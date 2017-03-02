@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Droidcon-Boston</string>
+    <string name="app_name">ModelViewPresenterTemplate</string>
+    <string name="drawer_close">Drawer Close</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_title">Drawer Title</string>
+
+    <string-array name="navigation_drawer">
+        <item name="navigation_drawer_element_1">First Navigation Element</item>
+    </string-array>
+
 </resources>
