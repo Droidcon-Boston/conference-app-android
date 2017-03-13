@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ModelViewPresenterTemplate</string>
+    <string name="app_name">MVPTemplate</string>
     <string name="drawer_close">Drawer Close</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_title">Drawer Title</string>
@@ -8,4 +8,8 @@
         <item name="navigation_drawer_element_1">First Navigation Element</item>
     </string-array>
 
+
+    <string name="agenda_fragment_title">Agenda</string>
+    <string name="chat_fragment_title">Chat</string>
+    <string name="twitter_fragment_title">Twitter</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.mentalmachines.droidcon_boston.services;
 
-import com.mentalmachines.mvptemplate.model.Model;
+import com.mentalmachines.droidcon_boston.data.model.Model;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

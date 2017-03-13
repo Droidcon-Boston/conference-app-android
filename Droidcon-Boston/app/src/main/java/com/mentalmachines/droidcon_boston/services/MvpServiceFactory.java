@@ -2,7 +2,7 @@ package com.mentalmachines.droidcon_boston.services;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.mentalmachines.mvptemplate.BuildConfig;
+import com.mentalmachines.droidcon_boston.BuildConfig;
 import com.squareup.moshi.Moshi;
 
 import okhttp3.OkHttpClient;

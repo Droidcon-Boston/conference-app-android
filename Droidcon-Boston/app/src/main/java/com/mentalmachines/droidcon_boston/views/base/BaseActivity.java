@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.views.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -10,31 +11,34 @@ import timber.log.Timber;
  * Created by jkim11 on 1/31/17.
  */
 
-public class BaseActivity extends AppCompatActivity{
-
-    private ActivityComponent mActivityComponent;
-
+public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         ButterKnife.bind(this);
-        // Create the ActivityComponent and reuses cached ConfigPersistentComponent if this is
-        // being called after a configuration change.
-        mActivityId = savedInstanceState != null ?
-                savedInstanceState.getLong(KEY_ACTIVITY_ID) : NEXT_ID.getAndIncrement();
-        ConfigPersistentComponent configPersistentComponent;
-        if (sComponentsArray.get(mActivityId) == null) {
-            Timber.i("Creating new ConfigPersistentComponent id=%d", mActivityId);
-            configPersistentComponent = DaggerConfigPersistentComponent.builder()
-                    .applicationComponent(MvpStarterApplication.get(this).getComponent())
-                    .build();
-            sComponentsArray.put(mActivityId, configPersistentComponent);
-        } else {
-            Timber.i("Reusing ConfigPersistentComponent id=%d", mActivityId);
-            configPersistentComponent = sComponentsArray.get(mActivityId);
+    }
+
+    public abstract int getLayout();
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        mActivityComponent = configPersistentComponent.activityComponent(new ActivityModule(this));
-        mActivityComponent.inject(this);
     }
 }

@@ -1,11 +1,14 @@
 package com.mentalmachines.droidcon_boston.views;
 
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,84 +21,48 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.mentalmachines.mvptemplate.R;
-import com.mentalmachines.mvptemplate.views.base.BaseActivity;
+
+import com.mentalmachines.droidcon_boston.R;
+import com.mentalmachines.droidcon_boston.views.base.BaseActivity;
+import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
-    FloatingActionButton fab;
-    RecyclerView recycler;
-    DrawerLayout navigationDrawer;
+public class MainActivity extends MaterialActivity {
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+    BottomNavigationView bottomNavigationView;
     ActionBarDrawerToggle drawerToggle;
-    ListView drawerList;
-    String mTitle, mDrawerTitle;
-    Toolbar toolbar;
-    ArrayList<String> mPlanetTitles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        recycler = (RecyclerView) findViewById(R.id.recycler);
+        // define your fragments here
+        final Fragment agendaFragment = new AgendaFragment();
+        final Fragment chatFragment = new ChatFragment();
+        final Fragment tweetsFragment = new TweetsFragment();
 
-        //get realm instance
-        // this.realm = RealmController.with(this).getRealm();
-
-        //set toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        navigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // Set the adapter for the list view
-        drawerList.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, this.getResources().getStringArray(R.array.navigation_drawer)));
-        drawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        navigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                navigationDrawer,         /* DrawerLayout object */
-                toolbar,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
-            }
-        };
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-
-        // Set the drawer toggle as the DrawerListener
-        navigationDrawer.setDrawerListener(drawerToggle);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
-        /*if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().
-                    add(R.id.container, new WeatherFragment(), WeatherFragment.TAG).
-                    commit();
-        }*/
+        // handle navigation selection
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        switch (item.getItemId()) {
+                            case R.id.action_agenda:
+                                fragmentTransaction.replace(R.id.fragment_container, agendaFragment).commit();
+                                return true;
+                            case R.id.action_chat:
+                                fragmentTransaction.replace(R.id.fragment_container, chatFragment).commit();
+                                return true;
+                            case R.id.action_twitter:
+                                fragmentTransaction.replace(R.id.fragment_container, tweetsFragment).commit();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
     }
 
     @Override
@@ -123,18 +90,11 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class DrawerItemClickListener implements ListView.OnItemClickListener{
+    class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         }
-    }
-
-    // Add Fragments to Tabs
-    private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new WeatherFragment(), WeatherFragment.TAG);
-        viewPager.setAdapter(adapter);
     }
 
     static class Adapter extends FragmentPagerAdapter {
