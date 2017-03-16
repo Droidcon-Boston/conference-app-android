@@ -16,14 +16,14 @@ import timber.log.Timber;
  */
 
 public class MvpServiceFactory {
-    public static MvpServiceFactory makeMvpStarterService() {
+    public static DroidconAgendaApi makeMvpStarterService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_API_URL)
                 .client(makeOkHttpClient())
                 .addConverterFactory(MoshiConverterFactory.create(makeMoshi()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        return retrofit.create(OpenWeatherMapApi.class);
+        return retrofit.create(DroidconAgendaApi.class);
     }
 
     private static OkHttpClient makeOkHttpClient() {
