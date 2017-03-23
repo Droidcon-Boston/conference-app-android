@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.base;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -14,55 +15,40 @@ import android.widget.ListView;
 
 import com.mentalmachines.droidcon_boston.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by jinn on 3/11/17.
  */
 
 public abstract class MaterialActivity extends BaseActivity {
-    FloatingActionButton fab;
-    RecyclerView recycler;
-    DrawerLayout navigationDrawer;
-    ActionBarDrawerToggle drawerToggle;
-    Toolbar toolbar;
-    ListView drawerList;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.recycler) RecyclerView recycler;
+    @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.viewpager) ViewPager viewPager;
+    @BindView(R.id.tabs) TabLayout tabs;
     Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main_activity);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        recycler = (RecyclerView) findViewById(R.id.recycler);
+        setContentView(getLayout());
+        ButterKnife.setDebug(true);
+        ButterKnife.bind(this);
 
-        //set toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        navigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+       tabs.setupWithViewPager(viewPager);
 
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-
-        // Set the drawer toggle as the DrawerListener
-        navigationDrawer.setDrawerListener(drawerToggle);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
-        drawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // Set the adapter for the list view
-        drawerList.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, this.getResources().getStringArray(R.array.navigation_drawer)));
-        drawerList.setOnItemClickListener(new DrawerItemClickListener());
-
+        // getActionBar().setDisplayHomeAsUpEnabled(true);
+        // getActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
     public int getLayout() {
-        return 0;
+        return R.layout.main_activity;
     }
 }

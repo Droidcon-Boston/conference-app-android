@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MVPTemplate</string>
+    <string name="app_name">DroidCon Boston</string>
     <string name="drawer_close">Drawer Close</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_title">Drawer Title</string>
@@ -12,4 +12,5 @@
     <string name="agenda_fragment_title">Agenda</string>
     <string name="chat_fragment_title">Chat</string>
     <string name="twitter_fragment_title">Twitter</string>
+    <string name="environs_fragment_title">Environs</string>
 </resources>

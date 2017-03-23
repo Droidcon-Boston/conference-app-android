@@ -29,9 +29,11 @@ import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class MainActivity extends MaterialActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    BottomNavigationView bottomNavigationView;
+    @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
     ActionBarDrawerToggle drawerToggle;
 
     @Override
@@ -69,7 +71,7 @@ public class MainActivity extends MaterialActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState();
+        // drawerToggle.syncState();
     }
 
     @Override
