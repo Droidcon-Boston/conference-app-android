@@ -23,12 +23,10 @@ import butterknife.ButterKnife;
  */
 
 public abstract class MaterialActivity extends BaseActivity {
-    @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.recycler) RecyclerView recycler;
+    // @BindView(R.id.fab) FloatingActionButton fab;
+    // @BindView(R.id.recycler) RecyclerView recycler;
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.viewpager) ViewPager viewPager;
-    @BindView(R.id.tabs) TabLayout tabs;
     Snackbar snackbar;
 
     @Override
@@ -40,9 +38,6 @@ public abstract class MaterialActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-
-       tabs.setupWithViewPager(viewPager);
-
         // getActionBar().setDisplayHomeAsUpEnabled(true);
         // getActionBar().setHomeButtonEnabled(true);
     }

@@ -4,6 +4,7 @@ import com.mentalmachines.droidcon_boston.data.model.DroidconSchedule;
 
 import java.util.List;
 
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -15,6 +16,6 @@ import rx.Observable;
 public interface DroidconAgendaApi {
     final String DroidconWordpressApiUrl = "http://www.droidcon-boston.com/wp-json/wp/v2";
     @GET("pages/461")
-    Observable<List<DroidconSchedule>> getSchedule();
+    Single<List<DroidconSchedule>> getSchedule();
 
 }

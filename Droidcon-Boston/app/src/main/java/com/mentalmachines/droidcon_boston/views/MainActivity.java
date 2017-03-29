@@ -3,27 +3,20 @@ package com.mentalmachines.droidcon_boston.views;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
 import com.mentalmachines.droidcon_boston.R;
-import com.mentalmachines.droidcon_boston.views.base.BaseActivity;
+import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
 import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
 
 import java.util.ArrayList;

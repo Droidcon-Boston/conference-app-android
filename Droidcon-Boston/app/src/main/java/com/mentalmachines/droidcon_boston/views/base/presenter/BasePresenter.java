@@ -1,4 +1,4 @@
-package com.mentalmachines.droidcon_boston.presenter;
+package com.mentalmachines.droidcon_boston.views.base.presenter;
 
 /**
  * Created by jinn on 3/12/17.
@@ -9,7 +9,6 @@ import com.mentalmachines.droidcon_boston.views.base.BaseView;
 
 import rx.Observable;
 import rx.Single;
-import rx.Subscription;
 
 
 /**
@@ -36,7 +35,7 @@ public class BasePresenter<T extends BaseView> implements BasePresenterInterface
         return mMvpView != null;
     }
 
-    public T getMvpView() {
+    public T getView() {
         return mMvpView;
     }
 
