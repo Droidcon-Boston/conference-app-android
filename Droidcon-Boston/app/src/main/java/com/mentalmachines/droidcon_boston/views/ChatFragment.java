@@ -7,4 +7,8 @@ import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
  */
 
 public class ChatFragment extends BaseFragment {
+    @Override
+    public int getLayout() {
+        return 0;
+    }
 }

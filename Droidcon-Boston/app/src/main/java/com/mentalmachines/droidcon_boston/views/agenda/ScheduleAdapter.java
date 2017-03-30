@@ -24,6 +24,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     private List<DroidconSchedule> schedule;
     private Context mContext;
 
+    public static final int TYPE_GENERAL = 0;
+    public static final int TYPE_SINGLE_ITEM = 1;
+    public static final int TYPE_DOUBLE_ITEM = 2;
+    public static final int TYPE_TRIPLE_ITEM = 3;
+
+
     public void setSchedule(List<DroidconSchedule> schedule) {
         schedule = schedule;
     }
@@ -35,23 +41,16 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
     // Not use static
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         public TextView mTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.text);
-            itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(
-                            mContext,
-                            "onItemClick - " + getPosition() + " - "
-                                    + mTextView.getText().toString() + " - "
-                                    + schedule.get(getPosition()), Toast.LENGTH_LONG).show();
-                }
-            });
+            itemView.setOnClickListener(v -> Toast.makeText(
+                    mContext,
+                    "onItemClick - " + getPosition() + " - "
+                            + mTextView.getText().toString() + " - "
+                            + schedule.get(getPosition()), Toast.LENGTH_LONG).show());
         }
     }
 

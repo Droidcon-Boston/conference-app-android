@@ -1,15 +1,12 @@
-package com.mentalmachines.droidcon_boston.views.base.presenter;
+package com.mentalmachines.droidcon_boston.views.base;
 
 /**
  * Created by jinn on 3/12/17.
  */
 
 
-import com.mentalmachines.droidcon_boston.views.base.BaseView;
-
 import rx.Observable;
 import rx.Single;
-
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for
@@ -17,7 +14,7 @@ import rx.Single;
  * can be accessed from the children classes by calling getMvpView().
  */
 
-public class BasePresenter<T extends BaseView> implements BasePresenterInterface<T> {
+public class BasePresenter<T> implements BasePresenterInterface<T> {
 
     private T mMvpView;
 
