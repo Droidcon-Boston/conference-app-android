@@ -2,10 +2,11 @@
     <string name="app_name">DroidCon Boston</string>
     <string name="drawer_close">Drawer Close</string>
     <string name="drawer_open">Drawer Open</string>
-    <string name="drawer_title">Drawer Title</string>
 
     <string-array name="navigation_drawer">
-        <item name="navigation_drawer_element_1">First Navigation Element</item>
+        <item name="nav_agenda">@string/agenda_fragment_title</item>
+        <item name="nav_chat">@string/chat_fragment_title</item>
+        <item name="nav_twitter">@string/twitter_fragment_title</item>
     </string-array>
 
 
