@@ -6,9 +6,6 @@ import com.mentalmachines.droidcon_boston.views.base.BasePresenterInterface;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.Single;
-
 /**
  * Created by jinn on 3/29/17.
  */
@@ -23,8 +20,6 @@ public interface AgendaContract extends BaseContract {
     }
 
     interface Presenter extends BasePresenterInterface {
-        Single<List<DroidconSchedule>> getSchedule();
-
-        Observable<List<DroidconSchedule>> observeSchedule();
+        void getSchedule();
     }
 }
