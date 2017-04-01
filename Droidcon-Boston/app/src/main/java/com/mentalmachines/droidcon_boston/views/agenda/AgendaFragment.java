@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.DataManager;
+import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.data.model.DroidconSchedule;
 import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
 
@@ -54,6 +56,7 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
         dataManager = new DataManager(makeMvpStarterService());
         presenter = new AgendaPresenter(dataManager);
 
+        /*
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(), 3);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -73,7 +76,10 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
             }
         });
         recycler.setLayoutManager(gridLayoutManager);
-        recycler.setAdapter(adapter);
+        */
+
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setAdapter(new ScheduleDatabase.ScheduleAdapter(getContext()));
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             presenter.getSchedule();

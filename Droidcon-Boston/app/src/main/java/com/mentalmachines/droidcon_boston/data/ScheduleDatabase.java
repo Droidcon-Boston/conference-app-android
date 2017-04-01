@@ -167,13 +167,14 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             holder.speaker.setTag(s); //keep the data for the detail view
             holder.speaker.setText(s.speakerName);
             holder.title.setText(s.talkTitle);
-            holder.location.setText(s.talkDescription);
+            holder.description.setText(s.talkDescription);
+            holder.time.setText(s.time);
         }
 
 
         @Override
         public int getItemCount() {
-            return 0;
+            return items.length;
         }
     }
 
@@ -181,14 +182,14 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
         public final TextView title;
         public final TextView speaker;
-        public final TextView location;
+        public final TextView description;
         public final TextView time;
 
         public TalkViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title_text);
             speaker = (TextView) itemView.findViewById(R.id.speaker_name_text);
-            location = (TextView) itemView.findViewById(R.id.location_text);
+            description = (TextView) itemView.findViewById(R.id.description_text);
             time = (TextView) itemView.findViewById(R.id.time_text);
         }
     }

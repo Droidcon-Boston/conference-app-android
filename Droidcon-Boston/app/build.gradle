@@ -99,4 +99,6 @@ dependencies {
     compile "com.facebook.stetho:stetho-okhttp3:1.4.2"
     compile "com.squareup.leakcanary:leakcanary-watcher:$leakCanary"
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+
+    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
 }
