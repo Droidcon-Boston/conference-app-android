@@ -98,4 +98,5 @@ dependencies {
     compile "com.jakewharton.timber:timber:$timber"
     compile "com.facebook.stetho:stetho-okhttp3:1.4.2"
     compile "com.squareup.leakcanary:leakcanary-watcher:$leakCanary"
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 }
