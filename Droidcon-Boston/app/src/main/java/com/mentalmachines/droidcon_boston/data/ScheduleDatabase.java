@@ -141,7 +141,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                     item.date = c.getString(COL_TALK_DATE);
                     items[dex++] = item;
                 } while (c.moveToNext());
-                Log.i(TAG, "finished adapter arrray");
+                Log.i(TAG, "finished adapter array");
                 c.close();
             } else {
                 Log.e(TAG, "Error reading database");
