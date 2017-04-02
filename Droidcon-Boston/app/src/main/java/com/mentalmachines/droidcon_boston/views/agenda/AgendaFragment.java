@@ -1,49 +1,44 @@
 package com.mentalmachines.droidcon_boston.views.agenda;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.DataManager;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.data.model.DroidconSchedule;
 import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
-import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
 
 import static com.mentalmachines.droidcon_boston.services.MvpServiceFactory.makeMvpStarterService;
 
 /**
+ *
  * Created by jinn on 3/11/17.
  */
 
 public class AgendaFragment extends BaseFragment implements AgendaContract.View {
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
-    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.tablayout)
+    android.support.design.widget.TabLayout tabLayout;
+
+    @BindView(R.id.viewpager)
+    android.support.v4.view.ViewPager viewPager;
 
     ScheduleAdapter adapter;
     AgendaPresenter presenter;
     DataManager dataManager;
 
-    private Map<String, ScheduleAdapterItemHeader> timeHeaders = new HashMap<>();
+    public static final String TAB_POSITION = "POSITION";
 
     @Nullable
     @Override
@@ -64,95 +59,14 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
         dataManager = new DataManager(makeMvpStarterService());
         presenter = new AgendaPresenter(dataManager);
 
-        /*
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(), 3);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (adapter.getItemViewType(position)) {
-                    case ScheduleAdapter.TYPE_GENERAL:
-                        return 1;
-                    case ScheduleAdapter.TYPE_SINGLE_ITEM:
-                        return 1;
-                    case ScheduleAdapter.TYPE_DOUBLE_ITEM:
-                        return 2;
-                    case ScheduleAdapter.TYPE_TRIPLE_ITEM:
-                        return 3;
-                    default:
-                        return -1;
-                }
-            }
-        });
-        recycler.setLayoutManager(gridLayoutManager);
-        */
-
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        //recycler.setAdapter(new ScheduleDatabase.ScheduleAdapter(getContext()));
-        setupHeaderAdapter();
-
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            presenter.getSchedule();
-        });
-
         presenter.getSchedule();
-    }
 
-    private void setupHeaderAdapter() {
-        List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase.fetchScheduleListByDay(getContext(), null);
-        List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
-        for (ScheduleDatabase.ScheduleRow row : rows) {
-            String timeDisplay = ((row.time == null) || (row.time.length() == 0)) ? "Unscheduled" : row.time;
-            ScheduleAdapterItemHeader header = timeHeaders.get(timeDisplay);
-            if (header == null) {
-                header = new ScheduleAdapterItemHeader(timeDisplay);
-                timeHeaders.put(timeDisplay, header);
-            }
-
-            ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
-            items.add(item);
-        }
-
-        FlexibleAdapter.enableLogs(true);
-        FlexibleAdapter<ScheduleAdapterItem> headerAdapter =
-                new FlexibleAdapter<>(items,
-                        (FlexibleAdapter.OnItemClickListener) position -> {
-                            ScheduleAdapterItem item = items.get(position);
-
-                            AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            Bundle arguments = new Bundle();
-                            arguments.putString("speaker_name", item.getItemData().speakerName);
-                            agendaDetailFragment.setArguments(arguments);
-                            fragmentTransaction.add(R.id.fragment_container, agendaDetailFragment);
-                            fragmentTransaction.commit();
-                            return true;
-                        });
-        headerAdapter
-                        .expandItemsAtStartUp()
-                        .setDisplayHeadersAtStartUp(true)
-                        .setStickyHeaders(true);
-        recycler.setAdapter(headerAdapter);
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
+        setupDayPager(view, savedInstanceState);
     }
 
     public void showSchedule(List<DroidconSchedule> schedule) {
         adapter.setSchedule(schedule);
         adapter.notifyDataSetChanged();
-
-        recycler.setVisibility(View.VISIBLE);
-        swipeRefreshLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -163,5 +77,37 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
     @Override
     public void showError(Throwable throwable) {
 
+    }
+
+
+    private void setupDayPager(View parent, Bundle savedInstanceState) {
+        ViewPager viewPager = (ViewPager) parent.findViewById(R.id.viewpager);
+        viewPager.setAdapter(new AgendaDayPagerAdapter(getChildFragmentManager()));
+
+        TabLayout tabLayout = (TabLayout) parent.findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
+
+        if (savedInstanceState != null) {
+            viewPager.setCurrentItem(savedInstanceState.getInt(TAB_POSITION));
+        } else {
+            // set current day to second if today matches
+            Calendar today = Calendar.getInstance();
+            Calendar dayTwo = Calendar.getInstance();
+            dayTwo.set(2017, 4, 10);
+            if (today.equals(dayTwo)) {
+                viewPager.setCurrentItem(1);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(TAB_POSITION, tabLayout.getSelectedTabPosition());
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
     }
 }
