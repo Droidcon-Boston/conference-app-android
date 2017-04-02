@@ -4,15 +4,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.mentalmachines.droidcon_boston.R;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by emezias on 3/31/17.
@@ -24,11 +21,10 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
     public static final String TAG = "ScheduleDatabase";
     private static SQLiteDatabase sDB;
-    private static final String DATABASE_NAME = "droidconbos.db";
+    private static final String DATABASE_NAME = "schedule.db";
     private static final int DATABASE_VERSION = 1;
     //columns, database constants
     public static final String TABLE = "schedule";
-    public static final String ID = "_id";
     public static final String NAME = "name";
     public static final String TITLE = "talk";
     public static final String DESCRIPTION = "description";
@@ -40,18 +36,36 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     public static final String SPKR_TWEET = "twitter";
     public static final String SPKR_LINKD = "linkedin";
     public static final String SPKR_FB = "facebook";
-    public static final int COL_ID = 0;
-    public static final int COL_NAME = 1;
-    public static final int COL_TITLE = 2;
-    public static final int COL_DESCRIPTION = 3;
-    public static final int COL_PHOTO = 4;
-    public static final int COL_BIO = 5;
-    public static final int COL_TALK_DATE = 6;
-    public static final int COL_TALK_TIME = 7;
-    public static final int COL_ROOM = 8;
-    public static final int COL_SPKR_TWEET = 9;
-    public static final int COL_SPKR_LINKD = 10;
-    public static final int COL_SPKR_FB = 11;
+
+    public static final int COL_NAME = 0;
+    public static final int COL_TITLE = 1;
+    public static final int COL_DESCRIPTION = 2;
+    public static final int COL_PHOTO = 3;
+    public static final int COL_BIO = 4;
+    public static final int COL_TALK_DATE = 5;
+    public static final int COL_TALK_TIME = 6;
+    public static final int COL_ROOM = 7;
+    public static final int COL_SPKR_TWEET = 8;
+    public static final int COL_SPKR_LINKD = 9;
+    public static final int COL_SPKR_FB = 10;
+
+    public static class ScheduleRow {
+        public String speakerName;
+        public String talkTitle;
+        public String photo;
+        public String time;
+        public String room;
+        public String date;
+    }
+
+    public static class ScheduleDetail {
+        public ScheduleRow listRow;
+        public String talkDescription;
+        public String speakerBio;
+        public String twitter;
+        public String linkedIn;
+        public String facebook;
+    }
 
     public ScheduleDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -65,31 +79,10 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
      */
     public static SQLiteDatabase getDatabase(@NonNull Context ctx) {
         if (sDB == null) {
-            sDB = (new ScheduleDatabase(ctx)).getReadableDatabase();
+            sDB = (new ScheduleDatabase(ctx)).getWritableDatabase();
         }
         return sDB;
     }
-
-    public static class ScheduleRow {
-        public String[] projection = new String[] { NAME,
-                TITLE, DESCRIPTION, PHOTO,
-                SPKR_TWEET, SPKR_LINKD, SPKR_FB,
-                TALK_TIME, ROOM, TALK_DATE };
-
-        String speakerName;
-        String talkTitle;
-        String talkDescription;
-        String photo;
-        String twitter;
-        String linkedIn;
-        String facebook;
-        String time;
-        String room;
-        String date;
-    }
-
-    public static final String[] sDetailProjection = new String[] { BIO };
-    public static final String sDetailWhere = "WHERE " + NAME + " LIKE ?";
 
     /**
      * Can use this data structure or just select the bio, the rest is already there
@@ -97,99 +90,129 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
      * @param speakername
      * @return
      */
-    public static final String fetchDetailData(@NonNull Context ctx, @NonNull String speakername) {
+    public static ScheduleDetail fetchDetailData(@NonNull Context ctx, @NonNull String speakername) {
         final SQLiteDatabase db = getDatabase(ctx);
-        final Cursor c = db.query(TABLE, sDetailProjection, sDetailWhere,
-                new String[] { speakername },
+        final Cursor c = db.query(TABLE, null, sDetailWhere, new String[] { speakername },
                 null, null, null);
         //should be exactly one field from one row
         if (c.moveToFirst()) {
-            final String bio = c.getString(0);
-            Log.d(TAG, "got bio for " + speakername);
-            c.close();
-            return bio;
+            final ScheduleDetail talkData = new ScheduleDetail();
+            talkData.listRow = new ScheduleRow();
+            talkData.listRow.speakerName = c.getString(COL_NAME);
+            talkData.listRow.talkTitle = c.getString(COL_TITLE);
+            talkData.listRow.photo = c.getString(COL_PHOTO);
+            if (!c.isNull(COL_TALK_TIME)) {
+                talkData.listRow.room = c.getString(COL_ROOM);
+                talkData.listRow.time = c.getString(COL_TALK_TIME);
+                talkData.listRow.date = c.getString(COL_TALK_DATE);
+            }
+
+            talkData.talkDescription = c.getString(COL_DESCRIPTION);
+            talkData.speakerBio = c.getString(COL_BIO);
+            if (c.isNull(COL_SPKR_FB)) talkData.facebook = null;
+            else talkData.facebook = c.getString(COL_SPKR_FB);
+            if (c.isNull(COL_SPKR_LINKD)) talkData.linkedIn = null;
+            else talkData.linkedIn = c.getString(COL_SPKR_LINKD);
+            if (c.isNull(COL_SPKR_TWEET)) talkData.twitter = null;
+            else talkData.twitter = c.getString(COL_SPKR_TWEET);
+            return talkData;
         } else {
             Log.e(TAG, "Error reading bio for " + speakername);
             return null;
         }
     }
 
-    public static class ScheduleAdapter extends RecyclerView.Adapter<TalkViewHolder> {
-        final private ScheduleRow[] items;
-
-        public ScheduleAdapter(Context ctx) {
-            Log.i(TAG, "adapter");
-            final SQLiteDatabase db = getDatabase(ctx);
-            final Cursor c = db.query(TABLE, null, null, null, null, null, null);
-            //all rows
-            if (c.moveToFirst()) {
-                int dex = 0;
-                items = new ScheduleRow[c.getCount()];
-                ScheduleRow item;
-                do {
-                    item = new ScheduleRow();
-                    item.speakerName = c.getString(COL_NAME);
-                    //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
-                    item.talkTitle = c.getString(COL_TITLE);
-                    item.talkDescription = c.getString(COL_DESCRIPTION);
-                    item.photo = c.getString(COL_PHOTO);
-                    item.twitter = c.getString(COL_SPKR_TWEET);
-                    item.linkedIn = c.getString(COL_SPKR_LINKD);
-                    item.facebook = c.getString(COL_SPKR_FB);
-                    item.time = c.getString(COL_TALK_TIME);
-                    item.room = c.getString(COL_ROOM);
-                    item.date = c.getString(COL_TALK_DATE);
-                    items[dex++] = item;
-                } while (c.moveToNext());
-                Log.i(TAG, "finished adapter array");
-                c.close();
-            } else {
-                Log.e(TAG, "Error reading database");
-                items = null;
-            }
-
-        }
-
-        @Override
-        public TalkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            final View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.schedule_card_view, parent, false);
-            return new TalkViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(TalkViewHolder holder, int position) {
-            if (items == null || position >+ items.length) {
-                Log.e(TAG, "Error, bad item");
-                return;
-            }
-            final ScheduleRow s = items[position];
-            holder.speaker.setTag(s); //keep the data for the detail view
-            holder.speaker.setText(s.speakerName);
-            holder.title.setText(s.talkTitle);
-            holder.location.setText(s.talkDescription);
-        }
-
-
-        @Override
-        public int getItemCount() {
-            return 0;
+    public static ScheduleRow[] fetchScheduleData(Context ctx) {
+        final SQLiteDatabase db = getDatabase(ctx);
+        final Cursor c = db.query(TABLE, null, null, null, null, null, null);
+        //all rows
+        if (c.moveToFirst()) {
+            int dex = 0;
+            final ScheduleRow[] items = new ScheduleRow[c.getCount()];
+            ScheduleRow item;
+            do {
+                item = new ScheduleRow();
+                item.speakerName = c.getString(0);
+                //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
+                item.talkTitle = c.getString(1);
+                item.photo = c.getString(2);
+                if (!c.isNull(3)){
+                    item.time = c.getString(3);
+                    item.room = c.getString(4);
+                    item.date = c.getString(5);
+                } else {
+                    item.time = "unscheduled";
+                }
+                items[dex++] = item;
+            } while (c.moveToNext());
+            Log.i(TAG, "finished adapter arrray, length? " + items.length);
+            c.close();
+            return items;
+        } else {
+            Log.e(TAG, "Error reading database");
+            return null;
         }
     }
 
-    public static class TalkViewHolder extends RecyclerView.ViewHolder {
+    public static String[] sAgendaProjection = new String[] { NAME,
+            TITLE, PHOTO, TALK_TIME, ROOM, TALK_DATE };
 
-        public final TextView title;
-        public final TextView speaker;
-        public final TextView location;
-        public final TextView time;
+    public static final String sDetailWhere = " " + NAME + " LIKE ?";
+    public static final String MONDAY = "4/10/2017";
+    public static final String TUESDAY = "4/11/2017";
 
-        public TalkViewHolder(View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_text);
-            speaker = (TextView) itemView.findViewById(R.id.speaker_name_text);
-            location = (TextView) itemView.findViewById(R.id.location_text);
-            time = (TextView) itemView.findViewById(R.id.time_text);
+    public static List<ScheduleRow> fetchScheduleListByDay(Context ctx, String date) {
+        List<ScheduleRow> items;
+        //date is currently always null
+        String filter = (date == null) ? null : TALK_DATE + " like " + date;
+        String orderBy =  TALK_DATE + " ASC, " + TALK_TIME + " ASC";
+
+        final SQLiteDatabase db = getDatabase(ctx);
+        final Cursor c = db.query(TABLE, sAgendaProjection, filter, null, null, null, orderBy);
+        //all rows
+        if (c.moveToFirst()) {
+            //why not use square brackets?
+            items = new ArrayList<ScheduleRow>(c.getCount());
+            ScheduleRow item;
+            do {
+                item = new ScheduleRow();
+                item.speakerName = c.getString(0);
+                //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
+                item.talkTitle = c.getString(1);
+                item.photo = c.getString(2);
+                item.time = c.getString(3);
+                item.room = c.getString(4);
+                item.date = c.getString(5);
+                items.add(item);
+            } while (c.moveToNext());
+            Log.i(TAG, "finished adapter array");
+            c.close();
+        } else {
+            Log.e(TAG, "Error reading database");
+            items = null;
         }
+
+        return items;
+    }
+
+    //DEBUG code for dev, run in Main onCreate
+    public static void testDb(@NonNull Context ctx) {
+        final SQLiteDatabase db = getDatabase(ctx);
+        Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type like 'table'", null);
+
+        if (c.moveToFirst()) {
+            while ( !c.isAfterLast() ) {
+                Log.d(TAG, "Table Name=> " + c.getString(0));
+                c.moveToNext();
+            }
+        }
+        final ScheduleRow[] items = fetchScheduleData(ctx);
+        if (items == null) {
+            Log.e(TAG, "Error reading database");
+            return;
+        }
+        Log.i(TAG, "finished adapter arrray, length? " + items.length);
+        c.close();
+        fetchDetailData(ctx, items[0].speakerName);
     }
 }

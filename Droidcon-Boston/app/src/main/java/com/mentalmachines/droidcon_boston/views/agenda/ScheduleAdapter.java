@@ -81,7 +81,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         TextView titleText;
         @BindView(R.id.time_text)
         TextView timeText;
-        @BindView(R.id.location_text)
+        @BindView(R.id.description_text)
         TextView locationText;
         @BindView(R.id.speaker_name_text)
         TextView speakerNameText;

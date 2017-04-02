@@ -1,82 +1,53 @@
 package com.mentalmachines.droidcon_boston.views;
 
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
 import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-
 public class MainActivity extends MaterialActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
     ActionBarDrawerToggle drawerToggle;
+    DrawerLayout mDrawerLayout;
+    ListView mDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        // define your fragments here
-        final Fragment agendaFragment = new AgendaFragment();
-        final Fragment chatFragment = ChatFragment.newInstance("T2M1BL9EU","C2M1UNB0A");
-        final Fragment tweetsFragment = new TweetsFragment();
-
-        // handle navigation selection
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        switch (item.getItemId()) {
-                            case R.id.action_agenda:
-                                fragmentTransaction.replace(R.id.fragment_container, agendaFragment).commit();
-                                return true;
-                            case R.id.action_chat:
-                                fragmentTransaction.replace(R.id.fragment_container, chatFragment).commit();
-                                return true;
-                            case R.id.action_twitter:
-                                fragmentTransaction.replace(R.id.fragment_container, tweetsFragment).commit();
-                                return true;
-                        }
-                        return false;
-                    }
-                });
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        mDrawerList = (ListView) findViewById(R.id.fragmentList);
+        mDrawerList.setAdapter(new NavigationAdapter(this));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        //click listener is set into the list item layout
+        //ScheduleDatabase.testDb(this);
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        // drawerToggle.syncState();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
+        drawerToggle.syncState();
     }
 
     @Override
@@ -97,40 +68,64 @@ public class MainActivity extends MaterialActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        } /*
+        Fragment transactions are not on the backstack
+        else if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            // to avoid looping below on initScreen
+            super.onBackPressed();
+            finish();
+        } else {
+            super.onBackPressed();
+            final BaseFragment fragment = (BaseFragment) fragmentManager.findFragmentById(R.id.fragment_container);
+            fragment.onResume();
+        }*/
+        super.onBackPressed();
+    }
+
     class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            if (position < 3) {
+                ((NavigationAdapter) parent.getAdapter()).setSelectedIndex(position);
+            } //others are contact links
+            Uri data = null;
+            switch (position) {
+                case 0: //agenda
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
+                    break;
+                case 1: //chat
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();
+                    break;
+                case 2: //tweet
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment()).commit();
+                    break;
+                case 3: //contact, facebook
+                    data = Uri.parse(NavigationAdapter.LN_FB);
+                    break;
+                case 4: //contact twitter, instagram, linked in
+                    data = Uri.parse(NavigationAdapter.LN_TWEET);
+                    break;
+                case 5:
+                    data = Uri.parse(NavigationAdapter.LN_INSTA);
+                    break;
+                case 6:
+                    data = Uri.parse(NavigationAdapter.LN_LINKD);
+                    break;
+            }
+            if (data == null) {
+                fragmentManager.executePendingTransactions();
+            } else {
+                final Intent tnt = new Intent(Intent.ACTION_VIEW);
+                tnt.setData(data);
+                startActivity(tnt);
+            }
 
         }
-    }
-
-    static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public Adapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-
+    } //end click listener
 }
