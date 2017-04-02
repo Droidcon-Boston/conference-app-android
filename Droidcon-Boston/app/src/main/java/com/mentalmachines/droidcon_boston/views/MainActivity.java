@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.mentalmachines.droidcon_boston.R;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
 import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
 
@@ -40,7 +39,7 @@ public class MainActivity extends MaterialActivity {
         mDrawerList.setAdapter(new NavigationAdapter(this));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         //click listener is set into the list item layout
-        ScheduleDatabase.testDb(this);
+        //ScheduleDatabase.testDb(this);
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
     }
 
