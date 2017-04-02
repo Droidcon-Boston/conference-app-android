@@ -101,4 +101,5 @@ dependencies {
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }

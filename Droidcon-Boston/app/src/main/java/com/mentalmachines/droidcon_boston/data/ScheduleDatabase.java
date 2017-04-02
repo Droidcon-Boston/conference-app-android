@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.mentalmachines.droidcon_boston.R;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by emezias on 3/31/17.
  * This database can workaround certain issues with the Wordpress API
@@ -76,16 +79,16 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 SPKR_TWEET, SPKR_LINKD, SPKR_FB,
                 TALK_TIME, ROOM, TALK_DATE };
 
-        String speakerName;
-        String talkTitle;
-        String talkDescription;
-        String photo;
-        String twitter;
-        String linkedIn;
-        String facebook;
-        String time;
-        String room;
-        String date;
+        public String speakerName;
+        public String talkTitle;
+        public String talkDescription;
+        public String photo;
+        public String twitter;
+        public String linkedIn;
+        public String facebook;
+        public String time;
+        public String room;
+        public String date;
     }
 
     public static final String[] sDetailProjection = new String[] { BIO };
@@ -97,7 +100,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
      * @param speakername
      * @return
      */
-    public static final String fetchDetailData(@NonNull Context ctx, @NonNull String speakername) {
+    public static String fetchDetailData(@NonNull Context ctx, @NonNull String speakername) {
         final SQLiteDatabase db = getDatabase(ctx);
         final Cursor c = db.query(TABLE, sDetailProjection, sDetailWhere,
                 new String[] { speakername },
@@ -114,40 +117,50 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         }
     }
 
+    public static List<ScheduleRow> fetchScheduleListByDay(Context ctx, String date) {
+        List<ScheduleRow> items;
+
+        String filter = (date == null) ? null : TALK_DATE + "=" + date;
+        String orderBy =  TALK_DATE + " ASC, " + TALK_TIME + " ASC";
+
+        final SQLiteDatabase db = getDatabase(ctx);
+        final Cursor c = db.query(TABLE, null, filter, null, null, null, orderBy);
+        //all rows
+        if (c.moveToFirst()) {
+            int dex = 0;
+            items = new ArrayList<ScheduleRow>(c.getCount());
+            ScheduleRow item;
+            do {
+                item = new ScheduleRow();
+                item.speakerName = c.getString(COL_NAME);
+                //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
+                item.talkTitle = c.getString(COL_TITLE);
+                item.talkDescription = c.getString(COL_DESCRIPTION);
+                item.photo = c.getString(COL_PHOTO);
+                item.twitter = c.getString(COL_SPKR_TWEET);
+                item.linkedIn = c.getString(COL_SPKR_LINKD);
+                item.facebook = c.getString(COL_SPKR_FB);
+                item.time = c.getString(COL_TALK_TIME);
+                item.room = c.getString(COL_ROOM);
+                item.date = c.getString(COL_TALK_DATE);
+                items.add(item);
+            } while (c.moveToNext());
+            Log.i(TAG, "finished adapter array");
+            c.close();
+        } else {
+            Log.e(TAG, "Error reading database");
+            items = null;
+        }
+
+        return items;
+    }
+
     public static class ScheduleAdapter extends RecyclerView.Adapter<TalkViewHolder> {
-        final private ScheduleRow[] items;
+        final private List<ScheduleRow> items;
 
         public ScheduleAdapter(Context ctx) {
             Log.i(TAG, "adapter");
-            final SQLiteDatabase db = getDatabase(ctx);
-            final Cursor c = db.query(TABLE, null, null, null, null, null, null);
-            //all rows
-            if (c.moveToFirst()) {
-                int dex = 0;
-                items = new ScheduleRow[c.getCount()];
-                ScheduleRow item;
-                do {
-                    item = new ScheduleRow();
-                    item.speakerName = c.getString(COL_NAME);
-                    //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
-                    item.talkTitle = c.getString(COL_TITLE);
-                    item.talkDescription = c.getString(COL_DESCRIPTION);
-                    item.photo = c.getString(COL_PHOTO);
-                    item.twitter = c.getString(COL_SPKR_TWEET);
-                    item.linkedIn = c.getString(COL_SPKR_LINKD);
-                    item.facebook = c.getString(COL_SPKR_FB);
-                    item.time = c.getString(COL_TALK_TIME);
-                    item.room = c.getString(COL_ROOM);
-                    item.date = c.getString(COL_TALK_DATE);
-                    items[dex++] = item;
-                } while (c.moveToNext());
-                Log.i(TAG, "finished adapter array");
-                c.close();
-            } else {
-                Log.e(TAG, "Error reading database");
-                items = null;
-            }
-
+            items = fetchScheduleListByDay(ctx, null);
         }
 
         @Override
@@ -159,22 +172,22 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
         @Override
         public void onBindViewHolder(TalkViewHolder holder, int position) {
-            if (items == null || position >+ items.length) {
+            if (items == null || position >+ items.size()) {
                 Log.e(TAG, "Error, bad item");
                 return;
             }
-            final ScheduleRow s = items[position];
+            final ScheduleRow s = items.get(position);
             holder.speaker.setTag(s); //keep the data for the detail view
             holder.speaker.setText(s.speakerName);
             holder.title.setText(s.talkTitle);
             holder.description.setText(s.talkDescription);
-            holder.time.setText(s.time);
+            holder.time.setText(s.date + " " + s.time);
         }
 
 
         @Override
         public int getItemCount() {
-            return items.length;
+            return items.size();
         }
     }
 

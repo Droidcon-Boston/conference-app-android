@@ -17,10 +17,14 @@ import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.data.model.DroidconSchedule;
 import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 
 import static com.mentalmachines.droidcon_boston.services.MvpServiceFactory.makeMvpStarterService;
 
@@ -36,6 +40,8 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
     ScheduleAdapter adapter;
     AgendaPresenter presenter;
     DataManager dataManager;
+
+    private Map<String, ScheduleAdapterItemHeader> timeHeaders = new HashMap<>();
 
     @Nullable
     @Override
@@ -79,7 +85,8 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
         */
 
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler.setAdapter(new ScheduleDatabase.ScheduleAdapter(getContext()));
+        //recycler.setAdapter(new ScheduleDatabase.ScheduleAdapter(getContext()));
+        setupHeaderAdapter();
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             presenter.getSchedule();
@@ -87,6 +94,32 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
 
         presenter.getSchedule();
     }
+
+    private void setupHeaderAdapter() {
+        List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase.fetchScheduleListByDay(getContext(), null);
+        List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
+        for (ScheduleDatabase.ScheduleRow row : rows) {
+            String timeDisplay = ((row.time == null) || (row.time.length() == 0)) ? "Unscheduled" : row.time;
+            ScheduleAdapterItemHeader header = timeHeaders.get(timeDisplay);
+            if (header == null) {
+                header = new ScheduleAdapterItemHeader(timeDisplay);
+                timeHeaders.put(timeDisplay, header);
+            }
+
+            ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
+            items.add(item);
+        }
+
+        FlexibleAdapter.enableLogs(true);
+        FlexibleAdapter<ScheduleAdapterItem> headerAdapter =
+                new FlexibleAdapter<>(items);
+        headerAdapter
+                        .expandItemsAtStartUp()
+                        .setDisplayHeadersAtStartUp(true)
+                        .setStickyHeaders(true);
+        recycler.setAdapter(headerAdapter);
+    }
+
 
     @Override
     public void onAttach(Activity activity) {
