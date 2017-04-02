@@ -100,7 +100,7 @@ public class MainActivity extends MaterialActivity {
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
                     break;
                 case 1: //chat
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, ChatFragment.newInstance("T2M1BL9EU","C2M1UNB0A")).commit();
                     break;
                 case 2: //tweet
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment()).commit();
