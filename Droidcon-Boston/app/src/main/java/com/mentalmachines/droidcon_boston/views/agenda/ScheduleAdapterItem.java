@@ -31,6 +31,10 @@ public class ScheduleAdapterItem extends
         this.itemData = scheduleRow;
     }
 
+    public String getTitle() {
+        return itemData.talkTitle;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof ScheduleAdapterItem) {

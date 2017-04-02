@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.DataManager;
@@ -112,7 +113,16 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
 
         FlexibleAdapter.enableLogs(true);
         FlexibleAdapter<ScheduleAdapterItem> headerAdapter =
-                new FlexibleAdapter<>(items);
+                new FlexibleAdapter<>(items,
+                        new FlexibleAdapter.OnItemClickListener() {
+                            @Override
+                            public boolean onItemClick(int position) {
+                                ScheduleAdapterItem item = items.get(position);
+
+                                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+                            }
+                        });
         headerAdapter
                         .expandItemsAtStartUp()
                         .setDisplayHeadersAtStartUp(true)
