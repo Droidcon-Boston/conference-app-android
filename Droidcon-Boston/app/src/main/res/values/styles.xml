@@ -20,4 +20,8 @@
     <dimen name="def_margin">16dp</dimen>
     <dimen name="navigation_drawer_width">320dp</dimen>
     <dimen name="def_padding">8dp</dimen>
+
+    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/colorPagerTabIndicator</item>
+    </style>
 </resources>

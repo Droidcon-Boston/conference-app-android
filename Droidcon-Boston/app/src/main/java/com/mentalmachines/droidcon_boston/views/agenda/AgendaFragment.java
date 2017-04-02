@@ -3,6 +3,8 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import com.mentalmachines.droidcon_boston.data.model.DroidconSchedule;
 import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +35,12 @@ import static com.mentalmachines.droidcon_boston.services.MvpServiceFactory.make
  */
 
 public class AgendaFragment extends BaseFragment implements AgendaContract.View {
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
+
+    @BindView(R.id.tablayout)
+    android.support.design.widget.TabLayout tabLayout;
+
+    @BindView(R.id.viewpager)
+    android.support.v4.view.ViewPager viewPager;
 
     ScheduleAdapter adapter;
     AgendaPresenter presenter;
@@ -60,64 +67,14 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
         dataManager = new DataManager(makeMvpStarterService());
         presenter = new AgendaPresenter(dataManager);
 
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        //recycler.setAdapter(new ScheduleDatabase.ScheduleAdapter(getContext()));
-        setupHeaderAdapter();
-
         presenter.getSchedule();
-    }
 
-    private void setupHeaderAdapter() {
-        List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase.fetchScheduleListByDay(getContext(), null);
-        List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
-        for (ScheduleDatabase.ScheduleRow row : rows) {
-            String timeDisplay = ((row.time == null) || (row.time.length() == 0)) ? "Unscheduled" : row.time;
-            ScheduleAdapterItemHeader header = timeHeaders.get(timeDisplay);
-            if (header == null) {
-                header = new ScheduleAdapterItemHeader(timeDisplay);
-                timeHeaders.put(timeDisplay, header);
-            }
-
-            ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
-            items.add(item);
-        }
-
-        FlexibleAdapter.enableLogs(true);
-        FlexibleAdapter<ScheduleAdapterItem> headerAdapter =
-                new FlexibleAdapter<>(items,
-                        new FlexibleAdapter.OnItemClickListener() {
-                            @Override
-                            public boolean onItemClick(int position) {
-                                ScheduleAdapterItem item = items.get(position);
-
-                                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-                            }
-                        });
-        headerAdapter
-                        .expandItemsAtStartUp()
-                        .setDisplayHeadersAtStartUp(true)
-                        .setStickyHeaders(true);
-        recycler.setAdapter(headerAdapter);
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
+        setupDayPager(view);
     }
 
     public void showSchedule(List<DroidconSchedule> schedule) {
         adapter.setSchedule(schedule);
         adapter.notifyDataSetChanged();
-
-        recycler.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -128,5 +85,22 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
     @Override
     public void showError(Throwable throwable) {
 
+    }
+
+
+    private void setupDayPager(View parent) {
+        ViewPager viewPager = (ViewPager) parent.findViewById(R.id.viewpager);
+        viewPager.setAdapter(new AgendaDayPagerAdapter(getChildFragmentManager()));
+
+        TabLayout tabLayout = (TabLayout) parent.findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
+
+        // set current day to second if today matches
+        Calendar today = Calendar.getInstance();
+        Calendar dayTwo = Calendar.getInstance();
+        dayTwo.set(2017, 04, 10);
+        if (today.equals(dayTwo)) {
+            viewPager.setCurrentItem(1);
+        }
     }
 }

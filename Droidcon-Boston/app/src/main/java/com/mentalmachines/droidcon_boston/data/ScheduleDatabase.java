@@ -158,17 +158,19 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             TITLE, PHOTO, TALK_TIME, ROOM, TALK_DATE };
 
     public static final String sDetailWhere = " " + NAME + " LIKE ?";
+    public static final String sDayWhere = " " + TALK_DATE + " LIKE ?";
     public static final String MONDAY = "4/10/2017";
     public static final String TUESDAY = "4/11/2017";
 
     public static List<ScheduleRow> fetchScheduleListByDay(Context ctx, String date) {
         List<ScheduleRow> items;
-        //date is currently always null
-        String filter = (date == null) ? null : TALK_DATE + " like " + date;
-        String orderBy =  TALK_DATE + " ASC, " + TALK_TIME + " ASC";
+
+        String filter = (date == null) ? null : sDayWhere;
+        String params[] = (date == null) ? null : new String[] { date };
+        String orderBy =  TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
 
         final SQLiteDatabase db = getDatabase(ctx);
-        final Cursor c = db.query(TABLE, sAgendaProjection, filter, null, null, null, orderBy);
+        final Cursor c = db.query(TABLE, sAgendaProjection, filter, params, null, null, orderBy);
         //all rows
         if (c.moveToFirst()) {
             //why not use square brackets?

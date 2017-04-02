@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF00FAAE</color>
 
     <color name="colorBackground">#FFEEEEEE</color>
+    <color name="colorPagerTabIndicator">@color/colorPrimaryDark</color>
 </resources>
