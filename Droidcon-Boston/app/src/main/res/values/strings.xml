@@ -18,4 +18,5 @@
     <string name="chat_fragment_title">Chat</string>
     <string name="twitter_fragment_title">Twitter</string>
     <string name="environs_fragment_title">Environs</string>
+    <string name="speaker_avatar">Speaker avatar</string>
 </resources>
