@@ -3,19 +3,21 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.DataManager;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.data.model.DroidconSchedule;
 import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
+import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,14 +115,18 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
         FlexibleAdapter.enableLogs(true);
         FlexibleAdapter<ScheduleAdapterItem> headerAdapter =
                 new FlexibleAdapter<>(items,
-                        new FlexibleAdapter.OnItemClickListener() {
-                            @Override
-                            public boolean onItemClick(int position) {
-                                ScheduleAdapterItem item = items.get(position);
+                        (FlexibleAdapter.OnItemClickListener) position -> {
+                            ScheduleAdapterItem item = items.get(position);
 
-                                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
-                                return true;
-                            }
+                            AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Bundle arguments = new Bundle();
+                            arguments.putString("speaker_name", item.getItemData().speakerName);
+                            agendaDetailFragment.setArguments(arguments);
+                            fragmentTransaction.add(R.id.fragment_container, agendaDetailFragment);
+                            fragmentTransaction.commit();
+                            return true;
                         });
         headerAdapter
                         .expandItemsAtStartUp()

@@ -19,4 +19,6 @@
     <string name="twitter_fragment_title">Twitter</string>
     <string name="environs_fragment_title">Environs</string>
     <string name="speaker_avatar">Speaker avatar</string>
+
+    <string name="action_bar_speaker_title">Speaker Profile</string>
 </resources>
