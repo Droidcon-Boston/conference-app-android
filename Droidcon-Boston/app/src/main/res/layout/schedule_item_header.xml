@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
- <TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
     android:layout_marginBottom="16dp"
-    android:maxLines="1"
-    android:ellipsize="end"
-    android:textSize="20sp"
-    android:fontFamily="sans-serif"
-    android:textColor="@android:color/black"
-    android:background="@color/colorAccent"
-    android:id="@+id/header_text"
-    tools:text="10:30am"/>
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"/>
+    <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:paddingLeft="16dp"
+       android:paddingRight="16dp"
+       android:paddingTop="8dp"
+       android:paddingBottom="8dp"
+       android:maxLines="1"
+       android:ellipsize="end"
+       android:textSize="20sp"
+       android:fontFamily="sans-serif"
+       android:textColor="@android:color/black"
+       android:background="@color/colorBackground"
+       android:id="@+id/header_text"
+       tools:text="10:30am"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"/>
+</LinearLayout>
