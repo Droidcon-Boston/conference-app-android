@@ -35,7 +35,7 @@ public class MainActivity extends MaterialActivity {
 
         // define your fragments here
         final Fragment agendaFragment = new AgendaFragment();
-        final Fragment chatFragment = new ChatFragment();
+        final Fragment chatFragment = ChatFragment.newInstance("T2M1BL9EU","C2M1UNB0A");
         final Fragment tweetsFragment = new TweetsFragment();
 
         // handle navigation selection
@@ -65,6 +65,18 @@ public class MainActivity extends MaterialActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         // drawerToggle.syncState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
     }
 
     @Override
