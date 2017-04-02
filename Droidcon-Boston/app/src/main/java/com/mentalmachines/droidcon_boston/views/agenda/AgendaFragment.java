@@ -3,7 +3,6 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,7 +34,6 @@ import static com.mentalmachines.droidcon_boston.services.MvpServiceFactory.make
 public class AgendaFragment extends BaseFragment implements AgendaContract.View {
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
 
     ScheduleAdapter adapter;
     AgendaPresenter presenter;
@@ -62,35 +60,9 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
         dataManager = new DataManager(makeMvpStarterService());
         presenter = new AgendaPresenter(dataManager);
 
-        /*
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(), 3);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (adapter.getItemViewType(position)) {
-                    case ScheduleAdapter.TYPE_GENERAL:
-                        return 1;
-                    case ScheduleAdapter.TYPE_SINGLE_ITEM:
-                        return 1;
-                    case ScheduleAdapter.TYPE_DOUBLE_ITEM:
-                        return 2;
-                    case ScheduleAdapter.TYPE_TRIPLE_ITEM:
-                        return 3;
-                    default:
-                        return -1;
-                }
-            }
-        });
-        recycler.setLayoutManager(gridLayoutManager);
-        */
-
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         //recycler.setAdapter(new ScheduleDatabase.ScheduleAdapter(getContext()));
         setupHeaderAdapter();
-
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            presenter.getSchedule();
-        });
 
         presenter.getSchedule();
     }
@@ -146,7 +118,6 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
         adapter.notifyDataSetChanged();
 
         recycler.setVisibility(View.VISIBLE);
-        swipeRefreshLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
