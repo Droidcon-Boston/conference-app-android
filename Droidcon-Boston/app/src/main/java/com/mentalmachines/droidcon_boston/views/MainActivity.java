@@ -4,27 +4,20 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.mentalmachines.droidcon_boston.R;
+import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
 import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
 
 public class MainActivity extends MaterialActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -47,6 +40,8 @@ public class MainActivity extends MaterialActivity {
         mDrawerList.setAdapter(new NavigationAdapter(this));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         //click listener is set into the list item layout
+        ScheduleDatabase.testDb(this);
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
     }
 
     @Override
@@ -98,7 +93,7 @@ public class MainActivity extends MaterialActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
             if (position < 3) {
-                ((NavigationAdapter)parent.getAdapter()).setSelectedIndex(position);
+                ((NavigationAdapter) parent.getAdapter()).setSelectedIndex(position);
             } //others are contact links
             Uri data = null;
             switch (position) {
@@ -133,27 +128,5 @@ public class MainActivity extends MaterialActivity {
             }
 
         }
-    }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-
+    } //end click listener
 }
