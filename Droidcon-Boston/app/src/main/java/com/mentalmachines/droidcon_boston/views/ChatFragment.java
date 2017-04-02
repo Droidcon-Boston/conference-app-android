@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Hariharan Sridharan on 4/02/17.
@@ -100,7 +101,11 @@ public class ChatFragment extends Fragment {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(slackPlayStoreUrl));
-        startActivity(intent);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(getContext(), "No Play store...please install Slack manually", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
