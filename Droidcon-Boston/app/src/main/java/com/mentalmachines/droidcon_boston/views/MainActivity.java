@@ -1,6 +1,8 @@
 package com.mentalmachines.droidcon_boston.views;
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -87,7 +89,10 @@ public class MainActivity extends MaterialActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-            ((NavigationAdapter)parent.getAdapter()).setSelectedIndex(position);
+            if (position < 3) {
+                ((NavigationAdapter)parent.getAdapter()).setSelectedIndex(position);
+            } //others are contact links
+            Uri data = null;
             switch (position) {
                 case 0: //agenda
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
@@ -98,8 +103,27 @@ public class MainActivity extends MaterialActivity {
                 case 2: //tweet
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment()).commit();
                     break;
+                case 3: //contact, facebook
+                    data = Uri.parse(NavigationAdapter.LN_FB);
+                    break;
+                case 4: //contact twitter, instagram, linked in
+                    data = Uri.parse(NavigationAdapter.LN_TWEET);
+                    break;
+                case 5:
+                    data = Uri.parse(NavigationAdapter.LN_INSTA);
+                    break;
+                case 6:
+                    data = Uri.parse(NavigationAdapter.LN_LINKD);
+                    break;
             }
-            fragmentManager.executePendingTransactions();
+            if (data == null) {
+                fragmentManager.executePendingTransactions();
+            } else {
+                final Intent tnt = new Intent(Intent.ACTION_VIEW);
+                tnt.setData(data);
+                startActivity(tnt);
+            }
+
         }
     }
 

@@ -22,6 +22,12 @@ import com.mentalmachines.droidcon_boston.R;
  */
 
 public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
+
+    public static final String LN_INSTA = "https://www.instagram.com/droidconbos/";
+    public static final String LN_FB = "https://www.facebook.com/droidconbos/";
+    public static final String LN_TWEET = "https://twitter.com/droidconbos";
+    public static final String LN_LINKD = "https://www.linkedin.com/groups/8586436";
+
     final String[] mTitles;
     //parallel arrays
     final Drawable[] mIcons;
@@ -41,7 +47,11 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
         mIcons = new Drawable[] {
                 buildIcon(res, R.drawable.ic_schedule_white_24dp),
                 buildIcon(res, R.drawable.ic_chat_white_24dp),
-                buildIcon(res, R.drawable.ic_twitter_white_24dp)
+                buildIcon(res, R.drawable.ic_twitter_white_24dp),
+                res.getDrawable(R.drawable.ic_facebook),
+                res.getDrawable(R.drawable.ic_twitter),
+                res.getDrawable(R.drawable.ic_instagram),
+                res.getDrawable(R.drawable.ic_linkedin)
         };
     }
 
@@ -76,6 +86,7 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
         } else {
             ((ImageView) convertView.getTag()).setSelected(false);
         }
+
         ((TextView) convertView.findViewById(R.id.nav_title)).setText(mTitles[position]);
         return convertView;
     }

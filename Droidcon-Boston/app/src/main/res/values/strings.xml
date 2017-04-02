@@ -4,11 +4,15 @@
     <string name="drawer_open">Drawer Open</string>
 
     <string-array name="navigation_drawer">
-        <item name="nav_agenda">@string/agenda_fragment_title</item>
-        <item name="nav_chat">@string/chat_fragment_title</item>
-        <item name="nav_twitter">@string/twitter_fragment_title</item>
-    </string-array>
+        <item>@string/agenda_fragment_title</item>
+        <item>@string/chat_fragment_title</item>
+        <item>@string/twitter_fragment_title</item>
 
+        <item>Our Facebook</item>
+        <item>We\'re on Twitter</item>
+        <item>Instagram Too</item>
+        <item>N.E. Android Devs</item>
+    </string-array>
 
     <string name="agenda_fragment_title">Agenda</string>
     <string name="chat_fragment_title">Chat</string>
