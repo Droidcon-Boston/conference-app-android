@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1084321061238",
+    "firebase_url": "https://droidcon-bos.firebaseio.com",
+    "project_id": "droidcon-bos",
+    "storage_bucket": "droidcon-bos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084321061238:android:25915fcd8a3d0f10",
+        "android_client_info": {
+          "package_name": "com.mentalmachines.droidcon_boston"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084321061238-2nrbs1pca3150e7s9gu7sui0kc351ncb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs_9JpoHXsxVblAVzujYHAIvekzW3M-fI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
