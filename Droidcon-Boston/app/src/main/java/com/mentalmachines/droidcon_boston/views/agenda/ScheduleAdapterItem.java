@@ -25,6 +25,10 @@ public class ScheduleAdapterItem extends
 
     private ScheduleDatabase.ScheduleRow itemData;
 
+    public ScheduleDatabase.ScheduleRow getItemData() {
+        return itemData;
+    }
+
     public ScheduleAdapterItem(ScheduleDatabase.ScheduleRow scheduleRow,
                                ScheduleAdapterItemHeader header) {
         super(header);

@@ -20,6 +20,8 @@
     <string name="environs_fragment_title">Environs</string>
     <string name="speaker_avatar">Speaker avatar</string>
 
+    <string name="action_bar_speaker_title">Speaker Profile</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -3,6 +3,8 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,7 +92,14 @@ public class AgendaDayFragment extends Fragment {
                         (FlexibleAdapter.OnItemClickListener) position -> {
                             ScheduleAdapterItem item = items.get(position);
 
-                            Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+                            AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Bundle arguments = new Bundle();
+                            arguments.putString("speaker_name", item.getItemData().speakerName);
+                            agendaDetailFragment.setArguments(arguments);
+                            fragmentTransaction.add(R.id.fragment_container, agendaDetailFragment);
+                            fragmentTransaction.commit();
                             return true;
                         });
         headerAdapter
