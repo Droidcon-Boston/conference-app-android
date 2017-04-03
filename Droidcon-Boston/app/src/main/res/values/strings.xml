@@ -5,7 +5,6 @@
 
     <string-array name="navigation_drawer">
         <item>@string/agenda_fragment_title</item>
-        <item>@string/chat_fragment_title</item>
         <item>@string/twitter_fragment_title</item>
 
         <item>Our Facebook</item>

@@ -99,22 +99,22 @@ public class MainActivity extends MaterialActivity {
                 case 0: //agenda
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
                     break;
-                case 1: //chat
+                /*case 1: //chat
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, ChatFragment.newInstance("T2M1BL9EU","C2M1UNB0A")).commit();
-                    break;
-                case 2: //tweet
+                    break;*/
+                case 1: //tweet
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment()).commit();
                     break;
-                case 3: //contact, facebook
+                case 2: //contact, facebook
                     data = Uri.parse(NavigationAdapter.LN_FB);
                     break;
-                case 4: //contact twitter, instagram, linked in
+                case 3: //contact twitter, instagram, linked in
                     data = Uri.parse(NavigationAdapter.LN_TWEET);
                     break;
-                case 5:
+                case 4:
                     data = Uri.parse(NavigationAdapter.LN_INSTA);
                     break;
-                case 6:
+                case 5:
                     data = Uri.parse(NavigationAdapter.LN_LINKD);
                     break;
             }
