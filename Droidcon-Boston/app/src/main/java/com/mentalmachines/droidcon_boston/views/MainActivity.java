@@ -39,7 +39,7 @@ public class MainActivity extends MaterialActivity {
         mDrawerList.setAdapter(new NavigationAdapter(this));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         //click listener is set into the list item layout
-        //ScheduleDatabase.testDb(this);
+        //ScheduleDatabase.fetchFAQ(this);
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
     }
 
