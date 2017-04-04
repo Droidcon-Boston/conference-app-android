@@ -166,8 +166,8 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         List<ScheduleRow> items;
 
         String filter = (date == null) ? null : sDayWhere;
-        String params[] = (date == null) ? null : new String[] { date };
-        String orderBy =  TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
+        String params[] = (date == null) ? null : new String[]{date};
+        String orderBy = TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
 
         final SQLiteDatabase db = getDatabase(ctx);
         final Cursor c = db.query(TABLE, sAgendaProjection, filter, params, null, null, orderBy);

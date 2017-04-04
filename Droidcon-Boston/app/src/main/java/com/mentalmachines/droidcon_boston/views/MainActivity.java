@@ -70,6 +70,11 @@ public class MainActivity extends MaterialActivity {
 
     @Override
     public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
             return;
@@ -84,8 +89,10 @@ public class MainActivity extends MaterialActivity {
             final BaseFragment fragment = (BaseFragment) fragmentManager.findFragmentById(R.id.fragment_container);
             fragment.onResume();
         }*/
+
         super.onBackPressed();
     }
+
 
     class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override

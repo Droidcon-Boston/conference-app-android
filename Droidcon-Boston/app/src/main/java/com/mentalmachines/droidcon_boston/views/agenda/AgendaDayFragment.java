@@ -4,13 +4,12 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
@@ -56,6 +55,21 @@ public class AgendaDayFragment extends Fragment {
         if (getArguments() != null) {
             dayFilter = getArguments().getString(ARG_DAY);
         }
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // onBackPressed();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -91,15 +105,19 @@ public class AgendaDayFragment extends Fragment {
                 new FlexibleAdapter<>(items,
                         (FlexibleAdapter.OnItemClickListener) position -> {
                             ScheduleAdapterItem item = items.get(position);
-
-                            AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             Bundle arguments = new Bundle();
                             arguments.putString("speaker_name", item.getItemData().speakerName);
+
+                            AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
                             agendaDetailFragment.setArguments(arguments);
-                            fragmentTransaction.add(R.id.fragment_container, agendaDetailFragment);
-                            fragmentTransaction.commit();
+
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            fragmentManager.beginTransaction()
+                                    .add(R.id.fragment_container, agendaDetailFragment)
+                                    .addToBackStack(null)
+                                    .commit();
+
+
                             return true;
                         });
         headerAdapter
