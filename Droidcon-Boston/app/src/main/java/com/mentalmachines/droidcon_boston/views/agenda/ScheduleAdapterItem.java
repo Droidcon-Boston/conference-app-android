@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.agenda;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,11 @@ import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
@@ -25,6 +30,10 @@ public class ScheduleAdapterItem extends
 
     private ScheduleDatabase.ScheduleRow itemData;
 
+    private Date startTime;
+
+    private Integer roomOrder;
+
     public ScheduleDatabase.ScheduleRow getItemData() {
         return itemData;
     }
@@ -33,10 +42,34 @@ public class ScheduleAdapterItem extends
                                ScheduleAdapterItemHeader header) {
         super(header);
         this.itemData = scheduleRow;
+
+        String dateTimeString = scheduleRow.date + " " + scheduleRow.time;
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
+        try {
+            startTime = format.parse(dateTimeString);
+        } catch (ParseException e) {
+            Log.e("ScheduleAdapterItem", "Parse error: " + e + " for " + dateTimeString);
+        }
+
+        if ("THEATER 1".equals(scheduleRow.room)) {
+            roomOrder = 1;
+        } else if ("THEATER 2".equals(scheduleRow.room)) {
+            roomOrder = 2;
+        } else if ("CYCLORAMA".equals(scheduleRow.room)) {
+            roomOrder = 3;
+        }
     }
 
     public String getTitle() {
         return itemData.talkTitle;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public Integer getRoomSortOrder() {
+        return roomOrder;
     }
 
     @Override
@@ -72,16 +105,28 @@ public class ScheduleAdapterItem extends
                                int position,
                                List payloads) {
 
-        holder.title.setText(itemData.talkTitle);
-        holder.speaker.setText(itemData.speakerName);
-        holder.room.setText(itemData.room);
+        if (itemData.speakerName == null) {
+            holder.sessionLayout.setVisibility(View.GONE);
+            holder.avatar.setVisibility(View.GONE);
+            holder.bigTitle.setVisibility(View.VISIBLE);
 
-        Context context = holder.title.getContext();
-        Glide.with(context)
-                .load(itemData.photo)
-                .transform(new CircleTransform(context))
-                .crossFade()
-                .into(holder.avatar);
+            holder.bigTitle.setText(itemData.talkTitle);
+        } else {
+            holder.sessionLayout.setVisibility(View.VISIBLE);
+            holder.avatar.setVisibility(View.VISIBLE);
+            holder.bigTitle.setVisibility(View.GONE);
+
+            holder.title.setText(itemData.talkTitle);
+            holder.speaker.setText(itemData.speakerName);
+            holder.room.setText(itemData.room);
+
+            Context context = holder.title.getContext();
+            Glide.with(context)
+                    .load(itemData.photo)
+                    .transform(new CircleTransform(context))
+                    .crossFade()
+                    .into(holder.avatar);
+        }
     }
 
 
@@ -91,6 +136,8 @@ public class ScheduleAdapterItem extends
         TextView title;
         TextView speaker;
         TextView room;
+        View sessionLayout;
+        TextView bigTitle;
 
         public ViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
@@ -109,6 +156,8 @@ public class ScheduleAdapterItem extends
             title = (TextView) parent.findViewById(R.id.title_text);
             speaker = (TextView) parent.findViewById(R.id.speaker_name_text);
             room = (TextView) parent.findViewById(R.id.room_text);
+            sessionLayout = parent.findViewById(R.id.session_layout);
+            bigTitle = (TextView) parent.findViewById(R.id.bigtitle_text);
         }
     }
 }

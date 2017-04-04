@@ -6,13 +6,14 @@
     <string-array name="navigation_drawer">
         <item>@string/agenda_fragment_title</item>
         <item>@string/twitter_fragment_title</item>
+        <item>@string/faq_fragment_title</item>
 
         <item>Our Facebook</item>
         <item>Open Twitter</item>
         <item>Instagram Too</item>
         <item>N.E. Android Devs</item>
     </string-array>
-
+    <string name="faq_fragment_title">FAQ</string>
     <string name="agenda_fragment_title">Agenda</string>
     <string name="chat_fragment_title">Chat</string>
     <string name="twitter_fragment_title">Twitter</string>

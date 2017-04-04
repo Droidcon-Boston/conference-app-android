@@ -32,7 +32,7 @@ public class TweetsFragment extends ListFragment {
 
     private Context context = null;
     private SwipeRefreshLayout swipeLayout = null;
-    private final String droidconTwitterHashTag = "#droidconbos";
+    private final String droidconTwitterHashTag = "#droidconbos OR #Droidcon OR #DroidconBoston";
 
     @Override
     public void onAttach(Context context) {

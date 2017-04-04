@@ -16,6 +16,7 @@ import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +100,13 @@ public class AgendaDayFragment extends Fragment {
             ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
             items.add(item);
         }
+        Collections.sort(items, (s1, s2) -> {
+            int timeComparison = s1.getStartTime().compareTo(s2.getStartTime());
+            if (timeComparison != 0) {
+                return timeComparison;
+            }
+            return s1.getRoomSortOrder().compareTo(s2.getRoomSortOrder());
+        });
 
         FlexibleAdapter.enableLogs(true);
         FlexibleAdapter<ScheduleAdapterItem> headerAdapter =

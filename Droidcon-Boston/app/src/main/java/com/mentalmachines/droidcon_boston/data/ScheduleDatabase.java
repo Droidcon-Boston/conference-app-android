@@ -166,8 +166,9 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         List<ScheduleRow> items;
 
         String filter = (date == null) ? null : sDayWhere;
-        String params[] = (date == null) ? null : new String[]{date};
-        String orderBy = TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
+        String params[] = (date == null) ? null : new String[] { date };
+        //NOTE: DB has date/time in string format so we can't sort the right way :-P
+        String orderBy = null; // TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
 
         final SQLiteDatabase db = getDatabase(ctx);
         final Cursor c = db.query(TABLE, sAgendaProjection, filter, params, null, null, orderBy);
@@ -191,46 +192,107 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             c.close();
         } else {
             Log.e(TAG, "Error reading database");
-            items = null;
+            return null;
+        }
+
+        if (MONDAY.equals(date) || (date == null)) {
+            //HACK: add registration and lunch which are missing from spreadsheet
+            ScheduleRow registration = new ScheduleRow();
+            registration.speakerName = null;
+            registration.talkTitle = "REGISTRATION";
+            registration.photo = null;
+            registration.time = "9:00 AM";
+            registration.room = "";
+            registration.date = MONDAY;
+            items.add(registration);
+            ScheduleRow lunch = new ScheduleRow();
+            lunch.speakerName = null;
+            lunch.talkTitle = "LUNCH";
+            lunch.photo = null;
+            lunch.time = "12:00 PM";
+            lunch.room = "";
+            lunch.date = MONDAY;
+            items.add(lunch);
+        }
+
+        if (TUESDAY.equals(date) || (date == null)) {
+            //HACK: add registration and lunch which are missing from spreadsheet
+            ScheduleRow breakfast = new ScheduleRow();
+            breakfast.speakerName = null;
+            breakfast.talkTitle = "BREAKFAST";
+            breakfast.photo = null;
+            breakfast.time = "9:00 AM";
+            breakfast.room = "";
+            breakfast.date = TUESDAY;
+            items.add(breakfast);
+            ScheduleRow lunch = new ScheduleRow();
+            lunch.speakerName = null;
+            lunch.talkTitle = "LUNCH";
+            lunch.photo = null;
+            lunch.time = "12:00 PM";
+            lunch.room = "";
+            lunch.date = TUESDAY;
+            items.add(lunch);
+            ScheduleRow party = new ScheduleRow();
+            party.speakerName = null;
+            party.talkTitle = "BOF, PANEL, CLOSING PARTY";
+            party.photo = null;
+            party.time = "5:30 PM";
+            party.room = "";
+            party.date = TUESDAY;
+            items.add(party);
         }
 
         return items;
     }
     /*************************FAQ******************/
     public static final String FAQ_TABLE = "faq";
-    public static final String QUESTIONS = "Question";
+    /*public static final String QUESTIONS = "Question";
     public static final String ANSWRS = "Answers";
     public static final String OTHER_LNK = "other_link";
-    public static final String MAP_COORDS = "map_link";
+    public static final String MAP_COORDS = "map_link";*/
 
     public static class FaqData {
-        String question;
-        String answer;
-        String photoUrl;
-        String mapCoords;
-        String bizLink;
+        public String question;
+        public String answer;
+        public String photoUrl;
+        public String mapCoords;
+        public String bizLink;
     }
 
-    public static void fetchFAQ(@NonNull Context ctx) {
+    public static FaqData[] fetchFAQ(@NonNull Context ctx) {
         final SQLiteDatabase db = getDatabase(ctx);
         final Cursor c = db.query(FAQ_TABLE, null, null, null, null, null, null);
         //all rows
+        ArrayList<FaqData> items = null;
         if (c.moveToFirst()) {
-            int dex = 0;
-            final FaqData[] items = new FaqData[c.getCount()];
+            String question = "";
+            items = new ArrayList<>(c.getCount());
             FaqData item;
             do {
                 item = new FaqData();
                 item.question = c.getString(0);
+                //creating Question (dummy entry) for special handling in the adapter
+                if (!question.equals(item.question)) {
+                    items.add(item);
+                    item = new FaqData();
+                    item.question = c.getString(0);
+                    question = item.question;
+                }
                 item.answer = c.getString(1);
                 item.photoUrl = c.isNull(2)? null : c.getString(2);
                 item.mapCoords = c.isNull(3)? null : c.getString(3);
                 item.bizLink = c.isNull(4)? null : c.getString(4);
-                items[dex++] = item;
-                Log.d(TAG, "answer? " + item.answer);
+                items.add(item);
+                //Log.d(TAG, "photo url? " + item.photoUrl.toString());
             } while (c.moveToNext());
         }
         c.close();
+        if (items != null) {
+            return items.toArray(new FaqData[items.size()]);
+        }
+        Log.e(TAG, "problem fetching FAQ data");
+        return null;
     }
 
 
