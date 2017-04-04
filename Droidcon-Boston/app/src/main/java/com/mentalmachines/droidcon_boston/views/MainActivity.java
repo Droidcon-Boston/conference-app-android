@@ -19,6 +19,7 @@ import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
 import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends MaterialActivity {
@@ -70,35 +71,46 @@ public class MainActivity extends MaterialActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
-        if (drawerToggle.onOptionsItemSelected(item)) {
+        /*if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }
+        }*/
         // Handle your other action bar items...
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                } else if (fragmentManager.getBackStackEntryCount() == 1) {
+                    // to avoid looping below on initScreen
+                    super.onBackPressed();
+                    finish();
+                } else {
+                    if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
+                    }
+                }
+                return true;
+        }
+        return false;
+                /*int count = getFragmentManager().getBackStackEntryCount();
 
-        return super.onOptionsItemSelected(item);
+                if (count == 0) {
+                    super.onBackPressed();
+                    //additional code
+                } else {
+                    getFragmentManager().popBackStack();
+                }
+                return true;*/
     }
+
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
-        }
-
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
             return;
-        } /*
-        Fragment transactions are not on the backstack
-        else if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            // to avoid looping below on initScreen
-            super.onBackPressed();
-            finish();
-        } else {
-            super.onBackPressed();
-            final BaseFragment fragment = (BaseFragment) fragmentManager.findFragmentById(R.id.fragment_container);
-            fragment.onResume();
-        }*/
+        }
 
         super.onBackPressed();
     }

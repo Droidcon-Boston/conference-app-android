@@ -75,6 +75,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:padding="8dp"
+                android:clickable="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_twitter" />
 
@@ -86,12 +87,14 @@
                 android:background="@android:color/transparent"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
+                android:clickable="true"
                 android:src="@drawable/ic_linkedin" />
 
             <ImageButton
                 android:id="@+id/image_facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:padding="8dp"
