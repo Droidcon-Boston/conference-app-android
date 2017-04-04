@@ -192,7 +192,47 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             c.close();
         } else {
             Log.e(TAG, "Error reading database");
-            items = null;
+            return null;
+        }
+
+        if (MONDAY.equals(date) || (date == null)) {
+            //HACK: add registration and lunch which are missing from spreadsheet
+            ScheduleRow registration = new ScheduleRow();
+            registration.speakerName = null;
+            registration.talkTitle = "REGISTRATION";
+            registration.photo = null;
+            registration.time = "9:00 AM";
+            registration.room = "";
+            registration.date = MONDAY;
+            items.add(registration);
+            ScheduleRow lunch = new ScheduleRow();
+            lunch.speakerName = null;
+            lunch.talkTitle = "LUNCH";
+            lunch.photo = null;
+            lunch.time = "12:00 PM";
+            lunch.room = "";
+            lunch.date = MONDAY;
+            items.add(lunch);
+        }
+
+        if (TUESDAY.equals(date) || (date == null)) {
+            //HACK: add registration and lunch which are missing from spreadsheet
+            ScheduleRow breakfast = new ScheduleRow();
+            breakfast.speakerName = null;
+            breakfast.talkTitle = "BREAKFAST";
+            breakfast.photo = null;
+            breakfast.time = "9:00 AM";
+            breakfast.room = "";
+            breakfast.date = TUESDAY;
+            items.add(breakfast);
+            ScheduleRow lunch = new ScheduleRow();
+            lunch.speakerName = null;
+            lunch.talkTitle = "LUNCH";
+            lunch.photo = null;
+            lunch.time = "12:00 PM";
+            lunch.room = "";
+            lunch.date = TUESDAY;
+            items.add(lunch);
         }
 
         return items;

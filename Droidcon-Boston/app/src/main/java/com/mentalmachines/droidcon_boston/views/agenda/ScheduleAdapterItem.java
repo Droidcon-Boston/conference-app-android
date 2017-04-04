@@ -105,16 +105,28 @@ public class ScheduleAdapterItem extends
                                int position,
                                List payloads) {
 
-        holder.title.setText(itemData.talkTitle);
-        holder.speaker.setText(itemData.speakerName);
-        holder.room.setText(itemData.room);
+        if (itemData.speakerName == null) {
+            holder.sessionLayout.setVisibility(View.GONE);
+            holder.avatar.setVisibility(View.GONE);
+            holder.bigTitle.setVisibility(View.VISIBLE);
 
-        Context context = holder.title.getContext();
-        Glide.with(context)
-                .load(itemData.photo)
-                .transform(new CircleTransform(context))
-                .crossFade()
-                .into(holder.avatar);
+            holder.bigTitle.setText(itemData.talkTitle);
+        } else {
+            holder.sessionLayout.setVisibility(View.VISIBLE);
+            holder.avatar.setVisibility(View.VISIBLE);
+            holder.bigTitle.setVisibility(View.GONE);
+
+            holder.title.setText(itemData.talkTitle);
+            holder.speaker.setText(itemData.speakerName);
+            holder.room.setText(itemData.room);
+
+            Context context = holder.title.getContext();
+            Glide.with(context)
+                    .load(itemData.photo)
+                    .transform(new CircleTransform(context))
+                    .crossFade()
+                    .into(holder.avatar);
+        }
     }
 
 
@@ -124,6 +136,8 @@ public class ScheduleAdapterItem extends
         TextView title;
         TextView speaker;
         TextView room;
+        View sessionLayout;
+        TextView bigTitle;
 
         public ViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
@@ -142,6 +156,8 @@ public class ScheduleAdapterItem extends
             title = (TextView) parent.findViewById(R.id.title_text);
             speaker = (TextView) parent.findViewById(R.id.speaker_name_text);
             room = (TextView) parent.findViewById(R.id.room_text);
+            sessionLayout = parent.findViewById(R.id.session_layout);
+            bigTitle = (TextView) parent.findViewById(R.id.bigtitle_text);
         }
     }
 }
