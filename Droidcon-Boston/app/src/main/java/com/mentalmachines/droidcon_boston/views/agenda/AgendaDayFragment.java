@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
@@ -18,7 +17,6 @@ import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +106,7 @@ public class AgendaDayFragment extends Fragment {
                             arguments.putString("speaker_name", item.getItemData().speakerName);
                             agendaDetailFragment.setArguments(arguments);
                             fragmentTransaction.add(R.id.fragment_container, agendaDetailFragment);
-                            fragmentTransaction.commit();
+                            fragmentTransaction.addToBackStack("detail").commit();
                             return true;
                         });
         headerAdapter
