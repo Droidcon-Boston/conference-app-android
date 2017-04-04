@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="24dp"
+    android:paddingEnd="16dp"
+    android:layout_marginBottom="16dp"
+    android:background="?attr/selectableItemBackground">
+
+    <ImageView
+        android:layout_width="196dp"
+        android:layout_height="196dp"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="FAQ photo"
+        android:id="@+id/q_image"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:id="@+id/q_text"
+            tools:text="Answer"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@color/colorAccent" />
+
+        <LinearLayout android:id="@+id/q_button_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:orientation="horizontal">
+
+
+            <ImageButton
+                android:id="@+id/q_more"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:onClick="faqClick"
+                android:src="@android:drawable/ic_dialog_info" />
+
+            <ImageButton
+                android:id="@+id/q_map"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:onClick="faqClick"
+                android:src="@android:drawable/ic_dialog_map" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@color/colorAccent" />
+
+    </LinearLayout>
+</LinearLayout>

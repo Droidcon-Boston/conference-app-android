@@ -198,39 +198,53 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     }
     /*************************FAQ******************/
     public static final String FAQ_TABLE = "faq";
-    public static final String QUESTIONS = "Question";
+    /*public static final String QUESTIONS = "Question";
     public static final String ANSWRS = "Answers";
     public static final String OTHER_LNK = "other_link";
-    public static final String MAP_COORDS = "map_link";
+    public static final String MAP_COORDS = "map_link";*/
 
     public static class FaqData {
-        String question;
-        String answer;
-        String photoUrl;
-        String mapCoords;
-        String bizLink;
+        public String question;
+        public String answer;
+        public String photoUrl;
+        public String mapCoords;
+        public String bizLink;
     }
 
-    public static void fetchFAQ(@NonNull Context ctx) {
+    public static FaqData[] fetchFAQ(@NonNull Context ctx) {
         final SQLiteDatabase db = getDatabase(ctx);
         final Cursor c = db.query(FAQ_TABLE, null, null, null, null, null, null);
         //all rows
+        ArrayList<FaqData> items = null;
         if (c.moveToFirst()) {
             int dex = 0;
-            final FaqData[] items = new FaqData[c.getCount()];
+            String question = null;
+            items = new ArrayList<>(c.getCount());
             FaqData item;
             do {
                 item = new FaqData();
                 item.question = c.getString(0);
+                //creating Question (dummy entry) for special handling in the adapter
+                if (!question.equals(item.question)) {
+                    items.add(item);
+                    item = new FaqData();
+                    item.question = c.getString(0);
+                    question = item.question;
+                }
                 item.answer = c.getString(1);
                 item.photoUrl = c.isNull(2)? null : c.getString(2);
                 item.mapCoords = c.isNull(3)? null : c.getString(3);
                 item.bizLink = c.isNull(4)? null : c.getString(4);
-                items[dex++] = item;
+                items.add(item);
                 Log.d(TAG, "answer? " + item.answer);
             } while (c.moveToNext());
         }
         c.close();
+        if (items != null) {
+            return items.toArray(new FaqData[items.size()]);
+        }
+        Log.e(TAG, "problem fetching FAQ data");
+        return null;
     }
 
 

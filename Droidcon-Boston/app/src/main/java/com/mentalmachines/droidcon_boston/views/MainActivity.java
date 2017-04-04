@@ -19,6 +19,7 @@ import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
 import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends MaterialActivity {
@@ -138,4 +139,10 @@ public class MainActivity extends MaterialActivity {
 
         }
     } //end click listener
+
+    public void faqClick(View v) {
+        final Intent tnt = new Intent(Intent.ACTION_VIEW);
+        tnt.setData(Uri.parse((String) v.getTag()));
+        startActivity(tnt);
+    }
 }
