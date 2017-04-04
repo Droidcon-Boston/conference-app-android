@@ -17,8 +17,16 @@ import android.widget.ListView;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
 import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends MaterialActivity {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "csLPIPIQ6AoWyhzCSHlK2lOen";
+    private static final String TWITTER_SECRET = "p3c45qpNvIOQiTZi6iK9Cffb3xRH4X7SThT4EfVo7fIu42SNWD";
+
     final FragmentManager fragmentManager = getSupportFragmentManager();
     ActionBarDrawerToggle drawerToggle;
     DrawerLayout mDrawerLayout;
@@ -27,6 +35,8 @@ public class MainActivity extends MaterialActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,7 +49,7 @@ public class MainActivity extends MaterialActivity {
         mDrawerList.setAdapter(new NavigationAdapter(this));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         //click listener is set into the list item layout
-        //ScheduleDatabase.testDb(this);
+        //ScheduleDatabase.fetchFAQ(this);
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
     }
 
@@ -106,22 +116,22 @@ public class MainActivity extends MaterialActivity {
                 case 0: //agenda
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
                     break;
-                case 1: //chat
+                /*case 1: //chat
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, ChatFragment.newInstance("T2M1BL9EU","C2M1UNB0A")).commit();
-                    break;
-                case 2: //tweet
+                    break;*/
+                case 1: //tweet
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment()).commit();
                     break;
-                case 3: //contact, facebook
+                case 2: //contact, facebook
                     data = Uri.parse(NavigationAdapter.LN_FB);
                     break;
-                case 4: //contact twitter, instagram, linked in
+                case 3: //contact twitter, instagram, linked in
                     data = Uri.parse(NavigationAdapter.LN_TWEET);
                     break;
-                case 5:
+                case 4:
                     data = Uri.parse(NavigationAdapter.LN_INSTA);
                     break;
-                case 6:
+                case 5:
                     data = Uri.parse(NavigationAdapter.LN_LINKD);
                     break;
             }

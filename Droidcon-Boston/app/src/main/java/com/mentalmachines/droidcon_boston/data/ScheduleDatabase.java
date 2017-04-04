@@ -21,7 +21,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
     public static final String TAG = "ScheduleDatabase";
     private static SQLiteDatabase sDB;
-    private static final String DATABASE_NAME = "schedule.db";
+    private static final String DATABASE_NAME = "droidconboston.db";
     private static final int DATABASE_VERSION = 1;
     //columns, database constants
     public static final String TABLE = "schedule";
@@ -196,6 +196,43 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
         return items;
     }
+    /*************************FAQ******************/
+    public static final String FAQ_TABLE = "faq";
+    public static final String QUESTIONS = "Question";
+    public static final String ANSWRS = "Answers";
+    public static final String OTHER_LNK = "other_link";
+    public static final String MAP_COORDS = "map_link";
+
+    public static class FaqData {
+        String question;
+        String answer;
+        String photoUrl;
+        String mapCoords;
+        String bizLink;
+    }
+
+    public static void fetchFAQ(@NonNull Context ctx) {
+        final SQLiteDatabase db = getDatabase(ctx);
+        final Cursor c = db.query(FAQ_TABLE, null, null, null, null, null, null);
+        //all rows
+        if (c.moveToFirst()) {
+            int dex = 0;
+            final FaqData[] items = new FaqData[c.getCount()];
+            FaqData item;
+            do {
+                item = new FaqData();
+                item.question = c.getString(0);
+                item.answer = c.getString(1);
+                item.photoUrl = c.isNull(2)? null : c.getString(2);
+                item.mapCoords = c.isNull(3)? null : c.getString(3);
+                item.bizLink = c.isNull(4)? null : c.getString(4);
+                items[dex++] = item;
+                Log.d(TAG, "answer? " + item.answer);
+            } while (c.moveToNext());
+        }
+        c.close();
+    }
+
 
     //DEBUG code for dev, run in Main onCreate
     public static void testDb(@NonNull Context ctx) {

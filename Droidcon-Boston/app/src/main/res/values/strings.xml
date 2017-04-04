@@ -5,11 +5,10 @@
 
     <string-array name="navigation_drawer">
         <item>@string/agenda_fragment_title</item>
-        <item>@string/chat_fragment_title</item>
         <item>@string/twitter_fragment_title</item>
 
         <item>Our Facebook</item>
-        <item>We\'re on Twitter</item>
+        <item>Open Twitter</item>
         <item>Instagram Too</item>
         <item>N.E. Android Devs</item>
     </string-array>
@@ -21,7 +20,4 @@
     <string name="speaker_avatar">Speaker avatar</string>
 
     <string name="action_bar_speaker_title">Speaker Profile</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -46,7 +46,6 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
         //build drawables for nav list
         mIcons = new Drawable[] {
                 buildIcon(res, R.drawable.ic_schedule_white_24dp),
-                buildIcon(res, R.drawable.ic_chat_white_24dp),
                 buildIcon(res, R.drawable.ic_twitter_white_24dp),
                 res.getDrawable(R.drawable.ic_facebook),
                 res.getDrawable(R.drawable.ic_twitter),
