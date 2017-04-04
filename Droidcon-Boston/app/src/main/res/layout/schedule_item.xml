@@ -74,6 +74,7 @@
         android:ellipsize="end"
         android:textSize="24sp"
         android:fontFamily="sans-serif"
+        android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:id="@+id/bigtitle_text"
         android:visibility="gone"
