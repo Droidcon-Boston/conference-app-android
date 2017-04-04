@@ -79,8 +79,9 @@ public class FAQFragment extends ListFragment {
                 case QUESTION_VIEW:
                     if (convertView == null || convertView.getTag() != null) {
                         convertView = LayoutInflater.from(ctx).inflate(R.layout.faq_header, null);
+                        convertView.setTag(null);
                     }
-                    convertView.setTag(null);
+
                     ((TextView) convertView.findViewById(R.id.question_text)).setText(
                             listItems[position].question.toUpperCase());
                     return convertView;
@@ -88,8 +89,13 @@ public class FAQFragment extends ListFragment {
                     final ScheduleDatabase.FaqData item = listItems[position];
                     if (convertView == null || convertView.getTag() == null) {
                         convertView = LayoutInflater.from(ctx).inflate(R.layout.faq_item, null);
+                        convertView.setTag(convertView.findViewById(R.id.q_bottom));
                     }
-                    convertView.setTag(true);
+                    if (position == listItems.length -1) {
+                        ((View)convertView.getTag()).setVisibility(View.GONE);
+                    } else {
+                        ((View)convertView.getTag()).setVisibility(View.VISIBLE);
+                    }
                     boolean hasData = !TextUtils.isEmpty(item.photoUrl);
                     convertView.findViewById(R.id.q_image).setVisibility(
                             hasData ? View.VISIBLE: View.GONE);
@@ -97,7 +103,6 @@ public class FAQFragment extends ListFragment {
                         Log.i(TAG, "load photo ? " + item.photoUrl);
                         Glide.with(ctx)
                                 .load(item.photoUrl)
-                                .centerCrop()
                                 .into((ImageView) convertView.findViewById(R.id.q_image));
                     } else {
                         Log.i(TAG, "no photo " + position);
