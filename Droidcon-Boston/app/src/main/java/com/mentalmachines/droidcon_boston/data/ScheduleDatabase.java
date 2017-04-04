@@ -167,7 +167,8 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
         String filter = (date == null) ? null : sDayWhere;
         String params[] = (date == null) ? null : new String[] { date };
-        String orderBy =  TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
+        //NOTE: DB has date/time in string format so we can't sort the right way :-P
+        String orderBy = null; // TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
 
         final SQLiteDatabase db = getDatabase(ctx);
         final Cursor c = db.query(TABLE, sAgendaProjection, filter, params, null, null, orderBy);
@@ -191,7 +192,55 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             c.close();
         } else {
             Log.e(TAG, "Error reading database");
-            items = null;
+            return null;
+        }
+
+        if (MONDAY.equals(date) || (date == null)) {
+            //HACK: add registration and lunch which are missing from spreadsheet
+            ScheduleRow registration = new ScheduleRow();
+            registration.speakerName = null;
+            registration.talkTitle = "REGISTRATION";
+            registration.photo = null;
+            registration.time = "9:00 AM";
+            registration.room = "";
+            registration.date = MONDAY;
+            items.add(registration);
+            ScheduleRow lunch = new ScheduleRow();
+            lunch.speakerName = null;
+            lunch.talkTitle = "LUNCH";
+            lunch.photo = null;
+            lunch.time = "12:00 PM";
+            lunch.room = "";
+            lunch.date = MONDAY;
+            items.add(lunch);
+        }
+
+        if (TUESDAY.equals(date) || (date == null)) {
+            //HACK: add registration and lunch which are missing from spreadsheet
+            ScheduleRow breakfast = new ScheduleRow();
+            breakfast.speakerName = null;
+            breakfast.talkTitle = "BREAKFAST";
+            breakfast.photo = null;
+            breakfast.time = "9:00 AM";
+            breakfast.room = "";
+            breakfast.date = TUESDAY;
+            items.add(breakfast);
+            ScheduleRow lunch = new ScheduleRow();
+            lunch.speakerName = null;
+            lunch.talkTitle = "LUNCH";
+            lunch.photo = null;
+            lunch.time = "12:00 PM";
+            lunch.room = "";
+            lunch.date = TUESDAY;
+            items.add(lunch);
+            ScheduleRow party = new ScheduleRow();
+            party.speakerName = null;
+            party.talkTitle = "BOF, PANEL, CLOSING PARTY";
+            party.photo = null;
+            party.time = "5:30 PM";
+            party.room = "";
+            party.date = TUESDAY;
+            items.add(party);
         }
 
         return items;

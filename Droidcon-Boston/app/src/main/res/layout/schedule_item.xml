@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/session_layout">
 
         <TextView
             android:layout_width="match_parent"
@@ -63,4 +64,19 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/bigtitle_text"
+        android:visibility="gone"
+        tools:text="LUNCH"/>
 </LinearLayout>
