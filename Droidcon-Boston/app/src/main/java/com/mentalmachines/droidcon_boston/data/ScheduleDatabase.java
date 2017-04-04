@@ -217,8 +217,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         //all rows
         ArrayList<FaqData> items = null;
         if (c.moveToFirst()) {
-            int dex = 0;
-            String question = null;
+            String question = "";
             items = new ArrayList<>(c.getCount());
             FaqData item;
             do {
@@ -236,7 +235,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 item.mapCoords = c.isNull(3)? null : c.getString(3);
                 item.bizLink = c.isNull(4)? null : c.getString(4);
                 items.add(item);
-                Log.d(TAG, "answer? " + item.answer);
+                //Log.d(TAG, "photo url? " + item.photoUrl.toString());
             } while (c.moveToNext());
         }
         c.close();

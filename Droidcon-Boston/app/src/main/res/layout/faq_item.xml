@@ -4,83 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingStart="24dp"
-    android:paddingEnd="16dp"
-    android:layout_marginBottom="16dp"
-    android:background="?attr/selectableItemBackground">
+    android:orientation="vertical">
 
     <ImageView
-        android:layout_width="196dp"
-        android:layout_height="196dp"
-        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="200dp"
         android:contentDescription="FAQ photo"
         android:id="@+id/q_image"/>
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/q_text"
+        tools:text="Answer"/>
+
+    <LinearLayout android:id="@+id/q_button_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:ellipsize="end"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:textSize="18sp"
+            android:gravity="center_vertical"
             android:fontFamily="sans-serif"
-            android:textColor="@android:color/black"
-            android:id="@+id/q_text"
-            tools:text="Answer"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            tools:text="MORE?"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:background="@color/colorAccent" />
-
-        <LinearLayout android:id="@+id/q_button_row"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/q_more"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:onClick="faqClick" />
 
-
-            <ImageButton
-                android:id="@+id/q_more"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:padding="8dp"
-                android:scaleType="fitCenter"
-                android:onClick="faqClick"
-                android:src="@android:drawable/ic_dialog_info" />
-
-            <ImageButton
-                android:id="@+id/q_map"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:padding="8dp"
-                android:scaleType="fitCenter"
-                android:onClick="faqClick"
-                android:src="@android:drawable/ic_dialog_map" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:background="@color/colorAccent" />
-
+        <ImageButton
+            android:id="@+id/q_map"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:onClick="faqClick" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@color/colorAccent" />
 </LinearLayout>

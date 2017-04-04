@@ -116,16 +116,19 @@ public class MainActivity extends MaterialActivity {
                 case 1: //tweet
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment()).commit();
                     break;
-                case 2: //contact, facebook
+                case 2: //faq
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new FAQFragment()).commit();
+                    break;
+                case 3: //contact, facebook
                     data = Uri.parse(NavigationAdapter.LN_FB);
                     break;
-                case 3: //contact twitter, instagram, linked in
+                case 4: //contact twitter, instagram, linked in
                     data = Uri.parse(NavigationAdapter.LN_TWEET);
                     break;
-                case 4:
+                case 5:
                     data = Uri.parse(NavigationAdapter.LN_INSTA);
                     break;
-                case 5:
+                case 6:
                     data = Uri.parse(NavigationAdapter.LN_LINKD);
                     break;
             }
