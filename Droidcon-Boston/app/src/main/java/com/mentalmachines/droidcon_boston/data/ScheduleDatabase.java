@@ -167,7 +167,8 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
         String filter = (date == null) ? null : sDayWhere;
         String params[] = (date == null) ? null : new String[] { date };
-        String orderBy =  TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
+        //NOTE: DB has date/time in string format so we can't sort the right way :-P
+        String orderBy = null; // TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
 
         final SQLiteDatabase db = getDatabase(ctx);
         final Cursor c = db.query(TABLE, sAgendaProjection, filter, params, null, null, orderBy);
