@@ -233,6 +233,14 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             lunch.room = "";
             lunch.date = TUESDAY;
             items.add(lunch);
+            ScheduleRow party = new ScheduleRow();
+            party.speakerName = null;
+            party.talkTitle = "BOF, PANEL, CLOSING PARTY";
+            party.photo = null;
+            party.time = "5:30 PM";
+            party.room = "";
+            party.date = TUESDAY;
+            items.add(party);
         }
 
         return items;
