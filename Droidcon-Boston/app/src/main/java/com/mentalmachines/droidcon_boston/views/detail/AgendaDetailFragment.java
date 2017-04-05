@@ -1,11 +1,8 @@
 package com.mentalmachines.droidcon_boston.views.detail;
 
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,7 +35,17 @@ public class AgendaDetailFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                final FragmentManager fm = getActivity().getSupportFragmentManager();
+                if (fm.getBackStackEntryCount() > 0) {
+                    fm.popBackStack();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -63,11 +70,6 @@ public class AgendaDetailFragment extends BaseFragment {
     @BindView(R.id.image_facebook)
     ImageView imageFacebook;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,7 +81,9 @@ public class AgendaDetailFragment extends BaseFragment {
         String speakerName = bundle.getString("speaker_name");
         ScheduleDatabase.ScheduleDetail scheduleDetail = ScheduleDatabase.fetchDetailData(getContext(), speakerName);
         showAgendaDetail(scheduleDetail);
-
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //setHasOptionsMenu(true);
+        //TODO
         return view;
     }
 
@@ -93,6 +97,10 @@ public class AgendaDetailFragment extends BaseFragment {
     public void showAgendaDetail(ScheduleDatabase.ScheduleDetail scheduleDetail) {
         Glide.with(this)
                 .load(scheduleDetail.listRow.photo)
+                .placeholder(R.drawable.emo_im_cool)
+                .crossFade()
+                .override(1000, 1000)
+                .centerCrop()
                 .into(imageSpeaker);
 
         textTitle.setText(scheduleDetail.listRow.talkTitle);
@@ -102,15 +110,21 @@ public class AgendaDetailFragment extends BaseFragment {
 
         if (StringUtils.isNullorEmpty(scheduleDetail.twitter)) {
             imageTwitter.setVisibility(View.GONE);
+        } else {
+            imageTwitter.setTag(scheduleDetail.twitter);
         }
         if (StringUtils.isNullorEmpty(scheduleDetail.linkedIn)) {
             imageLinkedin.setVisibility(View.GONE);
+        } else {
+            imageLinkedin.setTag(imageLinkedin);
         }
         if (StringUtils.isNullorEmpty(scheduleDetail.facebook)) {
             imageFacebook.setVisibility(View.GONE);
+        } else {
+            imageFacebook.setTag(scheduleDetail.facebook);
         }
 
-        imageTwitter.setOnClickListener(view -> {
+        /*imageTwitter.setOnClickListener(view -> {
             Intent intent = null;
             try {
                 // get the Twitter app if possible
@@ -135,7 +149,7 @@ public class AgendaDetailFragment extends BaseFragment {
             } catch (PackageManager.NameNotFoundException ignored) {
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/PROFILENAME"));
             }
-        });
+        });*/
     }
 
     @Override
