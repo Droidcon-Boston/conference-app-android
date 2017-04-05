@@ -18,7 +18,7 @@ import com.mentalmachines.droidcon_boston.R;
 /**
  * Created by emezias on 4/1/17.
  * Class to populate a slide out navigation drawer
- * keeping it easy to see the agenda and get to other content
+ * keeping the agenda display clear and still easy to get to other content
  */
 
 public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
@@ -27,6 +27,7 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
     public static final String LN_FB = "https://www.facebook.com/droidconbos/";
     public static final String LN_TWEET = "https://twitter.com/droidconbos";
     public static final String LN_LINKD = "https://www.linkedin.com/groups/8586436";
+    public static final String LN_CONTACT = "http://www.droidcon-boston.com/#form_section";
 
     final String[] mTitles;
     //parallel arrays
@@ -45,7 +46,7 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
                 buildIcon(res, R.drawable.ic_schedule_white_24dp),
                 buildIcon(res, R.drawable.ic_twitter_white_24dp),
                 buildIcon(res, android.R.drawable.ic_dialog_info),
-
+                res.getDrawable(R.mipmap.ic_launcher),
                 buildIcon(res, R.drawable.ic_facebook),
                 buildIcon(res, R.drawable.ic_instagram),
                 buildIcon(res, R.drawable.ic_linkedin),
@@ -79,6 +80,9 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
             convertView.setTag(convertView.findViewById(R.id.nav_icon));
         }
         ((ImageView) convertView.getTag()).setImageDrawable(mIcons[position]);
+        convertView.setBackgroundResource(
+                position > 2 ? R.drawable.bg_social_btn: android.R.color.transparent);
+
         if (position == selectedIndex) {
             ((ImageView) convertView.getTag()).setSelected(true);
         } else {

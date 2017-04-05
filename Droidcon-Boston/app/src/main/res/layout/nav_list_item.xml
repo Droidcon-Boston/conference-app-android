@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:padding="4dp"
         android:minHeight="36dp"
         android:minWidth="36dp" />
 
@@ -19,8 +20,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_gravity="center_vertical"
-        style="@android:style/TextAppearance.Large"
+        style="@android:style/TextAppearance.Medium"
         android:text="menu title"
+        android:fontFamily="sans-serif"
         android:textColor="@color/colorPrimary"/>
 
 </LinearLayout>

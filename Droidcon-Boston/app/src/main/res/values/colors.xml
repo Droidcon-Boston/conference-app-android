@@ -3,6 +3,7 @@
     <color name="colorPrimary">#FF3B4468</color>
     <color name="colorPrimaryDark">#FF333B5E</color>
     <color name="colorAccent">#FF00FAAE</color>
+    <color name="socialBG">#1100FAAE</color>
 
     <color name="colorBackground">#FFEEEEEE</color>
     <color name="colorPagerTabIndicator">@color/colorPrimaryDark</color>

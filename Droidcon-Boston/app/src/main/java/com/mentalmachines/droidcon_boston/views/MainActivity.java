@@ -119,7 +119,7 @@ public class MainActivity extends MaterialActivity {
     class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
+
             if (position < 3) {
                 ((NavigationAdapter) parent.getAdapter()).setSelectedIndex(position);
             } //others are contact links
@@ -137,17 +137,20 @@ public class MainActivity extends MaterialActivity {
                 case 2: //faq
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new FAQFragment()).commit();
                     break;
-                case 3: //contact, facebook
-                    data = Uri.parse(NavigationAdapter.LN_FB);
+                case 3: //contact us
+                    data = Uri.parse(NavigationAdapter.LN_CONTACT);
                     break;
-                case 4: //contact twitter, instagram, linked in
-                    data = Uri.parse(NavigationAdapter.LN_TWEET);
+                case 4: //contact, facebook
+                    data = Uri.parse(NavigationAdapter.LN_FB);
                     break;
                 case 5:
                     data = Uri.parse(NavigationAdapter.LN_INSTA);
                     break;
                 case 6:
                     data = Uri.parse(NavigationAdapter.LN_LINKD);
+                    break;
+                case 7: //contact twitter, instagram, linked in
+                    data = Uri.parse(NavigationAdapter.LN_TWEET);
                     break;
             }
             if (data == null) {
@@ -157,7 +160,7 @@ public class MainActivity extends MaterialActivity {
                 tnt.setData(data);
                 startActivity(tnt);
             }
-
+            mDrawerLayout.closeDrawer(GravityCompat.START);
         }
     } //end click listener
 

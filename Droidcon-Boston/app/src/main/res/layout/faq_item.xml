@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginRight="16dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -40,6 +41,7 @@
             android:background="@android:color/transparent"
             android:padding="8dp"
             android:scaleType="fitCenter"
+            android:layout_gravity="right"
             android:onClick="faqClick" />
 
         <ImageButton
@@ -50,6 +52,7 @@
             android:background="@android:color/transparent"
             android:padding="8dp"
             android:scaleType="fitCenter"
+            android:layout_gravity="right"
             android:onClick="faqClick" />
     </LinearLayout>
     <View android:id="@+id/q_bottom"
