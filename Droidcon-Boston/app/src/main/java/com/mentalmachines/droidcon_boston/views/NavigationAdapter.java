@@ -47,9 +47,9 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
                 buildIcon(res, android.R.drawable.ic_dialog_info),
 
                 buildIcon(res, R.drawable.ic_facebook),
-                buildIcon(res, R.drawable.ic_twitter),
                 buildIcon(res, R.drawable.ic_instagram),
-                buildIcon(res, R.drawable.ic_linkedin)
+                buildIcon(res, R.drawable.ic_linkedin),
+                buildIcon(res, R.drawable.ic_twitter)
         };
     }
 
