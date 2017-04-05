@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +112,8 @@ public class ScheduleAdapterItem extends
             holder.bigTitle.setVisibility(View.VISIBLE);
 
             holder.bigTitle.setText(itemData.talkTitle);
+
+            holder.rootLayout.setBackground(null);
         } else {
             holder.sessionLayout.setVisibility(View.VISIBLE);
             holder.avatar.setVisibility(View.VISIBLE);
@@ -126,12 +129,17 @@ public class ScheduleAdapterItem extends
                     .transform(new CircleTransform(context))
                     .crossFade()
                     .into(holder.avatar);
+
+            TypedValue outValue = new TypedValue();
+            context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            holder.rootLayout.setBackgroundResource(outValue.resourceId);
         }
     }
 
 
     public static class ViewHolder extends FlexibleViewHolder {
 
+        View rootLayout;
         ImageView avatar;
         TextView title;
         TextView speaker;
@@ -152,6 +160,7 @@ public class ScheduleAdapterItem extends
         }
 
         private void findViews(View parent) {
+            rootLayout = parent.findViewById(R.id.rootLayout);
             avatar = (ImageView) parent.findViewById(R.id.speaker_image);
             title = (TextView) parent.findViewById(R.id.title_text);
             speaker = (TextView) parent.findViewById(R.id.speaker_name_text);
