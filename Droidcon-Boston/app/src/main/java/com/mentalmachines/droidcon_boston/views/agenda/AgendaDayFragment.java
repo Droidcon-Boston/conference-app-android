@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
 
 import java.util.ArrayList;
@@ -113,8 +114,9 @@ public class AgendaDayFragment extends Fragment {
                 new FlexibleAdapter<>(items,
                         (FlexibleAdapter.OnItemClickListener) position -> {
                             ScheduleAdapterItem item = items.get(position);
+                            if (StringUtils.isNullorEmpty(item.getItemData().speakerName)) return false;
                             Bundle arguments = new Bundle();
-                            arguments.putString("speaker_name", item.getItemData().speakerName);
+                            arguments.putString(ScheduleDatabase.NAME, item.getItemData().speakerName);
 
                             AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
                             agendaDetailFragment.setArguments(arguments);

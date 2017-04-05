@@ -103,6 +103,8 @@ public class FAQFragment extends ListFragment {
                         Log.i(TAG, "load photo ? " + item.photoUrl);
                         Glide.with(ctx)
                                 .load(item.photoUrl)
+                                .override(600, 600)
+                                .fitCenter()
                                 .into((ImageView) convertView.findViewById(R.id.q_image));
                     } else {
                         Log.i(TAG, "no photo " + position);

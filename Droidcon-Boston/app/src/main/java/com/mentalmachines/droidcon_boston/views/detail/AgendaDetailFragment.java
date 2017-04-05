@@ -1,11 +1,12 @@
 package com.mentalmachines.droidcon_boston.views.detail;
 
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
+import com.mentalmachines.droidcon_boston.views.NavigationAdapter;
 import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
 
 import butterknife.BindView;
@@ -25,15 +27,8 @@ import butterknife.ButterKnife;
  */
 
 public class AgendaDetailFragment extends BaseFragment {
-    public static String TAG = "AGENDA_DETAIL_FRAGMENT";
-    String speakerName;
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
@@ -46,7 +41,7 @@ public class AgendaDetailFragment extends BaseFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     @Override
     public int getLayout() {
@@ -78,20 +73,13 @@ public class AgendaDetailFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         Bundle bundle = getArguments();
-        String speakerName = bundle.getString("speaker_name");
+        String speakerName = bundle.getString(ScheduleDatabase.NAME);
         ScheduleDatabase.ScheduleDetail scheduleDetail = ScheduleDatabase.fetchDetailData(getContext(), speakerName);
         showAgendaDetail(scheduleDetail);
         //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //setHasOptionsMenu(true);
         //TODO
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void showAgendaDetail(ScheduleDatabase.ScheduleDetail scheduleDetail) {
@@ -107,53 +95,36 @@ public class AgendaDetailFragment extends BaseFragment {
         textSpeakerName.setText(scheduleDetail.listRow.speakerName);
         textSpeakerBio.setText(scheduleDetail.speakerBio);
         textDescription.setText(scheduleDetail.talkDescription);
-
+        final Resources res = getContext().getResources();
         if (StringUtils.isNullorEmpty(scheduleDetail.twitter)) {
             imageTwitter.setVisibility(View.GONE);
         } else {
             imageTwitter.setTag(scheduleDetail.twitter);
+            imageTwitter.setImageDrawable(buildIcon(res, R.drawable.twitter));
         }
         if (StringUtils.isNullorEmpty(scheduleDetail.linkedIn)) {
             imageLinkedin.setVisibility(View.GONE);
         } else {
-            imageLinkedin.setTag(imageLinkedin);
+            imageLinkedin.setTag(scheduleDetail.linkedIn);
+            imageLinkedin.setImageDrawable(buildIcon(res, R.drawable.linkedin));
         }
         if (StringUtils.isNullorEmpty(scheduleDetail.facebook)) {
             imageFacebook.setVisibility(View.GONE);
         } else {
             imageFacebook.setTag(scheduleDetail.facebook);
+            imageFacebook.setImageDrawable(buildIcon(res, R.drawable.facebook));
         }
-
-        /*imageTwitter.setOnClickListener(view -> {
-            Intent intent = null;
-            try {
-                // get the Twitter app if possible
-                getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
-                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id=USERID"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            } catch (Exception e) {
-                // no Twitter app, revert to browser
-                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/PROFILENAME"));
-            }
-        });
-
-        imageFacebook.setOnClickListener(view -> {
-            Intent intent;
-            //Uri uri = Uri.parse(url);
-            try {
-                ApplicationInfo applicationInfo = getActivity().getPackageManager().getApplicationInfo("com.facebook.katana", 0);
-                if (applicationInfo.enabled) {
-                    // http://stackoverflow.com/a/24547437/1048340
-                    // uri = Uri.parse("fb://facewebmodal/f?href=" + url);
-                }
-            } catch (PackageManager.NameNotFoundException ignored) {
-                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/PROFILENAME"));
-            }
-        });*/
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public static Drawable buildIcon(Resources res, int baseIcon) {
+        StateListDrawable iconStates = new StateListDrawable();
+        final Drawable stateImage = res.getDrawable(baseIcon);
+        iconStates.addState(NavigationAdapter.pressed, stateImage);
+        final Drawable pressImage = res.getDrawable(baseIcon);
+        pressImage.setColorFilter(res.getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
+        iconStates.addState(NavigationAdapter.normal, pressImage);
+        return iconStates;
     }
 }
+
+

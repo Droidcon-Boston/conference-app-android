@@ -21,21 +21,21 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
     public static final String TAG = "ScheduleDatabase";
     private static SQLiteDatabase sDB;
-    private static final String DATABASE_NAME = "droidconboston.db";
+    private static final String DATABASE_NAME = "dcondatabase.db";
     private static final int DATABASE_VERSION = 1;
     //columns, database constants
-    public static final String TABLE = "schedule";
+    public static final String TABLE = "speaker";
     public static final String NAME = "name";
     public static final String TITLE = "talk";
-    public static final String DESCRIPTION = "description";
+    //public static final String DESCRIPTION = "description";
     public static final String PHOTO = "photo_link";
-    public static final String BIO = "bio";
+    //public static final String BIO = "bio";
     public static final String TALK_DATE = "date";
     public static final String TALK_TIME = "time";
     public static final String ROOM = "room";
-    public static final String SPKR_TWEET = "twitter";
-    public static final String SPKR_LINKD = "linkedin";
-    public static final String SPKR_FB = "facebook";
+    //public static final String SPKR_TWEET = "twitter";
+    //public static final String SPKR_LINKD = "linkedin";
+    //public static final String SPKR_FB = "facebook";
 
     public static final int COL_NAME = 0;
     public static final int COL_TITLE = 1;

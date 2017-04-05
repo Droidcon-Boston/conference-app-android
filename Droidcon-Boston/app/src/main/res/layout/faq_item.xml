@@ -9,7 +9,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="200dp"
         android:contentDescription="FAQ photo"
         android:id="@+id/q_image"/>
 
@@ -32,18 +31,6 @@
         android:minHeight="48dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:gravity="center_vertical"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/colorPrimaryDark"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            tools:text="MORE?"/>
 
         <ImageButton
             android:id="@+id/q_more"

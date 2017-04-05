@@ -38,7 +38,6 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
     public NavigationAdapter(@NonNull Context ctx) {
         super(ctx, R.layout.nav_list_item);
         final Resources res = ctx.getResources();
-        final Resources.Theme thm = ctx.getTheme();
 
         mTitles = res.getStringArray(R.array.navigation_drawer);
         //build drawables for nav list
@@ -47,10 +46,10 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
                 buildIcon(res, R.drawable.ic_twitter_white_24dp),
                 buildIcon(res, android.R.drawable.ic_dialog_info),
 
-                res.getDrawable(R.drawable.ic_facebook),
-                res.getDrawable(R.drawable.ic_twitter),
-                res.getDrawable(R.drawable.ic_instagram),
-                res.getDrawable(R.drawable.ic_linkedin)
+                buildIcon(res, R.drawable.ic_facebook),
+                buildIcon(res, R.drawable.ic_twitter),
+                buildIcon(res, R.drawable.ic_instagram),
+                buildIcon(res, R.drawable.ic_linkedin)
         };
     }
 
@@ -95,9 +94,9 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
         notifyDataSetChanged();
     }
 
-    static final int[] normal = new int[] { };
-    static final int[] selected = new int[] { android.R.attr.state_selected };
-    static final int[] pressed = new int[] { android.R.attr.state_pressed, android.R.attr.state_focused };
+    public static final int[] normal = new int[] { };
+    public static final int[] selected = new int[] { android.R.attr.state_selected };
+    public static final int[] pressed = new int[] { android.R.attr.state_pressed, android.R.attr.state_focused };
 
 
     public static Drawable buildIcon(Resources res, int baseIcon) {
