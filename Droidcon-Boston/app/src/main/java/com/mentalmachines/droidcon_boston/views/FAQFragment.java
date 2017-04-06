@@ -1,160 +1,196 @@
 package com.mentalmachines.droidcon_boston.views;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+
 
 /**
  * Created by emezias 4/3/17
  */
 
-public class FAQFragment extends ListFragment {
+public class FAQFragment extends Fragment {
     public static final String TAG = "FAQFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.faq_fragment, container, false);
+        final View view = inflater.inflate(R.layout.faq_fragment, container, false);
+        ((ExpandableListView)view.findViewById(R.id.faqlist)).setAdapter(new FaqExpandable());
+        /*final ExpandableListView list = (ExpandableListView)view.findViewById(R.id.faqlist);
+        final FaqExpandable adapter = new FaqExpandable();
+        list.setAdapter(adapter);
+        for (int dex = 0; dex < adapter.getGroupCount(); dex++) {
+            list.expandGroup(dex);
+        }*/
+        return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setListAdapter(new FaqFragmentAdapter(getContext()));
-    }
+    public class FaqExpandable extends BaseExpandableListAdapter {
+        final String[] questionsGroup;
+        final HashMap<Integer, ScheduleDatabase.FaqData[]> childrens;
+        private final int mapIcon = android.R.drawable.ic_dialog_map, moreIcon = android.R.drawable.ic_dialog_info;
 
-    public class FaqFragmentAdapter extends BaseAdapter {
-        private final int QUESTION_VIEW = 0;
-        private static final int ANSWER_VIEW = 1;
-        private final Drawable mapIcon, moreIcon;
-
-        final ScheduleDatabase.FaqData[] listItems;
-
-        public FaqFragmentAdapter(Context ctx) {
-            listItems = ScheduleDatabase.fetchFAQ(ctx);
-            Log.i(TAG, "created FAQ " + listItems.length + " items");
-            final Resources res = ctx.getResources();
-            mapIcon = NavigationAdapter.buildIcon(res, android.R.drawable.ic_dialog_map);
-            moreIcon = NavigationAdapter.buildIcon(res, android.R.drawable.ic_dialog_info);
+        public FaqExpandable() {
+            final Context ctx = getContext();
+            questionsGroup = ScheduleDatabase.fetchQuestions(ctx);
+            childrens = ScheduleDatabase.makeAnswers(ctx, questionsGroup);
         }
 
         @Override
-        public int getCount() {
-            return listItems == null? 0 : listItems.length;
+        public int getGroupCount() {
+            return questionsGroup == null? 0: questionsGroup.length;
         }
 
         @Override
-        public Object getItem(int i) {
-            return listItems == null? null : listItems[i];
+        public int getChildrenCount(int position) {
+            return childrens.get(position) == null? 0: childrens.get(position).length;
         }
 
         @Override
-        public long getItemId(int i) {
-            return i;
+        public Object getGroup(int position) {
+            return childrens.get(position);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (position >= listItems.length) return null;
-            Log.i(TAG, "get view ? " + position);
-            final Context ctx = parent.getContext();
-            //inflate and load the proper type
-            switch (getItemViewType(position)) {
-                case QUESTION_VIEW:
-                    if (convertView == null || convertView.getTag() != null) {
-                        convertView = LayoutInflater.from(ctx).inflate(R.layout.faq_header, null);
-                        convertView.setTag(null);
-                    }
+        public Object getChild(int groupId, int dex) {
+            return childrens.get(groupId)[dex];
+        }
 
-                    ((TextView) convertView.findViewById(R.id.question_text)).setText(
-                            listItems[position].question.toUpperCase());
-                    return convertView;
-                case ANSWER_VIEW:
-                    final ScheduleDatabase.FaqData item = listItems[position];
-                    if (convertView == null || convertView.getTag() == null) {
-                        convertView = LayoutInflater.from(ctx).inflate(R.layout.faq_item, null);
-                        convertView.setTag(convertView.findViewById(R.id.q_bottom));
-                    }
-                    if (position == listItems.length -1) {
-                        ((View)convertView.getTag()).setVisibility(View.GONE);
-                    } else {
-                        ((View)convertView.getTag()).setVisibility(View.VISIBLE);
-                    }
-                    boolean hasData = !TextUtils.isEmpty(item.photoUrl);
-                    convertView.findViewById(R.id.q_image).setVisibility(
-                            hasData ? View.VISIBLE: View.GONE);
-                    if (hasData) {
-                        Log.i(TAG, "load photo ? " + item.photoUrl);
-                        Glide.with(ctx)
-                                .load(item.photoUrl)
-                                .override(600, 600)
-                                .centerCrop()
-                                .into((ImageView) convertView.findViewById(R.id.q_image));
-                    } else {
-                        Log.i(TAG, "no photo " + position);
-                    }
-                    ((TextView) convertView.findViewById(R.id.q_text)).setText(item.answer);
-                    hasData = !TextUtils.isEmpty(item.bizLink);
+        @Override
+        public long getGroupId(int position) {
+            return position;
+        }
 
-                    if (!hasData && TextUtils.isEmpty(item.mapCoords)) {
-                        //no extra data, text only
-                        convertView.findViewById(R.id.q_button_row).setVisibility(View.GONE);
-                    } else {
-                        //make stuff visible
-                        convertView.findViewById(R.id.q_button_row).setVisibility(View.VISIBLE);
-                        ImageButton tmp = (ImageButton) convertView.findViewById(R.id.q_more);
-                        tmp.setVisibility(hasData ? View.VISIBLE : View.GONE);
-                        if (hasData) {
-                            tmp.setImageDrawable(moreIcon);
-                            Log.i(TAG, "load bizLink ? " + item.bizLink);
-                            tmp.setTag(item.bizLink);
-                        }
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return groupPosition*100 + childPosition;
+        }
 
-                        //okay to set null tag
-                        tmp = (ImageButton) convertView.findViewById(R.id.q_map);
-                        if (TextUtils.isEmpty(item.mapCoords)) {
-                            tmp.setVisibility(View.GONE);
-                        } else {
-                            Log.i(TAG, "load geo ? " + TextUtils.isEmpty(item.mapCoords));
-                            tmp.setVisibility(View.VISIBLE);
-                            tmp.setImageDrawable(mapIcon);
-                            tmp.setTag(item.mapCoords);
-                        }
-                    }
-                    return convertView;
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            Log.i(TAG, "get group view? " + groupPosition);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.faq_header, null);
             }
-            return null;
+            ((TextView) convertView.findViewById(R.id.question_text)).setText(questionsGroup[groupPosition]);
+            return convertView;
         }
 
         @Override
-        public int getViewTypeCount() {
-            return 2;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            if (position >= listItems.length) return -1;
-            if (listItems[position].answer == null) {
-                return QUESTION_VIEW;
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            final ScheduleDatabase.FaqData item = childrens.get(groupPosition)[childPosition];
+            Log.i(TAG, groupPosition + " get child view " + childPosition + ": " + item.answer);
+            final Context ctx = getContext();
+            if (convertView == null) {
+                convertView = LayoutInflater.from(ctx).inflate(R.layout.faq_item, null);
+                convertView.setTag(convertView.findViewById(R.id.q_top));
+                convertView.setTag(R.id.q_photo_row, convertView.findViewById(R.id.q_photo_row));
+                convertView.setTag(R.id.q_button_row, convertView.findViewById(R.id.q_button_row));
+            }
+            if (childPosition == 0) {
+                ((View)convertView.getTag()).setVisibility(View.GONE);
             } else {
-                return ANSWER_VIEW;
+                ((View)convertView.getTag()).setVisibility(View.VISIBLE);
             }
+
+            ((TextView) convertView.findViewById(R.id.q_text)).setText(item.answer);
+            if (TextUtils.isEmpty(item.photoUrl) && TextUtils.isEmpty(item.mapCoords) &&
+                    TextUtils.isEmpty(item.bizLink)) {
+                return convertView;
+            }
+            final ImageButton more, map;
+            LinearLayout photoLayout = null;
+            final LinearLayout buttonRow = (LinearLayout) convertView.getTag(R.id.q_button_row);
+            if (!TextUtils.isEmpty(item.photoUrl)) {
+                buttonRow.setVisibility(View.GONE);
+                photoLayout = (LinearLayout) convertView.getTag(R.id.q_photo_row);
+                photoLayout.setVisibility(View.VISIBLE);
+                Log.i(TAG, "load photo ? " + item.photoUrl);
+                Glide.with(ctx)
+                        .load(item.photoUrl)
+                        .override(400, 400)
+                        .centerCrop()
+                        .into((ImageView) photoLayout.findViewById(R.id.q_photo));
+                photoLayout = (LinearLayout) photoLayout.findViewById(R.id.q_button_col);
+                more = (ImageButton) photoLayout.findViewById(R.id.q_more_p);
+                map = (ImageButton) photoLayout.findViewById(R.id.q_map_p);
+            } else {
+                ((View) convertView.getTag(R.id.q_photo_row)).setVisibility(View.GONE);
+                Log.i(TAG, "no photo " + childPosition);
+                more = (ImageButton) buttonRow.findViewById(R.id.q_more);
+                map = (ImageButton) buttonRow.findViewById(R.id.q_map);
+            }
+
+            //item may not have either bizLink or mapCoords or both
+            if (TextUtils.isEmpty(item.bizLink) && TextUtils.isEmpty(item.mapCoords)){
+                Log.d(TAG, "hide buttons");
+                if (photoLayout == null) {
+                    buttonRow.setVisibility(View.GONE);
+                } else {
+                    photoLayout.setVisibility(View.GONE);
+                }
+            } else {
+                //has either geo or biz link to set data on a view intent
+                try {
+                    URLEncoder.encode(item.bizLink, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "show buttons");
+                if (photoLayout != null) {
+                    //this is the row of buttons now
+                    photoLayout.setVisibility(View.VISIBLE);
+                } else {
+                    buttonRow.setVisibility(View.VISIBLE);
+                }
+                if (TextUtils.isEmpty(item.mapCoords)) {
+                    map.setVisibility(View.GONE);
+                } else {
+                    //Log.i(TAG, "load geo ? " + item.mapCoords);
+                    map.setVisibility(View.VISIBLE);
+                    map.setImageDrawable(NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_map_white_48dp));
+                    map.setTag(item.mapCoords);
+                }
+                if (TextUtils.isEmpty(item.bizLink)) {
+                    more.setVisibility(View.GONE);
+                } else {
+                    //Log.i(TAG, "biz link ? " + item.bizLink);
+                    more.setVisibility(View.VISIBLE);
+                    more.setImageDrawable(NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_info_outline_white_48dp));
+                    more.setTag(item.bizLink);
+                }
+            }
+            return convertView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
         }
     }
 
