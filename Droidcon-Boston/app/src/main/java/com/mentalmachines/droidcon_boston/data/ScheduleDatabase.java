@@ -23,10 +23,10 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
     public static final String TAG = "ScheduleDatabase";
     private static SQLiteDatabase sDB;
-    private static final String DATABASE_NAME = "dc2017boston.db";
+    private static final String DATABASE_NAME = "DroidconBoston2017.db";
     private static final int DATABASE_VERSION = 1;
     //columns, database constants
-    public static final String TABLE = "speaker";
+    public static final String TABLE = "schedule";
     public static final String NAME = "name";
     public static final String TITLE = "talk";
     //public static final String DESCRIPTION = "description";
