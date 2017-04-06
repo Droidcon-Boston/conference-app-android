@@ -9,17 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mentalmachines.droidcon_boston.R;
-import com.mentalmachines.droidcon_boston.data.DataManager;
-import com.mentalmachines.droidcon_boston.data.model.DroidconSchedule;
 import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
 
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.mentalmachines.droidcon_boston.services.MvpServiceFactory.makeMvpStarterService;
 
 /**
  *
@@ -35,8 +30,7 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
     android.support.v4.view.ViewPager viewPager;
 
     ScheduleAdapter adapter;
-    AgendaPresenter presenter;
-    DataManager dataManager;
+
 
     public static final String TAB_POSITION = "POSITION";
 
@@ -56,17 +50,7 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dataManager = new DataManager(makeMvpStarterService());
-        presenter = new AgendaPresenter(dataManager);
-
-        presenter.getSchedule();
-
         setupDayPager(view, savedInstanceState);
-    }
-
-    public void showSchedule(List<DroidconSchedule> schedule) {
-        adapter.setSchedule(schedule);
-        adapter.notifyDataSetChanged();
     }
 
     @Override

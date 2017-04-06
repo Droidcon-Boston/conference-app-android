@@ -6,13 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mentalmachines.droidcon_boston.R;
-import com.mentalmachines.droidcon_boston.data.model.DroidconSchedule;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +17,7 @@ import butterknife.ButterKnife;
  */
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleItemViewHolder> {
-    private List<DroidconSchedule> schedule;
+
     private Context mContext;
 
     public static final int TYPE_GENERAL = 0;
@@ -30,34 +25,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     public static final int TYPE_DOUBLE_ITEM = 2;
     public static final int TYPE_TRIPLE_ITEM = 3;
 
-
-    public void setSchedule(List<DroidconSchedule> schedule) {
-        schedule = schedule;
-    }
-
-    public ScheduleAdapter(ArrayList<DroidconSchedule> schedule, Context context) {
-        schedule = schedule;
-        mContext = context;
-    }
-
-    // Not use static
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.text);
-            itemView.setOnClickListener(v -> Toast.makeText(
-                    mContext,
-                    "onItemClick - " + getPosition() + " - "
-                            + mTextView.getText().toString() + " - "
-                            + schedule.get(getPosition()), Toast.LENGTH_LONG).show());
-        }
+    @Override
+    public int getItemCount() {
+        return 0;
     }
 
     @Override
-    public int getItemCount() {
-        return schedule.size();
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     @Override
@@ -70,10 +45,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
     @Override
     public void onBindViewHolder(ScheduleItemViewHolder holder, int position) {
-        holder.titleText.setText(schedule.get(position).title.toString());
-        holder.timeText.setText(schedule.get(position).title.toString());
-        holder.locationText.setText(schedule.get(position).title.toString());
-        holder.speakerNameText.setText(schedule.get(position).title.toString());
     }
 
     public static class ScheduleItemViewHolder extends RecyclerView.ViewHolder {
