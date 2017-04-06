@@ -113,20 +113,24 @@ public class AgendaDayFragment extends Fragment {
         FlexibleAdapter<ScheduleAdapterItem> headerAdapter =
                 new FlexibleAdapter<>(items,
                         (FlexibleAdapter.OnItemClickListener) position -> {
-                            ScheduleAdapterItem item = items.get(position);
-                            if (StringUtils.isNullorEmpty(item.getItemData().speakerName)) return false;
-                            Bundle arguments = new Bundle();
-                            arguments.putString(ScheduleDatabase.NAME, item.getItemData().speakerName);
+                            Object listItem = items.get(position);
+                            //noinspection ConstantConditions
+                            if (listItem instanceof ScheduleAdapterItem) {
+                                ScheduleAdapterItem item = (ScheduleAdapterItem) listItem;
+                                if (StringUtils.isNullorEmpty(item.getItemData().speakerName))
+                                    return false;
+                                Bundle arguments = new Bundle();
+                                arguments.putString(ScheduleDatabase.NAME, item.getItemData().speakerName);
 
-                            AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
-                            agendaDetailFragment.setArguments(arguments);
+                                AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
+                                agendaDetailFragment.setArguments(arguments);
 
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            fragmentManager.beginTransaction()
-                                    .add(R.id.fragment_container, agendaDetailFragment)
-                                    .addToBackStack(null)
-                                    .commit();
-
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                fragmentManager.beginTransaction()
+                                        .add(R.id.fragment_container, agendaDetailFragment)
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
 
                             return true;
                         });
