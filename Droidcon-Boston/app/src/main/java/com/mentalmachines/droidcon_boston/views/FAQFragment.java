@@ -19,8 +19,6 @@ import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 
 
@@ -130,10 +128,10 @@ public class FAQFragment extends Fragment {
                 buttonRow.setVisibility(View.GONE);
                 photoLayout = (LinearLayout) convertView.getTag(R.id.q_photo_row);
                 photoLayout.setVisibility(View.VISIBLE);
-                Log.i(TAG, "load photo ? " + item.photoUrl);
+                //Log.i(TAG, "load photo ? " + item.photoUrl);
                 Glide.with(ctx)
                         .load(item.photoUrl)
-                        .override(400, 400)
+                        .override(600, 600)
                         .centerCrop()
                         .into((ImageView) photoLayout.findViewById(R.id.q_photo));
                 photoLayout = (LinearLayout) photoLayout.findViewById(R.id.q_button_col);
@@ -156,11 +154,6 @@ public class FAQFragment extends Fragment {
                 }
             } else {
                 //has either geo or biz link to set data on a view intent
-                try {
-                    URLEncoder.encode(item.bizLink, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
                 Log.d(TAG, "show buttons");
                 if (photoLayout != null) {
                     //this is the row of buttons now

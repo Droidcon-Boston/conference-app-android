@@ -63,6 +63,7 @@
     <LinearLayout android:id="@+id/q_photo_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="400dp"
         android:layout_below="@id/q_text"
         android:visibility="gone"
         android:layout_marginBottom="8dp"
