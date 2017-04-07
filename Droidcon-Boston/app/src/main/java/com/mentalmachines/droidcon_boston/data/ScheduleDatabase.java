@@ -245,16 +245,13 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     /*************************FAQ******************/
     public static final String FAQ_TABLE = "faq";
     public static final String QUESTIONS = "Question";
-    public static final String ANSWRS = "Answers";
-    public static final String OTHER_LNK = "other_link";
-    public static final String MAP_COORDS = "map_link";
 
     public static class FaqData {
         public String question;
         public String answer;
-        public String photoUrl;
-        public String mapCoords;
-        public String bizLink;
+        public String photoUrl = null;
+        public String mapCoords = null;
+        public String bizLink = null;
     }
 
     public static FaqData[] fetchFAQ(@NonNull Context ctx) {
@@ -281,7 +278,6 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 item.mapCoords = c.isNull(3)? null : c.getString(3);
                 item.bizLink = c.isNull(4)? null : c.getString(4);
                 items.add(item);
-                //Log.d(TAG, "photo url? " + item.photoUrl.toString());
             } while (c.moveToNext());
         }
         c.close();

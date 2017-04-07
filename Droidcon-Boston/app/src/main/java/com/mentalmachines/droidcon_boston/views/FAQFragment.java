@@ -34,19 +34,12 @@ public class FAQFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         final View view = inflater.inflate(R.layout.faq_fragment, container, false);
         ((ExpandableListView)view.findViewById(R.id.faqlist)).setAdapter(new FaqExpandable());
-        /*final ExpandableListView list = (ExpandableListView)view.findViewById(R.id.faqlist);
-        final FaqExpandable adapter = new FaqExpandable();
-        list.setAdapter(adapter);
-        for (int dex = 0; dex < adapter.getGroupCount(); dex++) {
-            list.expandGroup(dex);
-        }*/
         return view;
     }
 
     public class FaqExpandable extends BaseExpandableListAdapter {
         final String[] questionsGroup;
         final HashMap<Integer, ScheduleDatabase.FaqData[]> childrens;
-        private final int mapIcon = android.R.drawable.ic_dialog_map, moreIcon = android.R.drawable.ic_dialog_info;
 
         public FaqExpandable() {
             final Context ctx = getContext();
@@ -135,6 +128,7 @@ public class FAQFragment extends Fragment {
                         .centerCrop()
                         .into((ImageView) photoLayout.findViewById(R.id.q_photo));
                 photoLayout = (LinearLayout) photoLayout.findViewById(R.id.q_button_col);
+
                 more = (ImageButton) photoLayout.findViewById(R.id.q_more_p);
                 map = (ImageButton) photoLayout.findViewById(R.id.q_map_p);
             } else {
@@ -151,12 +145,10 @@ public class FAQFragment extends Fragment {
                     buttonRow.setVisibility(View.GONE);
                 } else {
                     photoLayout.setVisibility(View.GONE);
-                    more.setTag(null);
-                    map.setTag(null);
                 }
             } else {
                 //has either geo or biz link to set data on a view intent
-                Log.d(TAG, "show buttons");
+                Log.d(TAG, "show buttons? " + item.mapCoords.toString() + " biz " + item.bizLink.toString());
                 if (photoLayout != null) {
                     //this is the row of buttons now
                     photoLayout.setVisibility(View.VISIBLE);
@@ -165,20 +157,14 @@ public class FAQFragment extends Fragment {
                 }
                 if (TextUtils.isEmpty(item.mapCoords)) {
                     map.setVisibility(View.GONE);
-                    map.setTag(null);
                 } else {
-                    //Log.i(TAG, "load geo ? " + item.mapCoords);
                     map.setVisibility(View.VISIBLE);
-                    map.setImageDrawable(NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_map_white_48dp));
                     map.setTag(item.mapCoords);
                 }
                 if (TextUtils.isEmpty(item.bizLink)) {
                     more.setVisibility(View.GONE);
-                    more.setTag(null);
                 } else {
-                    //Log.i(TAG, "biz link ? " + item.bizLink);
                     more.setVisibility(View.VISIBLE);
-                    more.setImageDrawable(NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_info_outline_white_48dp));
                     more.setTag(item.bizLink);
                 }
             }
