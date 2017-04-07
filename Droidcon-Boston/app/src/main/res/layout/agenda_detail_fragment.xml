@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_dark_background"
+        android:background="@color/colorBackground"
         android:orientation="vertical">
 
         <ImageView
@@ -18,54 +18,27 @@
 
         <TextView
             android:id="@+id/text_speaker_name"
-            style="@android:style/TextAppearance.Medium"
+            android:textSize="16dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            android:textColor="@android:color/white" />
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/text_title"
-            style="@android:style/TextAppearance.Medium"
+            android:textSize="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@android:color/white"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorPrimary"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"/>
-
-        <TextView
-            style="@android:style/TextAppearance.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:gravity="center"
-            android:fontFamily="italic"
-            android:text="A sketch of the Talk"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/text_description"
-            style="@android:style/TextAppearance.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:background="@color/colorAccent" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,6 +82,33 @@
                 android:src="@drawable/ic_facebook" />
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@color/colorAccent" />
+        <TextView
+            android:textSize="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif|italic"
+            android:text="A sketch of the Talk"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp" />
 
         <View
             android:layout_width="match_parent"
@@ -119,24 +119,25 @@
             android:background="@color/colorAccent" />
 
         <TextView
-            style="@android:style/TextAppearance.Small"
+            android:textSize="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginBottom="4dp"
-            android:fontFamily="italic"
+            android:fontFamily="sans-serif|italic"
             android:text="About the speaker"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/text_speaker_bio"
-            style="@android:style/TextAppearance.Small"
+            android:textSize="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            android:textColor="@android:color/white" />
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
 </ScrollView>

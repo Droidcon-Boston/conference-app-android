@@ -151,6 +151,8 @@ public class FAQFragment extends Fragment {
                     buttonRow.setVisibility(View.GONE);
                 } else {
                     photoLayout.setVisibility(View.GONE);
+                    more.setTag(null);
+                    map.setTag(null);
                 }
             } else {
                 //has either geo or biz link to set data on a view intent
@@ -163,6 +165,7 @@ public class FAQFragment extends Fragment {
                 }
                 if (TextUtils.isEmpty(item.mapCoords)) {
                     map.setVisibility(View.GONE);
+                    map.setTag(null);
                 } else {
                     //Log.i(TAG, "load geo ? " + item.mapCoords);
                     map.setVisibility(View.VISIBLE);
@@ -171,6 +174,7 @@ public class FAQFragment extends Fragment {
                 }
                 if (TextUtils.isEmpty(item.bizLink)) {
                     more.setVisibility(View.GONE);
+                    more.setTag(null);
                 } else {
                     //Log.i(TAG, "biz link ? " + item.bizLink);
                     more.setVisibility(View.VISIBLE);

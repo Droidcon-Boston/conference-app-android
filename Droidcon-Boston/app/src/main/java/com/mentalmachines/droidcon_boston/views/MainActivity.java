@@ -9,10 +9,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
@@ -165,6 +167,11 @@ public class MainActivity extends MaterialActivity {
     } //end click listener
 
     public void faqClick(View v) {
+        if (v.getTag() == null) {
+            Log.e(FAQFragment.TAG, "link click failed");
+            Toast.makeText(v.getContext(), "Retry?", Toast.LENGTH_SHORT).show();
+            return;
+        }
         final Intent tnt = new Intent(Intent.ACTION_VIEW);
         tnt.setData(Uri.parse((String) v.getTag()));
         startActivity(tnt);

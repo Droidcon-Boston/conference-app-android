@@ -87,11 +87,12 @@ public class AgendaDetailFragment extends BaseFragment {
                 .load(scheduleDetail.listRow.photo)
                 .placeholder(R.drawable.emo_im_cool)
                 .crossFade()
-                .override(1000, 1000)
+                .override(800, 800)
                 .centerCrop()
                 .into(imageSpeaker);
 
-        textTitle.setText(scheduleDetail.listRow.talkTitle);
+        textTitle.setText(scheduleDetail.listRow.talkTitle + "\n" + scheduleDetail.listRow.date + "@" + scheduleDetail.listRow.time
+                + "\n" + scheduleDetail.listRow.room);
         textSpeakerName.setText(scheduleDetail.listRow.speakerName);
         textSpeakerBio.setText(scheduleDetail.speakerBio);
         textDescription.setText(scheduleDetail.talkDescription);
@@ -119,10 +120,11 @@ public class AgendaDetailFragment extends BaseFragment {
     public static Drawable buildIcon(Resources res, int baseIcon) {
         StateListDrawable iconStates = new StateListDrawable();
         final Drawable stateImage = res.getDrawable(baseIcon);
-        iconStates.addState(NavigationAdapter.pressed, stateImage);
-        final Drawable pressImage = res.getDrawable(baseIcon);
-        pressImage.setColorFilter(res.getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
-        iconStates.addState(NavigationAdapter.normal, pressImage);
+        stateImage.setColorFilter(res.getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+        /*final Drawable pressImage = res.getDrawable(baseIcon);
+        pressImage.setColorFilter(res.getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);*/
+        iconStates.addState(NavigationAdapter.normal, stateImage);
+        iconStates.addState(NavigationAdapter.pressed, res.getDrawable(baseIcon));
         return iconStates;
     }
 }
