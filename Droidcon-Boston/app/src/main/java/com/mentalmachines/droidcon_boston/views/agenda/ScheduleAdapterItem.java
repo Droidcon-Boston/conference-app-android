@@ -113,7 +113,11 @@ public class ScheduleAdapterItem extends
 
             holder.bigTitle.setText(itemData.talkTitle);
 
-            holder.rootLayout.setBackground(null);
+            if (itemData.photo == null) {
+                holder.rootLayout.setBackground(null);
+            } else {
+                addBackgroundRipple(holder);
+            }
         } else {
             holder.sessionLayout.setVisibility(View.VISIBLE);
             holder.avatar.setVisibility(View.VISIBLE);
@@ -130,14 +134,19 @@ public class ScheduleAdapterItem extends
                     .crossFade()
                     .into(holder.avatar);
 
-            TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
-            holder.rootLayout.setBackgroundResource(outValue.resourceId);
+            addBackgroundRipple(holder);
         }
     }
 
+    private void addBackgroundRipple(ViewHolder holder) {
+        TypedValue outValue = new TypedValue();
+        Context context = holder.title.getContext();
+        context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        holder.rootLayout.setBackgroundResource(outValue.resourceId);
+    }
 
-    public static class ViewHolder extends FlexibleViewHolder {
+
+    static class ViewHolder extends FlexibleViewHolder {
 
         View rootLayout;
         ImageView avatar;
@@ -147,7 +156,7 @@ public class ScheduleAdapterItem extends
         View sessionLayout;
         TextView bigTitle;
 
-        public ViewHolder(View view, FlexibleAdapter adapter) {
+        ViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
 
             findViews(view);

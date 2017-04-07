@@ -242,6 +242,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             party.time = "5:30 PM";
             party.room = "";
             party.date = TUESDAY;
+            party.photo = "http://www.droidcon-boston.com/events-info/";
             items.add(party);
         }
 

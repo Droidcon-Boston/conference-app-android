@@ -1,6 +1,9 @@
 package com.mentalmachines.droidcon_boston.views.agenda;
 
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -117,8 +120,20 @@ public class AgendaDayFragment extends Fragment {
                             //noinspection ConstantConditions
                             if (listItem instanceof ScheduleAdapterItem) {
                                 ScheduleAdapterItem item = (ScheduleAdapterItem) listItem;
-                                if (StringUtils.isNullorEmpty(item.getItemData().speakerName))
+                                if (StringUtils.isNullorEmpty(item.getItemData().speakerName)) {
+                                    String url = item.getItemData().photo;
+                                    if (item.getItemData().photo == null) {
+                                        return false;
+                                    }
+                                    // event where info URL is in the photo string
+                                    Intent i = new Intent(Intent.ACTION_VIEW);
+                                    i.setData(Uri.parse(url));
+                                    PackageManager packageManager = getActivity().getPackageManager();
+                                    if (i.resolveActivity(packageManager) != null) {
+                                        startActivity(i);
+                                    }
                                     return false;
+                                }
                                 Bundle arguments = new Bundle();
                                 arguments.putString(ScheduleDatabase.NAME, item.getItemData().speakerName);
 
