@@ -24,7 +24,7 @@ android {
         applicationId "com.mentalmachines.droidcon_boston"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 5
+        versionCode 6
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -82,7 +82,9 @@ dependencies {
     compile "com.android.support:support-v13:$support"
     compile "com.android.support:support-vector-drawable:$support"
     compile "com.android.support:animated-vector-drawable:$support"
-    compile "com.google.android.gms:play-services:$playServices"
+    compile "com.google.android.gms:play-services-maps:$playServices"
+    compile "com.google.android.gms:play-services-location:$playServices"
+    compile "com.google.android.gms:play-services-places:$playServices"
 
     // NETWORKING
     compile "com.squareup.retrofit2:retrofit:$retrofit2"
