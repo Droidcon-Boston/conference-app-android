@@ -17,6 +17,7 @@ import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.NavigationAdapter;
+import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform;
 import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
 
 import butterknife.BindView;
@@ -64,6 +65,10 @@ public class AgendaDetailFragment extends BaseFragment {
     ImageView imageLinkedin;
     @BindView(R.id.image_facebook)
     ImageView imageFacebook;
+    @BindView(R.id.text_time)
+    TextView textTime;
+    @BindView(R.id.text_room)
+    TextView textRoom;
 
     @Nullable
     @Override
@@ -76,6 +81,10 @@ public class AgendaDetailFragment extends BaseFragment {
         String speakerName = bundle.getString(ScheduleDatabase.NAME);
         ScheduleDatabase.ScheduleDetail scheduleDetail = ScheduleDatabase.fetchDetailData(getContext(), speakerName);
         showAgendaDetail(scheduleDetail);
+
+        textTime.setText(bundle.getString(ScheduleDatabase.TALK_TIME));
+        textRoom.setText(bundle.getString(ScheduleDatabase.ROOM));
+
         //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //setHasOptionsMenu(true);
         //TODO
@@ -85,10 +94,9 @@ public class AgendaDetailFragment extends BaseFragment {
     public void showAgendaDetail(ScheduleDatabase.ScheduleDetail scheduleDetail) {
         Glide.with(this)
                 .load(scheduleDetail.listRow.photo)
+                .transform(new CircleTransform(getContext()))
                 .placeholder(R.drawable.emo_im_cool)
                 .crossFade()
-                .override(1000, 1000)
-                .centerCrop()
                 .into(imageSpeaker);
 
         textTitle.setText(scheduleDetail.listRow.talkTitle);
@@ -100,19 +108,19 @@ public class AgendaDetailFragment extends BaseFragment {
             imageTwitter.setVisibility(View.GONE);
         } else {
             imageTwitter.setTag(scheduleDetail.twitter);
-            imageTwitter.setImageDrawable(buildIcon(res, R.drawable.twitter));
+            //imageTwitter.setImageDrawable(buildIcon(res, R.drawable.twitter));
         }
         if (StringUtils.isNullorEmpty(scheduleDetail.linkedIn)) {
             imageLinkedin.setVisibility(View.GONE);
         } else {
             imageLinkedin.setTag(scheduleDetail.linkedIn);
-            imageLinkedin.setImageDrawable(buildIcon(res, R.drawable.linkedin));
+            //imageLinkedin.setImageDrawable(buildIcon(res, R.drawable.linkedin));
         }
         if (StringUtils.isNullorEmpty(scheduleDetail.facebook)) {
             imageFacebook.setVisibility(View.GONE);
         } else {
             imageFacebook.setTag(scheduleDetail.facebook);
-            imageFacebook.setImageDrawable(buildIcon(res, R.drawable.facebook));
+            //imageFacebook.setImageDrawable(buildIcon(res, R.drawable.facebook));
         }
     }
 

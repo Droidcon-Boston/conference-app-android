@@ -136,6 +136,8 @@ public class AgendaDayFragment extends Fragment {
                                 }
                                 Bundle arguments = new Bundle();
                                 arguments.putString(ScheduleDatabase.NAME, item.getItemData().speakerName);
+                                arguments.putString(ScheduleDatabase.TALK_TIME, item.getItemData().time);
+                                arguments.putString(ScheduleDatabase.ROOM, item.getItemData().room);
 
                                 AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
                                 agendaDetailFragment.setArguments(arguments);
