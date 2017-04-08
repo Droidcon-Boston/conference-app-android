@@ -24,7 +24,7 @@ android {
         applicationId "com.mentalmachines.droidcon_boston"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 6
+        versionCode 7
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -55,20 +55,11 @@ dependencies {
     final playServices = "10.0.1"
     final leakCanary = "1.5"
     final butterKnife = "8.2.1"
-
-    final retrofit2 = "2.1.0"
-    final okHttp = "3.6.0"
     final rxAndroid = "2.0.1"
     final rxJava2 = "2.0.5"
     final rxBinding = "0.4.0"
     final rxLifecycle = "0.8.0"
-    final rxGcm = "0.1.4-SNAPSHOT"
-    final espresso = "2.2.2"
-    final testRunner = "0.5"
-    final mockito = "1.10.19"
     final junit = "4.12"
-    final timber = "4.3.1"
-    final moshi = "1.2.0"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -86,15 +77,6 @@ dependencies {
     compile "com.google.android.gms:play-services-location:$playServices"
     compile "com.google.android.gms:play-services-places:$playServices"
 
-    // NETWORKING
-    compile "com.squareup.retrofit2:retrofit:$retrofit2"
-    compile "com.squareup.okhttp3:okhttp:$okHttp"
-    compile "com.squareup.okhttp3:logging-interceptor:$okHttp"
-
-    //JSON PARSING
-    compile "com.squareup.moshi:moshi:$moshi"
-    compile group: 'com.squareup.retrofit2', name: 'converter-moshi', version: '2.0.0-beta3'
-
     //Rx
     compile "io.reactivex.rxjava2:rxjava:$rxJava2"
     compile "io.reactivex.rxjava2:rxandroid:$rxAndroid"
@@ -111,11 +93,7 @@ dependencies {
     // MISC
     compile "com.jakewharton:butterknife:$butterKnife"
     apt "com.jakewharton:butterknife-compiler:$butterKnife"
-    compile "com.jakewharton.timber:timber:$timber"
     compile "com.squareup.leakcanary:leakcanary-watcher:$leakCanary"
-
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
     compile 'com.github.bumptech.glide:glide:3.7.0'

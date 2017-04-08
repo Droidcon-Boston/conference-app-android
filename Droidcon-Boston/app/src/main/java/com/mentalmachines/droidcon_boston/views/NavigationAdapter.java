@@ -2,7 +2,10 @@ package com.mentalmachines.droidcon_boston.views;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.NonNull;
@@ -34,8 +37,6 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
     final Drawable[] mIcons;
     private int selectedIndex = 0;
 
-    //static int primaryDark, primary, accent;
-
     public NavigationAdapter(@NonNull Context ctx) {
         super(ctx, R.layout.nav_list_item);
         final Resources res = ctx.getResources();
@@ -45,8 +46,8 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
         mIcons = new Drawable[] {
                 buildIcon(res, R.drawable.ic_schedule_white_24dp),
                 buildIcon(res, R.drawable.ic_twitter_white_24dp),
-                buildIcon(res, android.R.drawable.ic_dialog_info),
-                res.getDrawable(R.mipmap.ic_launcher),
+                buildIcon(res, R.drawable.ic_info_white_24dp),
+                res.getDrawable(R.drawable.ic_menu_launcher),
                 buildIcon(res, R.drawable.ic_facebook),
                 buildIcon(res, R.drawable.ic_instagram),
                 buildIcon(res, R.drawable.ic_linkedin),
@@ -102,16 +103,17 @@ public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
     public static final int[] selected = new int[] { android.R.attr.state_selected };
     public static final int[] pressed = new int[] { android.R.attr.state_pressed, android.R.attr.state_focused };
 
-
     public static Drawable buildIcon(Resources res, int baseIcon) {
+        Bitmap icon = BitmapFactory.decodeResource(res, baseIcon);
         StateListDrawable iconStates = new StateListDrawable();
-        Drawable stateImage = res.getDrawable(baseIcon);
-        stateImage.setColorFilter(res.getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
+
+        BitmapDrawable stateImage = new BitmapDrawable(res, icon);
+        stateImage.setColorFilter(res.getColor(R.color.colorPrimarySelected), PorterDuff.Mode.MULTIPLY);
         iconStates.addState(selected, stateImage);
-        stateImage = res.getDrawable(baseIcon);
-        stateImage.setColorFilter(res.getColor(R.color.colorPrimaryDark), PorterDuff.Mode.MULTIPLY);
+        stateImage = new BitmapDrawable(res, icon);
+        stateImage.setColorFilter(res.getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
         iconStates.addState(pressed, stateImage);
-        stateImage = res.getDrawable(baseIcon);
+        stateImage = new BitmapDrawable(res, icon);
         stateImage.setColorFilter(res.getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
         iconStates.addState(normal, stateImage);
         return iconStates;

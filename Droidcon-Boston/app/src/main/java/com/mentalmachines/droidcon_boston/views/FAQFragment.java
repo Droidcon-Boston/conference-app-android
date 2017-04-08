@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.views;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -102,6 +103,13 @@ public class FAQFragment extends Fragment {
                 convertView.setTag(convertView.findViewById(R.id.q_top));
                 convertView.setTag(R.id.q_photo_row, convertView.findViewById(R.id.q_photo_row));
                 convertView.setTag(R.id.q_button_row, convertView.findViewById(R.id.q_button_row));
+                //dynamically colored icons set on newly inflated convertview
+                Drawable btnIcon = NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_info_outline_white_48dp);
+                ((ImageButton)convertView.findViewById(R.id.q_more)).setImageDrawable(btnIcon);
+                ((ImageButton)convertView.findViewById(R.id.q_more_p)).setImageDrawable(btnIcon);
+                btnIcon = NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_map_white_48dp);
+                ((ImageButton)convertView.findViewById(R.id.q_map)).setImageDrawable(btnIcon);
+                ((ImageButton)convertView.findViewById(R.id.q_map_p)).setImageDrawable(btnIcon);
             }
             if (childPosition == 0) {
                 ((View)convertView.getTag()).setVisibility(View.GONE);
