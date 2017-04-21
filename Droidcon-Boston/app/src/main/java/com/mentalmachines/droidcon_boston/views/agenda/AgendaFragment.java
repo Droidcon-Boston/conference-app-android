@@ -77,7 +77,7 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
             // set current day to second if today matches
             Calendar today = Calendar.getInstance();
             Calendar dayTwo = Calendar.getInstance();
-            dayTwo.set(2017, 4, 10);
+            dayTwo.set(2017, Calendar.APRIL, 11);
             if (today.equals(dayTwo)) {
                 viewPager.setCurrentItem(1);
             }
