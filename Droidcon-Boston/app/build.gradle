@@ -24,7 +24,6 @@ android {
     versionCode 2
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    multiDexEnabled = true
   }
   buildTypes {
     release {
@@ -49,23 +48,11 @@ android {
 
 dependencies {
   final support = "27.0.2"
-  final playServices = "10.0.1"
+  final playServices = "11.8.0"
   final leakCanary = "1.5"
-  final butterKnife = "8.2.1"
-
-  final retrofit2 = "2.1.0"
-  final okHttp = "3.9.1"
-  final rxAndroid = "2.0.1"
-  final rxJava2 = "2.0.5"
-  final rxBinding = "0.4.0"
-  final rxLifecycle = "0.8.0"
-  final rxGcm = "0.1.4-SNAPSHOT"
-  final espresso = "2.2.2"
-  final testRunner = "0.5"
-  final mockito = "1.10.19"
+  final butterKnife = "8.8.1"
   final junit = "4.12"
-  final timber = "4.3.1"
-  final moshi = "1.2.0"
+  final timber = "4.6.0"
 
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -82,27 +69,6 @@ dependencies {
   implementation "com.android.support:animated-vector-drawable:$support"
   implementation "com.google.android.gms:play-services:$playServices"
 
-  // NETWORKING
-  implementation "com.squareup.retrofit2:retrofit:$retrofit2"
-  implementation "com.squareup.okhttp3:okhttp:$okHttp"
-  implementation "com.squareup.okhttp3:logging-interceptor:$okHttp"
-
-  //JSON PARSING
-  implementation "com.squareup.moshi:moshi:$moshi"
-  implementation group: 'com.squareup.retrofit2', name: 'converter-moshi', version: '2.0.0-beta3'
-
-  //Rx
-  implementation "io.reactivex.rxjava2:rxjava:$rxJava2"
-  implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
-  implementation "com.jakewharton.rxbinding:rxbinding:$rxBinding"
-  implementation "com.jakewharton.rxbinding:rxbinding-support-v4:$rxBinding"
-  implementation "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rxBinding"
-  implementation "com.jakewharton.rxbinding:rxbinding-design:$rxBinding"
-  implementation "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rxBinding"
-  implementation "com.jakewharton.rxbinding:rxbinding-leanback-v17:$rxBinding"
-  implementation "com.trello:rxlifecycle:$rxLifecycle"
-  implementation "com.trello:rxlifecycle-android:$rxLifecycle"
-  implementation "com.trello:rxlifecycle-components:$rxLifecycle"
 
   // MISC
   implementation "com.jakewharton:butterknife:$butterKnife"
@@ -110,7 +76,6 @@ dependencies {
   implementation "com.jakewharton.timber:timber:$timber"
   implementation "com.squareup.leakcanary:leakcanary-watcher:$leakCanary"
 
-  implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
   implementation 'com.facebook.stetho:stetho-okhttp3:1.4.2'
   implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
   implementation 'eu.davidea:flexible-adapter:5.0.0-rc1'
