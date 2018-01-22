@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by emezias on 3/31/17.
  * This database can workaround certain issues with the Wordpress API
  * Another advantage is that local resources reduce the network resources required by the crowd using it
  */

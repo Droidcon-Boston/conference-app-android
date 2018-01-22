@@ -5,10 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 
-/**
- * Created by jkim11 on 1/31/17.
- */
-
 public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

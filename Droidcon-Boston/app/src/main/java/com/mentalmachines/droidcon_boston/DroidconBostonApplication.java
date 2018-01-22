@@ -7,10 +7,6 @@ import com.facebook.stetho.Stetho;
 
 import timber.log.Timber;
 
-/**
- * Created by jkim11 on 2/24/17.
- */
-
 public class DroidconBostonApplication extends Application{
 
     public static DroidconBostonApplication get(Context context) {

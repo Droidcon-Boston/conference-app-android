@@ -12,9 +12,6 @@ import com.mentalmachines.droidcon_boston.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by jinn on 3/27/17.
- */
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleItemViewHolder> {
 

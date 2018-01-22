@@ -23,10 +23,6 @@ import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by jinn on 3/31/17.
- */
-
 public class AgendaDetailFragment extends BaseFragment {
 
     /*@Override

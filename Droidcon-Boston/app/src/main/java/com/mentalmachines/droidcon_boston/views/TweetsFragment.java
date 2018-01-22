@@ -18,11 +18,6 @@ import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
-
-/**
- * Created by Hariharan Sridharan on 4/3/17.
- */
-
 public class TweetsFragment extends ListFragment {
 
     private Context context = null;

@@ -16,11 +16,6 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- *
- * Created by jinn on 3/11/17.
- */
-
 public class AgendaFragment extends BaseFragment implements AgendaContract.View {
 
     @BindView(R.id.tablayout)

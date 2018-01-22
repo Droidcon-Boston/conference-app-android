@@ -21,11 +21,6 @@ import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 
 import java.util.HashMap;
 
-
-/**
- * Created by emezias 4/3/17
- */
-
 public class FAQFragment extends Fragment {
     public static final String TAG = "FAQFragment";
 

@@ -12,10 +12,6 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.URL;
 
-/**
- * Created by CaptofOuterSpace on 12/16/2016.
- */
-
 public class NetworkUtils {
     public static boolean isServerAvailable(){
         boolean exists = false;
