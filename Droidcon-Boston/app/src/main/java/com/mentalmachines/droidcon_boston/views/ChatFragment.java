@@ -8,10 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-/**
- * Created by Hariharan Sridharan on 4/02/17.
- */
-
 public class ChatFragment extends Fragment {
 
     private boolean shouldFireIntent = true;

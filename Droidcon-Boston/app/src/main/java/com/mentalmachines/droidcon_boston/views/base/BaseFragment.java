@@ -11,11 +11,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import butterknife.ButterKnife;
 
-
-/**
- * Created by jkim11 on 1/31/17.
- */
-
 public abstract class BaseFragment extends Fragment {
     private static final String KEY_FRAGMENT_ID = "KEY_FRAGMENT_ID";
     private static final AtomicLong NEXT_ID = new AtomicLong(0);

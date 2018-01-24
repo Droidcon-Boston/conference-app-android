@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.mentalmachines.droidcon_boston.R;
 
 /**
- * Created by emezias on 4/1/17.
  * Class to populate a slide out navigation drawer
  * keeping the agenda display clear and still easy to get to other content
  */

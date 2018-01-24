@@ -1,124 +1,87 @@
 buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
+  repositories {
+    maven { url 'https://maven.fabric.io/public' }
+  }
 
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
+  dependencies {
+    classpath 'io.fabric.tools:gradle:1.+'
+  }
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 repositories {
-    maven { url 'https://maven.fabric.io/public' }
+  maven { url 'https://maven.fabric.io/public' }
 }
 
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'android-apt'
-
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
-    defaultConfig {
-        applicationId "com.mentalmachines.droidcon_boston"
-        minSdkVersion 18
-        targetSdkVersion 25
-        versionCode 2
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled = true
+  compileSdkVersion 27
+  buildToolsVersion "27.0.3"
+  defaultConfig {
+    applicationId "com.mentalmachines.droidcon_boston"
+    minSdkVersion 18
+    targetSdkVersion 27
+    versionCode 2
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+  }
 
-    buildTypes.each {
-        it.buildConfigField 'String', 'BASE_API_URL', BASE_API_URL
-    }
+  buildTypes.each {
+    it.buildConfigField 'String', 'BASE_API_URL', BASE_API_URL
+  }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-    }
+  packagingOptions {
+    exclude 'META-INF/rxjava.properties'
+  }
 }
 
 dependencies {
-    final support = "25.1.0"
-    final playServices = "10.0.1"
-    final leakCanary = "1.5"
-    final butterKnife = "8.2.1"
+  final support = "27.0.2"
+  final playServices = "11.8.0"
+  final leakCanary = "1.5"
+  final butterKnife = "8.8.1"
+  final junit = "4.12"
+  final timber = "4.6.0"
 
-    final retrofit2 = "2.1.0"
-    final okHttp = "3.6.0"
-    final rxAndroid = "2.0.1"
-    final rxJava2 = "2.0.5"
-    final rxBinding = "0.4.0"
-    final rxLifecycle = "0.8.0"
-    final rxGcm = "0.1.4-SNAPSHOT"
-    final espresso = "2.2.2"
-    final testRunner = "0.5"
-    final mockito = "1.10.19"
-    final junit = "4.12"
-    final timber = "4.3.1"
-    final moshi = "1.2.0"
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+  // TESTING
+  testImplementation "junit:junit:$junit"
 
-    // TESTING
-    testCompile "junit:junit:$junit"
+  // GOOGLE APIs
+  implementation "com.android.support:appcompat-v7:$support"
+  implementation "com.android.support:support-v4:$support"
+  implementation "com.android.support:cardview-v7:$support"
+  implementation "com.android.support:design:$support"
+  implementation "com.android.support:support-v13:$support"
+  implementation "com.android.support:support-vector-drawable:$support"
+  implementation "com.android.support:animated-vector-drawable:$support"
+  implementation "com.google.android.gms:play-services:$playServices"
 
-    // GOOGLE APIs
-    compile "com.android.support:appcompat-v7:$support"
-    compile "com.android.support:cardview-v7:$support"
-    compile "com.android.support:design:$support"
-    compile "com.android.support:support-v13:$support"
-    compile "com.android.support:support-vector-drawable:$support"
-    compile "com.android.support:animated-vector-drawable:$support"
-    compile "com.google.android.gms:play-services:$playServices"
 
-    // NETWORKING
-    compile "com.squareup.retrofit2:retrofit:$retrofit2"
-    compile "com.squareup.okhttp3:okhttp:$okHttp"
-    compile "com.squareup.okhttp3:logging-interceptor:$okHttp"
+  // MISC
+  implementation "com.jakewharton:butterknife:$butterKnife"
+  annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnife"
+  implementation "com.jakewharton.timber:timber:$timber"
+  implementation "com.squareup.leakcanary:leakcanary-watcher:$leakCanary"
 
-    //JSON PARSING
-    compile "com.squareup.moshi:moshi:$moshi"
-    compile group: 'com.squareup.retrofit2', name: 'converter-moshi', version: '2.0.0-beta3'
+  implementation 'com.facebook.stetho:stetho-okhttp3:1.4.2'
+  implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+  implementation 'eu.davidea:flexible-adapter:5.0.0-rc1'
+  implementation 'com.github.bumptech.glide:glide:3.7.0'
 
-    //Rx
-    compile "io.reactivex.rxjava2:rxjava:$rxJava2"
-    compile "io.reactivex.rxjava2:rxandroid:$rxAndroid"
-    compile "com.jakewharton.rxbinding:rxbinding:$rxBinding"
-    compile "com.jakewharton.rxbinding:rxbinding-support-v4:$rxBinding"
-    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rxBinding"
-    compile "com.jakewharton.rxbinding:rxbinding-design:$rxBinding"
-    compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rxBinding"
-    compile "com.jakewharton.rxbinding:rxbinding-leanback-v17:$rxBinding"
-    compile "com.trello:rxlifecycle:$rxLifecycle"
-    compile "com.trello:rxlifecycle-android:$rxLifecycle"
-    compile "com.trello:rxlifecycle-components:$rxLifecycle"
-
-    // MISC
-    compile "com.jakewharton:butterknife:$butterKnife"
-    apt "com.jakewharton:butterknife-compiler:$butterKnife"
-    compile "com.jakewharton.timber:timber:$timber"
-    compile "com.squareup.leakcanary:leakcanary-watcher:$leakCanary"
-
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
-    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
-    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile('com.twitter.sdk.android:twitter:2.3.2@aar') {
-        transitive = true;
-    }
+  compile('com.twitter.sdk.android:twitter:2.3.2@aar') {
+    transitive = true;
+  }
 }
