@@ -8,20 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
-
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
+import eu.davidea.viewholders.FlexibleViewHolder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
-import eu.davidea.viewholders.FlexibleViewHolder;
 
 /**
  * Used for displaying the schedule with sticky headers with optional day filtering
@@ -40,7 +37,7 @@ public class ScheduleAdapterItem extends
     }
 
     public ScheduleAdapterItem(ScheduleDatabase.ScheduleRow scheduleRow,
-                               ScheduleAdapterItemHeader header) {
+            ScheduleAdapterItemHeader header) {
         super(header);
         this.itemData = scheduleRow;
 
@@ -94,17 +91,17 @@ public class ScheduleAdapterItem extends
 
     @Override
     public ScheduleAdapterItem.ViewHolder createViewHolder(FlexibleAdapter adapter,
-                                                           LayoutInflater inflater,
-                                         ViewGroup parent) {
+            LayoutInflater inflater,
+            ViewGroup parent) {
         return new ScheduleAdapterItem.ViewHolder(
                 inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter,
-                               ScheduleAdapterItem.ViewHolder holder,
-                               int position,
-                               List payloads) {
+            ScheduleAdapterItem.ViewHolder holder,
+            int position,
+            List payloads) {
 
         if (itemData.speakerName == null) {
             holder.sessionLayout.setVisibility(View.GONE);
@@ -149,11 +146,17 @@ public class ScheduleAdapterItem extends
     static class ViewHolder extends FlexibleViewHolder {
 
         View rootLayout;
+
         ImageView avatar;
+
         TextView title;
+
         TextView speaker;
+
         TextView room;
+
         View sessionLayout;
+
         TextView bigTitle;
 
         ViewHolder(View view, FlexibleAdapter adapter) {
