@@ -8,49 +8,50 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
-import com.mentalmachines.droidcon_boston.views.base.MaterialActivity;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends MaterialActivity {
+public class MainActivity extends AppCompatActivity {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "csLPIPIQ6AoWyhzCSHlK2lOen";
+
     private static final String TWITTER_SECRET = "p3c45qpNvIOQiTZi6iK9Cffb3xRH4X7SThT4EfVo7fIu42SNWD";
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
+
     ActionBarDrawerToggle drawerToggle;
+
     DrawerLayout mDrawerLayout;
+
     ListView mDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_activity);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-        mDrawerList = (ListView) findViewById(R.id.fragmentList);
+        mDrawerList = findViewById(R.id.fragmentList);
         mDrawerList.setAdapter(new NavigationAdapter(this));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        //click listener is set into the list item layout
-        //ScheduleDatabase.fetchFAQ(this);
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
     }
 
@@ -78,7 +79,6 @@ public class MainActivity extends MaterialActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                FragmentManager fragmentManager = getSupportFragmentManager();
                 if (fragmentManager.getBackStackEntryCount() > 0) {
                     fragmentManager.popBackStack();
                 } else if (fragmentManager.getBackStackEntryCount() == 1) {
@@ -93,15 +93,6 @@ public class MainActivity extends MaterialActivity {
                 return true;
         }
         return false;
-                /*int count = getFragmentManager().getBackStackEntryCount();
-
-                if (count == 0) {
-                    super.onBackPressed();
-                    //additional code
-                } else {
-                    getFragmentManager().popBackStack();
-                }
-                return true;*/
     }
 
 
@@ -117,6 +108,7 @@ public class MainActivity extends MaterialActivity {
 
 
     class DrawerItemClickListener implements ListView.OnItemClickListener {
+
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -126,13 +118,12 @@ public class MainActivity extends MaterialActivity {
             Uri data = null;
             switch (position) {
                 case 0: //agenda
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment())
+                            .commit();
                     break;
-                /*case 1: //chat
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, ChatFragment.newInstance("T2M1BL9EU","C2M1UNB0A")).commit();
-                    break;*/
                 case 1: //tweet
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment())
+                            .commit();
                     break;
                 case 2: //faq
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new FAQFragment()).commit();

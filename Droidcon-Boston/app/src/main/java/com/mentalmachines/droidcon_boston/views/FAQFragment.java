@@ -29,19 +29,12 @@ public class FAQFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         final View view = inflater.inflate(R.layout.faq_fragment, container, false);
         ((ExpandableListView)view.findViewById(R.id.faqlist)).setAdapter(new FaqExpandable());
-        /*final ExpandableListView list = (ExpandableListView)view.findViewById(R.id.faqlist);
-        final FaqExpandable adapter = new FaqExpandable();
-        list.setAdapter(adapter);
-        for (int dex = 0; dex < adapter.getGroupCount(); dex++) {
-            list.expandGroup(dex);
-        }*/
         return view;
     }
 
     public class FaqExpandable extends BaseExpandableListAdapter {
         final String[] questionsGroup;
         final HashMap<Integer, ScheduleDatabase.FaqData[]> childrens;
-        private final int mapIcon = android.R.drawable.ic_dialog_map, moreIcon = android.R.drawable.ic_dialog_info;
 
         public FaqExpandable() {
             final Context ctx = getContext();
@@ -86,7 +79,6 @@ public class FAQFragment extends Fragment {
 
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            Log.i(TAG, "get group view? " + groupPosition);
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.faq_header, null);
             }
@@ -97,7 +89,6 @@ public class FAQFragment extends Fragment {
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             final ScheduleDatabase.FaqData item = childrens.get(groupPosition)[childPosition];
-            Log.i(TAG, groupPosition + " get child view " + childPosition + ": " + item.answer);
             final Context ctx = getContext();
             if (convertView == null) {
                 convertView = LayoutInflater.from(ctx).inflate(R.layout.faq_item, null);
@@ -123,20 +114,19 @@ public class FAQFragment extends Fragment {
                 buttonRow.setVisibility(View.GONE);
                 photoLayout = (LinearLayout) convertView.getTag(R.id.q_photo_row);
                 photoLayout.setVisibility(View.VISIBLE);
-                //Log.i(TAG, "load photo ? " + item.photoUrl);
                 Glide.with(ctx)
                         .load(item.photoUrl)
                         .override(600, 600)
                         .centerCrop()
                         .into((ImageView) photoLayout.findViewById(R.id.q_photo));
-                photoLayout = (LinearLayout) photoLayout.findViewById(R.id.q_button_col);
-                more = (ImageButton) photoLayout.findViewById(R.id.q_more_p);
-                map = (ImageButton) photoLayout.findViewById(R.id.q_map_p);
+                photoLayout =  photoLayout.findViewById(R.id.q_button_col);
+                more = photoLayout.findViewById(R.id.q_more_p);
+                map = photoLayout.findViewById(R.id.q_map_p);
             } else {
                 ((View) convertView.getTag(R.id.q_photo_row)).setVisibility(View.GONE);
                 Log.i(TAG, "no photo " + childPosition);
-                more = (ImageButton) buttonRow.findViewById(R.id.q_more);
-                map = (ImageButton) buttonRow.findViewById(R.id.q_map);
+                more = buttonRow.findViewById(R.id.q_more);
+                map =  buttonRow.findViewById(R.id.q_map);
             }
 
             //item may not have either bizLink or mapCoords or both
@@ -159,7 +149,6 @@ public class FAQFragment extends Fragment {
                 if (TextUtils.isEmpty(item.mapCoords)) {
                     map.setVisibility(View.GONE);
                 } else {
-                    //Log.i(TAG, "load geo ? " + item.mapCoords);
                     map.setVisibility(View.VISIBLE);
                     map.setImageDrawable(NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_map_white_48dp));
                     map.setTag(item.mapCoords);
@@ -167,7 +156,6 @@ public class FAQFragment extends Fragment {
                 if (TextUtils.isEmpty(item.bizLink)) {
                     more.setVisibility(View.GONE);
                 } else {
-                    //Log.i(TAG, "biz link ? " + item.bizLink);
                     more.setVisibility(View.VISIBLE);
                     more.setImageDrawable(NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_info_outline_white_48dp));
                     more.setTag(item.bizLink);
