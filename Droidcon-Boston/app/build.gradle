@@ -52,6 +52,8 @@ dependencies {
   implementation "com.android.support:cardview-v7:$support"
   implementation "com.android.support:design:$support"
 
+  // Firebase cloud messaging
+  implementation "com.google.firebase:firebase-messaging:$playServices"
 
   // Misc
   implementation "com.jakewharton:butterknife:$butterKnife"
