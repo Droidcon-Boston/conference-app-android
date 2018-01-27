@@ -3,20 +3,17 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.mentalmachines.droidcon_boston.R;
-import com.mentalmachines.droidcon_boston.views.base.BaseFragment;
-
-import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.mentalmachines.droidcon_boston.R;
+import java.util.Calendar;
 
-public class AgendaFragment extends BaseFragment implements AgendaContract.View {
+public class AgendaFragment extends Fragment {
 
     @BindView(R.id.tablayout)
     android.support.design.widget.TabLayout tabLayout;
@@ -24,23 +21,17 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
     @BindView(R.id.viewpager)
     android.support.v4.view.ViewPager viewPager;
 
-    ScheduleAdapter adapter;
-
-
     public static final String TAB_POSITION = "POSITION";
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(getLayout(), container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.agenda_fragment, container, false);
         ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public int getLayout() {
-        return R.layout.agenda_fragment;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -48,22 +39,12 @@ public class AgendaFragment extends BaseFragment implements AgendaContract.View 
         setupDayPager(view, savedInstanceState);
     }
 
-    @Override
-    public void showProgress(boolean progress) {
-
-    }
-
-    @Override
-    public void showError(Throwable throwable) {
-
-    }
-
 
     private void setupDayPager(View parent, Bundle savedInstanceState) {
-        ViewPager viewPager = (ViewPager) parent.findViewById(R.id.viewpager);
+        ViewPager viewPager = parent.findViewById(R.id.viewpager);
         viewPager.setAdapter(new AgendaDayPagerAdapter(getChildFragmentManager()));
 
-        TabLayout tabLayout = (TabLayout) parent.findViewById(R.id.tablayout);
+        TabLayout tabLayout = parent.findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
         if (savedInstanceState != null) {

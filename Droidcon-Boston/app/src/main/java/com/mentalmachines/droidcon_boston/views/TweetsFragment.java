@@ -34,7 +34,7 @@ public class TweetsFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tweet_layout, container, false);
-        swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        swipeLayout =  view.findViewById(R.id.swipe_container);
 
         return view;
 
@@ -54,22 +54,19 @@ public class TweetsFragment extends ListFragment {
 
         setListAdapter(adapter);
 
-        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeLayout.setRefreshing(true);
-                adapter.refresh(new Callback<TimelineResult<Tweet>>() {
-                    @Override
-                    public void success(Result<TimelineResult<Tweet>> result) {
-                        swipeLayout.setRefreshing(false);
-                    }
+        swipeLayout.setOnRefreshListener(() -> {
+            swipeLayout.setRefreshing(true);
+            adapter.refresh(new Callback<TimelineResult<Tweet>>() {
+                @Override
+                public void success(Result<TimelineResult<Tweet>> result) {
+                    swipeLayout.setRefreshing(false);
+                }
 
-                    @Override
-                    public void failure(TwitterException exception) {
-                        Toast.makeText(context, "No Tweets", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+                @Override
+                public void failure(TwitterException exception) {
+                    Toast.makeText(context, "No Tweets", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }
