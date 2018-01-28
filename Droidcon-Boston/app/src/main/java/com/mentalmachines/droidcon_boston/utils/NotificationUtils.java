@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.views.MainActivity;
 
 public class NotificationUtils extends ContextWrapper {
@@ -61,7 +62,7 @@ public class NotificationUtils extends ContextWrapper {
                 channelId)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setTicker("Droidcon Boston")
+                .setTicker(getString(R.string.conference_name))
                 .setSmallIcon(android.R.drawable.stat_notify_more)
                 .setAutoCancel(true)
                 // for notification click action, also required on Gingerbread and below

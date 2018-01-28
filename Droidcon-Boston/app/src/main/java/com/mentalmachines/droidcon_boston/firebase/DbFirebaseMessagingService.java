@@ -3,12 +3,13 @@ package com.mentalmachines.droidcon_boston.firebase;
 import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils;
 import java.util.Map;
 
 public class DbFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "FCM";
+    private final String TAG = getClass().getSimpleName();
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -33,7 +34,7 @@ public class DbFirebaseMessagingService extends FirebaseMessagingService {
 
             // Show the notification here
             NotificationUtils notificationUtils = new NotificationUtils(this);
-            notificationUtils.sendAndroidChannelNotification("Droidcon Boston", bodyStr, 101);
+            notificationUtils.sendAndroidChannelNotification(getString(R.string.conference_name), bodyStr, 101);
         }
 
 

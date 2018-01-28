@@ -81,3 +81,5 @@ buildscript {
 repositories {
   maven { url 'https://maven.fabric.io/public' }
 }
+
+apply plugin: 'com.google.gms.google-services'

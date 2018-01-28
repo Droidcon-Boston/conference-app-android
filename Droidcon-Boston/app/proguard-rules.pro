@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+# Remove all debug logs
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+}
