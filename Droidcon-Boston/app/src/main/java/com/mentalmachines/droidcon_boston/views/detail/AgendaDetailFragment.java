@@ -10,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+import com.mentalmachines.droidcon_boston.data.UserAgendaRepo;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform;
 
@@ -23,6 +26,9 @@ public class AgendaDetailFragment extends Fragment {
 
     @BindView(R.id.text_title)
     TextView textTitle;
+
+    @BindView(R.id.image_bookmark)
+    ImageView imageBookmark;
 
     @BindView(R.id.text_speaker_name)
     TextView textSpeakerName;
@@ -48,6 +54,8 @@ public class AgendaDetailFragment extends Fragment {
     @BindView(R.id.text_room)
     TextView textRoom;
 
+    private ScheduleDatabase.ScheduleDetail scheduleDetail;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -58,13 +66,23 @@ public class AgendaDetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         String speakerName = bundle.getString(ScheduleDatabase.NAME);
-        ScheduleDatabase.ScheduleDetail scheduleDetail = ScheduleDatabase.fetchDetailData(getActivity().getApplicationContext(), speakerName);
+        scheduleDetail = ScheduleDatabase.fetchDetailData(getActivity().getApplicationContext(), speakerName);
         showAgendaDetail(scheduleDetail);
 
         textTime.setText(bundle.getString(ScheduleDatabase.TALK_TIME));
         textRoom.setText(bundle.getString(ScheduleDatabase.ROOM));
 
         return view;
+    }
+
+    @OnClick(R.id.image_bookmark)
+    protected void bookmarkClicked() {
+        if (scheduleDetail != null) {
+            UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
+            userAgendaRepo.bookmarkSession(scheduleDetail.getId(),
+                                           !userAgendaRepo.isSessionBookmarked(scheduleDetail.getId()));
+            showBookmarkStatus(scheduleDetail);
+        }
     }
 
     public void showAgendaDetail(ScheduleDatabase.ScheduleDetail scheduleDetail) {
@@ -95,6 +113,18 @@ public class AgendaDetailFragment extends Fragment {
         } else {
             imageFacebook.setTag(scheduleDetail.facebook);
         }
+
+        showBookmarkStatus(scheduleDetail);
+    }
+
+    private void showBookmarkStatus(ScheduleDatabase.ScheduleDetail scheduleDetail) {
+        UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
+        imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.listRow.talkTitle)
+                                       ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);
+    }
+
+    private UserAgendaRepo getUserAgendaRepo() {
+        return UserAgendaRepo.Companion.getInstance(imageBookmark.getContext());
     }
 }
 
