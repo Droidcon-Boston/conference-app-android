@@ -2,10 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
+
     <ExpandableListView
         android:id="@+id/faqlist"
-        android:divider="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:divider="@color/colorAccent" />
+</FrameLayout>

@@ -24,161 +24,154 @@ import java.util.Locale;
  * Used for displaying the schedule with sticky headers with optional day filtering
  */
 public class ScheduleAdapterItem extends
-        AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader> {
+    AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader> {
 
-    private ScheduleDatabase.ScheduleRow itemData;
+  static class ViewHolder extends FlexibleViewHolder {
 
-    private Date startTime;
+    ImageView avatar;
 
-    private Integer roomOrder;
+    TextView room;
 
-    public ScheduleDatabase.ScheduleRow getItemData() {
-        return itemData;
+    View rootLayout;
+
+    TextView speaker;
+
+    TextView timeText;
+
+    TextView title;
+
+    ViewHolder(View view, FlexibleAdapter adapter) {
+      super(view, adapter);
+
+      findViews(view);
     }
 
-    public ScheduleAdapterItem(ScheduleDatabase.ScheduleRow scheduleRow,
-            ScheduleAdapterItemHeader header) {
-        super(header);
-        this.itemData = scheduleRow;
-
-        String dateTimeString = scheduleRow.date + " " + scheduleRow.time;
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
-        try {
-            startTime = format.parse(dateTimeString);
-        } catch (ParseException e) {
-            Log.e("ScheduleAdapterItem", "Parse error: " + e + " for " + dateTimeString);
-        }
-
-        if ("THEATER 1".equals(scheduleRow.room)) {
-            roomOrder = 1;
-        } else if ("THEATER 2".equals(scheduleRow.room)) {
-            roomOrder = 2;
-        } else if ("CYCLORAMA".equals(scheduleRow.room)) {
-            roomOrder = 3;
-        }
+    public ViewHolder(View view, FlexibleAdapter adapter, boolean stickyHeader) {
+      super(view, adapter, stickyHeader);
+      findViews(view);
     }
 
-    public String getTitle() {
-        return itemData.talkTitle;
+    private void findViews(View parent) {
+      rootLayout = parent.findViewById(R.id.rootLayout);
+      avatar = parent.findViewById(R.id.speaker_image);
+      title = parent.findViewById(R.id.title_text);
+      speaker = parent.findViewById(R.id.speaker_name_text);
+      room = parent.findViewById(R.id.room_text);
+      timeText = parent.findViewById(R.id.time_text);
+    }
+  }
+
+  private ScheduleDatabase.ScheduleRow itemData;
+
+  private Integer roomOrder;
+
+  private Date startTime;
+
+  public ScheduleAdapterItem(ScheduleDatabase.ScheduleRow scheduleRow,
+      ScheduleAdapterItemHeader header) {
+    super(header);
+    this.itemData = scheduleRow;
+
+    String dateTimeString = scheduleRow.date + " " + scheduleRow.time;
+    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
+    try {
+      startTime = format.parse(dateTimeString);
+    } catch (ParseException e) {
+      Log.e("ScheduleAdapterItem", "Parse error: " + e + " for " + dateTimeString);
     }
 
-    public Date getStartTime() {
-        return startTime;
+    if ("THEATER 1".equals(scheduleRow.room)) {
+      roomOrder = 1;
+    } else if ("THEATER 2".equals(scheduleRow.room)) {
+      roomOrder = 2;
+    } else if ("CYCLORAMA".equals(scheduleRow.room)) {
+      roomOrder = 3;
     }
+  }
 
-    public Integer getRoomSortOrder() {
-        return roomOrder;
+  @Override
+  public void bindViewHolder(FlexibleAdapter adapter,
+      ScheduleAdapterItem.ViewHolder holder,
+      int position,
+      List payloads) {
+
+    if (itemData.speakerName == null) {
+      holder.avatar.setVisibility(View.GONE);
+      holder.timeText.setVisibility(View.VISIBLE);
+
+      holder.timeText.setText(itemData.talkTitle);
+
+      if (itemData.photo == null) {
+        holder.rootLayout.setBackground(null);
+      } else {
+        addBackgroundRipple(holder);
+      }
+    } else {
+      holder.avatar.setVisibility(View.VISIBLE);
+      holder.timeText.setVisibility(View.GONE);
+
+      holder.title.setText(itemData.talkTitle);
+      holder.speaker.setText(itemData.speakerName);
+      holder.room.setText(itemData.room);
+
+      Context context = holder.title.getContext();
+      Glide.with(context)
+          .load(itemData.photo)
+          .transform(new CircleTransform(context))
+          .crossFade()
+          .into(holder.avatar);
+
+      addBackgroundRipple(holder);
     }
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof ScheduleAdapterItem) {
-            ScheduleAdapterItem inItem = (ScheduleAdapterItem) o;
-            return this.itemData.talkTitle.equals(inItem.itemData.talkTitle);
-        }
-        return false;
+  @Override
+  public ScheduleAdapterItem.ViewHolder createViewHolder(FlexibleAdapter adapter,
+      LayoutInflater inflater,
+      ViewGroup parent) {
+    return new ScheduleAdapterItem.ViewHolder(
+        inflater.inflate(getLayoutRes(), parent, false), adapter);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof ScheduleAdapterItem) {
+      ScheduleAdapterItem inItem = (ScheduleAdapterItem) o;
+      return this.itemData.talkTitle.equals(inItem.itemData.talkTitle);
     }
+    return false;
+  }
 
-    @Override
-    public int hashCode() {
-        return itemData.talkTitle.hashCode();
-    }
+  public ScheduleDatabase.ScheduleRow getItemData() {
+    return itemData;
+  }
 
-    @Override
-    public int getLayoutRes() {
-        return R.layout.schedule_item;
-    }
+  @Override
+  public int getLayoutRes() {
+    return R.layout.schedule_item;
+  }
 
-    @Override
-    public ScheduleAdapterItem.ViewHolder createViewHolder(FlexibleAdapter adapter,
-            LayoutInflater inflater,
-            ViewGroup parent) {
-        return new ScheduleAdapterItem.ViewHolder(
-                inflater.inflate(getLayoutRes(), parent, false), adapter);
-    }
+  public Integer getRoomSortOrder() {
+    return roomOrder;
+  }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter,
-            ScheduleAdapterItem.ViewHolder holder,
-            int position,
-            List payloads) {
+  public Date getStartTime() {
+    return startTime;
+  }
 
-        if (itemData.speakerName == null) {
-            holder.sessionLayout.setVisibility(View.GONE);
-            holder.avatar.setVisibility(View.GONE);
-            holder.bigTitle.setVisibility(View.VISIBLE);
+  public String getTitle() {
+    return itemData.talkTitle;
+  }
 
-            holder.bigTitle.setText(itemData.talkTitle);
+  @Override
+  public int hashCode() {
+    return itemData.talkTitle.hashCode();
+  }
 
-            if (itemData.photo == null) {
-                holder.rootLayout.setBackground(null);
-            } else {
-                addBackgroundRipple(holder);
-            }
-        } else {
-            holder.sessionLayout.setVisibility(View.VISIBLE);
-            holder.avatar.setVisibility(View.VISIBLE);
-            holder.bigTitle.setVisibility(View.GONE);
-
-            holder.title.setText(itemData.talkTitle);
-            holder.speaker.setText(itemData.speakerName);
-            holder.room.setText(itemData.room);
-
-            Context context = holder.title.getContext();
-            Glide.with(context)
-                    .load(itemData.photo)
-                    .transform(new CircleTransform(context))
-                    .crossFade()
-                    .into(holder.avatar);
-
-            addBackgroundRipple(holder);
-        }
-    }
-
-    private void addBackgroundRipple(ViewHolder holder) {
-        TypedValue outValue = new TypedValue();
-        Context context = holder.title.getContext();
-        context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
-        holder.rootLayout.setBackgroundResource(outValue.resourceId);
-    }
-
-
-    static class ViewHolder extends FlexibleViewHolder {
-
-        View rootLayout;
-
-        ImageView avatar;
-
-        TextView title;
-
-        TextView speaker;
-
-        TextView room;
-
-        View sessionLayout;
-
-        TextView bigTitle;
-
-        ViewHolder(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-
-            findViews(view);
-        }
-
-        public ViewHolder(View view, FlexibleAdapter adapter, boolean stickyHeader) {
-            super(view, adapter, stickyHeader);
-
-            findViews(view);
-        }
-
-        private void findViews(View parent) {
-            rootLayout = parent.findViewById(R.id.rootLayout);
-            avatar = (ImageView) parent.findViewById(R.id.speaker_image);
-            title = (TextView) parent.findViewById(R.id.title_text);
-            speaker = (TextView) parent.findViewById(R.id.speaker_name_text);
-            room = (TextView) parent.findViewById(R.id.room_text);
-            sessionLayout = parent.findViewById(R.id.session_layout);
-            bigTitle = (TextView) parent.findViewById(R.id.bigtitle_text);
-        }
-    }
+  private void addBackgroundRipple(ViewHolder holder) {
+    TypedValue outValue = new TypedValue();
+    Context context = holder.title.getContext();
+    context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+    holder.rootLayout.setBackgroundResource(outValue.resourceId);
+  }
 }

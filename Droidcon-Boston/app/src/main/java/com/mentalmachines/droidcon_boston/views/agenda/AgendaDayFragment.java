@@ -31,129 +31,127 @@ import java.util.Map;
  */
 public class AgendaDayFragment extends Fragment {
 
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
+  private static final String ARG_DAY = "day";
 
-    private Map<String, ScheduleAdapterItemHeader> timeHeaders = new HashMap<>();
+  @BindView(R.id.recycler)
+  RecyclerView recycler;
 
-    private static final String ARG_DAY = "day";
+  private String dayFilter;
 
-    private String dayFilter;
+  private Map<String, ScheduleAdapterItemHeader> timeHeaders = new HashMap<>();
 
-    public AgendaDayFragment() {
-        // Required empty public constructor
+  public static AgendaDayFragment newInstance(String day) {
+    AgendaDayFragment fragment = new AgendaDayFragment();
+    Bundle args = new Bundle();
+    args.putString(ARG_DAY, day);
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public AgendaDayFragment() {
+    // Required empty public constructor
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      dayFilter = getArguments().getString(ARG_DAY);
     }
 
-    public static AgendaDayFragment newInstance(String day) {
-        AgendaDayFragment fragment = new AgendaDayFragment();
-        Bundle args  = new Bundle();
-        args.putString(ARG_DAY, day);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            dayFilter = getArguments().getString(ARG_DAY);
+  }
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.agenda_day_fragment, container, false);
+    ButterKnife.bind(this, view);
+
+    recycler.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+    setupHeaderAdapter();
+
+    return view;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // onBackPressed();
+        FragmentManager fragmentManager = getActivity().getFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+          fragmentManager.popBackStack();
         }
-
-
     }
+    return super.onOptionsItemSelected(item);
+  }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // onBackPressed();
-                FragmentManager fragmentManager = getActivity().getFragmentManager();
-                if (fragmentManager.getBackStackEntryCount() > 0) {
-                    fragmentManager.popBackStack();
+  private void setupHeaderAdapter() {
+    List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase
+        .fetchScheduleListByDay(getActivity().getApplicationContext(), dayFilter);
+    List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
+    for (ScheduleDatabase.ScheduleRow row : rows) {
+      String timeDisplay = ((row.time == null) || (row.time.length() == 0)) ? "Unscheduled" : row.time;
+      ScheduleAdapterItemHeader header = timeHeaders.get(timeDisplay);
+      if (header == null) {
+        header = new ScheduleAdapterItemHeader(timeDisplay);
+        timeHeaders.put(timeDisplay, header);
+      }
+
+      ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
+      items.add(item);
+    }
+    Collections.sort(items, (s1, s2) -> {
+      int timeComparison = s1.getStartTime().compareTo(s2.getStartTime());
+      if (timeComparison != 0) {
+        return timeComparison;
+      }
+      return s1.getRoomSortOrder().compareTo(s2.getRoomSortOrder());
+    });
+
+    FlexibleAdapter.enableLogs(true);
+    FlexibleAdapter<ScheduleAdapterItem> headerAdapter =
+        new FlexibleAdapter<>(items,
+            (FlexibleAdapter.OnItemClickListener) position -> {
+              Object listItem = items.get(position);
+              //noinspection ConstantConditions
+              if (listItem instanceof ScheduleAdapterItem) {
+                ScheduleAdapterItem item = (ScheduleAdapterItem) listItem;
+                if (StringUtils.isNullorEmpty(item.getItemData().speakerName)) {
+                  String url = item.getItemData().photo;
+                  if (item.getItemData().photo == null) {
+                    return false;
+                  }
+                  // event where info URL is in the photo string
+                  Intent i = new Intent(Intent.ACTION_VIEW);
+                  i.setData(Uri.parse(url));
+                  PackageManager packageManager = getActivity().getPackageManager();
+                  if (i.resolveActivity(packageManager) != null) {
+                    startActivity(i);
+                  }
+                  return false;
                 }
-        }
-        return super.onOptionsItemSelected(item);
-    }
+                Bundle arguments = new Bundle();
+                arguments.putString(ScheduleDatabase.NAME, item.getItemData().speakerName);
+                arguments.putString(ScheduleDatabase.TALK_TIME, item.getItemData().time);
+                arguments.putString(ScheduleDatabase.ROOM, item.getItemData().room);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.agenda_day_fragment, container, false);
-        ButterKnife.bind(this, view);
+                AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
+                agendaDetailFragment.setArguments(arguments);
 
-        recycler.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        setupHeaderAdapter();
+                getActivity().getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, agendaDetailFragment)
+                    .addToBackStack(null)
+                    .commit();
+              }
 
-        return view;
-    }
-
-
-    private void setupHeaderAdapter() {
-        List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase
-                .fetchScheduleListByDay(getActivity().getApplicationContext(), dayFilter);
-        List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
-        for (ScheduleDatabase.ScheduleRow row : rows) {
-            String timeDisplay = ((row.time == null) || (row.time.length() == 0)) ? "Unscheduled" : row.time;
-            ScheduleAdapterItemHeader header = timeHeaders.get(timeDisplay);
-            if (header == null) {
-                header = new ScheduleAdapterItemHeader(timeDisplay);
-                timeHeaders.put(timeDisplay, header);
-            }
-
-            ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
-            items.add(item);
-        }
-        Collections.sort(items, (s1, s2) -> {
-            int timeComparison = s1.getStartTime().compareTo(s2.getStartTime());
-            if (timeComparison != 0) {
-                return timeComparison;
-            }
-            return s1.getRoomSortOrder().compareTo(s2.getRoomSortOrder());
-        });
-
-        FlexibleAdapter.enableLogs(true);
-        FlexibleAdapter<ScheduleAdapterItem> headerAdapter =
-                new FlexibleAdapter<>(items,
-                        (FlexibleAdapter.OnItemClickListener) position -> {
-                            Object listItem = items.get(position);
-                            //noinspection ConstantConditions
-                            if (listItem instanceof ScheduleAdapterItem) {
-                                ScheduleAdapterItem item = (ScheduleAdapterItem) listItem;
-                                if (StringUtils.isNullorEmpty(item.getItemData().speakerName)) {
-                                    String url = item.getItemData().photo;
-                                    if (item.getItemData().photo == null) {
-                                        return false;
-                                    }
-                                    // event where info URL is in the photo string
-                                    Intent i = new Intent(Intent.ACTION_VIEW);
-                                    i.setData(Uri.parse(url));
-                                    PackageManager packageManager = getActivity().getPackageManager();
-                                    if (i.resolveActivity(packageManager) != null) {
-                                        startActivity(i);
-                                    }
-                                    return false;
-                                }
-                                Bundle arguments = new Bundle();
-                                arguments.putString(ScheduleDatabase.NAME, item.getItemData().speakerName);
-                                arguments.putString(ScheduleDatabase.TALK_TIME, item.getItemData().time);
-                                arguments.putString(ScheduleDatabase.ROOM, item.getItemData().room);
-
-                                AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
-                                agendaDetailFragment.setArguments(arguments);
-
-                                FragmentManager fragmentManager = getActivity().getFragmentManager();
-                                fragmentManager.beginTransaction()
-                                        .add(R.id.fragment_container, agendaDetailFragment)
-                                        .addToBackStack(null)
-                                        .commit();
-                            }
-
-                            return true;
-                        });
-        headerAdapter
-                .expandItemsAtStartUp()
-                .setDisplayHeadersAtStartUp(true)
-                .setStickyHeaders(true);
-        recycler.setAdapter(headerAdapter);
-    }
+              return true;
+            });
+    headerAdapter
+        .expandItemsAtStartUp()
+        .setDisplayHeadersAtStartUp(true)
+        .setStickyHeaders(true);
+    recycler.setAdapter(headerAdapter);
+  }
 }

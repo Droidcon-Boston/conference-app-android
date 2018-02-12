@@ -22,4 +22,9 @@
 
     <string name="action_bar_speaker_title">Speaker Profile</string>
     <string name="conference_name">Droidcon Boston</string>
+
+
+    <string name="lorem">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id cursus metus aliquam eleifend mi in nulla posuere. Integer vitae justo eget magna. Aenean euismod elementum nisi quis eleifend quam. Dui id ornare arcu odio ut sem. Velit euismod in pellentesque massa placerat duis. Lacus laoreet non curabitur gravida arcu. Nunc pulvinar sapien et ligula. Ac feugiat sed lectus vestibulum mattis ullamcorper velit. Condimentum mattis pellentesque id nibh tortor id aliquet. Euismod lacinia at quis risus. Adipiscing commodo elit at imperdiet dui accumsan sit amet. Ultrices in iaculis nunc sed augue lacus viverra vitae congue. In est ante in nibh mauris cursus mattis. Neque ornare aenean euismod elementum nisi quis.
+    </string>
 </resources>

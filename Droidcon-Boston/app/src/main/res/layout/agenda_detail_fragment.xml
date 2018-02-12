@@ -1,187 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/agenda_detail_root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:layout_editor_absoluteY="25dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="16dp"
-        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/agenda_detail_img_headerbg"
+        android:layout_width="601dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/agenda_detail_tv_talkroom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/placeholder" />
+
+    <TextView
+        android:id="@+id/agenda_detail_tv_talktime"
+        android:layout_width="0dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_my_schedule"
+        android:drawableTint="@color/colorAccent"
+        android:fontFamily="sans-serif"
+        android:gravity="center_vertical"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agenda_detail_tv_talkroom"
+        tools:text="3:30 PM" />
+
+    <TextView
+        android:id="@+id/agenda_detail_tv_talkroom"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_place"
+        android:drawableTint="@color/colorAccent"
+        android:fontFamily="sans-serif"
+        android:gravity="center_vertical"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agenda_detail_img_headerbg"
+        tools:text="THEATER 1" />
+
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agenda_detail_tv_talktime">
 
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/agenda_detail_tv_talkdescription"
             style="@android:style/TextAppearance.Medium"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
-            tools:text="Title of Talk"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/text_time"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                tools:text="3:30 PM"/>
-
-            <TextView
-                android:id="@+id/text_room"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                tools:text="THEATER 1"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/text_description"
-            style="@android:style/TextAppearance.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:textColor="@android:color/black"
-            android:fontFamily="sans-serif"
+            android:layout_height="match_parent"
+            android:padding="8dp"
             android:textSize="20sp"
-            tools:text="Long description of the talk"/>
+            tools:text="@tools:sample/lorem/random" />
+    </ScrollView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
+    <TextView
+        android:id="@+id/agenda_detail_tv_talktitle"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="0dp"
+        android:layout_height="147dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:textColor="@color/colorBackground"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title of Talk" />
 
-            <ImageView
-                android:id="@+id/image_speaker"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginEnd="16dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="fitXY"
-                tools:src="@drawable/emo_im_cool"/>
+    <ImageView
+        android:id="@+id/agenda_detail_img_speaker"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/agenda_detail_img_headerbg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agenda_detail_tv_talktitle"
+        tools:src="@drawable/emo_im_cool" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:orientation="vertical">
+    <TextView
+        android:id="@+id/agenda_detail_tv_speaker_name"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/agenda_detail_img_speaker"
+        app:layout_constraintTop_toTopOf="@+id/agenda_detail_img_speaker"
+        tools:text="Sam Edwards" />
 
-                <TextView
-                    android:id="@+id/text_speaker_name"
-                    style="@android:style/TextAppearance.Medium"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:textStyle="bold"
-                    android:fontFamily="sans-serif"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/black"
-                    tools:text="Sam Edwards"/>
+    <TextView
+        android:id="@+id/agenda_detail_tv_speaker_bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorBackground"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/agenda_detail_img_speaker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/agenda_detail_img_speaker"
+        app:layout_constraintTop_toBottomOf="@+id/agenda_detail_tv_speaker_name"
+        tools:text="Software Engineer" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/image_twitter"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:onClick="faqClick"
-                        android:background="@android:color/transparent"
-                        android:padding="8dp"
-                        android:clickable="true"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_twitter"
-                        android:tint="@color/tw__blue_default"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/agenda_detail_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_star"
+        app:layout_constraintBottom_toTopOf="@+id/agenda_detail_tv_talkroom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agenda_detail_img_headerbg"
+        app:layout_constraintVertical_bias="0.75" />
 
-                    <ImageButton
-                        android:id="@+id/image_linkedin"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:onClick="faqClick"
-                        android:background="@color/tw__blue_default"
-                        android:padding="4dp"
-                        android:scaleType="fitCenter"
-                        android:clickable="true"
-                        android:src="@drawable/ic_linkedin"/>
-
-                    <ImageButton
-                        android:id="@+id/image_facebook"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:clickable="true"
-                        android:onClick="faqClick"
-                        android:background="@android:color/transparent"
-                        android:padding="8dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_facebook"
-                        android:tint="#ff3b5998"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/text_speaker_bio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:fontFamily="sans-serif"
-            android:textSize="16sp"
-            tools:text="Victoria is a random author who presents stuff"
-            />
-
-    </LinearLayout>
-</ScrollView>
+</android.support.constraint.ConstraintLayout>

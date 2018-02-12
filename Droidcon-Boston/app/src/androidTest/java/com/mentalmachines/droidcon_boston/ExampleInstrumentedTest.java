@@ -1,10 +1,5 @@
 package com.mentalmachines.droidcon_boston;
 
-import android.content.Context;
-
-
-import static junit.framework.Assert.assertEquals;
-
 /**
  * Instrumentation test, which will execute on an Android device.
  *

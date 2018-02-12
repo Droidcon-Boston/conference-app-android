@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/nav_agenda"
+            android:icon="@drawable/ic_agenda"
+            android:title="Agenda" />
+        <item
+            android:id="@+id/nav_my_schedule"
+            android:icon="@drawable/ic_my_schedule"
+            android:title="My Schedule" />
+        <item
+            android:id="@+id/nav_speakers"
+            android:icon="@drawable/ic_speakers"
+            android:title="Speakers" />
+        <item
+            android:id="@+id/nav_social"
+            android:icon="@drawable/ic_social"
+            android:title="Social" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_faq"
+            android:icon="@drawable/ic_faq"
+            android:title="FAQ" />
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_about_us"
+            android:title="About Us" />
+        <item
+            android:id="@+id/nav_coc"
+            android:icon="@drawable/ic_coc"
+            android:title="Code Of Conduct" />
+    </group>
+
+</menu>

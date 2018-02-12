@@ -12,48 +12,47 @@ import com.mentalmachines.droidcon_boston.R;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleItemViewHolder> {
 
-    @Override
-    public int getItemCount() {
-        return 0;
+  public static class ScheduleItemViewHolder extends RecyclerView.ViewHolder {
+
+    @BindView(R.id.room_text)
+    TextView locationText;
+
+    @BindView(R.id.speaker_name_text)
+    TextView speakerNameText;
+
+    @BindView(R.id.time_text)
+    TextView timeText;
+
+    @BindView(R.id.title_text)
+    TextView titleText;
+
+    ScheduleItemViewHolder(View itemView) {
+      super(itemView);
+      ButterKnife.bind(this, itemView);
+      itemView.setOnClickListener(v -> {
+      });
     }
+  }
 
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
+  @Override
+  public int getItemCount() {
+    return 0;
+  }
 
-    @Override
-    public ScheduleItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.schedule_card_view, parent, false);
-        ScheduleItemViewHolder holder = new ScheduleItemViewHolder(view);
-        return holder;
-    }
+  @Override
+  public int getItemViewType(int position) {
+    return super.getItemViewType(position);
+  }
 
-    @Override
-    public void onBindViewHolder(ScheduleItemViewHolder holder, int position) {
-    }
+  @Override
+  public void onBindViewHolder(ScheduleItemViewHolder holder, int position) {
+  }
 
-    public static class ScheduleItemViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.title_text)
-        TextView titleText;
-
-        @BindView(R.id.time_text)
-        TextView timeText;
-
-        @BindView(R.id.description_text)
-        TextView locationText;
-
-        @BindView(R.id.speaker_name_text)
-        TextView speakerNameText;
-
-        ScheduleItemViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> {
-            });
-        }
-    }
+  @Override
+  public ScheduleItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    View view = LayoutInflater.from(parent.getContext()).inflate(
+        R.layout.schedule_item, parent, false);
+    return new ScheduleItemViewHolder(view);
+  }
 }
 

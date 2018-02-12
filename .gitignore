@@ -39,3 +39,6 @@ captures/
 
 # Keystore files
 *.jks
+
+**/*/res/values/secrets.xml
+

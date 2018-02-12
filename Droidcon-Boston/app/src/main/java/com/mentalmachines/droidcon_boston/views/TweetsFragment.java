@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.mentalmachines.droidcon_boston.R;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -20,53 +19,55 @@ import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
 public class TweetsFragment extends ListFragment {
 
-    private Context context = null;
-    private SwipeRefreshLayout swipeLayout = null;
-    private final String droidconTwitterHashTag = "#droidconbos OR #Droidcon OR #DroidconBoston";
+  private Context context = null;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+  private final String droidconTwitterHashTag = "#droidconbos OR #Droidcon OR #DroidconBoston";
 
-        this.context = context;
-    }
+  private SwipeRefreshLayout swipeLayout = null;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tweet_layout, container, false);
-        swipeLayout =  view.findViewById(R.id.swipe_container);
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
 
-        return view;
+    this.context = context;
+  }
 
-    }
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.tweet_layout, container, false);
+    swipeLayout = view.findViewById(R.id.swipe_container);
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    return view;
 
-        final SearchTimeline searchTimeline = new SearchTimeline.Builder()
-                .query(droidconTwitterHashTag)
-                .build();
+  }
 
-        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(context)
-                .setTimeline(searchTimeline)
-                .build();
+  @Override
+  public void onResume() {
+    super.onResume();
 
-        setListAdapter(adapter);
+    final SearchTimeline searchTimeline = new SearchTimeline.Builder()
+        .query(droidconTwitterHashTag)
+        .build();
 
-        swipeLayout.setOnRefreshListener(() -> {
-            swipeLayout.setRefreshing(true);
-            adapter.refresh(new Callback<TimelineResult<Tweet>>() {
-                @Override
-                public void success(Result<TimelineResult<Tweet>> result) {
-                    swipeLayout.setRefreshing(false);
-                }
+    final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(context)
+        .setTimeline(searchTimeline)
+        .build();
 
-                @Override
-                public void failure(TwitterException exception) {
-                    Toast.makeText(context, "No Tweets", Toast.LENGTH_SHORT).show();
-                }
-            });
-        });
-    }
+    setListAdapter(adapter);
+
+    swipeLayout.setOnRefreshListener(() -> {
+      swipeLayout.setRefreshing(true);
+      adapter.refresh(new Callback<TimelineResult<Tweet>>() {
+        @Override
+        public void failure(TwitterException exception) {
+          Toast.makeText(context, "No Tweets", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void success(Result<TimelineResult<Tweet>> result) {
+          swipeLayout.setRefreshing(false);
+        }
+      });
+    });
+  }
 }

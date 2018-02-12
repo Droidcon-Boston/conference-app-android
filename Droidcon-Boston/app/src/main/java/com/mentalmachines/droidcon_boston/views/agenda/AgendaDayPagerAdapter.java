@@ -7,27 +7,29 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 
 public class AgendaDayPagerAdapter extends FragmentPagerAdapter {
-    private final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[]{"Day 1", "Day 2"};
 
-    public AgendaDayPagerAdapter(FragmentManager fm) {
-        super(fm);
-    }
+  private final int PAGE_COUNT = 2;
 
-    @Override
-    public int getCount() {
-        return PAGE_COUNT;
-    }
+  private String tabTitles[] = new String[]{"Day 1", "Day 2"};
 
-    @Override
-    public Fragment getItem(int position) {
-        return AgendaDayFragment.newInstance(
-                (position == 0) ? ScheduleDatabase.MONDAY : ScheduleDatabase.TUESDAY
-        );
-    }
+  public AgendaDayPagerAdapter(FragmentManager fm) {
+    super(fm);
+  }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return tabTitles[position];
-    }
+  @Override
+  public int getCount() {
+    return PAGE_COUNT;
+  }
+
+  @Override
+  public Fragment getItem(int position) {
+    return AgendaDayFragment.newInstance(
+        (position == 0) ? ScheduleDatabase.MONDAY : ScheduleDatabase.TUESDAY
+    );
+  }
+
+  @Override
+  public CharSequence getPageTitle(int position) {
+    return tabTitles[position];
+  }
 }
