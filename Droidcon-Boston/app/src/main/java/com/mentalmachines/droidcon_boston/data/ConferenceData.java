@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
 import java.text.SimpleDateFormat;
@@ -18,7 +19,8 @@ import java.util.Locale;
 
 public class ConferenceData {
     public static final String TAG = ConferenceData.class.getSimpleName();
-    private static SimpleDateFormat sDateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
+    private static SimpleDateFormat sTimeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+    private static SimpleDateFormat sDateFormat = new SimpleDateFormat("M/d/yyyy", Locale.US);
     public static ConferenceDataModel sConfData;
 
     /**
@@ -26,7 +28,7 @@ public class ConferenceData {
      * @param ctx
      * @return a list of all of the agenda events
      */
-    public static List<ScheduleRow> fetchScheduleList(Context ctx) {
+    public static List<ScheduleRow> fetchScheduleList(Context ctx, String date) {
         ScheduleRow listItem;
         if (sConfData == null) {
             sConfData = ConferenceDataUtils.Companion.parseData(ctx);
@@ -34,7 +36,9 @@ public class ConferenceData {
         ArrayList<ScheduleRow> eventData = new ArrayList<>();
         for (EventModel event: sConfData.getEvents().values()) {
             listItem = setScheduleRow(event);
-            eventData.add(listItem);
+            if (listItem.dateString.equals(date)) {
+                eventData.add(listItem);
+            }
         }
         return eventData;
     }
@@ -55,7 +59,10 @@ public class ConferenceData {
         }
         listItem.talkTitle = event.getName();
         if (event.getStartTime() != null) {
-            listItem.time = sDateFormat.format(event.getStartTime());
+            listItem.date = event.getStartTime();
+            listItem.time = sTimeFormat.format(listItem.date);
+            listItem.dateString = sDateFormat.format(listItem.date);
+            Log.d(TAG, "date string for compare " + listItem.dateString);
         }
         if (event.getRoomIds() != null) {
             listItem.room = (String) event.getRoomNames().keySet().toArray()[0];

@@ -2,7 +2,6 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +14,8 @@ import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Used for displaying the schedule with sticky headers with optional day filtering
@@ -41,14 +37,7 @@ public class ScheduleAdapterItem extends
             ScheduleAdapterItemHeader header) {
         super(header);
         this.itemData = scheduleRow;
-
-        String dateTimeString = scheduleRow.date + " " + scheduleRow.time;
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
-        try {
-            startTime = format.parse(dateTimeString);
-        } catch (ParseException e) {
-            Log.e("ScheduleAdapterItem", "Parse error: " + e + " for " + dateTimeString);
-        }
+        startTime = scheduleRow.date;
 
         if ("THEATER 1".equals(scheduleRow.room)) {
             roomOrder = 1;

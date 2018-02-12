@@ -23,6 +23,7 @@ import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class AgendaDayFragment extends Fragment {
                 .fetchScheduleListByDay(getActivity().getApplicationContext(), dayFilter);
      */
     private void setupHeaderAdapter() {
-        List<ScheduleDatabase.ScheduleRow> rows = ConferenceData.fetchScheduleList(getContext());
+        List<ScheduleDatabase.ScheduleRow> rows = ConferenceData.fetchScheduleList(getContext(), dayFilter);
         Log.d(TAG, "number of rows? " + rows.size());
         List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
         for (ScheduleDatabase.ScheduleRow row : rows) {
@@ -106,14 +107,15 @@ public class AgendaDayFragment extends Fragment {
             ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
             items.add(item);
         }
-        /* TODO
         Collections.sort(items, (s1, s2) -> {
             int timeComparison = s1.getStartTime().compareTo(s2.getStartTime());
             if (timeComparison != 0) {
                 return timeComparison;
             }
-            return s1.getRoomSortOrder().compareTo(s2.getRoomSortOrder());
-        });*/
+            return s1.getTitle().compareTo(s2.getTitle());
+            //TODO handle room order
+            //return s1.getRoomSortOrder().compareTo(s2.getRoomSortOrder());
+        });
 
         FlexibleAdapter.enableLogs(true);
         FlexibleAdapter<ScheduleAdapterItem> headerAdapter =

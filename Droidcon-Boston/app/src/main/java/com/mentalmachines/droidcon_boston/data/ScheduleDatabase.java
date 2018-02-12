@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     //public static final String DESCRIPTION = "description";
     public static final String PHOTO = "photo_link";
     //public static final String BIO = "bio";
-    public static final String TALK_DATE = "date";
+    public static final String TALK_DATE = "dateString";
     public static final String TALK_TIME = "time";
     public static final String ROOM = "room";
     //public static final String SPKR_TWEET = "twitter";
@@ -55,7 +56,8 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         public int photoResource;
         public String time;
         public String room;
-        public String date;
+        public String dateString;
+        public Date date;
     }
 
     public static class ScheduleDetail {
@@ -104,7 +106,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             if (!c.isNull(COL_TALK_TIME)) {
                 talkData.listRow.room = c.getString(COL_ROOM);
                 talkData.listRow.time = c.getString(COL_TALK_TIME);
-                talkData.listRow.date = c.getString(COL_TALK_DATE);
+                talkData.listRow.dateString = c.getString(COL_TALK_DATE);
             }
 
             talkData.talkDescription = c.getString(COL_DESCRIPTION);
@@ -139,7 +141,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 if (!c.isNull(3)){
                     item.time = c.getString(3);
                     item.room = c.getString(4);
-                    item.date = c.getString(5);
+                    item.dateString = c.getString(5);
                 } else {
                     item.time = "unscheduled";
                 }
@@ -159,15 +161,15 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
     public static final String sDetailWhere = " " + NAME + " LIKE ?";
     public static final String sDayWhere = " " + TALK_DATE + " LIKE ?";
-    public static final String MONDAY = "4/10/2017";
-    public static final String TUESDAY = "4/11/2017";
+    public static final String MONDAY = "2/1/2018";
+    public static final String TUESDAY = "2/2/2018";
 
     public static List<ScheduleRow> fetchScheduleListByDay(Context ctx, String date) {
         List<ScheduleRow> items;
 
         String filter = (date == null) ? null : sDayWhere;
         String params[] = (date == null) ? null : new String[] { date };
-        //NOTE: DB has date/time in string format so we can't sort the right way :-P
+        //NOTE: DB has dateString/time in string format so we can't sort the right way :-P
         String orderBy = null; // TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
 
         final SQLiteDatabase db = getDatabase(ctx);
@@ -185,7 +187,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 item.photo = c.getString(2);
                 item.time = c.getString(3);
                 item.room = c.getString(4);
-                item.date = c.getString(5);
+                item.dateString = c.getString(5);
                 items.add(item);
             } while (c.moveToNext());
             Log.i(TAG, "finished adapter array");
@@ -203,7 +205,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             registration.photo = null;
             registration.time = "9:00 AM";
             registration.room = "";
-            registration.date = MONDAY;
+            registration.dateString = MONDAY;
             items.add(registration);
             ScheduleRow lunch = new ScheduleRow();
             lunch.speakerName = null;
@@ -211,7 +213,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             lunch.photo = null;
             lunch.time = "12:00 PM";
             lunch.room = "";
-            lunch.date = MONDAY;
+            lunch.dateString = MONDAY;
             items.add(lunch);
         }
 
@@ -223,7 +225,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             breakfast.photo = null;
             breakfast.time = "9:00 AM";
             breakfast.room = "";
-            breakfast.date = TUESDAY;
+            breakfast.dateString = TUESDAY;
             items.add(breakfast);
             ScheduleRow lunch = new ScheduleRow();
             lunch.speakerName = null;
@@ -231,7 +233,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             lunch.photo = null;
             lunch.time = "12:00 PM";
             lunch.room = "";
-            lunch.date = TUESDAY;
+            lunch.dateString = TUESDAY;
             items.add(lunch);
             ScheduleRow party = new ScheduleRow();
             party.speakerName = null;
@@ -239,7 +241,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             party.photo = null;
             party.time = "5:30 PM";
             party.room = "";
-            party.date = TUESDAY;
+            party.dateString = TUESDAY;
             party.photo = "http://www.droidcon-boston.com/events-info/";
             items.add(party);
         }
