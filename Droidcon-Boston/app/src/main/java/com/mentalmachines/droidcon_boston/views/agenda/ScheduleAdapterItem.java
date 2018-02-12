@@ -25,8 +25,6 @@ public class ScheduleAdapterItem extends
 
     private ScheduleDatabase.ScheduleRow itemData;
 
-    private Date startTime;
-
     private Integer roomOrder;
 
     public ScheduleDatabase.ScheduleRow getItemData() {
@@ -37,7 +35,6 @@ public class ScheduleAdapterItem extends
             ScheduleAdapterItemHeader header) {
         super(header);
         this.itemData = scheduleRow;
-        startTime = scheduleRow.date;
 
         if ("THEATER 1".equals(scheduleRow.room)) {
             roomOrder = 1;
@@ -53,7 +50,7 @@ public class ScheduleAdapterItem extends
     }
 
     public Date getStartTime() {
-        return startTime;
+        return itemData.date;
     }
 
     public Integer getRoomSortOrder() {
@@ -114,30 +111,19 @@ public class ScheduleAdapterItem extends
             holder.speaker.setText(itemData.speakerName);
             holder.room.setText(itemData.room);
 
-            Context context = holder.title.getContext();
-            if (TextUtils.isEmpty(itemData.photo)) {
-                Glide.with(context)
-                        .load(itemData.photoResource)
-                        .transform(new CircleTransform(context))
-                        .crossFade()
-                        .into(holder.avatar);
-            } else {
-                Glide.with(context)
-                        .load(itemData.photo)
-                        .transform(new CircleTransform(context))
-                        .crossFade()
-                        .into(holder.avatar);
-            }
-
-
+            final Context context = holder.title.getContext();
+            Glide.with(context)
+                    .load(TextUtils.isEmpty(itemData.photo)? itemData.photoResource: itemData.photo)
+                    .transform(new CircleTransform(context))
+                    .crossFade()
+                    .into(holder.avatar);
             addBackgroundRipple(holder);
         }
     }
 
     private void addBackgroundRipple(ViewHolder holder) {
         TypedValue outValue = new TypedValue();
-        Context context = holder.title.getContext();
-        context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        holder.title.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
         holder.rootLayout.setBackgroundResource(outValue.resourceId);
     }
 

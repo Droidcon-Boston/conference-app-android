@@ -72,22 +72,12 @@ public class AgendaDetailFragment extends Fragment {
     }
 
     public void showAgendaDetail(ScheduleDatabase.ScheduleDetail scheduleDetail) {
-        if (TextUtils.isEmpty(scheduleDetail.listRow.photo)) {
-            Glide.with(this)
-                    .load(scheduleDetail.listRow.photoResource)
-                    .transform(new CircleTransform(getActivity().getApplicationContext()))
-                    .crossFade()
-                    .into(imageSpeaker);
-        } else {
-            Glide.with(this)
-                    .load(scheduleDetail.listRow.photo)
-                    .transform(new CircleTransform(getActivity().getApplicationContext()))
-                    .placeholder(R.drawable.emo_im_cool)
-                    .crossFade()
-                    .into(imageSpeaker);
-        }
-
-
+        Glide.with(this)
+                .load(TextUtils.isEmpty(scheduleDetail.listRow.photo) ?
+                        scheduleDetail.listRow.photoResource : scheduleDetail.listRow.photo)
+                .transform(new CircleTransform(getActivity().getApplicationContext()))
+                .crossFade()
+                .into(imageSpeaker);
         textTitle.setText(scheduleDetail.listRow.talkTitle);
         textSpeakerName.setText(scheduleDetail.listRow.speakerName);
         textSpeakerBio.setText(Html.fromHtml(scheduleDetail.speakerBio));
