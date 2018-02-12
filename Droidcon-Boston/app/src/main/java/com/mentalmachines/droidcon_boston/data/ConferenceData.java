@@ -2,7 +2,6 @@ package com.mentalmachines.droidcon_boston.data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
 import java.text.SimpleDateFormat;
@@ -26,6 +25,7 @@ public class ConferenceData {
     /**
      * Context is needed to get the json file from assets
      * @param ctx
+     * @param date - which tab will be shown
      * @return a list of all of the agenda events
      */
     public static List<ScheduleRow> fetchScheduleList(Context ctx, String date) {
@@ -62,7 +62,7 @@ public class ConferenceData {
             listItem.date = event.getStartTime();
             listItem.time = sTimeFormat.format(listItem.date);
             listItem.dateString = sDateFormat.format(listItem.date);
-            Log.d(TAG, "date string for compare " + listItem.dateString);
+            //Log.d(TAG, "date string for compare " + listItem.dateString);
         }
         if (event.getRoomIds() != null) {
             listItem.room = (String) event.getRoomNames().keySet().toArray()[0];
