@@ -8,13 +8,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorAccent" />
+        android:background="@color/colorGrayTranslucent" />
 
     <TextView
         android:id="@+id/header_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
+        android:background="@color/colorLightGray"
         android:ellipsize="end"
         android:fontFamily="sans-serif"
         android:maxLines="1"
@@ -29,5 +29,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorAccent" />
+        android:background="@color/colorGrayTranslucent" />
 </LinearLayout>

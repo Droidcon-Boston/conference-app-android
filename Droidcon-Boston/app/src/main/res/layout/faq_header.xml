@@ -9,7 +9,7 @@
         android:id="@+id/question_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
+        android:background="@color/colorLightGray"
         android:fontFamily="sans-serif"
         android:paddingBottom="8dp"
         android:paddingLeft="30dp"
@@ -22,7 +22,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent" />
+        android:background="@color/colorGrayTranslucent" />
 
 </LinearLayout>
