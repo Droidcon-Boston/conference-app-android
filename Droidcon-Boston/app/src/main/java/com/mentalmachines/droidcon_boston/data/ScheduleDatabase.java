@@ -6,9 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +52,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         public String speakerName;
         public String talkTitle;
         public String photo;
+        public int photoResource;
         public String time;
         public String room;
         public String date;

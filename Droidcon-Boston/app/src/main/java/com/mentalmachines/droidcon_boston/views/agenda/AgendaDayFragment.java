@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +17,12 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.mentalmachines.droidcon_boston.R;
+import com.mentalmachines.droidcon_boston.data.ConferenceData;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ import java.util.Map;
  * Fragment for an agenda day
  */
 public class AgendaDayFragment extends Fragment {
-
+    public static final String TAG = AgendaDayFragment.class.getSimpleName();
     @BindView(R.id.recycler)
     RecyclerView recycler;
 
@@ -58,8 +59,6 @@ public class AgendaDayFragment extends Fragment {
         if (getArguments() != null) {
             dayFilter = getArguments().getString(ARG_DAY);
         }
-
-
     }
 
     @Override
@@ -88,9 +87,13 @@ public class AgendaDayFragment extends Fragment {
     }
 
 
-    private void setupHeaderAdapter() {
-        List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase
+    /*
+    List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase
                 .fetchScheduleListByDay(getActivity().getApplicationContext(), dayFilter);
+     */
+    private void setupHeaderAdapter() {
+        List<ScheduleDatabase.ScheduleRow> rows = ConferenceData.fetchScheduleList(getContext());
+        Log.d(TAG, "number of rows? " + rows.size());
         List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
         for (ScheduleDatabase.ScheduleRow row : rows) {
             String timeDisplay = ((row.time == null) || (row.time.length() == 0)) ? "Unscheduled" : row.time;
@@ -103,13 +106,14 @@ public class AgendaDayFragment extends Fragment {
             ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
             items.add(item);
         }
+        /* TODO
         Collections.sort(items, (s1, s2) -> {
             int timeComparison = s1.getStartTime().compareTo(s2.getStartTime());
             if (timeComparison != 0) {
                 return timeComparison;
             }
             return s1.getRoomSortOrder().compareTo(s2.getRoomSortOrder());
-        });
+        });*/
 
         FlexibleAdapter.enableLogs(true);
         FlexibleAdapter<ScheduleAdapterItem> headerAdapter =

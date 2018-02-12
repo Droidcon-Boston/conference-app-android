@@ -53,7 +53,7 @@ public class AgendaFragment extends Fragment {
             // set current day to second if today matches
             Calendar today = Calendar.getInstance();
             Calendar dayTwo = Calendar.getInstance();
-            dayTwo.set(2017, Calendar.APRIL, 11);
+            dayTwo.set(2018, Calendar.MARCH, 27);
             if (today.equals(dayTwo)) {
                 viewPager.setCurrentItem(1);
             }

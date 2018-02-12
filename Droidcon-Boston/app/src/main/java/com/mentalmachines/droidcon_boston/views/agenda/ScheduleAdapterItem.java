@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.agenda;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -125,11 +126,20 @@ public class ScheduleAdapterItem extends
             holder.room.setText(itemData.room);
 
             Context context = holder.title.getContext();
-            Glide.with(context)
-                    .load(itemData.photo)
-                    .transform(new CircleTransform(context))
-                    .crossFade()
-                    .into(holder.avatar);
+            if (TextUtils.isEmpty(itemData.photo)) {
+                Glide.with(context)
+                        .load(itemData.photoResource)
+                        .transform(new CircleTransform(context))
+                        .crossFade()
+                        .into(holder.avatar);
+            } else {
+                Glide.with(context)
+                        .load(itemData.photo)
+                        .transform(new CircleTransform(context))
+                        .crossFade()
+                        .into(holder.avatar);
+            }
+
 
             addBackgroundRipple(holder);
         }

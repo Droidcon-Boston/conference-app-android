@@ -3,6 +3,8 @@ package com.mentalmachines.droidcon_boston.views.detail;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
+import com.mentalmachines.droidcon_boston.data.ConferenceData;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform;
@@ -58,7 +61,8 @@ public class AgendaDetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         String speakerName = bundle.getString(ScheduleDatabase.NAME);
-        ScheduleDatabase.ScheduleDetail scheduleDetail = ScheduleDatabase.fetchDetailData(getActivity().getApplicationContext(), speakerName);
+        //ScheduleDatabase.ScheduleDetail scheduleDetail = ScheduleDatabase.fetchDetailData(getActivity().getApplicationContext(), speakerName);
+        ScheduleDatabase.ScheduleDetail scheduleDetail = ConferenceData.fetchDetailData(speakerName);
         showAgendaDetail(scheduleDetail);
 
         textTime.setText(bundle.getString(ScheduleDatabase.TALK_TIME));
@@ -68,17 +72,26 @@ public class AgendaDetailFragment extends Fragment {
     }
 
     public void showAgendaDetail(ScheduleDatabase.ScheduleDetail scheduleDetail) {
-        Glide.with(this)
-                .load(scheduleDetail.listRow.photo)
-                .transform(new CircleTransform(getActivity().getApplicationContext()))
-                .placeholder(R.drawable.emo_im_cool)
-                .crossFade()
-                .into(imageSpeaker);
+        if (TextUtils.isEmpty(scheduleDetail.listRow.photo)) {
+            Glide.with(this)
+                    .load(scheduleDetail.listRow.photoResource)
+                    .transform(new CircleTransform(getActivity().getApplicationContext()))
+                    .crossFade()
+                    .into(imageSpeaker);
+        } else {
+            Glide.with(this)
+                    .load(scheduleDetail.listRow.photo)
+                    .transform(new CircleTransform(getActivity().getApplicationContext()))
+                    .placeholder(R.drawable.emo_im_cool)
+                    .crossFade()
+                    .into(imageSpeaker);
+        }
+
 
         textTitle.setText(scheduleDetail.listRow.talkTitle);
         textSpeakerName.setText(scheduleDetail.listRow.speakerName);
-        textSpeakerBio.setText(scheduleDetail.speakerBio);
-        textDescription.setText(scheduleDetail.talkDescription);
+        textSpeakerBio.setText(Html.fromHtml(scheduleDetail.speakerBio));
+        textDescription.setText(Html.fromHtml(scheduleDetail.talkDescription));
 
         if (StringUtils.isNullorEmpty(scheduleDetail.twitter)) {
             imageTwitter.setVisibility(View.GONE);
