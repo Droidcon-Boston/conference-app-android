@@ -46,5 +46,6 @@ tools:context="com.mentalmachines.droidcon_boston.views.MainActivity">
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

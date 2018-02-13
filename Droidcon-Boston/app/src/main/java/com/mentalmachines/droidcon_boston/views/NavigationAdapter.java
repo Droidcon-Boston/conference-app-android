@@ -22,12 +22,6 @@ import com.mentalmachines.droidcon_boston.R;
 
 public class NavigationAdapter extends ArrayAdapter<NavigationAdapter.NavItem> {
 
-    public static final String LN_INSTA = "https://www.instagram.com/droidconbos/";
-    public static final String LN_FB = "https://www.facebook.com/droidconbos/";
-    public static final String LN_TWEET = "https://twitter.com/droidconbos";
-    public static final String LN_LINKD = "https://www.linkedin.com/groups/8586436";
-    public static final String LN_CONTACT = "http://www.droidcon-boston.com/#form_section";
-
     final String[] mTitles;
     //parallel arrays
     final Drawable[] mIcons;
