@@ -125,23 +125,22 @@ public class MainActivity extends AppCompatActivity {
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment())
                             .commit();
                     break;
-                case 2: //faq
+                case 2: // faq
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new FAQFragment()).commit();
                     break;
-                case 3: //contact us
-                    data = Uri.parse(NavigationAdapter.LN_CONTACT);
+                case 3: //contact, us
                     break;
-                case 4: //contact, facebook
-                    data = Uri.parse(NavigationAdapter.LN_FB);
+                case 4: // contact, facebook
+                    data = Uri.parse(getString(R.string.facebook_link));
                     break;
-                case 5:
-                    data = Uri.parse(NavigationAdapter.LN_INSTA);
+                case 5: // contact, instagram
+                    data = Uri.parse(getString(R.string.instagram_link));
                     break;
-                case 6:
-                    data = Uri.parse(NavigationAdapter.LN_LINKD);
+                case 6: // contact, linkedin
+                    data = Uri.parse(getString(R.string.linkedin_link));
                     break;
-                case 7: //contact twitter, instagram, linked in
-                    data = Uri.parse(NavigationAdapter.LN_TWEET);
+                case 7: // contact, twitter
+                    data = Uri.parse(getString(R.string.twitter_link));
                     break;
             }
             if (data == null) {
