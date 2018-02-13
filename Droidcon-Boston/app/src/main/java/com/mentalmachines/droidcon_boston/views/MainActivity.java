@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,10 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
+import com.mentalmachines.droidcon_boston.views.web.WebFragment;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import io.fabric.sdk.android.Fabric;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.main_activity);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
@@ -115,42 +119,50 @@ public class MainActivity extends AppCompatActivity {
             if (position < 3) {
                 ((NavigationAdapter) parent.getAdapter()).setSelectedIndex(position);
             } //others are contact links
-            Uri data = null;
+            String targetUrl = null;
+            final Fragment fragment;
             switch (position) {
                 case 0: //agenda
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment())
-                            .commit();
+                    fragment = new AgendaFragment();
                     break;
                 case 1: //tweet
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment())
-                            .commit();
+                    fragment = new TweetsFragment();
                     break;
                 case 2: //faq
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new FAQFragment()).commit();
+                    fragment = new FAQFragment();
                     break;
                 case 3: //contact us
-                    data = Uri.parse(NavigationAdapter.LN_CONTACT);
+                    fragment = new WebFragment();
+                    targetUrl = NavigationAdapter.LN_CONTACT;
                     break;
                 case 4: //contact, facebook
-                    data = Uri.parse(NavigationAdapter.LN_FB);
+                    fragment = new WebFragment();
+                    targetUrl = NavigationAdapter.LN_FB;
                     break;
                 case 5:
-                    data = Uri.parse(NavigationAdapter.LN_INSTA);
+                    fragment = new WebFragment();
+                    targetUrl = NavigationAdapter.LN_INSTA;
                     break;
                 case 6:
-                    data = Uri.parse(NavigationAdapter.LN_LINKD);
+                    fragment = new WebFragment();
+                    targetUrl = NavigationAdapter.LN_LINKD;
                     break;
                 case 7: //contact twitter, instagram, linked in
-                    data = Uri.parse(NavigationAdapter.LN_TWEET);
+                    fragment = new WebFragment();
+                    targetUrl = NavigationAdapter.LN_TWEET;
                     break;
+                default:
+                    return;
             }
-            if (data == null) {
-                fragmentManager.executePendingTransactions();
-            } else {
-                final Intent tnt = new Intent(Intent.ACTION_VIEW);
-                tnt.setData(data);
-                startActivity(tnt);
+
+            if (targetUrl != null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", targetUrl);
+                fragment.setArguments(bundle);
             }
+
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            fragmentManager.executePendingTransactions();
             mDrawerLayout.closeDrawer(GravityCompat.START);
         }
     } //end click listener
