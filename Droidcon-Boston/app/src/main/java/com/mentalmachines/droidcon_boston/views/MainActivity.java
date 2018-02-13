@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();
         mDrawerList = findViewById(R.id.fragmentList);
         mDrawerList.setAdapter(new NavigationAdapter(this));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
     }
 
@@ -112,12 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
     class DrawerItemClickListener implements ListView.OnItemClickListener {
 
-        private final Context context;
-
-        public DrawerItemClickListener(final Context context) {
-            this.context = context;
-        }
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -159,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                         .setToolbarColor(getResources().getColor(R.color.colorPrimary))
                         .build();
-                customTabsIntent.launchUrl(context, data);
+                customTabsIntent.launchUrl(view.getContext(), data);
             }
             mDrawerLayout.closeDrawer(GravityCompat.START);
         }
