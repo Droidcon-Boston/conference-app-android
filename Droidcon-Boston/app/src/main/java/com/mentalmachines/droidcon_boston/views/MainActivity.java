@@ -90,27 +90,28 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_agenda:
                     replaceFragment(new AgendaFragment(), "Agenda");
                     break;
-                case R.id.nav_my_schedule:
-                    // replaceFragment(new MyScheduleFragment(), "My Schedule");
+                /* case R.id.nav_my_schedule:
+                    replaceFragment(new MyScheduleFragment(), "My Schedule");
                     break;
                 case R.id.nav_speakers:
-                    // replaceFragment(new SpeakersFragment(), "Speakers");
+                    replaceFragment(new SpeakersFragment(), "Speakers");
                     break;
                 case R.id.nav_social:
-                    // replaceFragment(new SocialFragment(), "Social");
+                    replaceFragment(new SocialFragment(), "Social");
                     break;
                 case R.id.nav_settings:
-                    // replaceFragment(new SettingsFragment(), "Settings");
-                    break;
+                    replaceFragment(new SettingsFragment(), "Settings");
+                    break;*/
                 case R.id.nav_faq:
                     replaceFragment(new FAQFragment(), "FAQ");
                     break;
+                /*
                 case R.id.nav_about_us:
                     // replaceFragment(new AboutUsFragment(), "About Us");
                     break;
                 case R.id.nav_coc:
                     // replaceFragment(new CocFragment(), "Code Of Conduct");
-                    break;
+                    break;*/
             }
             return true;
         });
