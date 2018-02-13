@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new FAQFragment()).commit();
                     break;
                 case 3: //contact, us
+                    data = Uri.parse(getString(R.string.contact_link));
                     break;
                 case 4: // contact, facebook
                     data = Uri.parse(getString(R.string.facebook_link));
