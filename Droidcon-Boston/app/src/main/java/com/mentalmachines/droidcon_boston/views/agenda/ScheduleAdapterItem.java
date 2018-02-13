@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+import com.mentalmachines.droidcon_boston.data.UserAgendaRepo;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -115,6 +117,8 @@ public class ScheduleAdapterItem extends
             } else {
                 addBackgroundRipple(holder);
             }
+
+            holder.bookmarkHint.setVisibility(View.INVISIBLE);
         } else {
             holder.sessionLayout.setVisibility(View.VISIBLE);
             holder.avatar.setVisibility(View.VISIBLE);
@@ -126,10 +130,14 @@ public class ScheduleAdapterItem extends
 
             Context context = holder.title.getContext();
             Glide.with(context)
-                    .load(itemData.photo)
-                    .transform(new CircleTransform(context))
-                    .crossFade()
-                    .into(holder.avatar);
+                 .load(itemData.photo)
+                 .transform(new CircleTransform(context))
+                 .crossFade()
+                 .into(holder.avatar);
+
+            UserAgendaRepo userAgendaRepo = UserAgendaRepo.Companion.getInstance(holder.bookmarkHint.getContext());
+            holder.bookmarkHint.setVisibility(userAgendaRepo.isSessionBookmarked(itemData.getId())
+                                              ? View.VISIBLE : View.INVISIBLE);
 
             addBackgroundRipple(holder);
         }
@@ -146,6 +154,8 @@ public class ScheduleAdapterItem extends
     static class ViewHolder extends FlexibleViewHolder {
 
         View rootLayout;
+
+        ImageView bookmarkHint;
 
         ImageView avatar;
 
@@ -173,6 +183,7 @@ public class ScheduleAdapterItem extends
 
         private void findViews(View parent) {
             rootLayout = parent.findViewById(R.id.rootLayout);
+            bookmarkHint = (ImageView) parent.findViewById(R.id.image_bookmark_hint);
             avatar = (ImageView) parent.findViewById(R.id.speaker_image);
             title = (TextView) parent.findViewById(R.id.title_text);
             speaker = (TextView) parent.findViewById(R.id.speaker_name_text);

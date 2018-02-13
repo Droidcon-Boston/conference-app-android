@@ -20,6 +20,9 @@
     <string name="environs_fragment_title">Environs</string>
     <string name="speaker_avatar">Speaker avatar</string>
 
+    <string name="hint_bookmark">Add to Agenda</string>
+    <string name="hint_bookmark_added">Added to Agenda</string>
+
     <string name="action_bar_speaker_title">Speaker Profile</string>
     <string name="conference_name">Droidcon Boston</string>
     <string name="instagram_link">https://www.instagram.com/droidconbos/</string>
