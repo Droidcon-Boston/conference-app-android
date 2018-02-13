@@ -61,6 +61,7 @@ dependencies {
   implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
   implementation 'eu.davidea:flexible-adapter:5.0.0-rc1'
   implementation 'com.github.bumptech.glide:glide:3.7.0'
+  implementation 'com.android.support:customtabs:27.0.2'
 
   implementation('com.twitter.sdk.android:twitter:2.3.2@aar') {
     transitive = true

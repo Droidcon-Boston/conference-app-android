@@ -1,9 +1,12 @@
 package com.mentalmachines.droidcon_boston.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();
         mDrawerList = findViewById(R.id.fragmentList);
         mDrawerList.setAdapter(new NavigationAdapter(this));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this));
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new AgendaFragment()).commit();
     }
 
@@ -109,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
 
     class DrawerItemClickListener implements ListView.OnItemClickListener {
 
+        private final Context context;
+
+        public DrawerItemClickListener(final Context context) {
+            this.context = context;
+        }
+
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -147,9 +156,10 @@ public class MainActivity extends AppCompatActivity {
             if (data == null) {
                 fragmentManager.executePendingTransactions();
             } else {
-                final Intent tnt = new Intent(Intent.ACTION_VIEW);
-                tnt.setData(data);
-                startActivity(tnt);
+                CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                        .setToolbarColor(getResources().getColor(R.color.colorPrimary))
+                        .build();
+                customTabsIntent.launchUrl(context, data);
             }
             mDrawerLayout.closeDrawer(GravityCompat.START);
         }
