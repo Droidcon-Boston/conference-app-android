@@ -16,6 +16,11 @@ class ConferenceDataUtils {
             return moshi
         }
 
+        fun processConferenceData(confData: ConferenceDataModel?) {
+            denormalizeConferenceData(confData)
+            fixSpeakerNames(confData)
+        }
+
         fun denormalizeConferenceData(confData: ConferenceDataModel?) {
             confData?.events?.forEach {
                 // denormalize speakers
@@ -41,6 +46,17 @@ class ConferenceDataUtils {
                 // look up track name
                 it.value.trackId?.apply {
                     it.value.trackName = confData.tracks.get(it.value.trackId!!)?.name
+                }
+            }
+        }
+
+        fun fixSpeakerNames(confData: ConferenceDataModel?) {
+            confData?.speakers?.forEach {
+                val speaker = it.value
+                val splitName = speaker.name.split(' ')
+                speaker.firstName = splitName.first()
+                if (splitName.size > 1) {
+                    speaker.lastName = splitName.last()
                 }
             }
         }

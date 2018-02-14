@@ -44,6 +44,8 @@ data class SectionModel(
 
 data class SpeakerModel(
         val name: String,
+        var firstName: String?,
+        var lastName: String?,
         val title: String?,
         val org: String?,
         val bio: String,

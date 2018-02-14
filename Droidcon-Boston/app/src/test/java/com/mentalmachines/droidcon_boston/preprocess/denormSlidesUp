@@ -18,7 +18,7 @@ val moshi = ConferenceDataUtils.getMoshiInstance()
 val jsonAdapter = moshi.adapter(ConferenceDataModel::class.java)
 val confData = jsonAdapter.fromJson(Okio.buffer(Okio.source(inputStream)))
 
-ConferenceDataUtils.denormalizeConferenceData(confData)
+ConferenceDataUtils.processConferenceData(confData)
 
 val denormalizedJson = jsonAdapter.toJson(confData)
 println(denormalizedJson)
