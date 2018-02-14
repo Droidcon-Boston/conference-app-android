@@ -22,6 +22,10 @@
     <dimen name="def_padding">8dp</dimen>
 
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/colorPagerTabIndicator</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+        <item name="tabTextColor">@color/colorBackground</item>
+
     </style>
 </resources>
