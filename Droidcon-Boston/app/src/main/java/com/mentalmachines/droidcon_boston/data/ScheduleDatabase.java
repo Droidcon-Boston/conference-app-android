@@ -57,6 +57,10 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         public String time;
         public String room;
         public String date;
+
+        public String getId() {
+            return talkTitle;
+        }
     }
 
     public static class ScheduleDetail {
@@ -66,6 +70,10 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         public String twitter;
         public String linkedIn;
         public String facebook;
+
+        public String getId() {
+            return listRow.getId();
+        }
     }
 
     public ScheduleDatabase(Context context) {

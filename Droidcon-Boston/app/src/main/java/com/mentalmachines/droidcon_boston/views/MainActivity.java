@@ -1,9 +1,12 @@
 package com.mentalmachines.droidcon_boston.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -125,31 +128,32 @@ public class MainActivity extends AppCompatActivity {
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new TweetsFragment())
                             .commit();
                     break;
-                case 2: //faq
+                case 2: // faq
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, new FAQFragment()).commit();
                     break;
-                case 3: //contact us
-                    data = Uri.parse(NavigationAdapter.LN_CONTACT);
+                case 3: //contact, us
+                    data = Uri.parse(getString(R.string.contact_link));
                     break;
-                case 4: //contact, facebook
-                    data = Uri.parse(NavigationAdapter.LN_FB);
+                case 4: // contact, facebook
+                    data = Uri.parse(getString(R.string.facebook_link));
                     break;
-                case 5:
-                    data = Uri.parse(NavigationAdapter.LN_INSTA);
+                case 5: // contact, instagram
+                    data = Uri.parse(getString(R.string.instagram_link));
                     break;
-                case 6:
-                    data = Uri.parse(NavigationAdapter.LN_LINKD);
+                case 6: // contact, linkedin
+                    data = Uri.parse(getString(R.string.linkedin_link));
                     break;
-                case 7: //contact twitter, instagram, linked in
-                    data = Uri.parse(NavigationAdapter.LN_TWEET);
+                case 7: // contact, twitter
+                    data = Uri.parse(getString(R.string.twitter_link));
                     break;
             }
             if (data == null) {
                 fragmentManager.executePendingTransactions();
             } else {
-                final Intent tnt = new Intent(Intent.ACTION_VIEW);
-                tnt.setData(data);
-                startActivity(tnt);
+                CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                        .setToolbarColor(getResources().getColor(R.color.colorPrimary))
+                        .build();
+                customTabsIntent.launchUrl(view.getContext(), data);
             }
             mDrawerLayout.closeDrawer(GravityCompat.START);
         }

@@ -58,8 +58,6 @@ public class AgendaDayFragment extends Fragment {
         if (getArguments() != null) {
             dayFilter = getArguments().getString(ARG_DAY);
         }
-
-
     }
 
     @Override
@@ -86,7 +84,6 @@ public class AgendaDayFragment extends Fragment {
 
         return view;
     }
-
 
     private void setupHeaderAdapter() {
         List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase
