@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
+import com.mentalmachines.droidcon_boston.views.social.SocialFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
           break;
         case R.id.nav_faq:
           replaceFragment(getString(R.string.str_faq));
+          break;
+        case R.id.nav_social:
+          replaceFragment(new SocialFragment(), getString(R.string.str_social));
           break;
       }
       return true;
