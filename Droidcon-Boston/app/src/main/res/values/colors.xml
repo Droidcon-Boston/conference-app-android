@@ -6,4 +6,5 @@
     <color name="socialBG">#1100FAAE</color>
     <color name="colorBackground">#FFEEEEEE</color>
     <color name="colorGray">#9e9e9e</color>
+    <color name="navItemTextColor">#484848</color>
 </resources>
