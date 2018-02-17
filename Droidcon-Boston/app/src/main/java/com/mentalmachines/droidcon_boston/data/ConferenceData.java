@@ -6,7 +6,6 @@ import android.util.Log;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
 import com.mentalmachines.droidcon_boston.firebase.ScheduleUpdateUtils;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,15 +82,10 @@ public class ConferenceData {
         }
         listItem.talkTitle = event.getName();
         if (event.getStartTime() != null) {
-            try {
-                listItem.date = sMakeDateObject.parse(event.getStartTime());
-                listItem.time = sTimeFormat.format(listItem.date);
-                listItem.dateString = sDateFormat.format(listItem.date);
-                //Log.d(TAG, "date string for compare " + listItem.dateString);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                Log.e(TAG, "date error: " + e.getMessage());
-            }
+            listItem.date = event.getStartTime();
+            listItem.time = sTimeFormat.format(listItem.date);
+            listItem.dateString = sDateFormat.format(listItem.date);
+            Log.d(TAG, "date string for compare " + listItem.dateString);
         }
         if (event.getRoomIds() != null) {
             listItem.room = (String) event.getRoomNames().keySet().toArray()[0];

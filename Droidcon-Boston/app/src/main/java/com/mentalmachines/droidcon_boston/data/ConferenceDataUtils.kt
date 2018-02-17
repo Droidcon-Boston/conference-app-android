@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.data;
 
 import android.content.Context
 import android.content.res.AssetManager
+import android.util.Log
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
@@ -10,6 +11,7 @@ import java.util.Date
 import java.util.HashMap
 
 class ConferenceDataUtils {
+
     companion object {
 
         fun getMoshiInstance(): Moshi {
@@ -46,6 +48,11 @@ class ConferenceDataUtils {
                 it.value.trackId?.apply {
                     it.value.trackName = confData.tracks.get(it.value.trackId!!)?.name
                 }
+                Log.d(ConferenceData.TAG, "XXXXX " + it.value.startTime);
+                Log.d(ConferenceData.TAG, "XXXXX " + it.value.updatedAt);
+                Log.d(ConferenceData.TAG, "XXXXX " + it.value.name);
+                Log.d(ConferenceData.TAG, "XXXXX " + it.value.trackName);
+
             }
         }
 
@@ -63,7 +70,6 @@ class ConferenceDataUtils {
             val confData = jsonAdapter.fromJson(inputJson)
 
             ConferenceDataUtils.denormalizeConferenceData(confData)
-            val denormalizedJson = jsonAdapter.toJson(confData)
             return confData
         }
     }

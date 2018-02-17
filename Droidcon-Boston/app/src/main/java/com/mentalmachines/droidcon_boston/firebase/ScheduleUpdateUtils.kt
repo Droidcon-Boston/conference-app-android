@@ -5,8 +5,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.mentalmachines.droidcon_boston.data.ConferenceData.EventData
 import com.mentalmachines.droidcon_boston.data.ConferenceDataModel
-import com.mentalmachines.droidcon_boston.data.EventModel
 
 /**
  * Created by emezias on 2/13/18.
@@ -31,8 +31,8 @@ object ScheduleUpdateUtils {
                     //return;
                 }
                 Log.d(TAG, "got data " + dataSnapshot.childrenCount)
-                val eventsfound: ArrayList<EventModel> = ArrayList()
-                dataSnapshot.children.mapNotNullTo(eventsfound) { it.getValue<EventModel>(EventModel::class.java) }
+                val eventsfound: ArrayList<EventData> = ArrayList()
+                dataSnapshot.children.mapNotNullTo(eventsfound) { it.getValue<EventData>(EventData::class.java) }
 
                 for (eventItem in eventsfound) {
                     //val note = noteDataSnapshot.getValue(ConferenceData.EventData::class.java)
