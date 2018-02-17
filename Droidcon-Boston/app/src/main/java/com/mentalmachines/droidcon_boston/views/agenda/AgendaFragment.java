@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.agenda;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.mentalmachines.droidcon_boston.R;
 import java.util.Calendar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.mentalmachines.droidcon_boston.data.FirebaseListenerRef;
+
 
 public class AgendaFragment extends Fragment {
 
@@ -22,6 +29,8 @@ public class AgendaFragment extends Fragment {
     android.support.v4.view.ViewPager viewPager;
 
     public static final String TAB_POSITION = "POSITION";
+
+    private FirebaseListenerRef firebaseListenerRef;
 
     @Nullable
     @Override
@@ -59,6 +68,35 @@ public class AgendaFragment extends Fragment {
             }
         }
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        firebaseListenerRef = new FirebaseListenerRef(
+            FirebaseDatabase.getInstance().getReference().child("conferenceData"),
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            }
+        );
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if ( firebaseListenerRef != null ) {
+            firebaseListenerRef.detach();
+            firebaseListenerRef = null;
+        }
+    }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
