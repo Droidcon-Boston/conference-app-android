@@ -54,6 +54,7 @@ dependencies {
 
     // Firebase cloud messaging
     implementation "com.google.firebase:firebase-messaging:$playServices"
+    implementation "com.google.firebase:firebase-database:$playServices"
 
     // Misc
     implementation "com.jakewharton:butterknife:$butterKnife"

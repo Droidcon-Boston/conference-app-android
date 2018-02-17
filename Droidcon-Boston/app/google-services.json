@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1084321061238-i84v8cqe01n25gj3sritbav7feg7612j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mentalmachines.droidcon_boston",
+            "certificate_hash": "1ed2b238b3a670872ddf260463a1302314ebb314"
+          }
+        },
+        {
           "client_id": "1084321061238-2nrbs1pca3150e7s9gu7sui0kc351ncb.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,20 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084321061238-1t3np7edthpjh7v6vi5hvc17eujam9ac.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.droidcon-boston.DroidconBoston"
+              }
+            },
+            {
+              "client_id": "1084321061238-2nrbs1pca3150e7s9gu7sui0kc351ncb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

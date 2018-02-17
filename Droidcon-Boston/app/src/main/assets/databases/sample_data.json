@@ -146,7 +146,9 @@
   "speakers" : {
     "-L3dd0queRj8ffFi-_sx" : {
       "bio" : "<p>Zach King is an American Vine star, filmmaker and YouTube personality based in Los Angeles. He is most known for his \"magic vines\" - six-second videos digitally edited to look as if he is doing magic. He calls his videos \"digital sleight of hand\".</p>",
+      "firstName" : "Zach",
       "isFeatured" : false,
+      "lastName" : "King",
       "name" : "Zach King",
       "org" : "FinalCutKing",
       "pictureId" : "8e7f7bdd-15ca-46ab-bf49-14ffbfdf1622",
@@ -162,7 +164,9 @@
     },
     "-L3dh2BblGFOUmPwsEib" : {
       "bio" : "<p>Addy Osmani is an engineer that's worked on the web for over a decade. He's deeply passionate about web performance, tools and helping share knowledge with others. He currently works as an engineering manager and Senior Staff Engineer with the Chrome and Developer Relations teams at Google. His focus is on helping get sites loading fast. His previous jobs have included stints at companies like AOL Online.</p>",
+      "firstName" : "Addy",
       "isFeatured" : false,
+      "lastName" : "Osmani",
       "name" : "Addy Osmani",
       "org" : "Google",
       "pictureId" : "d6bcc71f-151a-4370-93a0-418707318f76",
@@ -180,7 +184,9 @@
     },
     "-L3diC4vTxzzTok0ODOC" : {
       "bio" : "<p>Hi folks. I’m Paul. I’m a front-end developer who loves the web. I’m always thinking a lot about how to make you more productive with tools that improve your workflow help you make slicker, sexier, mobile web sites and webapps.</p>\n<p>I work on the <a href=\"http://twitter.com/chromiumdev\">Google Chrome</a> team focused on Developer Tooling. Chrome DevTools and everything else Chrome can do to make you a productive web developer.</p>\n<p>I’ve <strong>developed</strong> tools like <a href=\"http://modernizr.com/\">Modernizr</a>, <a href=\"http://yeoman.io/\">Yeoman</a>, <a href=\"http://css3please.com/\">CSS3 Please</a> and <a href=\"http://html5boilerplate.com/\">HTML5 Boilerplate</a>, <strong>curated</strong> <a href=\"http://html5rocks.com/\">HTML5 Rocks</a>, and <strong>co-created</strong> projects like <a href=\"http://html5please.com/\">HTML5 Please</a>, <a href=\"http://mothereffingtextshadow.com/\">mothereffingtextshadow</a>, <a href=\"http://mothereffinghsl.com/\">mothereffinghsl</a>, <a href=\"http://movethewebforward.org/\">Move the Web Forward</a>, <a href=\"http://mothereffinganimatedgif.com/\">Mothereffing Animated GIF</a>, <a href=\"http://w3fools.com/\">W3Fools</a>, <a href=\"http://chromestatus.com/\">chromestatus.com</a>, <a href=\"http://html5readiness.com/\">HTML5 Readiness</a>, <a href=\"http://na.isobar.com/standards/\">Front-end Coding Standards</a>, <a href=\"http://typerendering.com/\">Type Rendering Project</a>. Oh and I used to host the amazing <a href=\"http://yayquery.com/\" title=\"yayQuery Podcast - It's about jQuery, duh. :)\">yayQuery Podcast</a>. I’ve long loved music and kept the <a href=\"http://aurgasm.us/\">Aurgasm</a> music blog up for 10 years.</p>",
+      "firstName" : "Paul",
       "isFeatured" : false,
+      "lastName" : "Irish",
       "name" : "Paul Irish",
       "org" : "Google",
       "pictureId" : "cc826e99-35b7-4fef-80ff-8f1452200a28",
@@ -197,7 +203,9 @@
     },
     "-L3dlTYjoDUJrXrrPMDS" : {
       "bio" : "<p>Katie Dill is the VP of Design of Lyft. She used to be the director of experience design of Airbnb.</p>\n<p>Katie joined AirBnB from Greenstart Venture Design where, as a Partner and Creative Director, she worked with early stage startups to design their user experience and brand strategy.</p>\n<p>Prior to Greenstart, as Creative Director at frog design, Katie led strategic, multidisciplinary design programs for companies including Intel, Disney, Samsung, Dolby and Chase Bank.</p>\n<p>Katie's expertise includes interaction and industrial design, business strategy and user research. Katie earned her B.S. in Industrial Design at Art Center College of Design and over the last 3 years, she taught Interaction and Industrial Design at California College of Arts.</p>",
+      "firstName" : "Katie",
       "isFeatured" : false,
+      "lastName" : "Dill",
       "name" : "Katie Dill",
       "org" : "Lyft",
       "pictureId" : "3fa64d3b-5dbf-40e9-883f-7c815bceda3a",
@@ -212,7 +220,9 @@
     },
     "-L3dosApLejO6jxtrLGg" : {
       "bio" : "<p><br></p>",
+      "firstName" : "Steve",
       "isFeatured" : false,
+      "lastName" : "Wozniak",
       "name" : "Steve Wozniak",
       "updatedAt" : 1516825182356,
       "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
