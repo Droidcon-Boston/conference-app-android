@@ -19,32 +19,39 @@ object ScheduleUpdateUtils {
     val SECTIONS = "sections"
     val SPEAKERS = "speakers"
     val TRAX = "tracks"
+    val TS = 1516823130298.0
 
     fun checkForChanges(staticData: ConferenceDataModel, timestamp: Long): ConferenceDataModel {
-        val root = FirebaseDatabase.getInstance().getReference("conferenceData")
+        val root = FirebaseDatabase.getInstance().getReference("conferenceData");
+        val queryRef = root.child(EVENTS).orderByChild("updatedAt").startAt(TS);
         // Read from the database
-        val getScheduleData = root.child(EVENTS)//.startAt("1516821464815");
+        //val getScheduleData = root.startAt("1516821464815"); 1516823130298
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.childrenCount == 0L) {
-                    Log.d(TAG, "cancelled " + "no children returned")
+                    Log.d(TAG, "no children returned")
                     //return;
                 }
                 Log.d(TAG, "got data " + dataSnapshot.childrenCount)
                 val eventsfound: ArrayList<EventData> = ArrayList()
                 dataSnapshot.children.mapNotNullTo(eventsfound) { it.getValue<EventData>(EventData::class.java) }
-
                 for (eventItem in eventsfound) {
                     //val note = noteDataSnapshot.getValue(ConferenceData.EventData::class.java)
                     Log.d(TAG, "got event " + eventItem!!.name)
                 }
+                /*val spkrs: ArrayList<SpeakerData> = ArrayList()
+                dataSnapshot.child(SPEAKERS).children.mapNotNullTo(spkrs) { it.getValue<SpeakerData>(SpeakerData::class.java) }
+                for (speaker in spkrs) {
+                    //val note = noteDataSnapshot.getValue(ConferenceData.EventData::class.java)
+                    Log.d(TAG, "got spkr " + speaker!!.name)
+                }*/
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e(TAG, "cancelled " + databaseError.message)
             }
         }
-        getScheduleData.addListenerForSingleValueEvent(listener)
+        queryRef.addListenerForSingleValueEvent(listener)
         Log.d(TAG, "set listener")
         return staticData
     }

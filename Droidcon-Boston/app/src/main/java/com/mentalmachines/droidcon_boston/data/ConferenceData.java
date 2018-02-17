@@ -24,8 +24,8 @@ public class ConferenceData {
     public static final String TAG = ConferenceData.class.getSimpleName();
     private static SimpleDateFormat sTimeFormat = new SimpleDateFormat("h:mm a", Locale.US);
     private static SimpleDateFormat sDateFormat = new SimpleDateFormat("M/d/yyyy", Locale.US);
-    private static SimpleDateFormat sMakeDateObject = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
     public static ConferenceDataModel sConfData;
+    static final Double TS = 1516821464815d;
 
     public static class EventData {
         public String name;
