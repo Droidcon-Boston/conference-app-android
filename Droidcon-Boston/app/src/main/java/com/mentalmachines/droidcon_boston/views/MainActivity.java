@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     initNavDrawerToggle();
 
-    replaceFragment(new AgendaFragment(), getString(R.string.str_agenda));
+    replaceFragment(getString(R.string.str_agenda));
     navigationView.setCheckedItem(R.id.nav_agenda);
   }
 
@@ -70,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
           }
           break;
         case R.id.nav_agenda:
-          replaceFragment(new AgendaFragment(), getString(R.string.str_agenda));
+          replaceFragment(getString(R.string.str_agenda));
           break;
         case R.id.nav_faq:
-          replaceFragment(new FAQFragment(), getString(R.string.str_faq));
+          replaceFragment(getString(R.string.str_faq));
           break;
       }
       return true;
@@ -108,9 +108,30 @@ public class MainActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  private void replaceFragment(Fragment fragment, String title) {
+  private void replaceFragment(String title) {
     updateToolbarTitle(title);
-    fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
+    // Get the fragment by tag
+    Fragment fragment = fragmentManager.findFragmentByTag(title);
+
+    if (fragment == null) {
+      // Initialize the fragment based on tag
+      if (title.equals(getResources().getString(R.string.str_agenda))) {
+        fragment = new AgendaFragment();
+      } else if (title.equals(getResources().getString(R.string.str_faq))) {
+        fragment = new FAQFragment();
+      }
+      // Add fragment with tag
+      fragmentManager.beginTransaction().add(R.id.fragment_container, fragment, title).commit();
+    } else {
+      fragmentManager.beginTransaction()
+          // detach the fragment that is currently visible
+          .detach(fragmentManager.findFragmentById(R.id.fragment_container))
+          // attach the fragment found as per the tag
+          .attach(fragment)
+          // commit fragment transaction
+          .commit();
+    }
   }
 
   private void updateToolbarTitle(String title) {
