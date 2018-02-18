@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     initNavDrawerToggle();
 
     replaceFragment(new AgendaFragment(), getString(R.string.str_agenda));
+    navigationView.setCheckedItem(R.id.nav_agenda);
   }
 
 
@@ -52,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
     navigationView = findViewById(R.id.navView);
     navigationView.setNavigationItemSelectedListener(item -> {
 
-      //Checking if the item is in checked state or not, if not make it in checked state
-      item.setChecked(!item.isChecked());
+      navigationView.setCheckedItem(item.getItemId());
 
       //Closing drawer on item click
       androidDrawerLayout.closeDrawers();
