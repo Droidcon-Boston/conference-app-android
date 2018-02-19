@@ -107,8 +107,8 @@ public class AgendaDayFragment extends Fragment {
     }
 
     private void fetchScheduleData(String dayFilter) {
-        Query scheduleQuery = firebaseHelper.getMainDatabase().child("conferenceData").child("events");
-        scheduleQuery.addValueEventListener(new ValueEventListener() {
+        firebaseHelper.getMainDatabase().child("conferenceData").child("events")
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final List<ScheduleRow> rows = new ArrayList<>();
@@ -128,7 +128,7 @@ public class AgendaDayFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                Log.w(TAG, "scheduleQuery:onCancelled", databaseError.toException());
             }
         });
 

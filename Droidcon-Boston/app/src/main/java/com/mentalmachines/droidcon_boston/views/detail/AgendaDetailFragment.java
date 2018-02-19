@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,12 @@ import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo;
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
+import com.mentalmachines.droidcon_boston.views.agenda.AgendaDayFragment;
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform;
 
 public class AgendaDetailFragment extends Fragment {
 
+    private static final String TAG = AgendaDayFragment.class.getName();
     private static final Gson gson = new Gson();
 
     @BindView(R.id.image_speaker)
@@ -103,8 +106,8 @@ public class AgendaDetailFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
-            }
+                    Log.w(TAG, "detailQuery:onCancelled", databaseError.toException());
+                }
         });
 
         return view;
