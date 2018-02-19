@@ -1,6 +1,12 @@
 package com.mentalmachines.droidcon_boston.views.agenda;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,17 +15,25 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import com.mentalmachines.droidcon_boston.R;
+import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
+import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
+
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,6 +45,9 @@ import java.util.Map;
  */
 public class AgendaDayFragment extends Fragment {
 
+    private static final String TAG = AgendaDayFragment.class.getName();
+    private static final Gson gson = new Gson();
+
     @BindView(R.id.recycler)
     RecyclerView recycler;
 
@@ -39,6 +56,7 @@ public class AgendaDayFragment extends Fragment {
     private static final String ARG_DAY = "day";
 
     private String dayFilter;
+    private FirebaseHelper firebaseHelper;
 
     public AgendaDayFragment() {
         // Required empty public constructor
@@ -46,7 +64,7 @@ public class AgendaDayFragment extends Fragment {
 
     public static AgendaDayFragment newInstance(String day) {
         AgendaDayFragment fragment = new AgendaDayFragment();
-        Bundle args  = new Bundle();
+        Bundle args = new Bundle();
         args.putString(ARG_DAY, day);
         fragment.setArguments(args);
         return fragment;
@@ -58,6 +76,9 @@ public class AgendaDayFragment extends Fragment {
         if (getArguments() != null) {
             dayFilter = getArguments().getString(ARG_DAY);
         }
+
+        firebaseHelper = new FirebaseHelper();
+
     }
 
     @Override
@@ -80,14 +101,40 @@ public class AgendaDayFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         recycler.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        setupHeaderAdapter();
+        fetchScheduleData(dayFilter);
 
         return view;
     }
 
-    private void setupHeaderAdapter() {
-        List<ScheduleDatabase.ScheduleRow> rows = ScheduleDatabase
-                .fetchScheduleListByDay(getActivity().getApplicationContext(), dayFilter);
+    private void fetchScheduleData(String dayFilter) {
+        Query scheduleQuery = firebaseHelper.getMainDatabase().child("conferenceData").child("events");
+        scheduleQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<ScheduleRow> rows = new ArrayList<>();
+                for (DataSnapshot roomSnapshot: dataSnapshot.getChildren()) {
+                    ScheduleEvent data = roomSnapshot.getValue(ScheduleEvent.class);
+                    Log.d(TAG, "Event: " + data);
+                    if (data != null) {
+                        final ScheduleRow scheduleRow = data.toScheduleRow();
+                        if (scheduleRow.date.equals(dayFilter)) {
+                            rows.add(scheduleRow);
+                        }
+                    }
+                }
+
+                setupHeaderAdapter(rows);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+
+    }
+
+    private void setupHeaderAdapter(List<ScheduleRow> rows) {
         List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
         for (ScheduleDatabase.ScheduleRow row : rows) {
             String timeDisplay = ((row.time == null) || (row.time.length() == 0)) ? "Unscheduled" : row.time;
@@ -100,6 +147,7 @@ public class AgendaDayFragment extends Fragment {
             ScheduleAdapterItem item = new ScheduleAdapterItem(row, header);
             items.add(item);
         }
+
         Collections.sort(items, (s1, s2) -> {
             int timeComparison = s1.getStartTime().compareTo(s2.getStartTime());
             if (timeComparison != 0) {
@@ -116,9 +164,10 @@ public class AgendaDayFragment extends Fragment {
                             //noinspection ConstantConditions
                             if (listItem instanceof ScheduleAdapterItem) {
                                 ScheduleAdapterItem item = (ScheduleAdapterItem) listItem;
-                                if (StringUtils.isNullorEmpty(item.getItemData().speakerName)) {
-                                    String url = item.getItemData().photo;
-                                    if (item.getItemData().photo == null) {
+                                final ScheduleRow itemData = item.getItemData();
+                                if (StringUtils.isNullorEmpty(itemData.speakerName)) {
+                                    String url = itemData.photo;
+                                    if (itemData.photo == null) {
                                         return false;
                                     }
                                     // event where info URL is in the photo string
@@ -131,9 +180,7 @@ public class AgendaDayFragment extends Fragment {
                                     return false;
                                 }
                                 Bundle arguments = new Bundle();
-                                arguments.putString(ScheduleDatabase.NAME, item.getItemData().speakerName);
-                                arguments.putString(ScheduleDatabase.TALK_TIME, item.getItemData().time);
-                                arguments.putString(ScheduleDatabase.ROOM, item.getItemData().room);
+                                arguments.putString(ScheduleDatabase.SCHEDULE_ITEM_ROW, gson.toJson(itemData, ScheduleRow.class));
 
                                 AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
                                 agendaDetailFragment.setArguments(arguments);
@@ -147,8 +194,7 @@ public class AgendaDayFragment extends Fragment {
 
                             return true;
                         });
-        headerAdapter
-                .expandItemsAtStartUp()
+        headerAdapter.expandItemsAtStartUp()
                 .setDisplayHeadersAtStartUp(true)
                 .setStickyHeaders(true);
         recycler.setAdapter(headerAdapter);

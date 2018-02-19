@@ -21,6 +21,7 @@ import java.util.List;
 public class ScheduleDatabase extends SQLiteAssetHelper {
 
     public static final String TAG = "ScheduleDatabase";
+    public static final String SCHEDULE_ITEM_ROW = "schedule_item_row";
     private static SQLiteDatabase sDB;
     private static final String DATABASE_NAME = "DroidconBoston17.db";
     private static final int DATABASE_VERSION = 1;
@@ -28,9 +29,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     public static final String TABLE = "schedule";
     public static final String NAME = "name";
     public static final String TITLE = "talk";
-    //public static final String DESCRIPTION = "description";
     public static final String PHOTO = "photo_link";
-    //public static final String BIO = "bio";
     public static final String TALK_DATE = "date";
     public static final String TALK_TIME = "time";
     public static final String ROOM = "room";
@@ -51,6 +50,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     public static final int COL_SPKR_FB = 10;
 
     public static class ScheduleRow {
+        public String talkDescription;
         public String speakerName;
         public String talkTitle;
         public String photo;
@@ -65,7 +65,6 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
     public static class ScheduleDetail {
         public ScheduleRow listRow;
-        public String talkDescription;
         public String speakerBio;
         public String twitter;
         public String linkedIn;
@@ -116,7 +115,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 talkData.listRow.date = c.getString(COL_TALK_DATE);
             }
 
-            talkData.talkDescription = c.getString(COL_DESCRIPTION);
+            talkData.listRow.talkDescription = c.getString(COL_DESCRIPTION);
             talkData.speakerBio = c.getString(COL_BIO);
             if (c.isNull(COL_SPKR_FB)) talkData.facebook = null;
             else talkData.facebook = c.getString(COL_SPKR_FB);
@@ -168,8 +167,8 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
     public static final String sDetailWhere = " " + NAME + " LIKE ?";
     public static final String sDayWhere = " " + TALK_DATE + " LIKE ?";
-    public static final String MONDAY = "4/10/2017";
-    public static final String TUESDAY = "4/11/2017";
+    public static final String MONDAY = "03/26/2018";
+    public static final String TUESDAY = "03/27/2018";
 
     public static List<ScheduleRow> fetchScheduleListByDay(Context ctx, String date) {
         List<ScheduleRow> items;

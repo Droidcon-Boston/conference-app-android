@@ -1,5 +1,10 @@
 package com.mentalmachines.droidcon_boston.views.detail;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,12 +19,17 @@ import butterknife.OnClick;
 
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
+import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEventDetail;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo;
+import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform;
 
 public class AgendaDetailFragment extends Fragment {
+
+    private static final Gson gson = new Gson();
 
     @BindView(R.id.image_speaker)
     ImageView imageSpeaker;
@@ -55,6 +65,13 @@ public class AgendaDetailFragment extends Fragment {
     TextView textRoom;
 
     private ScheduleDatabase.ScheduleDetail scheduleDetail;
+    private FirebaseHelper firebaseHelper;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        firebaseHelper = new FirebaseHelper();
+    }
 
     @Nullable
     @Override
@@ -65,12 +82,30 @@ public class AgendaDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Bundle bundle = getArguments();
-        String speakerName = bundle.getString(ScheduleDatabase.NAME);
-        scheduleDetail = ScheduleDatabase.fetchDetailData(getActivity().getApplicationContext(), speakerName);
-        showAgendaDetail(scheduleDetail);
+        final ScheduleRow itemData = gson.fromJson(bundle.getString(ScheduleDatabase.SCHEDULE_ITEM_ROW), ScheduleRow.class);
 
-        textTime.setText(bundle.getString(ScheduleDatabase.TALK_TIME));
-        textRoom.setText(bundle.getString(ScheduleDatabase.ROOM));
+        final String speakerName = itemData.speakerName;
+        textTime.setText(itemData.time);
+        textRoom.setText(itemData.room);
+
+        firebaseHelper.getMainDatabase().child("conferenceData").child("speakers").orderByChild("name").equalTo(speakerName)
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                ScheduleEventDetail detail = dataSnapshot.getValue(ScheduleEventDetail.class);
+                if (detail != null) {
+                    scheduleDetail = detail.toScheduleDetail(itemData);
+                    showAgendaDetail(scheduleDetail);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         return view;
     }
@@ -96,7 +131,7 @@ public class AgendaDetailFragment extends Fragment {
         textTitle.setText(scheduleDetail.listRow.talkTitle);
         textSpeakerName.setText(scheduleDetail.listRow.speakerName);
         textSpeakerBio.setText(scheduleDetail.speakerBio);
-        textDescription.setText(scheduleDetail.talkDescription);
+        textDescription.setText(scheduleDetail.listRow.talkDescription);
 
         if (StringUtils.isNullorEmpty(scheduleDetail.twitter)) {
             imageTwitter.setVisibility(View.GONE);

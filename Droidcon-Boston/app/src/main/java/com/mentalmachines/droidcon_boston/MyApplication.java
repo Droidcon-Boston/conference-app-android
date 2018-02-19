@@ -11,8 +11,8 @@ public class MyApplication extends Application {
   public void onCreate() {
     super.onCreate();
 
-    TwitterAuthConfig authConfig = new TwitterAuthConfig(getResources().getString(R.string.twitter_key),
-        getResources().getString(R.string.twitter_secret));
-    Fabric.with(this, new Twitter(authConfig));
+//    TwitterAuthConfig authConfig = new TwitterAuthConfig(getResources().getString(R.string.twitter_key),
+//        getResources().getString(R.string.twitter_secret));
+//    Fabric.with(this, new Twitter(authConfig));
   }
 }

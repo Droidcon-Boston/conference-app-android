@@ -32,7 +32,7 @@ public class ScheduleAdapterItem extends
 
     private Date startTime;
 
-    private Integer roomOrder;
+    private final Integer roomOrder;
 
     public ScheduleDatabase.ScheduleRow getItemData() {
         return itemData;
@@ -57,6 +57,8 @@ public class ScheduleAdapterItem extends
             roomOrder = 2;
         } else if ("CYCLORAMA".equals(scheduleRow.room)) {
             roomOrder = 3;
+        } else {
+            roomOrder = 0;
         }
     }
 
