@@ -32,7 +32,8 @@ open class FirebaseDatabase {
             row.speakerName = speakerNames!!.keys.first()
             row.talkDescription = description
             row.talkTitle = name
-            row.photo = photo // TODO: speaker photo currently not present in the events firebase child (may want to denormalize).
+            // TODO: speaker photo currently not present in the events firebase child (may want to denormalize).
+            row.photo = photo
             return row
         }
     }
@@ -57,7 +58,5 @@ open class FirebaseDatabase {
             return detail
         }
     }
-
-
 }
 
