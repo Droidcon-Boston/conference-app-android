@@ -68,12 +68,11 @@ public class AgendaDetailFragment extends Fragment {
     TextView textRoom;
 
     private ScheduleDatabase.ScheduleDetail scheduleDetail;
-    private FirebaseHelper firebaseHelper;
+    private FirebaseHelper firebaseHelper = FirebaseHelper.Companion.getInstance();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseHelper = new FirebaseHelper();
     }
 
     @Nullable

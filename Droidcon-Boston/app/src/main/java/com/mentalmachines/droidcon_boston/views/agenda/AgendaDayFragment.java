@@ -56,7 +56,7 @@ public class AgendaDayFragment extends Fragment {
     private static final String ARG_DAY = "day";
 
     private String dayFilter;
-    private FirebaseHelper firebaseHelper;
+    private FirebaseHelper firebaseHelper = FirebaseHelper.Companion.getInstance();
 
     public AgendaDayFragment() {
         // Required empty public constructor
@@ -76,9 +76,6 @@ public class AgendaDayFragment extends Fragment {
         if (getArguments() != null) {
             dayFilter = getArguments().getString(ARG_DAY);
         }
-
-        firebaseHelper = new FirebaseHelper();
-
     }
 
     @Override
