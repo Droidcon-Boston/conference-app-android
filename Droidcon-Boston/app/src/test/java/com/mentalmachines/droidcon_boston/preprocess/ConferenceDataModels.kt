@@ -22,6 +22,7 @@ data class EventModel(
         val trackId: String?,
         var roomNames: Map<String, Boolean>?,
         var speakerNames: Map<String, Boolean>?,
+        var speakerNameToPhotoUrl: Map<String, String>?,
         var trackName: String?,
         val updatedAt: Long,
         val updatedBy: String
