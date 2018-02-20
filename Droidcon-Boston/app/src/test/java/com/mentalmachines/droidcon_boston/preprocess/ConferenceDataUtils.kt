@@ -51,7 +51,11 @@ class ConferenceDataUtils {
                 }
                 // look up track name
                 it.value.trackId?.apply {
-                    it.value.trackName = confData.tracks.get(it.value.trackId!!)?.name
+                    val trackInfo = confData.tracks.get(it.value.trackId!!)
+                    trackInfo?.let { track ->
+                        it.value.trackName = track.name
+                        it.value.trackSortOrder = track.sortOrder
+                    }
                 }
             }
         }
