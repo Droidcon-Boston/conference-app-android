@@ -18,8 +18,6 @@ public class SocialFragment extends Fragment {
 
   ArrayList<SocialModal> socialList;
 
-  CustomTabUtil customTabUtil = new CustomTabUtil();
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
@@ -39,7 +37,7 @@ public class SocialFragment extends Fragment {
 
     // Set On Click
     rv.addOnItemTouchListener(new RVItemClickListener(getActivity(),
-        (view1, position) -> customTabUtil.loadUriInCustomTab(getContext(), socialList.get(position).getLink())));
+        (view1, position) -> CustomTabUtil.loadUriInCustomTab(getContext(), socialList.get(position).getLink())));
 
     return view;
   }

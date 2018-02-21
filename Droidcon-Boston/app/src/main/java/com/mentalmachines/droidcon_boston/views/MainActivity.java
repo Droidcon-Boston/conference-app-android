@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
           replaceFragment(getString(R.string.str_faq));
           break;
         case R.id.nav_social:
-          replaceFragment(new SocialFragment(), getString(R.string.str_social));
+          replaceFragment(getString(R.string.str_social));
           break;
       }
       return true;
@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
         fragment = new AgendaFragment();
       } else if (title.equals(getResources().getString(R.string.str_faq))) {
         fragment = new FAQFragment();
+      } else if (title.equals(getResources().getString(R.string.str_social))) {
+        fragment = new SocialFragment();
       }
       // Add fragment with tag
       fragmentManager.beginTransaction().add(R.id.fragment_container, fragment, title).commit();
