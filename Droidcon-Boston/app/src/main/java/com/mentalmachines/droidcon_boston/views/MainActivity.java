@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment;
+import com.mentalmachines.droidcon_boston.views.social.SocialFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         case R.id.nav_faq:
           replaceFragment(getString(R.string.str_faq));
           break;
+        case R.id.nav_social:
+          replaceFragment(getString(R.string.str_social));
+          break;
       }
       return true;
     });
@@ -120,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
         fragment = new AgendaFragment();
       } else if (title.equals(getResources().getString(R.string.str_faq))) {
         fragment = new FAQFragment();
+      } else if (title.equals(getResources().getString(R.string.str_social))) {
+        fragment = new SocialFragment();
       }
       // Add fragment with tag
       fragmentManager.beginTransaction().add(R.id.fragment_container, fragment, title).commit();
