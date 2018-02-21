@@ -184,7 +184,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         //all rows
         if (c.moveToFirst()) {
             //why not use square brackets?
-            items = new ArrayList<ScheduleRow>(c.getCount());
+            items = new ArrayList<>(c.getCount());
             ScheduleRow item;
             do {
                 item = new ScheduleRow();

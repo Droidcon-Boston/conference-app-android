@@ -14,26 +14,27 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
-
 import java.util.HashMap;
 
 public class FAQFragment extends Fragment {
+
     public static final String TAG = "FAQFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View view = inflater.inflate(R.layout.faq_fragment, container, false);
-        ((ExpandableListView)view.findViewById(R.id.faqlist)).setAdapter(new FaqExpandable());
+        ((ExpandableListView) view.findViewById(R.id.faqlist)).setAdapter(new FaqExpandable());
         return view;
     }
 
     public class FaqExpandable extends BaseExpandableListAdapter {
+
         final String[] questionsGroup;
+
         final HashMap<Integer, ScheduleDatabase.FaqData[]> childrens;
 
         public FaqExpandable() {
@@ -44,12 +45,12 @@ public class FAQFragment extends Fragment {
 
         @Override
         public int getGroupCount() {
-            return questionsGroup == null? 0: questionsGroup.length;
+            return questionsGroup == null ? 0 : questionsGroup.length;
         }
 
         @Override
         public int getChildrenCount(int position) {
-            return childrens.get(position) == null? 0: childrens.get(position).length;
+            return childrens.get(position) == null ? 0 : childrens.get(position).length;
         }
 
         @Override
@@ -69,7 +70,7 @@ public class FAQFragment extends Fragment {
 
         @Override
         public long getChildId(int groupPosition, int childPosition) {
-            return groupPosition*100 + childPosition;
+            return groupPosition * 100 + childPosition;
         }
 
         @Override
@@ -87,7 +88,8 @@ public class FAQFragment extends Fragment {
         }
 
         @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+                ViewGroup parent) {
             final ScheduleDatabase.FaqData item = childrens.get(groupPosition)[childPosition];
             final Context ctx = getContext();
             if (convertView == null) {
@@ -97,9 +99,9 @@ public class FAQFragment extends Fragment {
                 convertView.setTag(R.id.q_button_row, convertView.findViewById(R.id.q_button_row));
             }
             if (childPosition == 0) {
-                ((View)convertView.getTag()).setVisibility(View.GONE);
+                ((View) convertView.getTag()).setVisibility(View.GONE);
             } else {
-                ((View)convertView.getTag()).setVisibility(View.VISIBLE);
+                ((View) convertView.getTag()).setVisibility(View.VISIBLE);
             }
 
             ((TextView) convertView.findViewById(R.id.q_text)).setText(item.answer);
@@ -119,18 +121,18 @@ public class FAQFragment extends Fragment {
                         .override(600, 600)
                         .centerCrop()
                         .into((ImageView) photoLayout.findViewById(R.id.q_photo));
-                photoLayout =  photoLayout.findViewById(R.id.q_button_col);
+                photoLayout = photoLayout.findViewById(R.id.q_button_col);
                 more = photoLayout.findViewById(R.id.q_more_p);
                 map = photoLayout.findViewById(R.id.q_map_p);
             } else {
                 ((View) convertView.getTag(R.id.q_photo_row)).setVisibility(View.GONE);
                 Log.i(TAG, "no photo " + childPosition);
                 more = buttonRow.findViewById(R.id.q_more);
-                map =  buttonRow.findViewById(R.id.q_map);
+                map = buttonRow.findViewById(R.id.q_map);
             }
 
             //item may not have either bizLink or mapCoords or both
-            if (TextUtils.isEmpty(item.bizLink) && TextUtils.isEmpty(item.mapCoords)){
+            if (TextUtils.isEmpty(item.bizLink) && TextUtils.isEmpty(item.mapCoords)) {
                 Log.d(TAG, "hide buttons");
                 if (photoLayout == null) {
                     buttonRow.setVisibility(View.GONE);
@@ -150,14 +152,12 @@ public class FAQFragment extends Fragment {
                     map.setVisibility(View.GONE);
                 } else {
                     map.setVisibility(View.VISIBLE);
-                    map.setImageDrawable(NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_map_white_48dp));
                     map.setTag(item.mapCoords);
                 }
                 if (TextUtils.isEmpty(item.bizLink)) {
                     more.setVisibility(View.GONE);
                 } else {
                     more.setVisibility(View.VISIBLE);
-                    more.setImageDrawable(NavigationAdapter.buildIcon(ctx.getResources(), R.drawable.ic_info_outline_white_48dp));
                     more.setTag(item.bizLink);
                 }
             }
