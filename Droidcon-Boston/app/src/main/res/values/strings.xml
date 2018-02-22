@@ -3,16 +3,6 @@
     <string name="drawer_close">Drawer Close</string>
     <string name="drawer_open">Drawer Open</string>
 
-    <string-array name="navigation_drawer">
-        <item>@string/agenda_fragment_title</item>
-        <item>@string/twitter_fragment_title</item>
-        <item>@string/faq_fragment_title</item>
-        <item>Contact Us</item>
-        <item>On Facebook</item>
-        <item>On Instagram</item>
-        <item>N.E. Android Devs</item>
-        <item>On Twitter</item>
-    </string-array>
     <string name="faq_fragment_title">FAQ</string>
     <string name="agenda_fragment_title">Agenda</string>
     <string name="chat_fragment_title">Chat</string>
@@ -30,4 +20,9 @@
     <string name="twitter_link">https://twitter.com/droidconbos</string>
     <string name="linkedin_link">https://www.linkedin.com/groups/8586436</string>
     <string name="contact_link">http://www.droidcon-boston.com/#form_section</string>
+
+    <string name="str_agenda">Agenda</string>
+    <string name="str_faq">FAQ</string>
+    <string name="str_droidcon_boston_18">Droidcon Boston\'18</string>
+    <string name="str_social">Social</string>
 </resources>
