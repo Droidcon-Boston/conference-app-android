@@ -44,10 +44,14 @@ public class SocialFragment extends Fragment {
 
   private ArrayList<SocialModal> prepareSocialList() {
     ArrayList<SocialModal> socialList = new ArrayList<>();
-    socialList.add(new SocialModal(R.drawable.social_facebook, "Facebook", getString(R.string.facebook_link)));
-    socialList.add(new SocialModal(R.drawable.social_instagram, "Instagram", getString(R.string.instagram_link)));
-    socialList.add(new SocialModal(R.drawable.social_linkedin, "Linkedin", getString(R.string.linkedin_link)));
-    socialList.add(new SocialModal(R.drawable.social_twitter, "Twitter", getString(R.string.twitter_link)));
+    socialList.add(new SocialModal(R.drawable.social_facebook, getString(R.string.social_title_facebook),
+        getString(R.string.facebook_link)));
+    socialList.add(new SocialModal(R.drawable.social_instagram, getString(R.string.social_title_instagram),
+        getString(R.string.instagram_link)));
+    socialList.add(new SocialModal(R.drawable.social_linkedin, getString(R.string.social_title_linkedin),
+        getString(R.string.linkedin_link)));
+    socialList.add(new SocialModal(R.drawable.social_twitter, getString(R.string.social_title_twitter),
+        getString(R.string.twitter_link)));
     return socialList;
 
   }
