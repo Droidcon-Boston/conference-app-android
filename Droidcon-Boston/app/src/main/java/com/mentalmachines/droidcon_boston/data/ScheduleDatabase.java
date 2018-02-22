@@ -50,6 +50,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     public static final int COL_SPKR_FB = 10;
 
     public static class ScheduleRow {
+
         public String talkDescription;
         public String speakerName;
         public String talkTitle;
@@ -59,12 +60,13 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         public String date;
         public Integer trackSortOrder;
 
-      public String getId() {
+        public String getId() {
             return talkTitle;
         }
     }
 
     public static class ScheduleDetail {
+
         public ScheduleRow listRow;
         public String speakerBio;
         public String twitter;
@@ -84,6 +86,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
      * Using a singleton to get the db, keep a single db open
      * Close cursors, do not close the db
      * If the feature set includes saving a user schedule we might make that preferences or set up a writable db
+     *
      * @return ScheduleDatabase
      */
     public static SQLiteDatabase getDatabase(@NonNull Context ctx) {
@@ -95,13 +98,10 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
     /**
      * Can use this data structure or just select the bio, the rest is already there
-     * @param ctx
-     * @param speakername
-     * @return
      */
     public static ScheduleDetail fetchDetailData(@NonNull Context ctx, @NonNull String speakername) {
         final SQLiteDatabase db = getDatabase(ctx);
-        final Cursor c = db.query(TABLE, null, sDetailWhere, new String[] { speakername },
+        final Cursor c = db.query(TABLE, null, sDetailWhere, new String[]{speakername},
                 null, null, null);
         //should be exactly one field from one row
         if (c.moveToFirst()) {
@@ -118,12 +118,21 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
             talkData.listRow.talkDescription = c.getString(COL_DESCRIPTION);
             talkData.speakerBio = c.getString(COL_BIO);
-            if (c.isNull(COL_SPKR_FB)) talkData.facebook = null;
-            else talkData.facebook = c.getString(COL_SPKR_FB);
-            if (c.isNull(COL_SPKR_LINKD)) talkData.linkedIn = null;
-            else talkData.linkedIn = c.getString(COL_SPKR_LINKD);
-            if (c.isNull(COL_SPKR_TWEET)) talkData.twitter = null;
-            else talkData.twitter = c.getString(COL_SPKR_TWEET);
+            if (c.isNull(COL_SPKR_FB)) {
+                talkData.facebook = null;
+            } else {
+                talkData.facebook = c.getString(COL_SPKR_FB);
+            }
+            if (c.isNull(COL_SPKR_LINKD)) {
+                talkData.linkedIn = null;
+            } else {
+                talkData.linkedIn = c.getString(COL_SPKR_LINKD);
+            }
+            if (c.isNull(COL_SPKR_TWEET)) {
+                talkData.twitter = null;
+            } else {
+                talkData.twitter = c.getString(COL_SPKR_TWEET);
+            }
             return talkData;
         } else {
             Log.e(TAG, "Error reading bio for " + speakername);
@@ -145,7 +154,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
                 item.talkTitle = c.getString(1);
                 item.photo = c.getString(2);
-                if (!c.isNull(3)){
+                if (!c.isNull(3)) {
                     item.time = c.getString(3);
                     item.room = c.getString(4);
                     item.date = c.getString(5);
@@ -163,8 +172,8 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         }
     }
 
-    public static String[] sAgendaProjection = new String[] { NAME,
-            TITLE, PHOTO, TALK_TIME, ROOM, TALK_DATE };
+    public static String[] sAgendaProjection = new String[]{NAME,
+            TITLE, PHOTO, TALK_TIME, ROOM, TALK_DATE};
 
     public static final String sDetailWhere = " " + NAME + " LIKE ?";
     public static final String sDayWhere = " " + TALK_DATE + " LIKE ?";
@@ -175,7 +184,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         List<ScheduleRow> items;
 
         String filter = (date == null) ? null : sDayWhere;
-        String params[] = (date == null) ? null : new String[] { date };
+        String params[] = (date == null) ? null : new String[]{date};
         //NOTE: DB has date/time in string format so we can't sort the right way :-P
         String orderBy = null; // TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
 
@@ -255,6 +264,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
         return items;
     }
+
     /*************************FAQ******************/
     public static final String FAQ_TABLE = "faq";
     public static final String QUESTIONS = "Question";
@@ -263,6 +273,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     public static final String MAP_COORDS = "map_link";
 
     public static class FaqData {
+
         public String question;
         public String answer;
         public String photoUrl;
@@ -290,9 +301,9 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                     question = item.question;
                 }
                 item.answer = c.getString(1);
-                item.photoUrl = c.isNull(2)? null : c.getString(2);
-                item.mapCoords = c.isNull(3)? null : c.getString(3);
-                item.bizLink = c.isNull(4)? null : c.getString(4);
+                item.photoUrl = c.isNull(2) ? null : c.getString(2);
+                item.mapCoords = c.isNull(3) ? null : c.getString(3);
+                item.bizLink = c.isNull(4) ? null : c.getString(4);
                 items.add(item);
                 //Log.d(TAG, "photo url? " + item.photoUrl.toString());
             } while (c.moveToNext());
@@ -312,7 +323,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         final ArrayList<FaqData> qData = new ArrayList<>();
         int dex = 0;
         for (String q : questions) {
-            for (FaqData answer: masterList) {
+            for (FaqData answer : masterList) {
                 if (q.equals(answer.question) && !TextUtils.isEmpty(answer.answer)) {
                     qData.add(answer);
                 }
@@ -324,15 +335,15 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         return answerData;
     }
 
-    public static String[] fetchQuestions (@NonNull Context ctx) {
+    public static String[] fetchQuestions(@NonNull Context ctx) {
         final SQLiteDatabase db = getDatabase(ctx);
-        final Cursor c = db.query(true, FAQ_TABLE, new String[] { QUESTIONS }, null, null, null, null, null, null);
+        final Cursor c = db.query(true, FAQ_TABLE, new String[]{QUESTIONS}, null, null, null, null, null, null);
         if (c.moveToFirst()) {
             String[] groups = new String[c.getCount()];
             int dex = 0;
             do {
                 groups[dex++] = c.getString(0);
-                Log.d(TAG, "questions?" + groups[dex-1]);
+                Log.d(TAG, "questions?" + groups[dex - 1]);
             } while (c.moveToNext());
             c.close();
             Log.d(TAG, "returning questions " + groups.length);
@@ -350,7 +361,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type like 'table'", null);
 
         if (c.moveToFirst()) {
-            while ( !c.isAfterLast() ) {
+            while (!c.isAfterLast()) {
                 Log.d(TAG, "Table Name=> " + c.getString(0));
                 c.moveToNext();
             }
