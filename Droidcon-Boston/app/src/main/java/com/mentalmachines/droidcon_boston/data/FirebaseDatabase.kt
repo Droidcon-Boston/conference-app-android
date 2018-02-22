@@ -49,6 +49,9 @@ open class FirebaseDatabase {
     class ScheduleEventDetail {
         val socialProfiles: HashMap<String, String>? = null
         var bio: String? = null
+        var title: String? = null
+        var org: String? = null
+        var name: String? = null
 
         fun toScheduleDetail(listRow: ScheduleRow) : ScheduleDetail {
             val detail = ScheduleDetail()
