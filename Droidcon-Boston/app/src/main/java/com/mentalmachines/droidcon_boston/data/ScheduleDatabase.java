@@ -57,8 +57,9 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         public String time;
         public String room;
         public String date;
+        public Integer trackSortOrder;
 
-        public String getId() {
+      public String getId() {
             return talkTitle;
         }
     }

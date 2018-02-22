@@ -90,7 +90,7 @@ public class AgendaDetailFragment extends Fragment {
         textTime.setText(itemData.time);
         textRoom.setText(itemData.room);
 
-        firebaseHelper.getMainDatabase().child("conferenceData").child("speakers").orderByChild("name").equalTo(speakerName)
+        firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(speakerName)
                 .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

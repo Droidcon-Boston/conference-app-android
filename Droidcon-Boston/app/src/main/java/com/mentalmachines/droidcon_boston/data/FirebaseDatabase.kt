@@ -12,6 +12,7 @@ open class FirebaseDatabase {
 
     class ScheduleEvent() {
         val speakerNames: HashMap<String, Boolean>? = null
+        val speakerNameToPhotoUrl: HashMap<String, String>? = null
         val roomNames: HashMap<String, Boolean>? = null
         val speakerIds: HashMap<String, Boolean>? = null
         val roomIds: HashMap<String, Boolean>? = null
@@ -19,21 +20,28 @@ open class FirebaseDatabase {
         val name: String? = null
         val photo: String? = null
         val startTime: String? = null
+        val trackSortOrder: Int? = 0
 
         fun toScheduleRow(): ScheduleRow {
             val row = ScheduleRow()
-            row.room = roomNames!!.keys.first()
             val d = DateUtils.fromISO8601UTC(startTime)
-            val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
-            val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
 
-            row.date = dateFormat.format(d)
-            row.time = timeFormat.format(d)
+            if (d != null) {
+                val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
+                val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
+                row.date = dateFormat.format(d)
+                row.time = timeFormat.format(d)
+            } else {
+                row.date = null
+                row.time = null
+            }
+
+            row.room = roomNames!!.keys.first()
+            row.trackSortOrder = trackSortOrder;
             row.speakerName = speakerNames!!.keys.first()
             row.talkDescription = description
             row.talkTitle = name
-            // TODO: speaker photo currently not present in the events firebase child (may want to denormalize).
-            row.photo = photo
+            row.photo = speakerNameToPhotoUrl!!.get(row.speakerName)
             return row
         }
     }
