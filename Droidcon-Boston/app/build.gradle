@@ -68,10 +68,12 @@ dependencies {
 
     // Firebase cloud messaging
     implementation "com.google.firebase:firebase-messaging:$playServices"
+    implementation "com.google.firebase:firebase-database:$playServices"
 
     // Misc
     implementation "com.jakewharton:butterknife:$butterKnife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnife"
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     implementation 'eu.davidea:flexible-adapter:5.0.0-rc1'
     implementation 'com.github.bumptech.glide:glide:3.7.0'

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
@@ -16,6 +17,7 @@ import com.mentalmachines.droidcon_boston.data.UserAgendaRepo;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,16 +34,16 @@ public class ScheduleAdapterItem extends
 
     private Date startTime;
 
-    private Integer roomOrder;
+    private final Integer roomOrder;
 
     public ScheduleDatabase.ScheduleRow getItemData() {
         return itemData;
     }
 
-    public ScheduleAdapterItem(ScheduleDatabase.ScheduleRow scheduleRow,
-            ScheduleAdapterItemHeader header) {
+    public ScheduleAdapterItem(ScheduleDatabase.ScheduleRow scheduleRow, ScheduleAdapterItemHeader header) {
         super(header);
         this.itemData = scheduleRow;
+        this.roomOrder = scheduleRow.trackSortOrder;
 
         String dateTimeString = scheduleRow.date + " " + scheduleRow.time;
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
@@ -51,13 +53,6 @@ public class ScheduleAdapterItem extends
             Log.e("ScheduleAdapterItem", "Parse error: " + e + " for " + dateTimeString);
         }
 
-        if ("THEATER 1".equals(scheduleRow.room)) {
-            roomOrder = 1;
-        } else if ("THEATER 2".equals(scheduleRow.room)) {
-            roomOrder = 2;
-        } else if ("CYCLORAMA".equals(scheduleRow.room)) {
-            roomOrder = 3;
-        }
     }
 
     public String getTitle() {
@@ -130,14 +125,14 @@ public class ScheduleAdapterItem extends
 
             Context context = holder.title.getContext();
             Glide.with(context)
-                 .load(itemData.photo)
-                 .transform(new CircleTransform(context))
-                 .crossFade()
-                 .into(holder.avatar);
+                    .load(itemData.photo)
+                    .transform(new CircleTransform(context))
+                    .crossFade()
+                    .into(holder.avatar);
 
             UserAgendaRepo userAgendaRepo = UserAgendaRepo.Companion.getInstance(holder.bookmarkHint.getContext());
             holder.bookmarkHint.setVisibility(userAgendaRepo.isSessionBookmarked(itemData.getId())
-                                              ? View.VISIBLE : View.INVISIBLE);
+                    ? View.VISIBLE : View.INVISIBLE);
 
             addBackgroundRipple(holder);
         }
