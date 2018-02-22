@@ -94,8 +94,8 @@ public class AgendaDetailFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
-                    ScheduleEventDetail detail = eventSnapshot.getValue(ScheduleEventDetail.class);
+                for (DataSnapshot speakerSnapshot : dataSnapshot.getChildren()) {
+                    ScheduleEventDetail detail = speakerSnapshot.getValue(ScheduleEventDetail.class);
                     if (detail != null) {
                         scheduleDetail = detail.toScheduleDetail(itemData);
                         showAgendaDetail(scheduleDetail);
