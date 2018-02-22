@@ -25,29 +25,6 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
     private static SQLiteDatabase sDB;
     private static final String DATABASE_NAME = "DroidconBoston17.db";
     private static final int DATABASE_VERSION = 1;
-    //columns, database constants
-    public static final String TABLE = "schedule";
-    public static final String NAME = "name";
-    public static final String TITLE = "talk";
-    public static final String PHOTO = "photo_link";
-    public static final String TALK_DATE = "date";
-    public static final String TALK_TIME = "time";
-    public static final String ROOM = "room";
-    //public static final String SPKR_TWEET = "twitter";
-    //public static final String SPKR_LINKD = "linkedin";
-    //public static final String SPKR_FB = "facebook";
-
-    public static final int COL_NAME = 0;
-    public static final int COL_TITLE = 1;
-    public static final int COL_DESCRIPTION = 2;
-    public static final int COL_PHOTO = 3;
-    public static final int COL_BIO = 4;
-    public static final int COL_TALK_DATE = 5;
-    public static final int COL_TALK_TIME = 6;
-    public static final int COL_ROOM = 7;
-    public static final int COL_SPKR_TWEET = 8;
-    public static final int COL_SPKR_LINKD = 9;
-    public static final int COL_SPKR_FB = 10;
 
     public static class ScheduleRow {
 
@@ -96,181 +73,13 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         return sDB;
     }
 
-    /**
-     * Can use this data structure or just select the bio, the rest is already there
-     */
-    public static ScheduleDetail fetchDetailData(@NonNull Context ctx, @NonNull String speakername) {
-        final SQLiteDatabase db = getDatabase(ctx);
-        final Cursor c = db.query(TABLE, null, sDetailWhere, new String[]{speakername},
-                null, null, null);
-        //should be exactly one field from one row
-        if (c.moveToFirst()) {
-            final ScheduleDetail talkData = new ScheduleDetail();
-            talkData.listRow = new ScheduleRow();
-            talkData.listRow.speakerName = c.getString(COL_NAME);
-            talkData.listRow.talkTitle = c.getString(COL_TITLE);
-            talkData.listRow.photo = c.getString(COL_PHOTO);
-            if (!c.isNull(COL_TALK_TIME)) {
-                talkData.listRow.room = c.getString(COL_ROOM);
-                talkData.listRow.time = c.getString(COL_TALK_TIME);
-                talkData.listRow.date = c.getString(COL_TALK_DATE);
-            }
 
-            talkData.listRow.talkDescription = c.getString(COL_DESCRIPTION);
-            talkData.speakerBio = c.getString(COL_BIO);
-            if (c.isNull(COL_SPKR_FB)) {
-                talkData.facebook = null;
-            } else {
-                talkData.facebook = c.getString(COL_SPKR_FB);
-            }
-            if (c.isNull(COL_SPKR_LINKD)) {
-                talkData.linkedIn = null;
-            } else {
-                talkData.linkedIn = c.getString(COL_SPKR_LINKD);
-            }
-            if (c.isNull(COL_SPKR_TWEET)) {
-                talkData.twitter = null;
-            } else {
-                talkData.twitter = c.getString(COL_SPKR_TWEET);
-            }
-            return talkData;
-        } else {
-            Log.e(TAG, "Error reading bio for " + speakername);
-            return null;
-        }
-    }
-
-    public static ScheduleRow[] fetchScheduleData(Context ctx) {
-        final SQLiteDatabase db = getDatabase(ctx);
-        final Cursor c = db.query(TABLE, null, null, null, null, null, null);
-        //all rows
-        if (c.moveToFirst()) {
-            int dex = 0;
-            final ScheduleRow[] items = new ScheduleRow[c.getCount()];
-            ScheduleRow item;
-            do {
-                item = new ScheduleRow();
-                item.speakerName = c.getString(0);
-                //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
-                item.talkTitle = c.getString(1);
-                item.photo = c.getString(2);
-                if (!c.isNull(3)) {
-                    item.time = c.getString(3);
-                    item.room = c.getString(4);
-                    item.date = c.getString(5);
-                } else {
-                    item.time = "unscheduled";
-                }
-                items[dex++] = item;
-            } while (c.moveToNext());
-            Log.i(TAG, "finished adapter arrray, length? " + items.length);
-            c.close();
-            return items;
-        } else {
-            Log.e(TAG, "Error reading database");
-            return null;
-        }
-    }
-
-    public static String[] sAgendaProjection = new String[]{NAME,
-            TITLE, PHOTO, TALK_TIME, ROOM, TALK_DATE};
-
-    public static final String sDetailWhere = " " + NAME + " LIKE ?";
-    public static final String sDayWhere = " " + TALK_DATE + " LIKE ?";
     public static final String MONDAY = "03/26/2018";
     public static final String TUESDAY = "03/27/2018";
-
-    public static List<ScheduleRow> fetchScheduleListByDay(Context ctx, String date) {
-        List<ScheduleRow> items;
-
-        String filter = (date == null) ? null : sDayWhere;
-        String params[] = (date == null) ? null : new String[]{date};
-        //NOTE: DB has date/time in string format so we can't sort the right way :-P
-        String orderBy = null; // TALK_DATE + " ASC, " + TALK_TIME + " ASC, " + ROOM + " ASC";
-
-        final SQLiteDatabase db = getDatabase(ctx);
-        final Cursor c = db.query(TABLE, sAgendaProjection, filter, params, null, null, orderBy);
-        //all rows
-        if (c.moveToFirst()) {
-            //why not use square brackets?
-            items = new ArrayList<>(c.getCount());
-            ScheduleRow item;
-            do {
-                item = new ScheduleRow();
-                item.speakerName = c.getString(0);
-                //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
-                item.talkTitle = c.getString(1);
-                item.photo = c.getString(2);
-                item.time = c.getString(3);
-                item.room = c.getString(4);
-                item.date = c.getString(5);
-                items.add(item);
-            } while (c.moveToNext());
-            Log.i(TAG, "finished adapter array");
-            c.close();
-        } else {
-            Log.e(TAG, "Error reading database");
-            return null;
-        }
-
-        if (MONDAY.equals(date) || (date == null)) {
-            //HACK: add registration and lunch which are missing from spreadsheet
-            ScheduleRow registration = new ScheduleRow();
-            registration.speakerName = null;
-            registration.talkTitle = "REGISTRATION";
-            registration.photo = null;
-            registration.time = "9:00 AM";
-            registration.room = "";
-            registration.date = MONDAY;
-            items.add(registration);
-            ScheduleRow lunch = new ScheduleRow();
-            lunch.speakerName = null;
-            lunch.talkTitle = "LUNCH";
-            lunch.photo = null;
-            lunch.time = "12:00 PM";
-            lunch.room = "";
-            lunch.date = MONDAY;
-            items.add(lunch);
-        }
-
-        if (TUESDAY.equals(date) || (date == null)) {
-            //HACK: add registration and lunch which are missing from spreadsheet
-            ScheduleRow breakfast = new ScheduleRow();
-            breakfast.speakerName = null;
-            breakfast.talkTitle = "BREAKFAST";
-            breakfast.photo = null;
-            breakfast.time = "9:00 AM";
-            breakfast.room = "";
-            breakfast.date = TUESDAY;
-            items.add(breakfast);
-            ScheduleRow lunch = new ScheduleRow();
-            lunch.speakerName = null;
-            lunch.talkTitle = "LUNCH";
-            lunch.photo = null;
-            lunch.time = "12:00 PM";
-            lunch.room = "";
-            lunch.date = TUESDAY;
-            items.add(lunch);
-            ScheduleRow party = new ScheduleRow();
-            party.speakerName = null;
-            party.talkTitle = "BOF, PANEL, CLOSING PARTY";
-            party.photo = null;
-            party.time = "5:30 PM";
-            party.room = "";
-            party.date = TUESDAY;
-            party.photo = "http://www.droidcon-boston.com/events-info/";
-            items.add(party);
-        }
-
-        return items;
-    }
 
     /*************************FAQ******************/
     public static final String FAQ_TABLE = "faq";
     public static final String QUESTIONS = "Question";
-    public static final String ANSWRS = "Answers";
-    public static final String OTHER_LNK = "other_link";
-    public static final String MAP_COORDS = "map_link";
 
     public static class FaqData {
 
@@ -352,27 +161,5 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             Log.e(TAG, "problem fetching FAQ data");
             return null;
         }
-    }
-
-
-    //DEBUG code for dev, run in Main onCreate
-    public static void testDb(@NonNull Context ctx) {
-        final SQLiteDatabase db = getDatabase(ctx);
-        Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type like 'table'", null);
-
-        if (c.moveToFirst()) {
-            while (!c.isAfterLast()) {
-                Log.d(TAG, "Table Name=> " + c.getString(0));
-                c.moveToNext();
-            }
-        }
-        final ScheduleRow[] items = fetchScheduleData(ctx);
-        if (items == null) {
-            Log.e(TAG, "Error reading database");
-            return;
-        }
-        Log.i(TAG, "finished adapter arrray, length? " + items.length);
-        c.close();
-        fetchDetailData(ctx, items[0].speakerName);
     }
 }
