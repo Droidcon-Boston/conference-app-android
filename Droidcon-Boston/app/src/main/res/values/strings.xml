@@ -27,4 +27,8 @@
     <string name="str_social">Social</string>
     <string name="str_coc">Code Of Conduct</string>
     <string name="path_to_coc_html_file">file:///android_asset/app/coc.html</string>
+    <string name="social_title_facebook">Facebook</string>
+    <string name="social_title_instagram">Instagram</string>
+    <string name="social_title_linkedin">LinkedIn</string>
+    <string name="social_title_twitter">Twitter</string>
 </resources>
