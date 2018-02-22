@@ -104,8 +104,7 @@ public class AgendaDayFragment extends Fragment {
     }
 
     private void fetchScheduleData(String dayFilter) {
-        firebaseHelper.getMainDatabase().child("conferenceData").child("events")
-                .addValueEventListener(new ValueEventListener() {
+        firebaseHelper.getEventDatabase().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final List<ScheduleRow> rows = new ArrayList<>();
