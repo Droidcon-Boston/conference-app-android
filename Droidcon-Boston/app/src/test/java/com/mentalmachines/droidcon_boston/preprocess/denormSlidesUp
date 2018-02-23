@@ -2,6 +2,7 @@
 //DEPS com.squareup.moshi:moshi:1.5.0,com.squareup.moshi:moshi-adapters:1.5.0,com.squareup.moshi:moshi-kotlin:1.5.0
 //INCLUDE ConferenceDataModels.kt
 //INCLUDE ConferenceDataUtils.kt
+//INCLUDE IsoDurationJsonAdapter.kt
 // note: the @file notation for the above doesn't seem to work yet :-P
 // you also might have to put full paths in front of the above files because kscript doesn't know how to look at PWD :-P
 

@@ -3,6 +3,7 @@ package com.mentalmachines.droidcon_boston.preprocess
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
+import java.time.Duration
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -13,6 +14,7 @@ class ConferenceDataUtils {
             val moshi = Moshi.Builder()
                     .add(KotlinJsonAdapterFactory())
                     .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                    .add(Duration::class.java, IsoDurationJsonAdapter().nullSafe())
                     .build()
             return moshi
         }
@@ -57,6 +59,8 @@ class ConferenceDataUtils {
                         it.value.trackSortOrder = track.sortOrder
                     }
                 }
+                // calculate the end time
+                it.value.endTime = Date.from(it.value.startTime.toInstant().plus(it.value.duration))
             }
         }
 

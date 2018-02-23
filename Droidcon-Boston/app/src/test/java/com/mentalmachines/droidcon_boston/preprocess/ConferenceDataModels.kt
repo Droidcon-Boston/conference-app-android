@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.preprocess
 
+import java.time.Duration
 import java.util.*
 
 data class ConferenceDataModel(
@@ -13,10 +14,11 @@ data class ConferenceDataModel(
 data class EventModel(
         val name: String,
         val description: String,
-        val duration: String,
+        val duration: Duration,
         val isGeneralEvent: Boolean,
         val isPublished: Boolean,
         val startTime: Date,
+        var endTime: Date?,
         val roomIds: Map<String, Boolean>?,
         val speakerIds: Map<String, Boolean>?,
         val trackId: String?,
