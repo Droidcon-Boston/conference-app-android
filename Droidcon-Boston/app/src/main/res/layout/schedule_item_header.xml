@@ -9,17 +9,17 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorAccent"/>
+        android:background="@color/colorBackground"/>
     <TextView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:paddingLeft="16dp"
        android:paddingRight="16dp"
-       android:paddingTop="8dp"
-       android:paddingBottom="8dp"
+       android:paddingTop="2dp"
+       android:paddingBottom="2dp"
        android:maxLines="1"
        android:ellipsize="end"
-       android:textSize="20sp"
+       android:textSize="14sp"
        android:fontFamily="sans-serif"
        android:textColor="@android:color/black"
        android:background="@color/colorBackground"
@@ -28,5 +28,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorAccent"/>
+        android:background="@color/colorBackground"/>
 </LinearLayout>

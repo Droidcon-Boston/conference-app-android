@@ -8,6 +8,7 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         style="@style/AppTabLayout"
+        app:tabTextAppearance="@style/AppTabText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed" />

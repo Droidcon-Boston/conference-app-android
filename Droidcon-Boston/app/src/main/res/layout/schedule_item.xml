@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
     android:background="?attr/selectableItemBackground"
     android:id="@+id/rootLayout"
     tools:ignore="RtlSymmetry">
@@ -15,25 +14,19 @@
         android:layout_width="5dp"
         android:layout_height="match_parent"
         android:layout_marginStart="1dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="10dp"
         android:background="@color/colorAccent"
         android:contentDescription="@string/hint_bookmark_added"
         android:visibility="invisible"
         tools:visibility="visible" />
 
-    <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_gravity="center_vertical"
-        android:contentDescription="@string/speaker_avatar"
-        tools:src="@drawable/bg_social_btn"
-        android:id="@+id/speaker_image"/>
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
         android:orientation="vertical"
         android:id="@+id/session_layout">
 
@@ -44,9 +37,21 @@
             android:ellipsize="end"
             android:textSize="18sp"
             android:fontFamily="sans-serif"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
             android:id="@+id/title_text"
             tools:text="Title"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/time_text"
+            tools:text="10:00 am - 10:30 am"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,28 +59,70 @@
             android:orientation="horizontal">
 
             <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="13sp"
-            android:fontFamily="sans-serif"
-            android:id="@+id/speaker_name_text"
-            tools:text="A Speaker"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_gravity="bottom"
+                android:textAlignment="gravity"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/colorGray"
+                android:text="@string/prefix_room"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textAlignment="gravity"
                 android:textSize="13sp"
                 android:fontFamily="sans-serif"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorGray"
                 android:id="@+id/room_text"
+                tools:text="Room Blah Blah"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_gravity="bottom"
+                android:textAlignment="gravity"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/colorGray"
+                android:text="@string/prefix_speaker"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textAlignment="gravity"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/speaker_name_text"
                 tools:text="A Speaker"/>
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/speaker_avatar"
+        tools:src="@drawable/bg_social_btn"
+        android:id="@+id/speaker_image"/>
 
 
     <TextView

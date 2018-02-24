@@ -6,6 +6,10 @@
             android:icon="@drawable/ic_agenda"
             android:title="@string/str_agenda" />
         <item
+            android:id="@+id/nav_my_schedule"
+            android:icon="@drawable/ic_agenda"
+            android:title="@string/str_my_schedule" />
+        <item
             android:id="@+id/nav_faq"
             android:icon="@drawable/ic_faq"
             android:title="@string/str_faq" />

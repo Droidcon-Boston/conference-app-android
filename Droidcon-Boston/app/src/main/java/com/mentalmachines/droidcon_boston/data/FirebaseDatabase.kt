@@ -2,38 +2,42 @@ package com.mentalmachines.droidcon_boston.data
 
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow
-import com.mentalmachines.droidcon_boston.utils.DateUtils
-import java.text.SimpleDateFormat
-import java.util.*
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import kotlin.collections.HashMap
 
 
 open class FirebaseDatabase {
 
     class ScheduleEvent() {
-        val speakerNames: HashMap<String, Boolean>? = null
-        val speakerNameToPhotoUrl: HashMap<String, String>? = null
-        val roomNames: HashMap<String, Boolean>? = null
-        val speakerIds: HashMap<String, Boolean>? = null
-        val roomIds: HashMap<String, Boolean>? = null
-        val description: String? = null;
-        val name: String? = null
-        val photo: String? = null
-        val startTime: String? = null
-        val trackSortOrder: Int? = 0
+        var speakerNames: HashMap<String, Boolean>? = null
+        var speakerNameToPhotoUrl: HashMap<String, String>? = null
+        var roomNames: HashMap<String, Boolean>? = null
+        var speakerIds: HashMap<String, Boolean>? = null
+        var roomIds: HashMap<String, Boolean>? = null
+        var description: String? = null;
+        var name: String? = null
+        var photo: String? = null
+        var startTime: String? = null
+        var endTime: String? = null
+        var trackSortOrder: Int? = 0
 
         fun toScheduleRow(): ScheduleRow {
             val row = ScheduleRow()
-            val d = DateUtils.fromISO8601UTC(startTime)
+            val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
 
-            if (d != null) {
-                val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
-                val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
-                row.date = dateFormat.format(d)
-                row.time = timeFormat.format(d)
-            } else {
-                row.date = null
-                row.time = null
+            if (startDateTime != null) {
+                val dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy")
+                val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
+                row.date = dateFormat.format(startDateTime)
+                row.startTime = timeFormat.format(startDateTime).toLowerCase()
+            }
+
+            val endDateTime = ZonedDateTime.parse(endTime).withZoneSameInstant(ZoneId.systemDefault())
+            if (endDateTime != null) {
+                val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
+                row.endTime = timeFormat.format(endDateTime).toLowerCase()
             }
 
             row.room = roomNames!!.keys.first()
