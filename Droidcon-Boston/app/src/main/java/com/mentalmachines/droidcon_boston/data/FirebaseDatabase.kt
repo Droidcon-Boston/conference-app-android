@@ -26,7 +26,7 @@ open class FirebaseDatabase {
         fun toScheduleRow(): ScheduleRow {
             val row = ScheduleRow()
             val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
-            row.localStartTime = startDateTime
+            row.utcStartTimeString = startTime
 
             if (startDateTime != null) {
                 val dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy")
@@ -43,10 +43,12 @@ open class FirebaseDatabase {
 
             row.room = roomNames!!.keys.first()
             row.trackSortOrder = trackSortOrder;
-            row.speakerName = speakerNames!!.keys.first()
+            row.speakerName = speakerNames!!.keys.joinToString(separator = ", ")
+            row.speakerCount = speakerNames!!.size
             row.talkDescription = description
             row.talkTitle = name
-            row.photo = speakerNameToPhotoUrl!!.get(row.speakerName)
+            val firstSpeaker = speakerNames!!.keys.first()
+            row.photo = speakerNameToPhotoUrl!!.get(firstSpeaker)
             return row
         }
     }

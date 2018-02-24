@@ -23,6 +23,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:layout_marginEnd="8dp"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
@@ -82,42 +83,25 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_gravity="bottom"
-                android:textAlignment="gravity"
-                android:textSize="12sp"
-                android:fontFamily="sans-serif"
-                android:textColor="@color/colorGray"
-                android:text="@string/prefix_speaker"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:textAlignment="gravity"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/speaker_name_text"
-                tools:text="A Speaker"/>
-
-        </LinearLayout>
+            android:layout_gravity="bottom"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textAlignment="gravity"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/speaker_name_text"
+            tools:text="A Speaker, asdf asfafsafdasffas, asdf asfadsfasdf, asdf, asdfsadf, asdf, asdfasdfasf, asdf, asdf"/>
 
     </LinearLayout>
 
     <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="16dp"
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/speaker_avatar"

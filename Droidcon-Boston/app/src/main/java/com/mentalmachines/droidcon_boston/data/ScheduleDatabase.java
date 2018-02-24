@@ -10,7 +10,6 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.threeten.bp.ZonedDateTime;
 
 /**
  * This database can workaround certain issues with the Wordpress API
@@ -52,9 +51,10 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
         public String talkDescription;
         public String speakerName;
+        public int speakerCount;
         public String talkTitle;
         public String photo;
-        public ZonedDateTime localStartTime;
+        public String utcStartTimeString;
         public String startTime;
         public String endTime;
         public String room;

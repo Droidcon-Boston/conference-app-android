@@ -117,7 +117,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         val sortedItems = items.sortedWith(
-                compareBy<ScheduleAdapterItem>{ it.itemData.localStartTime }
+                compareBy<ScheduleAdapterItem>{ it.itemData.utcStartTimeString }
                 .thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
@@ -129,10 +129,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int): Boolean {
-        val flexibleItem = headerAdapter.getItem(position)
-
-        if (flexibleItem is ScheduleAdapterItem) {
-            val item = flexibleItem as ScheduleAdapterItem?
+        if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
+            val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData
             if (StringUtils.isNullorEmpty(itemData.speakerName)) {
                 val url = itemData.photo
