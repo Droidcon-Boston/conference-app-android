@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+import com.mentalmachines.droidcon_boston.data.FaqDatabase;
 import java.util.HashMap;
 
 public class FAQFragment extends Fragment {
@@ -35,12 +35,12 @@ public class FAQFragment extends Fragment {
 
         final String[] questionsGroup;
 
-        final HashMap<Integer, ScheduleDatabase.FaqData[]> childrens;
+        final HashMap<Integer, FaqDatabase.FaqData[]> childrens;
 
         public FaqExpandable() {
             final Context ctx = getContext();
-            questionsGroup = ScheduleDatabase.fetchQuestions(ctx);
-            childrens = ScheduleDatabase.makeAnswers(ctx, questionsGroup);
+            questionsGroup = FaqDatabase.fetchQuestions(ctx);
+            childrens = FaqDatabase.makeAnswers(ctx, questionsGroup);
         }
 
         @Override
@@ -90,7 +90,7 @@ public class FAQFragment extends Fragment {
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
                 ViewGroup parent) {
-            final ScheduleDatabase.FaqData item = childrens.get(groupPosition)[childPosition];
+            final FaqDatabase.FaqData item = childrens.get(groupPosition)[childPosition];
             final Context ctx = getContext();
             if (convertView == null) {
                 convertView = LayoutInflater.from(ctx).inflate(R.layout.faq_item, null);

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow;
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -30,17 +30,17 @@ import java.util.Locale;
 public class ScheduleAdapterItem extends
         AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader> {
 
-    private ScheduleDatabase.ScheduleRow itemData;
+    private ScheduleRow itemData;
 
     private Date startTime;
 
     private final Integer roomOrder;
 
-    public ScheduleDatabase.ScheduleRow getItemData() {
+    public ScheduleRow getItemData() {
         return itemData;
     }
 
-    public ScheduleAdapterItem(ScheduleDatabase.ScheduleRow scheduleRow, ScheduleAdapterItemHeader header) {
+    public ScheduleAdapterItem(ScheduleRow scheduleRow, ScheduleAdapterItemHeader header) {
         super(header);
         this.itemData = scheduleRow;
         this.roomOrder = scheduleRow.trackSortOrder;

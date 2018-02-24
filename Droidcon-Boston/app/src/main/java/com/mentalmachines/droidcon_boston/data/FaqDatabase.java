@@ -11,51 +11,20 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This database can workaround certain issues with the Wordpress API
  * Another advantage is that local resources reduce the network resources required by the crowd using it
  */
 
-public class ScheduleDatabase extends SQLiteAssetHelper {
+public class FaqDatabase extends SQLiteAssetHelper {
 
-    public static final String TAG = "ScheduleDatabase";
-    public static final String SCHEDULE_ITEM_ROW = "schedule_item_row";
-    private static SQLiteDatabase sDB;
+    private static final String TAG = FaqDatabase.class.getName();
     private static final String DATABASE_NAME = "DroidconBoston17.db";
+    private static SQLiteDatabase sDB;
     private static final int DATABASE_VERSION = 1;
 
-    public static class ScheduleRow {
-
-        public String talkDescription;
-        public String speakerName;
-        public String talkTitle;
-        public String photo;
-        public String time;
-        public String room;
-        public String date;
-        public Integer trackSortOrder;
-
-        public String getId() {
-            return talkTitle;
-        }
-    }
-
-    public static class ScheduleDetail {
-
-        public ScheduleRow listRow;
-        public String speakerBio;
-        public String twitter;
-        public String linkedIn;
-        public String facebook;
-
-        public String getId() {
-            return listRow.getId();
-        }
-    }
-
-    public ScheduleDatabase(Context context) {
+    public FaqDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -68,14 +37,10 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
      */
     public static SQLiteDatabase getDatabase(@NonNull Context ctx) {
         if (sDB == null) {
-            sDB = (new ScheduleDatabase(ctx)).getWritableDatabase();
+            sDB = (new FaqDatabase(ctx)).getWritableDatabase();
         }
         return sDB;
     }
-
-
-    public static final String MONDAY = "03/26/2018";
-    public static final String TUESDAY = "03/27/2018";
 
     /*************************FAQ******************/
     public static final String FAQ_TABLE = "faq";

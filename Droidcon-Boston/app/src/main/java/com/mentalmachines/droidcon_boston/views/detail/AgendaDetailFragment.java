@@ -21,8 +21,9 @@ import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEventDetail;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail;
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow;
+import com.mentalmachines.droidcon_boston.data.Schedule;
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo;
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
@@ -67,7 +68,7 @@ public class AgendaDetailFragment extends Fragment {
     @BindView(R.id.text_room)
     TextView textRoom;
 
-    private ScheduleDatabase.ScheduleDetail scheduleDetail;
+    private ScheduleDetail scheduleDetail;
     private FirebaseHelper firebaseHelper = FirebaseHelper.Companion.getInstance();
 
     @Override
@@ -84,7 +85,7 @@ public class AgendaDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Bundle bundle = getArguments();
-        final ScheduleRow itemData = gson.fromJson(bundle.getString(ScheduleDatabase.SCHEDULE_ITEM_ROW), ScheduleRow.class);
+        final ScheduleRow itemData = gson.fromJson(bundle.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow.class);
 
         final String speakerName = itemData.speakerName;
         textTime.setText(itemData.time);
@@ -123,7 +124,7 @@ public class AgendaDetailFragment extends Fragment {
         }
     }
 
-    public void showAgendaDetail(ScheduleDatabase.ScheduleDetail scheduleDetail) {
+    public void showAgendaDetail(ScheduleDetail scheduleDetail) {
         Glide.with(this)
                 .load(scheduleDetail.listRow.photo)
                 .transform(new CircleTransform(getActivity().getApplicationContext()))
@@ -155,7 +156,7 @@ public class AgendaDetailFragment extends Fragment {
         showBookmarkStatus(scheduleDetail);
     }
 
-    private void showBookmarkStatus(ScheduleDatabase.ScheduleDetail scheduleDetail) {
+    private void showBookmarkStatus(ScheduleDetail scheduleDetail) {
         UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
         imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.listRow.talkTitle)
                                        ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);

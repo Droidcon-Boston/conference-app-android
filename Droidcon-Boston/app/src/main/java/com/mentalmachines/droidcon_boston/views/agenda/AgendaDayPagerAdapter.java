@@ -4,7 +4,8 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
+
+import com.mentalmachines.droidcon_boston.data.Schedule;
 
 public class AgendaDayPagerAdapter extends FragmentPagerAdapter {
     private final int PAGE_COUNT = 2;
@@ -22,7 +23,7 @@ public class AgendaDayPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return AgendaDayFragment.newInstance(
-                (position == 0) ? ScheduleDatabase.MONDAY : ScheduleDatabase.TUESDAY
+                (position == 0) ? Schedule.MONDAY : Schedule.TUESDAY
         );
     }
 

@@ -1,7 +1,7 @@
 package com.mentalmachines.droidcon_boston.data
 
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleDetail
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.utils.DateUtils
 import java.text.SimpleDateFormat
 import java.util.*

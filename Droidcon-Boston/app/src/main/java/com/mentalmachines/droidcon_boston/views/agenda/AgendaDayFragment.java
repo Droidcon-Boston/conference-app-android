@@ -3,7 +3,6 @@ package com.mentalmachines.droidcon_boston.views.agenda;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
@@ -26,8 +25,8 @@ import butterknife.ButterKnife;
 
 import com.mentalmachines.droidcon_boston.R;
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase;
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow;
+import com.mentalmachines.droidcon_boston.data.Schedule;
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment;
@@ -132,7 +131,7 @@ public class AgendaDayFragment extends Fragment {
 
     private void setupHeaderAdapter(List<ScheduleRow> rows) {
         List<ScheduleAdapterItem> items = new ArrayList<>(rows.size());
-        for (ScheduleDatabase.ScheduleRow row : rows) {
+        for (ScheduleRow row : rows) {
             String timeDisplay = ((row.time == null) || (row.time.length() == 0)) ? "Unscheduled" : row.time;
             ScheduleAdapterItemHeader header = timeHeaders.get(timeDisplay);
             if (header == null) {
@@ -176,7 +175,7 @@ public class AgendaDayFragment extends Fragment {
                                     return false;
                                 }
                                 Bundle arguments = new Bundle();
-                                arguments.putString(ScheduleDatabase.SCHEDULE_ITEM_ROW, gson.toJson(itemData, ScheduleRow.class));
+                                arguments.putString(Schedule.SCHEDULE_ITEM_ROW, gson.toJson(itemData, ScheduleRow.class));
 
                                 AgendaDetailFragment agendaDetailFragment = new AgendaDetailFragment();
                                 agendaDetailFragment.setArguments(arguments);
