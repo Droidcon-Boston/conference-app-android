@@ -31,4 +31,6 @@
     <string name="social_title_instagram">Instagram</string>
     <string name="social_title_linkedin">LinkedIn</string>
     <string name="social_title_twitter">Twitter</string>
+    <string name="saved_agena_item">Saved to your Agenda</string>
+    <string name="removed_agenda_item">Removed from your Agenda</string>
 </resources>
