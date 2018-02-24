@@ -34,18 +34,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:maxLines="2"
             android:ellipsize="end"
             android:textSize="18sp"
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
             android:id="@+id/title_text"
             tools:text="Title"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:maxLines="2"
             android:ellipsize="end"
             android:textSize="16sp"
@@ -57,6 +58,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal">
 
             <TextView
@@ -86,6 +88,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:layout_gravity="bottom"
             android:maxLines="2"
             android:ellipsize="end"
