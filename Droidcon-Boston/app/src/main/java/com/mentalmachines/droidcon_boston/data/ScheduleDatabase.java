@@ -6,12 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.threeten.bp.ZonedDateTime;
 
 /**
  * This database can workaround certain issues with the Wordpress API
@@ -55,6 +54,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
         public String speakerName;
         public String talkTitle;
         public String photo;
+        public ZonedDateTime localStartTime;
         public String startTime;
         public String endTime;
         public String room;

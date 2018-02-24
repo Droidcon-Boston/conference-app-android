@@ -26,6 +26,7 @@ open class FirebaseDatabase {
         fun toScheduleRow(): ScheduleRow {
             val row = ScheduleRow()
             val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
+            row.localStartTime = startDateTime
 
             if (startDateTime != null) {
                 val dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy")

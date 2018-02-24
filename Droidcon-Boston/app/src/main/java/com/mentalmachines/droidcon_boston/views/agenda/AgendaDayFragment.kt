@@ -103,7 +103,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
-        val items = ArrayList<ScheduleAdapterItem>(rows.size)
+        var items = ArrayList<ScheduleAdapterItem>(rows.size)
         for (row in rows) {
             val timeDisplay = if (row.startTime == null || row.startTime.isEmpty()) "Unscheduled" else row.startTime
             var header: ScheduleAdapterItemHeader? = timeHeaders[timeDisplay]
@@ -116,10 +116,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             items.add(item)
         }
 
-        items.sortedWith(compareBy({ it.startTime }, { it.roomSortOrder }))
+        val sortedItems = items.sortedWith(
+                compareBy<ScheduleAdapterItem>{ it.itemData.localStartTime }
+                .thenBy { it.roomSortOrder })
 
-        FlexibleAdapter.enableLogs(Level.DEBUG)
-        headerAdapter = FlexibleAdapter(items)
+        headerAdapter = FlexibleAdapter(sortedItems)
         headerAdapter.addListener(this)
         recycler.adapter = headerAdapter
         recycler.addItemDecoration(FlexibleItemDecoration(recycler.context).withDefaultDivider())
