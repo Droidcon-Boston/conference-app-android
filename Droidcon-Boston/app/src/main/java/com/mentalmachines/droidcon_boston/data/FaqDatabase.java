@@ -12,10 +12,6 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * This database can workaround certain issues with the Wordpress API
- * Another advantage is that local resources reduce the network resources required by the crowd using it
- */
 
 public class FaqDatabase extends SQLiteAssetHelper {
 
@@ -24,7 +20,7 @@ public class FaqDatabase extends SQLiteAssetHelper {
     private static SQLiteDatabase sDB;
     private static final int DATABASE_VERSION = 1;
 
-    public FaqDatabase(Context context) {
+    FaqDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -33,7 +29,7 @@ public class FaqDatabase extends SQLiteAssetHelper {
      * Close cursors, do not close the db
      * If the feature set includes saving a user schedule we might make that preferences or set up a writable db
      *
-     * @return ScheduleDatabase
+     * @return FaqDatabase
      */
     public static SQLiteDatabase getDatabase(@NonNull Context ctx) {
         if (sDB == null) {
