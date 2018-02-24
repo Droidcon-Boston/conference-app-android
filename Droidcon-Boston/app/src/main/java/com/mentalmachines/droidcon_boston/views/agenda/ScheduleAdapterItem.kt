@@ -91,6 +91,9 @@ class ScheduleAdapterItem internal constructor(val itemData: ScheduleDatabase.Sc
             holder.speaker.text = itemData.speakerName
             holder.room.text = itemData.room
 
+            holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
+            holder.speakerCount.text = String.format("+%d", itemData.speakerCount-1)
+
             val context = holder.title.context
             Glide.with(context)
                     .load(itemData.photo)
@@ -130,6 +133,8 @@ class ScheduleAdapterItem internal constructor(val itemData: ScheduleDatabase.Sc
 
         lateinit var speaker: TextView
 
+        lateinit var speakerCount: TextView
+
         lateinit var room: TextView
 
         lateinit var sessionLayout: View
@@ -153,6 +158,7 @@ class ScheduleAdapterItem internal constructor(val itemData: ScheduleDatabase.Sc
             title = parent.findViewById(R.id.title_text)
             time = parent.findViewById(R.id.time_text)
             speaker = parent.findViewById(R.id.speaker_name_text)
+            speakerCount = parent.findViewById(R.id.speaker_count)
             room = parent.findViewById(R.id.room_text)
             sessionLayout = parent.findViewById(R.id.session_layout)
             bigTitle = parent.findViewById(R.id.bigtitle_text)
