@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.dinuscxj.refresh.RecyclerRefreshLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -25,7 +27,6 @@ import com.mentalmachines.droidcon_boston.utils.StringUtils
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.utils.Log.Level
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -34,6 +35,7 @@ import java.util.HashMap
  */
 class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
+    private lateinit var refreshLayout: RecyclerRefreshLayout
     lateinit var recycler: RecyclerView
 
     private val timeHeaders = HashMap<String, ScheduleAdapterItemHeader>()
@@ -43,6 +45,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private var userAgendaRepo: UserAgendaRepo? = null
 
     private lateinit var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>
+    private lateinit var eventValueListener: ValueEventListener
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,20 +69,39 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return super.onOptionsItemSelected(item)
     }
 
+    private var onlyMyAgenda: Boolean = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.agenda_day_fragment, container, false)
 
-        recycler = view.findViewById(R.id.recycler)
+        recycler = view.findViewById(R.id.agenda_recycler)
+        refreshLayout = view.findViewById(R.id.refresh_layout)
 
         recycler.layoutManager = LinearLayoutManager(activity!!.applicationContext)
-        fetchScheduleData(dayFilter, arguments!!.getBoolean(ARG_MY_AGENDA))
+
+        onlyMyAgenda = arguments!!.getBoolean(ARG_MY_AGENDA)
+
+
+        fetchScheduleData(dayFilter, onlyMyAgenda)
+
+        refreshLayout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL)
+
+        refreshLayout.setOnRefreshListener {
+            headerAdapter.clear()
+            headerAdapter.notifyDataSetChanged()
+            refreshLayout.setRefreshing(true)
+            firebaseHelper.eventDatabase.removeEventListener(eventValueListener)
+            fetchScheduleData(dayFilter, onlyMyAgenda)
+            Toast.makeText(activity, "Refreshed Agenda", Toast.LENGTH_SHORT).show()
+        }
+
 
         return view
     }
 
     private fun fetchScheduleData(dayFilter: String?, onlyMyAgenda: Boolean) {
-        firebaseHelper.eventDatabase.addValueEventListener(object : ValueEventListener {
+        eventValueListener = firebaseHelper.eventDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val rows = ArrayList<ScheduleRow>()
                 for (roomSnapshot in dataSnapshot.children) {
@@ -92,6 +115,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                     }
                 }
 
+                refreshLayout.setRefreshing(false)
                 setupHeaderAdapter(rows)
             }
 
