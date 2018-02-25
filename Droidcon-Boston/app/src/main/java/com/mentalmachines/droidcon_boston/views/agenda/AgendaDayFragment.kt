@@ -47,6 +47,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private lateinit var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>
     private lateinit var eventValueListener: ValueEventListener
 
+    private var onlyMyAgenda: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +70,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    private var onlyMyAgenda: Boolean = false
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.agenda_day_fragment, container, false)
@@ -81,8 +80,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         recycler.layoutManager = LinearLayoutManager(activity!!.applicationContext)
 
         onlyMyAgenda = arguments!!.getBoolean(ARG_MY_AGENDA)
-
-
         fetchScheduleData(dayFilter, onlyMyAgenda)
 
         refreshLayout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL)
@@ -95,7 +92,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             fetchScheduleData(dayFilter, onlyMyAgenda)
             Toast.makeText(activity, "Refreshed Agenda", Toast.LENGTH_SHORT).show()
         }
-
 
         return view
     }
