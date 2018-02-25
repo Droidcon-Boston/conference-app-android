@@ -28,9 +28,5 @@ class UserAgendaRepo private constructor(context: Context) {
         sharedPrefs.edit().putStringSet(sessionIdsKey, savedSessionIds).apply()
     }
 
-    fun getMySessionIds(): HashSet<String> {
-        return savedSessionIds;
-    }
-
     companion object : SingletonHolder<UserAgendaRepo, Context>(::UserAgendaRepo)
 }

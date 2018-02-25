@@ -127,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
     if (fragment == null) {
       // Initialize the fragment based on tag
       if (title.equals(getResources().getString(R.string.str_agenda))) {
-        fragment = AgendaFragment.Companion.newInstance(false);
+        fragment = AgendaFragment.Companion.newInstance();
       } else if (title.equals(getResources().getString(R.string.str_my_schedule))) {
-        fragment = AgendaFragment.Companion.newInstance(true);
+        fragment = AgendaFragment.Companion.newInstanceMySchedule();
       } else if (title.equals(getResources().getString(R.string.str_faq))) {
         fragment = new FAQFragment();
       } else if (title.equals(getResources().getString(R.string.str_social))) {

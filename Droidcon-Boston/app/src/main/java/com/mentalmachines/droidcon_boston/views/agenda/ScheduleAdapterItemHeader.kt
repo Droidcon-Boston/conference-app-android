@@ -37,7 +37,6 @@ class ScheduleAdapterItemHeader internal constructor(private val sessionTime: St
                                 holder: ScheduleAdapterItemHeader.ViewHolder,
                                 position: Int,
                                 payloads: List<*>) {
-
         holder.header.text = sessionTime
     }
 
@@ -46,13 +45,13 @@ class ScheduleAdapterItemHeader internal constructor(private val sessionTime: St
 
         lateinit var header: TextView
 
-        constructor(view: View, adapter: FlexibleAdapter<*>) : super(view, adapter) {
-
+        constructor(view: View, adapter: FlexibleAdapter<*>)
+                : super(view, adapter) {
             findViews(view)
         }
 
-        internal constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(view, adapter, stickyHeader) {
-
+        internal constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean)
+                : super(view, adapter, stickyHeader) {
             findViews(view)
         }
 

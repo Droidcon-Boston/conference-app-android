@@ -67,7 +67,10 @@ class AgendaFragment : Fragment() {
 
         private val ARG_MY_AGENDA = "my_agenda"
 
-        fun newInstance(myAgenda: Boolean): AgendaFragment {
+        fun newInstance() = newInstance(false)
+        fun newInstanceMySchedule() = newInstance(true)
+
+        private fun newInstance(myAgenda: Boolean): AgendaFragment {
             val fragment = AgendaFragment()
             val args = Bundle()
             args.putBoolean(ARG_MY_AGENDA, myAgenda)
