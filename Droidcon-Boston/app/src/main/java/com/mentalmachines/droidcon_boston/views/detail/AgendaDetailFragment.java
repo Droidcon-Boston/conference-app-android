@@ -87,7 +87,7 @@ public class AgendaDetailFragment extends Fragment {
         final ScheduleRow itemData = gson.fromJson(bundle.getString(ScheduleDatabase.SCHEDULE_ITEM_ROW), ScheduleRow.class);
 
         final String speakerName = itemData.speakerName;
-        textTime.setText(itemData.time);
+        textTime.setText(itemData.startTime);
         textRoom.setText(itemData.room);
 
         firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(speakerName)

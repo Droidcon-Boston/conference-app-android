@@ -22,6 +22,7 @@
     <string name="contact_link">http://www.droidcon-boston.com/#form_section</string>
 
     <string name="str_agenda">Agenda</string>
+    <string name="str_my_schedule">My Schedule</string>
     <string name="str_faq">FAQ</string>
     <string name="str_droidcon_boston_18">Droidcon Boston\'18</string>
     <string name="str_social">Social</string>
@@ -31,4 +32,7 @@
     <string name="social_title_instagram">Instagram</string>
     <string name="social_title_linkedin">LinkedIn</string>
     <string name="social_title_twitter">Twitter</string>
+
+    <string name="prefix_speaker">talk by</string>
+    <string name="prefix_room">at</string>
 </resources>
