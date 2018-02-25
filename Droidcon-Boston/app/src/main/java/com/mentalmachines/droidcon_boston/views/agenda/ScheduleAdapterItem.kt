@@ -80,7 +80,7 @@ class ScheduleAdapterItem internal constructor(val itemData: ScheduleDatabase.Sc
                 addBackgroundRipple(holder)
             }
 
-            holder.bookmarkHint.visibility = View.INVISIBLE
+            holder.bookmarkIndicator.visibility = View.INVISIBLE
         } else {
             holder.sessionLayout.visibility = View.VISIBLE
             holder.avatar.visibility = View.VISIBLE
@@ -101,8 +101,8 @@ class ScheduleAdapterItem internal constructor(val itemData: ScheduleDatabase.Sc
                     .crossFade()
                     .into(holder.avatar)
 
-            val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkHint.context)
-            holder.bookmarkHint.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
+            val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
+            holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
                 View.VISIBLE
             else
                 View.INVISIBLE
@@ -123,7 +123,7 @@ class ScheduleAdapterItem internal constructor(val itemData: ScheduleDatabase.Sc
 
         lateinit var rootLayout: View
 
-        lateinit var bookmarkHint: ImageView
+        lateinit var bookmarkIndicator: ImageView
 
         lateinit var avatar: ImageView
 
@@ -153,7 +153,7 @@ class ScheduleAdapterItem internal constructor(val itemData: ScheduleDatabase.Sc
 
         private fun findViews(parent: View) {
             rootLayout = parent.findViewById(R.id.rootLayout)
-            bookmarkHint = parent.findViewById(R.id.image_bookmark_hint)
+            bookmarkIndicator = parent.findViewById(R.id.bookmark_indicator)
             avatar = parent.findViewById(R.id.speaker_image)
             title = parent.findViewById(R.id.title_text)
             time = parent.findViewById(R.id.time_text)
