@@ -23,9 +23,9 @@
 
     <string name="str_agenda">Agenda</string>
     <string name="str_my_schedule">My Schedule</string>
-    <string name="str_faq">FAQ</string>
-    <string name="str_droidcon_boston_18">Droidcon Boston\'18</string>
     <string name="str_social">Social</string>
+    <string name="str_faq">FAQ</string>
+    <string name="str_about_us">About Us</string>
     <string name="str_coc">Code Of Conduct</string>
     <string name="path_to_coc_html_file">file:///android_asset/app/coc.html</string>
     <string name="social_title_facebook">Facebook</string>
