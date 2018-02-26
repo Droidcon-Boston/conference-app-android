@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
         case R.id.nav_coc:
           replaceFragment(getString(R.string.str_coc));
           break;
+        case R.id.nav_about:
+          replaceFragment(getString(R.string.str_about_us));
+          break;
       }
       return true;
     });
@@ -136,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
         fragment = new SocialFragment();
       } else if (title.equals(getResources().getString(R.string.str_coc))) {
         fragment = new CocFragment();
+      } else if (title.equals(getResources().getString(R.string.str_about_us))) {
+        fragment = new AboutFragment();
       }
       // Add fragment with tag
       fragmentManager.beginTransaction().add(R.id.fragment_container, fragment, title).commit();
