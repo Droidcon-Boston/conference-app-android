@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -20,19 +19,13 @@ class AboutFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-        val rootView = inflater.inflate(R.layout.about_fragment, container, false)
-        ButterKnife.bind(this, rootView)
-        return rootView
+        return inflater.inflate(R.layout.about_fragment, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         fetchDataFromFirebase()
     }
-
 
     private fun fetchDataFromFirebase() {
         firebaseHelper.aboutDatabase.addValueEventListener(object : ValueEventListener {
