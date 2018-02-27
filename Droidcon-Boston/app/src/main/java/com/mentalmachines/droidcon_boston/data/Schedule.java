@@ -13,9 +13,12 @@ public class Schedule {
 
         public String talkDescription;
         public String speakerName;
+        public int speakerCount;
         public String talkTitle;
         public String photo;
-        public String time;
+        public String utcStartTimeString;
+        public String startTime;
+        public String endTime;
         public String room;
         public String date;
         public Integer trackSortOrder;

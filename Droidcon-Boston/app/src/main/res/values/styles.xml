@@ -22,6 +22,10 @@
         <item name="tabBackground">@color/colorPrimary</item>
         <item name="tabSelectedTextColor">@color/colorAccent</item>
         <item name="tabTextColor">@color/colorBackground</item>
-
     </style>
+
+    <style name="AppTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>
