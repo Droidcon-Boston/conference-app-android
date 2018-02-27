@@ -6,20 +6,26 @@ import com.google.firebase.database.FirebaseDatabase
 
 class FirebaseHelper private constructor() {
 
-    val database: FirebaseDatabase
-    val mainDatabase: DatabaseReference
+    private val database: FirebaseDatabase
+    private val mainDatabase: DatabaseReference
     val eventDatabase: DatabaseReference
     val speakerDatabase: DatabaseReference
+    val aboutDatabase: DatabaseReference
 
     init {
         this.database = FirebaseDatabase.getInstance()
+
         // Enable disk persistence, https://firebase.google.com/docs/database/android/offline-capabilities
         this.database.setPersistenceEnabled(true)
-        this.mainDatabase = database.getReference()
+        this.mainDatabase = database.reference
         this.eventDatabase = mainDatabase.child("conferenceData").child("events")
         this.speakerDatabase = mainDatabase.child("conferenceData").child("speakers")
+        this.aboutDatabase = mainDatabase.child("about")
     }
-    private object Holder { val INSTANCE = FirebaseHelper() }
+
+    private object Holder {
+        val INSTANCE = FirebaseHelper()
+    }
 
     companion object {
         val instance: FirebaseHelper by lazy { Holder.INSTANCE }

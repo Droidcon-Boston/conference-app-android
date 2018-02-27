@@ -6,9 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,9 +51,12 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
 
         public String talkDescription;
         public String speakerName;
+        public int speakerCount;
         public String talkTitle;
         public String photo;
-        public String time;
+        public String utcStartTimeString;
+        public String startTime;
+        public String endTime;
         public String room;
         public String date;
         public Integer trackSortOrder;
@@ -112,7 +113,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             talkData.listRow.photo = c.getString(COL_PHOTO);
             if (!c.isNull(COL_TALK_TIME)) {
                 talkData.listRow.room = c.getString(COL_ROOM);
-                talkData.listRow.time = c.getString(COL_TALK_TIME);
+                talkData.listRow.startTime = c.getString(COL_TALK_TIME);
                 talkData.listRow.date = c.getString(COL_TALK_DATE);
             }
 
@@ -155,11 +156,11 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 item.talkTitle = c.getString(1);
                 item.photo = c.getString(2);
                 if (!c.isNull(3)) {
-                    item.time = c.getString(3);
+                    item.startTime = c.getString(3);
                     item.room = c.getString(4);
                     item.date = c.getString(5);
                 } else {
-                    item.time = "unscheduled";
+                    item.startTime = "unscheduled";
                 }
                 items[dex++] = item;
             } while (c.moveToNext());
@@ -201,7 +202,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
                 //DEBUG Log.d(TAG, "speaker? " + item.speakerName);
                 item.talkTitle = c.getString(1);
                 item.photo = c.getString(2);
-                item.time = c.getString(3);
+                item.startTime = c.getString(3);
                 item.room = c.getString(4);
                 item.date = c.getString(5);
                 items.add(item);
@@ -219,7 +220,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             registration.speakerName = null;
             registration.talkTitle = "REGISTRATION";
             registration.photo = null;
-            registration.time = "9:00 AM";
+            registration.startTime = "9:00 AM";
             registration.room = "";
             registration.date = MONDAY;
             items.add(registration);
@@ -227,7 +228,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             lunch.speakerName = null;
             lunch.talkTitle = "LUNCH";
             lunch.photo = null;
-            lunch.time = "12:00 PM";
+            lunch.startTime = "12:00 PM";
             lunch.room = "";
             lunch.date = MONDAY;
             items.add(lunch);
@@ -239,7 +240,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             breakfast.speakerName = null;
             breakfast.talkTitle = "BREAKFAST";
             breakfast.photo = null;
-            breakfast.time = "9:00 AM";
+            breakfast.startTime = "9:00 AM";
             breakfast.room = "";
             breakfast.date = TUESDAY;
             items.add(breakfast);
@@ -247,7 +248,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             lunch.speakerName = null;
             lunch.talkTitle = "LUNCH";
             lunch.photo = null;
-            lunch.time = "12:00 PM";
+            lunch.startTime = "12:00 PM";
             lunch.room = "";
             lunch.date = TUESDAY;
             items.add(lunch);
@@ -255,7 +256,7 @@ public class ScheduleDatabase extends SQLiteAssetHelper {
             party.speakerName = null;
             party.talkTitle = "BOF, PANEL, CLOSING PARTY";
             party.photo = null;
-            party.time = "5:30 PM";
+            party.startTime = "5:30 PM";
             party.room = "";
             party.date = TUESDAY;
             party.photo = "http://www.droidcon-boston.com/events-info/";

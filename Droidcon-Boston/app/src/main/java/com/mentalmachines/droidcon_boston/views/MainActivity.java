@@ -73,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
         case R.id.nav_agenda:
           replaceFragment(getString(R.string.str_agenda));
           break;
+        case R.id.nav_my_schedule:
+          replaceFragment(getString(R.string.str_my_schedule));
+          break;
         case R.id.nav_faq:
           replaceFragment(getString(R.string.str_faq));
           break;
@@ -81,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
           break;
         case R.id.nav_coc:
           replaceFragment(getString(R.string.str_coc));
+          break;
+        case R.id.nav_about:
+          replaceFragment(getString(R.string.str_about_us));
           break;
       }
       return true;
@@ -124,13 +130,17 @@ public class MainActivity extends AppCompatActivity {
     if (fragment == null) {
       // Initialize the fragment based on tag
       if (title.equals(getResources().getString(R.string.str_agenda))) {
-        fragment = new AgendaFragment();
+        fragment = AgendaFragment.Companion.newInstance();
+      } else if (title.equals(getResources().getString(R.string.str_my_schedule))) {
+        fragment = AgendaFragment.Companion.newInstanceMySchedule();
       } else if (title.equals(getResources().getString(R.string.str_faq))) {
         fragment = new FAQFragment();
       } else if (title.equals(getResources().getString(R.string.str_social))) {
         fragment = new SocialFragment();
       } else if (title.equals(getResources().getString(R.string.str_coc))) {
         fragment = new CocFragment();
+      } else if (title.equals(getResources().getString(R.string.str_about_us))) {
+        fragment = new AboutFragment();
       }
       // Add fragment with tag
       fragmentManager.beginTransaction().add(R.id.fragment_container, fragment, title).commit();

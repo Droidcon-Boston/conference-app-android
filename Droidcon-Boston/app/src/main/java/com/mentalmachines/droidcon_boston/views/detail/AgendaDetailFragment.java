@@ -90,7 +90,7 @@ public class AgendaDetailFragment extends Fragment {
         final ScheduleRow itemData = gson.fromJson(bundle.getString(ScheduleDatabase.SCHEDULE_ITEM_ROW), ScheduleRow.class);
 
         final String speakerName = itemData.speakerName;
-        textTime.setText(itemData.time);
+        textTime.setText(itemData.startTime);
         textRoom.setText(itemData.room);
 
         firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(speakerName)
@@ -128,7 +128,7 @@ public class AgendaDetailFragment extends Fragment {
             final boolean nextBookmarkStatus = !userAgendaRepo.isSessionBookmarked(scheduleDetail.getId());
             userAgendaRepo.bookmarkSession(scheduleDetail.getId(), nextBookmarkStatus);
             Snackbar.make(getView().findViewById(R.id.agendaDetailView),
-                    nextBookmarkStatus ? getString(R.string.saved_agena_item) : getString(R.string.removed_agenda_item),
+                    nextBookmarkStatus ? getString(R.string.saved_agenda_item) : getString(R.string.removed_agenda_item),
                     Snackbar.LENGTH_SHORT).show();
             showBookmarkStatus(scheduleDetail);
         }

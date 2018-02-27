@@ -7,4 +7,5 @@
     <color name="colorBackground">#FFEEEEEE</color>
     <color name="colorGray">#9e9e9e</color>
     <color name="navItemTextColor">#484848</color>
+    <color name="colorStar">#eb8a2d</color>
 </resources>
