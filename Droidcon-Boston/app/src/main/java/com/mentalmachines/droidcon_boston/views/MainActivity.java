@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  private void replaceFragment(String title) {
+  public void replaceFragment(String title) {
     updateToolbarTitle(title);
 
     // Get the fragment by tag

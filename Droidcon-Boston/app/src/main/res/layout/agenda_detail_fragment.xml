@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/agendaDetailView"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,69 +18,79 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
+            <ImageButton
+                android:id="@+id/image_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/hint_back"
+                android:padding="8dp"
+                android:src="@drawable/ic_back_arrow_24dp" />
+
             <TextView
                 android:id="@+id/text_title"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif"
-                tools:text="Title of Talk"/>
+                tools:text="Title of Talk" />
 
             <ImageView
                 android:id="@+id/image_bookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:layout_gravity="center_vertical"
-                android:tint="@color/colorAccent"
-                android:contentDescription="@string/hint_bookmark"
-                android:src="@drawable/ic_star_border_black_24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true" />
+                android:clickable="true"
+                android:contentDescription="@string/hint_bookmark"
+                android:padding="8dp"
+                android:src="@drawable/ic_star_border_black_24dp"
+                android:tint="@color/colorAccent" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/text_time"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
+                android:layout_weight="1"
                 android:fontFamily="sans-serif"
-                android:textSize="18sp"
+                android:gravity="center"
                 android:textColor="@android:color/black"
-                tools:text="3:30 PM"/>
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="3:30 PM" />
 
             <TextView
                 android:id="@+id/text_room"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
+                android:layout_weight="1"
                 android:fontFamily="sans-serif"
-                android:textSize="18sp"
+                android:gravity="center"
                 android:textColor="@android:color/black"
-                tools:text="THEATER 1"/>
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="THEATER 1" />
 
         </LinearLayout>
 
@@ -89,54 +100,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:textColor="@android:color/black"
             android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
-            tools:text="Long description of the talk"/>
+            tools:text="Long description of the talk" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/image_speaker"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginEnd="16dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
                 android:scaleType="fitXY"
-                tools:src="@drawable/emo_im_cool"/>
+                tools:src="@drawable/emo_im_cool" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text_speaker_name"
                     style="@android:style/TextAppearance.Medium"
-                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:textStyle="bold"
                     android:fontFamily="sans-serif"
-                    android:textSize="20sp"
+                    android:gravity="center"
                     android:textColor="@android:color/black"
-                    tools:text="Sam Edwards"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Sam Edwards" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -149,44 +160,44 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:onClick="faqClick"
+                        android:layout_marginStart="8dp"
                         android:background="@android:color/transparent"
-                        android:padding="8dp"
                         android:clickable="true"
+                        android:onClick="faqClick"
+                        android:padding="8dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_twitter"
-                        android:tint="@color/tw__blue_default"/>
+                        android:tint="@color/tw__blue_default" />
 
                     <ImageButton
                         android:id="@+id/image_linkedin"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:onClick="faqClick"
+                        android:layout_marginStart="8dp"
                         android:background="@color/tw__blue_default"
+                        android:clickable="true"
+                        android:onClick="faqClick"
                         android:padding="4dp"
                         android:scaleType="fitCenter"
-                        android:clickable="true"
-                        android:src="@drawable/ic_linkedin"/>
+                        android:src="@drawable/ic_linkedin" />
 
                     <ImageButton
                         android:id="@+id/image_facebook"
                         android:layout_width="46dp"
                         android:layout_height="46dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@android:color/transparent"
                         android:clickable="true"
                         android:onClick="faqClick"
-                        android:background="@android:color/transparent"
                         android:padding="8dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_facebook"
-                        android:tint="#ff3b5998"/>
+                        android:tint="#ff3b5998" />
 
                 </LinearLayout>
 
@@ -198,11 +209,10 @@
             android:id="@+id/text_speaker_bio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
             android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
-            tools:text="Victoria is a random author who presents stuff"
-            />
+            tools:text="Victoria is a random author who presents stuff" />
 
     </LinearLayout>
 </ScrollView>

@@ -8,12 +8,14 @@ import com.google.gson.Gson;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,6 +28,7 @@ import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow;
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo;
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper;
 import com.mentalmachines.droidcon_boston.utils.StringUtils;
+import com.mentalmachines.droidcon_boston.views.MainActivity;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaDayFragment;
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform;
 
@@ -92,33 +95,41 @@ public class AgendaDetailFragment extends Fragment {
 
         firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(speakerName)
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot speakerSnapshot : dataSnapshot.getChildren()) {
-                    ScheduleEventDetail detail = speakerSnapshot.getValue(ScheduleEventDetail.class);
-                    if (detail != null) {
-                        scheduleDetail = detail.toScheduleDetail(itemData);
-                        showAgendaDetail(scheduleDetail);
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot speakerSnapshot : dataSnapshot.getChildren()) {
+                            ScheduleEventDetail detail = speakerSnapshot.getValue(ScheduleEventDetail.class);
+                            if (detail != null) {
+                                scheduleDetail = detail.toScheduleDetail(itemData);
+                                showAgendaDetail(scheduleDetail);
+                            }
+                        }
+
                     }
-                }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                    Log.w(TAG, "detailQuery:onCancelled", databaseError.toException());
-                }
-        });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w(TAG, "detailQuery:onCancelled", databaseError.toException());
+                    }
+                });
 
         return view;
+    }
+
+    @OnClick(R.id.image_back)
+    protected void backClicked() {
+        ((MainActivity) getActivity()).replaceFragment(getString(R.string.str_agenda));
     }
 
     @OnClick(R.id.image_bookmark)
     protected void bookmarkClicked() {
         if (scheduleDetail != null) {
             UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
-            userAgendaRepo.bookmarkSession(scheduleDetail.getId(),
-                                           !userAgendaRepo.isSessionBookmarked(scheduleDetail.getId()));
+            final boolean nextBookmarkStatus = !userAgendaRepo.isSessionBookmarked(scheduleDetail.getId());
+            userAgendaRepo.bookmarkSession(scheduleDetail.getId(), nextBookmarkStatus);
+            Snackbar.make(getView().findViewById(R.id.agendaDetailView),
+                    nextBookmarkStatus ? getString(R.string.saved_agenda_item) : getString(R.string.removed_agenda_item),
+                    Snackbar.LENGTH_SHORT).show();
             showBookmarkStatus(scheduleDetail);
         }
     }
@@ -158,7 +169,7 @@ public class AgendaDetailFragment extends Fragment {
     private void showBookmarkStatus(ScheduleDatabase.ScheduleDetail scheduleDetail) {
         UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
         imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.listRow.talkTitle)
-                                       ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);
+                ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);
     }
 
     private UserAgendaRepo getUserAgendaRepo() {
