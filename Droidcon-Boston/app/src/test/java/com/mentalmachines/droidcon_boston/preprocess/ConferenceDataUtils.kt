@@ -29,17 +29,22 @@ class ConferenceDataUtils {
                 // denormalize speakers
                 val speakerNames = HashMap<String, Boolean>()
                 val speakerNameToPhotoUrl = HashMap<String, String>()
+                val speakerNameToOrg = HashMap<String, String>()
                 it.value.speakerIds?.forEach {
                     confData.speakers.get(it.key)?.let {
                         speakerNames.put(it.name, true)
                         if (it.pictureUrl != null) {
                             speakerNameToPhotoUrl.put(it.name, it.pictureUrl)
                         }
+                        if (it.org != null) {
+                            speakerNameToOrg.put(it.name, it.org)
+                        }
                     }
                 }
                 if (speakerNames.size > 0) {
                     it.value.speakerNames = speakerNames
                     it.value.speakerNameToPhotoUrl = speakerNameToPhotoUrl
+                    it.value.speakerNameToOrg = speakerNameToOrg
                 }
                 // denormalize rooms
                 val roomNames = HashMap<String, Boolean>()
