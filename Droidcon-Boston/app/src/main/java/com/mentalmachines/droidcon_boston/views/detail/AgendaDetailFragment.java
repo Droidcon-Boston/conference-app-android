@@ -90,7 +90,15 @@ public class AgendaDetailFragment extends Fragment {
         Bundle bundle = getArguments();
         final ScheduleRow itemData = gson.fromJson(bundle.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow.class);
 
-        final String speakerName = itemData.speakerName;
+        final String speakerName;
+        if (itemData.speakerName.contains(",")) {
+            // In the case of multiple speakers for this event,
+            // Show detail for the first speaker within the agenda detail fragment.
+            speakerName = itemData.speakerName.split(",")[0];
+        } else {
+            speakerName = itemData.speakerName;
+        }
+
         textTime.setText(itemData.startTime);
         textRoom.setText(itemData.room);
 
