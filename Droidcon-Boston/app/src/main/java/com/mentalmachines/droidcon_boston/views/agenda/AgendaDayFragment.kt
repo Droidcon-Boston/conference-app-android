@@ -45,7 +45,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private var userAgendaRepo: UserAgendaRepo? = null
 
     private lateinit var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>
-    private lateinit var eventValueListener: ValueEventListener
 
     private var onlyMyAgenda: Boolean = false
 
@@ -88,7 +87,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             headerAdapter.clear()
             headerAdapter.notifyDataSetChanged()
             refreshLayout.setRefreshing(true)
-            firebaseHelper.eventDatabase.removeEventListener(eventValueListener)
             fetchScheduleData(dayFilter, onlyMyAgenda)
             Toast.makeText(activity, "Refreshed Agenda", Toast.LENGTH_SHORT).show()
         }
@@ -97,7 +95,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun fetchScheduleData(dayFilter: String?, onlyMyAgenda: Boolean) {
-        eventValueListener = firebaseHelper.eventDatabase.addValueEventListener(object : ValueEventListener {
+        firebaseHelper.eventDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val rows = ArrayList<ScheduleRow>()
                 for (roomSnapshot in dataSnapshot.children) {
