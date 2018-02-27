@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase
+import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
@@ -20,7 +20,7 @@ import java.util.Locale
 /**
  * Used for displaying the schedule with sticky headers with optional day filtering
  */
-class ScheduleAdapterItem internal constructor(val itemData: ScheduleDatabase.ScheduleRow,
+class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRow,
                                                header: ScheduleAdapterItemHeader) :
         AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 

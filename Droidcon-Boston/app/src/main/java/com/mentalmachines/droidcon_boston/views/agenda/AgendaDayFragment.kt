@@ -19,8 +19,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow
+import com.mentalmachines.droidcon_boston.data.Schedule
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.StringUtils
@@ -165,7 +165,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 return false
             }
             val arguments = Bundle()
-            arguments.putString(ScheduleDatabase.SCHEDULE_ITEM_ROW, gson.toJson(itemData, ScheduleRow::class.java))
+            arguments.putString(Schedule.SCHEDULE_ITEM_ROW, gson.toJson(itemData, ScheduleRow::class.java))
 
             val agendaDetailFragment = AgendaDetailFragment()
             agendaDetailFragment.arguments = arguments

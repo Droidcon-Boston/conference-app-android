@@ -2,7 +2,7 @@ package com.mentalmachines.droidcon_boston.views.agenda
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase
+import com.mentalmachines.droidcon_boston.data.Schedule
 
 class AgendaDayPagerAdapter internal constructor(fm: FragmentManager, private val myAgenda: Boolean)
     : FixedFragmentStatePagerAdapter(fm) {
@@ -16,7 +16,7 @@ class AgendaDayPagerAdapter internal constructor(fm: FragmentManager, private va
 
     override fun getItem(position: Int): Fragment {
         return AgendaDayFragment.newInstance(myAgenda,
-                if (position == 0) ScheduleDatabase.MONDAY else ScheduleDatabase.TUESDAY
+                if (position == 0) Schedule.MONDAY else Schedule.TUESDAY
         )
     }
 

@@ -1,11 +1,10 @@
 package com.mentalmachines.droidcon_boston.data
 
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleDetail
-import com.mentalmachines.droidcon_boston.data.ScheduleDatabase.ScheduleRow
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import kotlin.collections.HashMap
 
 
 open class FirebaseDatabase {
@@ -60,7 +59,7 @@ open class FirebaseDatabase {
         var org: String? = null
         var name: String? = null
 
-        fun toScheduleDetail(listRow: ScheduleRow) : ScheduleDetail {
+        fun toScheduleDetail(listRow: ScheduleRow): ScheduleDetail {
             val detail = ScheduleDetail()
             if (socialProfiles == null) {
                 detail.facebook = ""
