@@ -45,6 +45,20 @@ class ConferenceDataUtils {
                     it.value.speakerNames = speakerNames
                     it.value.speakerNameToPhotoUrl = speakerNameToPhotoUrl
                     it.value.speakerNameToOrg = speakerNameToOrg
+
+                    if (speakerNames.size == 1) {
+                        it.value.primarySpeakerName = speakerNames.entries.iterator().next().key
+                    } else {
+                        if (speakerNames.containsKey("Giorgio Natili")) {
+                            it.value.primarySpeakerName = "Giorgio Natili"
+                        } else if (speakerNames.containsKey("Kaan Mamikoglu")) {
+                            it.value.primarySpeakerName = "Kaan Mamikoglu"
+                        } else if (speakerNames.containsKey("Adrián Catalan")) {
+                            it.value.primarySpeakerName = "Adrián Catalan"
+                        } else {
+                            throw IllegalStateException("Didn't handle case of speakernames: " + speakerNames)
+                        }
+                    }
                 }
                 // denormalize rooms
                 val roomNames = HashMap<String, Boolean>()
