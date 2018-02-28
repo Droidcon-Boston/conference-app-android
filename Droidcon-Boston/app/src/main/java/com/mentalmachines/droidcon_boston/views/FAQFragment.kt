@@ -39,7 +39,7 @@ class FAQFragment : Fragment() {
     }
 
     private fun fetchDataFromFirebase() {
-        firebaseHelper.faqDatabase.addValueEventListener(object : ValueEventListener {
+        firebaseHelper.faqDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val rows = ArrayList<FaqEvent>()
                 for (faqSnapshot in dataSnapshot.children) {
