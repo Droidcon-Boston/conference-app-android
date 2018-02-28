@@ -75,5 +75,19 @@ open class FirebaseDatabase {
             return detail
         }
     }
+
+    class FaqEvent() {
+
+        class Answer() {
+            var answer: String = ""
+
+            var photoLink: String? = null
+            var mapLink: String? = null
+            var otherLink: String? = null
+        }
+
+        var answers: List<Answer> = ArrayList()
+        var question: String = ""
+    }
 }
 
