@@ -10,15 +10,18 @@ import org.threeten.bp.format.DateTimeFormatter
 open class FirebaseDatabase {
 
     class ScheduleEvent() {
+
+        var primarySpeakerName: String = ""
+        var startTime: String = ""
+        var name: String = ""
+
         var speakerNames: HashMap<String, Boolean>? = null
         var speakerNameToPhotoUrl: HashMap<String, String>? = null
         var roomNames: HashMap<String, Boolean>? = null
         var speakerIds: HashMap<String, Boolean>? = null
         var roomIds: HashMap<String, Boolean>? = null
-        var description: String? = null;
-        var name: String? = null
+        var description: String? = null
         var photo: String? = null
-        var startTime: String? = null
         var endTime: String? = null
         var trackSortOrder: Int? = 0
 
@@ -41,13 +44,13 @@ open class FirebaseDatabase {
             }
 
             row.room = roomNames!!.keys.first()
-            row.trackSortOrder = trackSortOrder;
-            row.speakerName = speakerNames!!.keys.joinToString(separator = ", ")
+            row.trackSortOrder = trackSortOrder
+            row.primarySpeakerName = primarySpeakerName
+            row.speakerNames = speakerNames!!.keys.toList()
             row.speakerCount = speakerNames!!.size
             row.talkDescription = description
             row.talkTitle = name
-            val firstSpeaker = speakerNames!!.keys.first()
-            row.photo = speakerNameToPhotoUrl!!.get(firstSpeaker)
+            row.photo = speakerNameToPhotoUrl!!.get(row.primarySpeakerName)
             return row
         }
     }
@@ -60,7 +63,7 @@ open class FirebaseDatabase {
         var name: String? = null
 
         fun toScheduleDetail(listRow: ScheduleRow): ScheduleDetail {
-            val detail = ScheduleDetail()
+            val detail = ScheduleDetail(listRow)
             if (socialProfiles == null) {
                 detail.facebook = ""
                 detail.linkedIn = ""
@@ -70,7 +73,6 @@ open class FirebaseDatabase {
                 detail.linkedIn = socialProfiles.get("linkedIn")
                 detail.twitter = socialProfiles.get("twitter")
             }
-            detail.listRow = listRow
             detail.speakerBio = bio
             return detail
         }

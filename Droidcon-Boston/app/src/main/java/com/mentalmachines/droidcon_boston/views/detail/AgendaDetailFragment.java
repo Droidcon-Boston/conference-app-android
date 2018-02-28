@@ -32,6 +32,7 @@ import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.MainActivity;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaDayFragment;
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform;
+import java.util.Locale;
 
 public class AgendaDetailFragment extends Fragment {
 
@@ -88,13 +89,12 @@ public class AgendaDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Bundle bundle = getArguments();
-        final ScheduleRow itemData = gson.fromJson(bundle.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow.class);
+        final ScheduleRow itemData = gson.fromJson(bundle.getString(Schedule.Companion.getSCHEDULE_ITEM_ROW()), ScheduleRow.class);
 
-        final String speakerName = itemData.speakerName;
-        textTime.setText(itemData.startTime);
-        textRoom.setText(itemData.room);
+        textTime.setText(itemData.getStartTime());
+        textRoom.setText(itemData.getRoom());
 
-        firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(speakerName)
+        firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(itemData.getPrimarySpeakerName())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -136,40 +136,51 @@ public class AgendaDetailFragment extends Fragment {
     }
 
     public void showAgendaDetail(ScheduleDetail scheduleDetail) {
+        final ScheduleRow listRow = scheduleDetail.getListRow();
         Glide.with(this)
-                .load(scheduleDetail.listRow.photo)
+                .load(listRow.getPhoto())
                 .transform(new CircleTransform(getActivity().getApplicationContext()))
                 .placeholder(R.drawable.emo_im_cool)
                 .crossFade()
                 .into(imageSpeaker);
 
-        textTitle.setText(scheduleDetail.listRow.talkTitle);
-        textSpeakerName.setText(scheduleDetail.listRow.speakerName);
-        textSpeakerBio.setText(scheduleDetail.speakerBio);
-        textDescription.setText(scheduleDetail.listRow.talkDescription);
+        textTitle.setText(listRow.getTalkTitle());
+        textSpeakerName.setText(listRow.getSpeakerString());
 
-        if (StringUtils.isNullorEmpty(scheduleDetail.twitter)) {
+        final String speakerBio;
+        if (listRow.hasMultipleSpeakers()) {
+            speakerBio = String.format(Locale.getDefault(), "Primary Speaker: %s\n\n%s",
+                listRow.getPrimarySpeakerName(), scheduleDetail.getSpeakerBio());
+        } else {
+            speakerBio = scheduleDetail.getSpeakerBio();
+        }
+
+        textSpeakerBio.setText(speakerBio);
+        textDescription.setText(listRow.getTalkDescription());
+
+        if (StringUtils.isNullorEmpty(scheduleDetail.getTwitter())) {
             imageTwitter.setVisibility(View.GONE);
         } else {
-            imageTwitter.setTag(scheduleDetail.twitter);
+            imageTwitter.setTag(scheduleDetail.getTwitter());
         }
-        if (StringUtils.isNullorEmpty(scheduleDetail.linkedIn)) {
+        if (StringUtils.isNullorEmpty(scheduleDetail.getLinkedIn())) {
             imageLinkedin.setVisibility(View.GONE);
         } else {
-            imageLinkedin.setTag(scheduleDetail.linkedIn);
+            imageLinkedin.setTag(scheduleDetail.getLinkedIn());
         }
-        if (StringUtils.isNullorEmpty(scheduleDetail.facebook)) {
+        if (StringUtils.isNullorEmpty(scheduleDetail.getFacebook())) {
             imageFacebook.setVisibility(View.GONE);
         } else {
-            imageFacebook.setTag(scheduleDetail.facebook);
+            imageFacebook.setTag(scheduleDetail.getFacebook());
         }
 
         showBookmarkStatus(scheduleDetail);
     }
 
+
     private void showBookmarkStatus(ScheduleDetail scheduleDetail) {
         UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
-        imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.listRow.talkTitle)
+        imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.getId())
                 ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);
     }
 
