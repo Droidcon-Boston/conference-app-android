@@ -117,8 +117,6 @@ public class AgendaDetailFragment extends Fragment {
         return view;
     }
 
-
-
     @OnClick(R.id.image_back)
     protected void backClicked() {
         ((MainActivity) getActivity()).replaceFragment(getString(R.string.str_agenda));
@@ -148,8 +146,9 @@ public class AgendaDetailFragment extends Fragment {
 
         textTitle.setText(listRow.getTalkTitle());
         textSpeakerName.setText(listRow.getSpeakerString());
+
         final String speakerBio;
-        if (listRow.getSpeakerCount() > 1) {
+        if (listRow.hasSpeaker()) {
             speakerBio = String.format(Locale.getDefault(), "Primary Speaker: %s\n\n%s",
                 listRow.getPrimarySpeakerName(), scheduleDetail.getSpeakerBio());
         } else {
@@ -180,7 +179,7 @@ public class AgendaDetailFragment extends Fragment {
 
     private void showBookmarkStatus(ScheduleDetail scheduleDetail) {
         UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
-        imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.getListRow().getId())
+        imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.getId())
                 ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);
     }
 

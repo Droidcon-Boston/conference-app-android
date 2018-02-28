@@ -4,7 +4,7 @@ package com.mentalmachines.droidcon_boston.data
 /*
  * View models for schedule and schedule detail items.
  */
-public class Schedule {
+class Schedule {
 
     class ScheduleRow {
 
@@ -21,6 +21,8 @@ public class Schedule {
         var room: String? = null
         var date: String? = null
         var trackSortOrder: Int? = null
+
+        fun hasSpeaker(): Boolean = speakerNames != null && speakerNames!!.isNotEmpty()
 
         fun getFirstSpeaker(): String? = if (primarySpeakerName != null) primarySpeakerName!! else speakerNames?.get(0)
 
