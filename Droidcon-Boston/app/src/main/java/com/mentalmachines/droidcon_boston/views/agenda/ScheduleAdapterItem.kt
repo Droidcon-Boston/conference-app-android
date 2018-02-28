@@ -28,8 +28,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
     var roomSortOrder = itemData.trackSortOrder
 
-    val title: String
-        get() = itemData.talkTitle
+    val title: String? get() = itemData.talkTitle
 
     init {
         val dateTimeString = itemData.date + " " + itemData.startTime
@@ -51,7 +50,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
     }
 
     override fun hashCode(): Int {
-        return itemData.talkTitle.hashCode()
+        return itemData.talkTitle!!.hashCode()
     }
 
     override fun getLayoutRes(): Int {
@@ -88,7 +87,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
             holder.title.text = itemData.talkTitle
             holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
-            holder.speaker.text = itemData.speakerNames
+            holder.speaker.text = itemData.getSpeakerString()
             holder.room.text = itemData.room
 
             holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE

@@ -89,10 +89,10 @@ public class AgendaDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Bundle bundle = getArguments();
-        final ScheduleRow itemData = gson.fromJson(bundle.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow.class);
+        final ScheduleRow itemData = gson.fromJson(bundle.getString(Schedule.Companion.getSCHEDULE_ITEM_ROW()), ScheduleRow.class);
 
-        textTime.setText(itemData.startTime);
-        textRoom.setText(itemData.room);
+        textTime.setText(itemData.getStartTime());
+        textRoom.setText(itemData.getRoom());
 
         firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(itemData.getFirstSpeaker())
                 .addValueEventListener(new ValueEventListener() {
@@ -138,40 +138,41 @@ public class AgendaDetailFragment extends Fragment {
     }
 
     public void showAgendaDetail(ScheduleDetail scheduleDetail) {
+        final ScheduleRow listRow = scheduleDetail.getListRow();
         Glide.with(this)
-                .load(scheduleDetail.listRow.photo)
+                .load(listRow.getPhoto())
                 .transform(new CircleTransform(getActivity().getApplicationContext()))
                 .placeholder(R.drawable.emo_im_cool)
                 .crossFade()
                 .into(imageSpeaker);
 
-        textTitle.setText(scheduleDetail.listRow.talkTitle);
-        textSpeakerName.setText(scheduleDetail.listRow.speakerNames);
+        textTitle.setText(listRow.getTalkTitle());
+        textSpeakerName.setText(listRow.getSpeakerString());
         final String speakerBio;
-        if (scheduleDetail.listRow.speakerCount > 1) {
+        if (listRow.getSpeakerCount() > 1) {
             speakerBio = String.format(Locale.getDefault(), "Primary Speaker: %s\n\n%s",
-                scheduleDetail.listRow.primarySpeakerName, scheduleDetail.speakerBio);
+                listRow.getPrimarySpeakerName(), scheduleDetail.getSpeakerBio());
         } else {
-            speakerBio = scheduleDetail.speakerBio;
+            speakerBio = scheduleDetail.getSpeakerBio();
         }
 
         textSpeakerBio.setText(speakerBio);
-        textDescription.setText(scheduleDetail.listRow.talkDescription);
+        textDescription.setText(listRow.getTalkDescription());
 
-        if (StringUtils.isNullorEmpty(scheduleDetail.twitter)) {
+        if (StringUtils.isNullorEmpty(scheduleDetail.getTwitter())) {
             imageTwitter.setVisibility(View.GONE);
         } else {
-            imageTwitter.setTag(scheduleDetail.twitter);
+            imageTwitter.setTag(scheduleDetail.getTwitter());
         }
-        if (StringUtils.isNullorEmpty(scheduleDetail.linkedIn)) {
+        if (StringUtils.isNullorEmpty(scheduleDetail.getLinkedIn())) {
             imageLinkedin.setVisibility(View.GONE);
         } else {
-            imageLinkedin.setTag(scheduleDetail.linkedIn);
+            imageLinkedin.setTag(scheduleDetail.getLinkedIn());
         }
-        if (StringUtils.isNullorEmpty(scheduleDetail.facebook)) {
+        if (StringUtils.isNullorEmpty(scheduleDetail.getFacebook())) {
             imageFacebook.setVisibility(View.GONE);
         } else {
-            imageFacebook.setTag(scheduleDetail.facebook);
+            imageFacebook.setTag(scheduleDetail.getFacebook());
         }
 
         showBookmarkStatus(scheduleDetail);
@@ -179,7 +180,7 @@ public class AgendaDetailFragment extends Fragment {
 
     private void showBookmarkStatus(ScheduleDetail scheduleDetail) {
         UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
-        imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.listRow.talkTitle)
+        imageBookmark.setImageResource(userAgendaRepo.isSessionBookmarked(scheduleDetail.getListRow().getId())
                 ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);
     }
 

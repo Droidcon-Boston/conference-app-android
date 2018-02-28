@@ -123,7 +123,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
         var items = ArrayList<ScheduleAdapterItem>(rows.size)
         for (row in rows) {
-            val timeDisplay = if (row.startTime == null || row.startTime.isEmpty()) "Unscheduled" else row.startTime
+            val timeDisplay = if (row.startTime == null || row.startTime!!.isEmpty()) "Unscheduled" else row.startTime!!
             var header: ScheduleAdapterItemHeader? = timeHeaders[timeDisplay]
             if (header == null) {
                 header = ScheduleAdapterItemHeader(timeDisplay)
@@ -150,7 +150,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
             val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData
-            if (StringUtils.isNullorEmpty(itemData.speakerNames)) {
+            if (itemData.speakerCount == 0) {
                 val url = itemData.photo
                 if (itemData.photo == null) {
                     return false

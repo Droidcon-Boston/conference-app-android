@@ -28,6 +28,7 @@ open class FirebaseDatabase {
             val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
             row.utcStartTimeString = startTime
 
+
             if (startDateTime != null) {
                 val dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy")
                 val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
@@ -44,11 +45,11 @@ open class FirebaseDatabase {
             row.room = roomNames!!.keys.first()
             row.trackSortOrder = trackSortOrder
             row.primarySpeakerName = primarySpeakerName
-            row.speakerNames = speakerNames!!.keys.joinToString(separator = ", ")
+            row.speakerNames = speakerNames!!.keys.toList()
             row.speakerCount = speakerNames!!.size
             row.talkDescription = description
             row.talkTitle = name
-            row.photo = speakerNameToPhotoUrl!!.get(row.firstSpeaker)
+            row.photo = speakerNameToPhotoUrl!!.get(row.getFirstSpeaker())
             return row
         }
     }
