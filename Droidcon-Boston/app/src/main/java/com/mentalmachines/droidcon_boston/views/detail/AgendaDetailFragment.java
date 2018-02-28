@@ -32,6 +32,7 @@ import com.mentalmachines.droidcon_boston.utils.StringUtils;
 import com.mentalmachines.droidcon_boston.views.MainActivity;
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaDayFragment;
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform;
+import java.util.Locale;
 
 public class AgendaDetailFragment extends Fragment {
 
@@ -90,19 +91,10 @@ public class AgendaDetailFragment extends Fragment {
         Bundle bundle = getArguments();
         final ScheduleRow itemData = gson.fromJson(bundle.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow.class);
 
-        final String speakerName;
-        if (itemData.speakerName.contains(",")) {
-            // In the case of multiple speakers for this event,
-            // Show detail for the first speaker within the agenda detail fragment.
-            speakerName = itemData.speakerName.split(",")[0];
-        } else {
-            speakerName = itemData.speakerName;
-        }
-
         textTime.setText(itemData.startTime);
         textRoom.setText(itemData.room);
 
-        firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(speakerName)
+        firebaseHelper.getSpeakerDatabase().orderByChild("name").equalTo(itemData.getFirstSpeaker())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -124,6 +116,8 @@ public class AgendaDetailFragment extends Fragment {
 
         return view;
     }
+
+
 
     @OnClick(R.id.image_back)
     protected void backClicked() {
@@ -152,8 +146,16 @@ public class AgendaDetailFragment extends Fragment {
                 .into(imageSpeaker);
 
         textTitle.setText(scheduleDetail.listRow.talkTitle);
-        textSpeakerName.setText(scheduleDetail.listRow.speakerName);
-        textSpeakerBio.setText(scheduleDetail.speakerBio);
+        textSpeakerName.setText(scheduleDetail.listRow.speakerNames);
+        final String speakerBio;
+        if (scheduleDetail.listRow.speakerCount > 1) {
+            speakerBio = String.format(Locale.getDefault(), "Primary Speaker: %s\n\n%s",
+                scheduleDetail.listRow.primarySpeakerName, scheduleDetail.speakerBio);
+        } else {
+            speakerBio = scheduleDetail.speakerBio;
+        }
+
+        textSpeakerBio.setText(speakerBio);
         textDescription.setText(scheduleDetail.listRow.talkDescription);
 
         if (StringUtils.isNullorEmpty(scheduleDetail.twitter)) {

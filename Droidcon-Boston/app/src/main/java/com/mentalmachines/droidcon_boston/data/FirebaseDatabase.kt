@@ -15,7 +15,8 @@ open class FirebaseDatabase {
         var roomNames: HashMap<String, Boolean>? = null
         var speakerIds: HashMap<String, Boolean>? = null
         var roomIds: HashMap<String, Boolean>? = null
-        var description: String? = null;
+        var primarySpeakerName: String? = null
+        var description: String? = null
         var name: String? = null
         var photo: String? = null
         var startTime: String? = null
@@ -41,13 +42,13 @@ open class FirebaseDatabase {
             }
 
             row.room = roomNames!!.keys.first()
-            row.trackSortOrder = trackSortOrder;
-            row.speakerName = speakerNames!!.keys.joinToString(separator = ", ")
+            row.trackSortOrder = trackSortOrder
+            row.primarySpeakerName = primarySpeakerName
+            row.speakerNames = speakerNames!!.keys.joinToString(separator = ", ")
             row.speakerCount = speakerNames!!.size
             row.talkDescription = description
             row.talkTitle = name
-            val firstSpeaker = speakerNames!!.keys.first()
-            row.photo = speakerNameToPhotoUrl!!.get(firstSpeaker)
+            row.photo = speakerNameToPhotoUrl!!.get(row.firstSpeaker)
             return row
         }
     }

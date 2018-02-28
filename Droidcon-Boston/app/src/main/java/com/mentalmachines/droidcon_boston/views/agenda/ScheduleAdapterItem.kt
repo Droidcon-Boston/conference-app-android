@@ -67,7 +67,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                 position: Int,
                                 payloads: List<*>) {
 
-        if (itemData.speakerName == null) {
+        if (itemData.speakerNames == null) {
             holder.sessionLayout.visibility = View.GONE
             holder.avatar.visibility = View.GONE
             holder.bigTitle.visibility = View.VISIBLE
@@ -88,7 +88,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
             holder.title.text = itemData.talkTitle
             holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
-            holder.speaker.text = itemData.speakerName
+            holder.speaker.text = itemData.speakerNames
             holder.room.text = itemData.room
 
             holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE

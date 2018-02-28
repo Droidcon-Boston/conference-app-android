@@ -150,7 +150,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
             val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData
-            if (StringUtils.isNullorEmpty(itemData.speakerName)) {
+            if (StringUtils.isNullorEmpty(itemData.speakerNames)) {
                 val url = itemData.photo
                 if (itemData.photo == null) {
                     return false

@@ -12,7 +12,8 @@ public class Schedule {
     public static class ScheduleRow {
 
         public String talkDescription;
-        public String speakerName;
+        public String primarySpeakerName;
+        public String speakerNames;
         public int speakerCount;
         public String talkTitle;
         public String photo;
@@ -25,6 +26,10 @@ public class Schedule {
 
         public String getId() {
             return talkTitle;
+        }
+
+        public String getFirstSpeaker() {
+            return primarySpeakerName != null ? primarySpeakerName : speakerNames;
         }
     }
 
