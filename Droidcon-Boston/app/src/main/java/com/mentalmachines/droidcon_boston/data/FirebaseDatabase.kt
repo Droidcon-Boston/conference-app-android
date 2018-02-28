@@ -28,7 +28,6 @@ open class FirebaseDatabase {
             val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
             row.utcStartTimeString = startTime
 
-
             if (startDateTime != null) {
                 val dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy")
                 val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
