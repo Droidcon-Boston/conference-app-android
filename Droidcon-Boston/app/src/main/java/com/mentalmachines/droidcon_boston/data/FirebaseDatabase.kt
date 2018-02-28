@@ -14,7 +14,6 @@ open class FirebaseDatabase {
         var primarySpeakerName: String = ""
         var startTime: String = ""
         var name: String = ""
-        var id: String = ""
 
         var speakerNames: HashMap<String, Boolean>? = null
         var speakerNameToPhotoUrl: HashMap<String, String>? = null
@@ -52,7 +51,6 @@ open class FirebaseDatabase {
             row.talkDescription = description
             row.talkTitle = name
             row.photo = speakerNameToPhotoUrl!!.get(row.primarySpeakerName)
-            row.id = id
             return row
         }
     }
