@@ -15,7 +15,7 @@ class UserAgendaRepo private constructor(context: Context) {
         savedSessionIds.addAll(sharedPrefs.getStringSet(sessionIdsKey, HashSet<String>()))
     }
 
-    fun isSessionBookmarked(sessionId : String?) : Boolean {
+    fun isSessionBookmarked(sessionId : String) : Boolean {
         return savedSessionIds.contains(sessionId)
     }
 

@@ -8,15 +8,16 @@ class Schedule {
 
     class ScheduleRow {
 
+        var primarySpeakerName: String = ""
+        var id: String = ""
+        var startTime: String = ""
+        var talkTitle: String = ""
+
         var talkDescription: String? = null
-        var talkTitle: String? = null
-        var primarySpeakerName: String? = null
         var speakerNames: List<String>? = null
         var speakerCount: Int = 0
-        var id: String? = null
         var photo: String? = null
         var utcStartTimeString: String? = null
-        var startTime: String? = null
         var endTime: String? = null
         var room: String? = null
         var date: String? = null
@@ -24,22 +25,17 @@ class Schedule {
 
         fun hasSpeaker(): Boolean = speakerNames != null && speakerNames!!.isNotEmpty()
 
-        fun getFirstSpeaker(): String? = if (primarySpeakerName != null) primarySpeakerName!! else speakerNames?.get(0)
-
         fun getSpeakerString(): String? = speakerNames?.joinToString(", ")
     }
 
-    class ScheduleDetail {
+    class ScheduleDetail(val listRow: ScheduleRow) {
 
-        var listRow: ScheduleRow? = null
-            get() = field
         var speakerBio: String? = null
         var twitter: String? = null
         var linkedIn: String? = null
         var facebook: String? = null
 
-        val id: String?
-            get() = listRow!!.id
+        val id: String get() = listRow.id
     }
 
     companion object {

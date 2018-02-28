@@ -50,7 +50,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
     }
 
     override fun hashCode(): Int {
-        return itemData.talkTitle!!.hashCode()
+        return itemData.talkTitle.hashCode()
     }
 
     override fun getLayoutRes(): Int {
