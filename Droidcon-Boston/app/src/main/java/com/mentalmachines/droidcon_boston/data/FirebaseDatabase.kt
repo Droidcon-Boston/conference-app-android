@@ -79,14 +79,15 @@ open class FirebaseDatabase {
     class FaqEvent() {
 
         class Answer() {
+            var answer: String = ""
+
             var photoLink: String? = null
             var mapLink: String? = null
             var otherLink: String? = null
-            var answer: String? = null
         }
 
-        var answers: List<Answer>? = null
-        var question: String? = null
+        var answers: List<Answer> = ArrayList()
+        var question: String = ""
     }
 }
 

@@ -33,7 +33,7 @@ class FAQFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.faq_fragment, container, false)
-        expandableListView = view.findViewById<View>(R.id.faqlist) as ExpandableListView
+        expandableListView = view.findViewById<ExpandableListView>(R.id.faqlist)
         fetchDataFromFirebase()
         return view
     }
@@ -61,8 +61,9 @@ class FAQFragment : Fragment() {
 
     inner class FaqExpandable(faqData: List<FaqEvent>) : BaseExpandableListAdapter() {
 
-        val questionsGroup: List<String?>
-        val childrens: HashMap<Int, List<Answer>?>
+        val questionsGroup: List<String>
+        val childrens: HashMap<Int, List<Answer>>
+
         init {
             questionsGroup = faqData.map { it.question }
             childrens = HashMap()
@@ -104,7 +105,7 @@ class FAQFragment : Fragment() {
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.faq_header, null)
             }
-            (convertView!!.findViewById<View>(R.id.question_text) as TextView).text = questionsGroup!![groupPosition]
+            (convertView!!.findViewById<View>(R.id.question_text) as TextView).text = questionsGroup[groupPosition]
             return convertView
         }
 
