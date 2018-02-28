@@ -25,6 +25,8 @@ class Schedule {
 
         fun hasSpeaker(): Boolean = speakerNames != null && speakerNames!!.isNotEmpty()
 
+        fun hasMultipleSpeakers(): Boolean = speakerNames != null && speakerNames!!.size > 1
+
         fun getSpeakerString(): String? = speakerNames?.joinToString(", ")
     }
 

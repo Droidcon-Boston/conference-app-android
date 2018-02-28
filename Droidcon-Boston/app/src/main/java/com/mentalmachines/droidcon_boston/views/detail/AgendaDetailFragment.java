@@ -148,7 +148,7 @@ public class AgendaDetailFragment extends Fragment {
         textSpeakerName.setText(listRow.getSpeakerString());
 
         final String speakerBio;
-        if (listRow.hasSpeaker()) {
+        if (listRow.hasMultipleSpeakers()) {
             speakerBio = String.format(Locale.getDefault(), "Primary Speaker: %s\n\n%s",
                 listRow.getPrimarySpeakerName(), scheduleDetail.getSpeakerBio());
         } else {
@@ -176,6 +176,7 @@ public class AgendaDetailFragment extends Fragment {
 
         showBookmarkStatus(scheduleDetail);
     }
+
 
     private void showBookmarkStatus(ScheduleDetail scheduleDetail) {
         UserAgendaRepo userAgendaRepo = getUserAgendaRepo();
