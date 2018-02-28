@@ -12,10 +12,10 @@ class Schedule {
         var id: String = ""
         var startTime: String = ""
         var talkTitle: String = ""
+        var speakerCount: Int = 0
 
         var talkDescription: String? = null
         var speakerNames: List<String>? = null
-        var speakerCount: Int = 0
         var photo: String? = null
         var utcStartTimeString: String? = null
         var endTime: String? = null
