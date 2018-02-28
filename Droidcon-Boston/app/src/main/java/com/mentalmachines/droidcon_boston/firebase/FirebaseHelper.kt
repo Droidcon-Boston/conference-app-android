@@ -11,6 +11,7 @@ class FirebaseHelper private constructor() {
     val eventDatabase: DatabaseReference
     val speakerDatabase: DatabaseReference
     val aboutDatabase: DatabaseReference
+    val faqDatabase: DatabaseReference
 
     init {
         this.database = FirebaseDatabase.getInstance()
@@ -21,6 +22,7 @@ class FirebaseHelper private constructor() {
         this.eventDatabase = mainDatabase.child("conferenceData").child("events")
         this.speakerDatabase = mainDatabase.child("conferenceData").child("speakers")
         this.aboutDatabase = mainDatabase.child("about")
+        this.faqDatabase = mainDatabase.child("faq")
     }
 
     private object Holder {
