@@ -6,37 +6,35 @@ package com.mentalmachines.droidcon_boston.data
  */
 class Schedule {
 
-    class ScheduleRow {
+    data class ScheduleRow(
+            var primarySpeakerName: String = "",
+            var id: String = "",
+            var startTime: String = "",
+            var talkTitle: String = "",
+            var speakerCount: Int = 0,
+            var talkDescription: String = "",
+            var speakerNames: List<String> = emptyList(),
+            var speakerNameToOrgName: HashMap<String, String> = HashMap(0),
+            var utcStartTimeString: String = "",
+            var endTime: String = "",
+            var room: String = "",
+            var date: String = "",
+            var trackSortOrder: Int = 0,
+            var photoUrlMap: HashMap<String, String> = HashMap(0)) {
 
-        var primarySpeakerName: String = ""
-        var id: String = ""
-        var startTime: String = ""
-        var talkTitle: String = ""
-        var speakerCount: Int = 0
+        fun hasSpeaker(): Boolean = speakerNames.isNotEmpty()
 
-        var talkDescription: String? = null
-        var speakerNames: List<String>? = null
-        var speakerNameToOrgName: HashMap<String, String>? = null
-        var utcStartTimeString: String? = null
-        var endTime: String? = null
-        var room: String? = null
-        var date: String? = null
-        var trackSortOrder: Int? = null
-        var photoUrlMap: HashMap<String, String>? = null
+        fun hasMultipleSpeakers(): Boolean = speakerNames.size > 1
 
-        fun hasSpeaker(): Boolean = speakerNames != null && speakerNames!!.isNotEmpty()
-
-        fun hasMultipleSpeakers(): Boolean = speakerNames != null && speakerNames!!.size > 1
-
-        fun getSpeakerString(): String? = speakerNames?.joinToString(", ")
+        fun getSpeakerString(): String? = speakerNames.joinToString(", ")
     }
 
     class ScheduleDetail(val listRow: ScheduleRow) {
 
-        var speakerBio: String? = null
-        var twitter: String? = null
-        var linkedIn: String? = null
-        var facebook: String? = null
+        var speakerBio: String = ""
+        var twitter: String = ""
+        var linkedIn: String = ""
+        var facebook: String = ""
 
         val id: String get() = listRow.id
     }

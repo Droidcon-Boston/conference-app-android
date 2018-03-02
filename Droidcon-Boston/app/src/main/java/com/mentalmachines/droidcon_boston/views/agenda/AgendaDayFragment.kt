@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -27,6 +26,8 @@ import com.mentalmachines.droidcon_boston.utils.StringUtils
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
+import kotlinx.android.synthetic.main.agenda_day_fragment.agenda_recycler
+import kotlinx.android.synthetic.main.agenda_day_fragment.refresh_layout
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -34,34 +35,26 @@ import java.util.HashMap
  * Fragment for an agenda day
  */
 class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
-
-    private lateinit var refreshLayout: RecyclerRefreshLayout
-    lateinit var recycler: RecyclerView
-
     private val timeHeaders = HashMap<String, ScheduleAdapterItemHeader>()
 
-    private var dayFilter: String? = null
+    private var dayFilter: String = ""
     private val firebaseHelper = FirebaseHelper.instance
-    private var userAgendaRepo: UserAgendaRepo? = null
-
-    private lateinit var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>
-
     private var onlyMyAgenda: Boolean = false
+
+    private lateinit var userAgendaRepo: UserAgendaRepo
+    private lateinit var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            dayFilter = arguments!!.getString(ARG_DAY)
-        }
-
+        dayFilter = arguments?.getString(ARG_DAY) ?: ""
         userAgendaRepo = UserAgendaRepo.getInstance(context!!)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             android.R.id.home -> {
-                val fragmentManager = activity!!.fragmentManager
-                if (fragmentManager.backStackEntryCount > 0) {
+                val fragmentManager = activity?.fragmentManager
+                if (fragmentManager?.backStackEntryCount!! > 0) {
                     fragmentManager.popBackStack()
                 }
             }
@@ -71,27 +64,32 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.agenda_day_fragment, container, false)
+        return inflater.inflate(R.layout.agenda_day_fragment, container, false)
+    }
 
-        recycler = view.findViewById(R.id.agenda_recycler)
-        refreshLayout = view.findViewById(R.id.refresh_layout)
 
-        recycler.layoutManager = LinearLayoutManager(activity!!.applicationContext)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        onlyMyAgenda = arguments!!.getBoolean(ARG_MY_AGENDA)
+        agenda_recycler.layoutManager = LinearLayoutManager(activity?.applicationContext)
+
+        onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
+
         fetchScheduleData(dayFilter, onlyMyAgenda)
 
-        refreshLayout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL)
+        refresh_layout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL)
 
-        refreshLayout.setOnRefreshListener {
+        refresh_layout.setOnRefreshListener {
             headerAdapter.clear()
             headerAdapter.notifyDataSetChanged()
-            refreshLayout.setRefreshing(true)
+            refresh_layout.setRefreshing(true)
             fetchScheduleData(dayFilter, onlyMyAgenda)
             Toast.makeText(activity, "Refreshed Agenda", Toast.LENGTH_SHORT).show()
         }
+    }
 
-        return view
+    fun updateList() {
+        agenda_recycler.adapter.notifyDataSetChanged()
     }
 
     private fun fetchScheduleData(dayFilter: String?, onlyMyAgenda: Boolean) {
@@ -103,13 +101,13 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                     Log.d(TAG, "Event: " + data)
                     if (data != null) {
                         val scheduleRow = data.toScheduleRow()
-                        if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo!!.isSessionBookmarked(scheduleRow.id))) {
+                        if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(scheduleRow.id))) {
                             rows.add(scheduleRow)
                         }
                     }
                 }
 
-                refreshLayout.setRefreshing(false)
+                refresh_layout.setRefreshing(false)
                 setupHeaderAdapter(rows)
             }
 
@@ -121,7 +119,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
-        var items = ArrayList<ScheduleAdapterItem>(rows.size)
+        val items = ArrayList<ScheduleAdapterItem>(rows.size)
         for (row in rows) {
             val timeDisplay = if (row.startTime.isEmpty()) "Unscheduled" else row.startTime
             var header: ScheduleAdapterItemHeader? = timeHeaders[timeDisplay]
@@ -135,13 +133,13 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         val sortedItems = items.sortedWith(
-                compareBy<ScheduleAdapterItem>{ it.itemData.utcStartTimeString }
-                .thenBy { it.roomSortOrder })
+                compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }
+                        .thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
         headerAdapter.addListener(this)
-        recycler.adapter = headerAdapter
-        recycler.addItemDecoration(FlexibleItemDecoration(recycler.context).withDefaultDivider())
+        agenda_recycler.adapter = headerAdapter
+        agenda_recycler.addItemDecoration(FlexibleItemDecoration(agenda_recycler.context).withDefaultDivider())
         headerAdapter.expandItemsAtStartUp()
                 .setDisplayHeadersAtStartUp(true)
     }
@@ -150,15 +148,12 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
             val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData
-            println(itemData.toString())
-            val speakerNames = itemData.speakerNames?.joinToString(",")
+            val speakerNames = itemData.speakerNames.joinToString(",")
             if (StringUtils.isNullorEmpty(speakerNames)) {
-                val firstSpeaker = itemData.speakerNames?.first()
+                val firstSpeaker = itemData.speakerNames.first()
 
-                val url = itemData.photoUrlMap?.get(firstSpeaker)
-                if (itemData.photoUrlMap == null) {
-                    return false
-                }
+                val url = itemData.photoUrlMap.get(firstSpeaker)
+
                 // event where info URL is in the photoUrls string
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)

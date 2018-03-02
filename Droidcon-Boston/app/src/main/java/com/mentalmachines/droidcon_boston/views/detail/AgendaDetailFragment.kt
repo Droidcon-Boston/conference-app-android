@@ -51,37 +51,43 @@ class AgendaDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.agenda_detail_fragment, container, false)
 
+        return inflater.inflate(R.layout.agenda_detail_fragment, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bundle = arguments
-        val itemData = gson.fromJson(bundle.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow::class.java)
+        val itemData = gson.fromJson(arguments.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow::class.java)
+        fetchDataFromFirebase(itemData)
+        populateView(itemData)
+    }
 
+    private fun populateView(itemData: ScheduleRow) {
         tv_agenda_detail_title.text = itemData.talkTitle
         tv_agenda_detail_room.text = "at " + itemData.room
         tv_agenda_detail_time.text = itemData.startTime + " - " + itemData.endTime
 
-        populateSpeakerNames(itemData)
-
-
         fab_agenda_detail_bookmark.setOnClickListener({
-            val userAgendaRepo = userAgendaRepo
+
             val nextBookmarkStatus = !userAgendaRepo.isSessionBookmarked(scheduleDetail.id)
             userAgendaRepo.bookmarkSession(scheduleDetail.id, nextBookmarkStatus)
+
             Snackbar.make(agendaDetailView,
-                    if (nextBookmarkStatus) getString(R.string.saved_agenda_item) else getString(R.string.removed_agenda_item),
+                    if (nextBookmarkStatus)
+                        getString(R.string.saved_agenda_item)
+                    else getString(R.string.removed_agenda_item),
                     Snackbar.LENGTH_SHORT).show()
+
             showBookmarkStatus(scheduleDetail)
         })
 
+        populateSpeakersInformation(itemData)
+    }
 
-        firebaseHelper.speakerDatabase.orderByChild("name").equalTo(itemData.speakerNames?.joinToString(","))
+    private fun fetchDataFromFirebase(itemData: ScheduleRow) {
+        firebaseHelper.speakerDatabase.orderByChild("name")
                 .addValueEventListener(object : ValueEventListener {
-
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         for (speakerSnapshot in dataSnapshot.children) {
                             val detail = speakerSnapshot.getValue(ScheduleEventDetail::class.java)
@@ -89,6 +95,7 @@ class AgendaDetailFragment : Fragment() {
                                 scheduleDetail = detail.toScheduleDetail(itemData)
                                 showAgendaDetail(scheduleDetail)
                             }
+
                         }
 
                     }
@@ -100,7 +107,7 @@ class AgendaDetailFragment : Fragment() {
     }
 
 
-    private fun populateSpeakerNames(itemData: ScheduleRow) = when {
+    private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
         itemData.speakerNames?.size == 0 -> tv_agenda_detail_speaker_name.visibility = View.GONE
         else -> {
             var speakerNames = ""
@@ -158,12 +165,11 @@ class AgendaDetailFragment : Fragment() {
     }
 
     fun showAgendaDetail(scheduleDetail: ScheduleDetail) {
+        populateSpeakersInformation(scheduleDetail.listRow)
+        showBookmarkStatus(scheduleDetail)
+
         tv_agenda_detail_title.text = scheduleDetail.listRow.talkTitle
         tv_agenda_detail_description.text = StringUtils.getHtmlFormattedSpanned(scheduleDetail.listRow.talkDescription)
-
-        populateSpeakerNames(scheduleDetail.listRow)
-
-        showBookmarkStatus(scheduleDetail)
     }
 
     private fun showBookmarkStatus(scheduleDetail: ScheduleDetail) {

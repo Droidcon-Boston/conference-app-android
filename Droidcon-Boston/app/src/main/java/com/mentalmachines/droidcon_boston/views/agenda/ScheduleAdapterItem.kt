@@ -24,7 +24,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                                header: ScheduleAdapterItemHeader) :
         AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
-    var startTime: Date? = null
+    var startTime: Date = Date()
 
     var roomSortOrder = itemData.trackSortOrder
 
@@ -45,7 +45,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
     override fun equals(other: Any?): Boolean {
         if (other is ScheduleAdapterItem) {
             val inItem = other as ScheduleAdapterItem?
-            return this.itemData.talkTitle == inItem!!.itemData.talkTitle
+            return this.itemData.talkTitle == inItem?.itemData?.talkTitle
         }
         return false
     }
@@ -66,50 +66,34 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                 holder: ScheduleAdapterItem.ViewHolder,
                                 position: Int,
                                 payloads: List<*>) {
+        holder.sessionLayout.visibility = View.VISIBLE
+        holder.avatar.visibility = View.VISIBLE
+        holder.bigTitle.visibility = View.GONE
 
-        if (itemData.speakerNames == null) {
-            holder.sessionLayout.visibility = View.GONE
-            holder.avatar.visibility = View.GONE
-            holder.bigTitle.visibility = View.VISIBLE
+        holder.title.text = itemData.talkTitle
+        holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
+        holder.speaker.text = itemData.speakerNames?.joinToString(separator = ", ")
+        holder.room.text = itemData.room
 
-            holder.bigTitle.text = itemData.talkTitle
+        holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
+        holder.speakerCount.text = String.format("+%d", itemData.speakerCount - 1)
 
-            if (itemData.photoUrlMap == null) {
-                holder.rootLayout.background = null
-            } else {
-                addBackgroundRipple(holder)
-            }
+        val context = holder.title.context
 
-            holder.bookmarkIndicator.visibility = View.INVISIBLE
-        } else {
-            holder.sessionLayout.visibility = View.VISIBLE
-            holder.avatar.visibility = View.VISIBLE
-            holder.bigTitle.visibility = View.GONE
+        Glide.with(context)
+                .load(itemData.photoUrlMap?.get(itemData.primarySpeakerName))
+                .transform(CircleTransform(context))
+                .crossFade()
+                .into(holder.avatar)
 
-            holder.title.text = itemData.talkTitle
-            holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
-            holder.speaker.text = itemData.speakerNames?.joinToString(separator = ", ")
-            holder.room.text = itemData.room
+        val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
+        holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
+            View.VISIBLE
+        else
+            View.INVISIBLE
 
-            holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
-            holder.speakerCount.text = String.format("+%d", itemData.speakerCount - 1)
+        addBackgroundRipple(holder)
 
-            val context = holder.title.context
-
-            Glide.with(context)
-                    .load(itemData.photoUrlMap?.get(itemData.primarySpeakerName))
-                    .transform(CircleTransform(context))
-                    .crossFade()
-                    .into(holder.avatar)
-
-            val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
-            holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
-                View.VISIBLE
-            else
-                View.INVISIBLE
-
-            addBackgroundRipple(holder)
-        }
     }
 
     private fun addBackgroundRipple(holder: ViewHolder) {
