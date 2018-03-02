@@ -121,7 +121,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
-        val items = ArrayList<ScheduleAdapterItem>(rows.size)
+        var items = ArrayList<ScheduleAdapterItem>(rows.size)
         for (row in rows) {
             val timeDisplay = if (row.startTime.isEmpty()) "Unscheduled" else row.startTime
             var header: ScheduleAdapterItemHeader? = timeHeaders[timeDisplay]
@@ -150,12 +150,16 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
             val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData
-            if (StringUtils.isNullorEmpty(itemData.primarySpeakerName)) {
-                val url = itemData.photo
-                if (itemData.photo == null) {
+            println(itemData.toString())
+            val speakerNames = itemData.speakerNames?.joinToString(",")
+            if (StringUtils.isNullorEmpty(speakerNames)) {
+                val firstSpeaker = itemData.speakerNames?.first()
+
+                val url = itemData.photoUrlMap?.get(firstSpeaker)
+                if (itemData.photoUrlMap == null) {
                     return false
                 }
-                // event where info URL is in the photo string
+                // event where info URL is in the photoUrls string
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)
                 val packageManager = activity!!.packageManager
@@ -170,11 +174,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val agendaDetailFragment = AgendaDetailFragment()
             agendaDetailFragment.arguments = arguments
 
-            val fragmentManager = activity!!.fragmentManager
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, agendaDetailFragment)
-                    .addToBackStack(null)
-                    .commit()
+            val fragmentManager = activity?.fragmentManager
+            fragmentManager?.beginTransaction()
+                    ?.add(R.id.fragment_container, agendaDetailFragment)
+                    ?.addToBackStack(null)
+                    ?.commit()
         }
 
         return true

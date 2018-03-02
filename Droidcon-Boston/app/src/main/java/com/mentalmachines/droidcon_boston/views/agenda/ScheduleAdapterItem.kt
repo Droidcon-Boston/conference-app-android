@@ -28,7 +28,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
     var roomSortOrder = itemData.trackSortOrder
 
-    val title: String? get() = itemData.talkTitle
+    val title: String
+        get() = itemData.talkTitle
 
     init {
         val dateTimeString = itemData.date + " " + itemData.startTime
@@ -66,14 +67,14 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                 position: Int,
                                 payloads: List<*>) {
 
-        if (!itemData.hasSpeaker()) {
+        if (itemData.speakerNames == null) {
             holder.sessionLayout.visibility = View.GONE
             holder.avatar.visibility = View.GONE
             holder.bigTitle.visibility = View.VISIBLE
 
             holder.bigTitle.text = itemData.talkTitle
 
-            if (itemData.photo == null) {
+            if (itemData.photoUrlMap == null) {
                 holder.rootLayout.background = null
             } else {
                 addBackgroundRipple(holder)
@@ -87,15 +88,16 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
             holder.title.text = itemData.talkTitle
             holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
-            holder.speaker.text = itemData.getSpeakerString()
+            holder.speaker.text = itemData.speakerNames?.joinToString(separator = ", ")
             holder.room.text = itemData.room
 
             holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
-            holder.speakerCount.text = String.format("+%d", itemData.speakerCount-1)
+            holder.speakerCount.text = String.format("+%d", itemData.speakerCount - 1)
 
             val context = holder.title.context
+
             Glide.with(context)
-                    .load(itemData.photo)
+                    .load(itemData.photoUrlMap?.get(itemData.primarySpeakerName))
                     .transform(CircleTransform(context))
                     .crossFade()
                     .into(holder.avatar)

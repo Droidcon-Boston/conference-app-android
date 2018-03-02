@@ -1,218 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/agendaDetailView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/agendaDetailView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+
+        <ImageView
+            android:id="@+id/imgv_header_bg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/navigation_header_image" />
 
-            <ImageButton
-                android:id="@+id/image_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/hint_back"
-                android:padding="8dp"
-                android:src="@drawable/ic_back_arrow_24dp" />
-
-            <TextView
-                android:id="@+id/text_title"
-                style="@android:style/TextAppearance.Medium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                tools:text="Title of Talk" />
-
-            <ImageView
-                android:id="@+id/image_bookmark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:contentDescription="@string/hint_bookmark"
-                android:padding="8dp"
-                android:src="@drawable/ic_star_border_black_24dp"
-                android:tint="@color/colorAccent" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/text_time"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="3:30 PM" />
-
-            <TextView
-                android:id="@+id/text_room"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="THEATER 1" />
-
-        </LinearLayout>
 
         <TextView
-            android:id="@+id/text_description"
+            android:id="@+id/tv_agenda_detail_title"
             style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="First, Do No Harm" />
+
+        <TextView
+            android:id="@+id/tv_agenda_detail_room"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_agenda_detail_time"
+            android:layout_alignParentStart="true"
+            android:fontFamily="sans-serif"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="at Nancy and edward Roberts Theater" />
+
+
+        <TextView
+            android:id="@+id/tv_agenda_detail_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imgv_header_bg"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            tools:text="10:30 am - 11:15 am" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_agenda_detail_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="sans-serif"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:text="Long description of the talk" />
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tv_agenda_detail_room"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/colorLightGray"
+            app:srcCompat="@drawable/ic_star_black_24dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+            android:padding="16dp"
+            android:layout_below="@id/imgv_header_bg"
+            android:orientation="vertical"
+            >
 
-            <ImageView
-                android:id="@+id/image_speaker"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="16dp"
-                android:scaleType="fitXY"
-                tools:src="@drawable/emo_im_cool" />
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tv_agenda_detail_speaker_title"
+                android:layout_width="319dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginEnd="50dp"
+                android:textColor="@color/colorGray"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/text_speaker_name"
-                    style="@android:style/TextAppearance.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:fontFamily="sans-serif"
-                    android:gravity="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="Sam Edwards" />
+            <TextView
+                android:id="@+id/tv_agenda_detail_speaker_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                tools:text="@tools:sample/full_names" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorLightGray" />
 
-                    <ImageButton
-                        android:id="@+id/image_twitter"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@android:color/transparent"
-                        android:clickable="true"
-                        android:onClick="faqClick"
-                        android:padding="8dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_twitter"
-                        android:tint="@color/tw__blue_default" />
+            <TextView
+                android:id="@+id/tv_agenda_detail_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="8dp"
 
-                    <ImageButton
-                        android:id="@+id/image_linkedin"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@color/tw__blue_default"
-                        android:clickable="true"
-                        android:onClick="faqClick"
-                        android:padding="4dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_linkedin" />
-
-                    <ImageButton
-                        android:id="@+id/image_facebook"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@android:color/transparent"
-                        android:clickable="true"
-                        android:onClick="faqClick"
-                        android:padding="8dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_facebook"
-                        android:tint="#ff3b5998" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+                tools:text="@tools:sample/lorem/random" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_speaker_bio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            tools:text="Victoria is a random author who presents stuff" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

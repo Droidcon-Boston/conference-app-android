@@ -16,12 +16,13 @@ class Schedule {
 
         var talkDescription: String? = null
         var speakerNames: List<String>? = null
-        var photo: String? = null
+        var speakerNameToOrgName: HashMap<String, String>? = null
         var utcStartTimeString: String? = null
         var endTime: String? = null
         var room: String? = null
         var date: String? = null
         var trackSortOrder: Int? = null
+        var photoUrlMap: HashMap<String, String>? = null
 
         fun hasSpeaker(): Boolean = speakerNames != null && speakerNames!!.isNotEmpty()
 

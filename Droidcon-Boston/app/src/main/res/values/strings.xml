@@ -38,4 +38,6 @@
 
     <string name="prefix_speaker">talk by</string>
     <string name="prefix_room">at</string>
+    <string name="str_speakers">Speakers:</string>
+    <string name="str_speaker">Speaker:</string>
 </resources>

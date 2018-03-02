@@ -9,7 +9,7 @@ import org.threeten.bp.format.DateTimeFormatter
 
 open class FirebaseDatabase {
 
-    class ScheduleEvent() {
+    class ScheduleEvent {
 
         var primarySpeakerName: String = ""
         var startTime: String = ""
@@ -17,11 +17,12 @@ open class FirebaseDatabase {
 
         var speakerNames: HashMap<String, Boolean>? = null
         var speakerNameToPhotoUrl: HashMap<String, String>? = null
+        var speakerNameToOrg: HashMap<String, String>? = null
         var roomNames: HashMap<String, Boolean>? = null
         var speakerIds: HashMap<String, Boolean>? = null
         var roomIds: HashMap<String, Boolean>? = null
         var description: String? = null
-        var photo: String? = null
+        var photo: HashMap<String, String>? = null
         var endTime: String? = null
         var trackSortOrder: Int? = 0
 
@@ -50,7 +51,8 @@ open class FirebaseDatabase {
             row.speakerCount = speakerNames!!.size
             row.talkDescription = description
             row.talkTitle = name
-            row.photo = speakerNameToPhotoUrl!!.get(row.primarySpeakerName)
+            row.speakerNameToOrgName = speakerNameToOrg
+            row.photoUrlMap = speakerNameToPhotoUrl
             return row
         }
     }
@@ -78,9 +80,9 @@ open class FirebaseDatabase {
         }
     }
 
-    class FaqEvent() {
+    class FaqEvent {
 
-        class Answer() {
+        class Answer {
             var answer: String = ""
 
             var photoLink: String? = null
