@@ -147,17 +147,14 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     override fun onItemClick(position: Int): Boolean {
         if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
             val item = headerAdapter.getItem(position)
-            val itemData = item!!.itemData
-            val speakerNames = itemData.speakerNames.joinToString(",")
-            if (StringUtils.isNullorEmpty(speakerNames)) {
-                val firstSpeaker = itemData.speakerNames.first()
-
-                val url = itemData.photoUrlMap.get(firstSpeaker)
-
+            val itemData = item?.itemData
+            if (StringUtils.isNullorEmpty(itemData?.primarySpeakerName)) {
+                val url = itemData?.photoUrlMap?.get(itemData.primarySpeakerName)
+                
                 // event where info URL is in the photoUrls string
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)
-                val packageManager = activity!!.packageManager
+                val packageManager = activity?.packageManager
                 if (i.resolveActivity(packageManager) != null) {
                     startActivity(i)
                 }

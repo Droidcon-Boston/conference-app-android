@@ -66,33 +66,52 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                 holder: ScheduleAdapterItem.ViewHolder,
                                 position: Int,
                                 payloads: List<*>) {
-        holder.sessionLayout.visibility = View.VISIBLE
-        holder.avatar.visibility = View.VISIBLE
-        holder.bigTitle.visibility = View.GONE
 
-        holder.title.text = itemData.talkTitle
-        holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
-        holder.speaker.text = itemData.speakerNames?.joinToString(separator = ", ")
-        holder.room.text = itemData.room
+        if (itemData.speakerNames.isEmpty()) {
+            // For "Lunch" and "Registration" Sessions
+            holder.sessionLayout.visibility = View.GONE
+            holder.avatar.visibility = View.GONE
+            holder.bigTitle.visibility = View.VISIBLE
 
-        holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
-        holder.speakerCount.text = String.format("+%d", itemData.speakerCount - 1)
+            holder.bigTitle.text = itemData.talkTitle
 
-        val context = holder.title.context
+            if (itemData.photoUrlMap.size == 0) {
+                holder.rootLayout.background = null
+            } else {
+                addBackgroundRipple(holder)
+            }
 
-        Glide.with(context)
-                .load(itemData.photoUrlMap?.get(itemData.primarySpeakerName))
-                .transform(CircleTransform(context))
-                .crossFade()
-                .into(holder.avatar)
+            holder.bookmarkIndicator.visibility = View.INVISIBLE
+        } else {
+            // For normal talks/sessions with speakers
+            holder.sessionLayout.visibility = View.VISIBLE
+            holder.avatar.visibility = View.VISIBLE
+            holder.bigTitle.visibility = View.GONE
 
-        val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
-        holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
-            View.VISIBLE
-        else
-            View.INVISIBLE
+            holder.title.text = itemData.talkTitle
+            holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
+            holder.speaker.text = itemData.speakerNames.joinToString(separator = ", ")
+            holder.room.text = itemData.room
 
-        addBackgroundRipple(holder)
+            holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
+            holder.speakerCount.text = String.format("+%d", itemData.speakerCount - 1)
+
+            val context = holder.title.context
+
+            Glide.with(context)
+                    .load(itemData.photoUrlMap[itemData.primarySpeakerName])
+                    .transform(CircleTransform(context))
+                    .crossFade()
+                    .into(holder.avatar)
+
+            val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
+            holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
+                View.VISIBLE
+            else
+                View.INVISIBLE
+
+            addBackgroundRipple(holder)
+        }
 
     }
 
