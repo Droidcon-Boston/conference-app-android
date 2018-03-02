@@ -25,7 +25,7 @@ open class FirebaseDatabase {
         var endTime: String? = null
         var trackSortOrder: Int? = 0
 
-        fun toScheduleRow(): ScheduleRow {
+        fun toScheduleRow(scheduleId: String): ScheduleRow {
             val row = ScheduleRow()
             val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
             row.utcStartTimeString = startTime
@@ -43,6 +43,7 @@ open class FirebaseDatabase {
                 row.endTime = timeFormat.format(endDateTime).toLowerCase()
             }
 
+            row.id = scheduleId
             row.room = roomNames!!.keys.first()
             row.trackSortOrder = trackSortOrder
             row.primarySpeakerName = primarySpeakerName
