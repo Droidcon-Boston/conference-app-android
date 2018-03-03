@@ -24,7 +24,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.StringUtils
+import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.agendaDetailView
 import kotlinx.android.synthetic.main.agenda_detail_fragment.fab_agenda_detail_bookmark
@@ -108,12 +108,12 @@ class AgendaDetailFragment : Fragment() {
 
 
     private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
-        itemData.speakerNames.size == 0 -> tv_agenda_detail_speaker_name.visibility = View.GONE
+        itemData.speakerNames?.size == 0 -> tv_agenda_detail_speaker_name.visibility = View.GONE
         else -> {
             var speakerNames = ""
             var marginValue = 28
             itemData.speakerNames.forEach {
-                val orgName: String? = itemData.speakerNameToOrgName.get(it)
+                val orgName: String? = itemData.speakerNameToOrgName[it]
                 // append org name to speaker name
                 speakerNames += it + when {
                     orgName != null -> " - $orgName"
@@ -126,7 +126,7 @@ class AgendaDetailFragment : Fragment() {
                     tv_agenda_detail_speaker_title.text = getString(string.str_speakers)
 
                     // if the current speaker name is not the last then add a line break
-                    if (!it.equals(itemData.speakerNames.last())) {
+                    if (it != itemData.speakerNames.last()) {
                         speakerNames += "\n"
                     }
                 } else {
@@ -137,7 +137,7 @@ class AgendaDetailFragment : Fragment() {
                 // Add an imageview to the relative layout
                 val tempImg = ImageView(activity)
                 val lp = RelativeLayout.LayoutParams(150, 150)
-                if (it.equals(itemData.speakerNames.first())) {
+                if (it == itemData.speakerNames.first()) {
                     lp.setMargins(28, 0, 0, 16)
                 } else {
                     marginValue += 120
@@ -152,7 +152,7 @@ class AgendaDetailFragment : Fragment() {
                 agendaDetailView.addView(tempImg)
 
                 Glide.with(this)
-                        .load(itemData.photoUrlMap.get(it))
+                        .load(itemData.photoUrlMap[it])
                         .transform(CircleTransform(activity.applicationContext))
                         .placeholder(R.drawable.emo_im_cool)
                         .crossFade()
@@ -169,7 +169,7 @@ class AgendaDetailFragment : Fragment() {
         showBookmarkStatus(scheduleDetail)
 
         tv_agenda_detail_title.text = scheduleDetail.listRow.talkTitle
-        tv_agenda_detail_description.text = StringUtils.getHtmlFormattedSpanned(scheduleDetail.listRow.talkDescription)
+        tv_agenda_detail_description.text = scheduleDetail.listRow.talkDescription.getHtmlFormattedSpanned()
     }
 
     private fun showBookmarkStatus(scheduleDetail: ScheduleDetail) {
