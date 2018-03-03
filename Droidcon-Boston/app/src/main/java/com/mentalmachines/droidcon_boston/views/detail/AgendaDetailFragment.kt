@@ -109,7 +109,7 @@ class AgendaDetailFragment : Fragment() {
 
 
     private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
-        itemData.speakerNames.size == 0 -> {
+        itemData.speakerNames.isEmpty() -> {
             tv_agenda_detail_speaker_name.visibility = View.GONE
             v_agenda_detail_speaker_divider.visibility = View.GONE
         }

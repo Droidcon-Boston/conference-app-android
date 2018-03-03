@@ -71,7 +71,6 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             // For "Lunch" and "Registration" Sessions
             holder.avatarLayout.visibility = View.GONE
             holder.bookmarkIndicator.visibility = View.GONE
-            holder.bigTitle.visibility = View.GONE
 
             holder.speaker.visibility = View.GONE
             holder.time.visibility = View.GONE
@@ -90,7 +89,6 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             // For normal talks/sessions with speakers
             holder.sessionLayout.visibility = View.VISIBLE
             holder.avatar.visibility = View.VISIBLE
-            holder.bigTitle.visibility = View.GONE
 
             holder.title.text = itemData.talkTitle
             holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
@@ -149,8 +147,6 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         lateinit var sessionLayout: View
 
-        lateinit var bigTitle: TextView
-
         constructor(view: View, adapter: FlexibleAdapter<*>) : super(view, adapter) {
 
             findViews(view)
@@ -172,7 +168,6 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             speakerCount = parent.findViewById(R.id.speaker_count)
             room = parent.findViewById(R.id.room_text)
             sessionLayout = parent.findViewById(R.id.session_layout)
-            bigTitle = parent.findViewById(R.id.bigtitle_text)
         }
     }
 }
