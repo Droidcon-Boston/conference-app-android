@@ -26,7 +26,7 @@ class AgendaDayPagerAdapter internal constructor(fm: FragmentManager, private va
 
     override fun updateFragmentItem(position: Int, fragment: Fragment) {
         if (fragment is AgendaDayFragment) {
-            fragment.recycler.adapter.notifyDataSetChanged()
+            fragment.updateList()
         }
     }
 
