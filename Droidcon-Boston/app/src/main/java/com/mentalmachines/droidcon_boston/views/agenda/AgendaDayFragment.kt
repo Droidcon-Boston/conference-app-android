@@ -97,6 +97,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val rows = ArrayList<ScheduleRow>()
                 for (roomSnapshot in dataSnapshot.children) {
+                    val key = roomSnapshot.key
                     val data = roomSnapshot.getValue(ScheduleEvent::class.java)
                     Log.d(TAG, "Event: " + data)
                     if (data != null) {
