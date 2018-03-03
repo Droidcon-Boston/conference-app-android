@@ -24,7 +24,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.StringUtils
+import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.agendaDetailView
 import kotlinx.android.synthetic.main.agenda_detail_fragment.fab_agenda_detail_bookmark
@@ -169,7 +169,7 @@ class AgendaDetailFragment : Fragment() {
         showBookmarkStatus(scheduleDetail)
 
         tv_agenda_detail_title.text = scheduleDetail.listRow.talkTitle
-        tv_agenda_detail_description.text = StringUtils.getHtmlFormattedSpanned(scheduleDetail.listRow.talkDescription)
+        tv_agenda_detail_description.text = scheduleDetail.listRow.talkDescription.getHtmlFormattedSpanned()
     }
 
     private fun showBookmarkStatus(scheduleDetail: ScheduleDetail) {

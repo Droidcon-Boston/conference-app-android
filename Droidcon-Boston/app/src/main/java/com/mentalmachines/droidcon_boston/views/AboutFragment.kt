@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import kotlinx.android.synthetic.main.about_fragment.tv_about_description
 
 class AboutFragment : Fragment() {
@@ -30,7 +31,7 @@ class AboutFragment : Fragment() {
     private fun fetchDataFromFirebase() {
         firebaseHelper.aboutDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                tv_about_description.text = dataSnapshot.getValue(String::class.java)
+                tv_about_description.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

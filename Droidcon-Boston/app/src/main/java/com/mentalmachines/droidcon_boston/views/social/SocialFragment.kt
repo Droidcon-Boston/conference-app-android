@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.modal.SocialModal
-import com.mentalmachines.droidcon_boston.utils.CustomTabUtil
 import com.mentalmachines.droidcon_boston.utils.DividerItemDecoration
 import com.mentalmachines.droidcon_boston.utils.RVItemClickListener
 import com.mentalmachines.droidcon_boston.utils.RVItemClickListener.OnItemClickListener
+import com.mentalmachines.droidcon_boston.utils.loadUriInCustomTab
 import kotlinx.android.synthetic.main.social_fragment.social_rv
 import java.util.ArrayList
 
@@ -41,7 +41,7 @@ class SocialFragment : Fragment() {
         // Set On Click
         social_rv.addOnItemTouchListener(RVItemClickListener(context!!, object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
-                CustomTabUtil.loadUriInCustomTab(context!!, socialList[position].link.toString())
+                context?.loadUriInCustomTab(socialList[position].link.toString())
             }
         }))
     }
@@ -57,7 +57,5 @@ class SocialFragment : Fragment() {
         socialList.add(SocialModal(R.drawable.social_twitter, getString(R.string.social_title_twitter),
                 getString(R.string.twitter_link)))
         return socialList
-
     }
-
 }
