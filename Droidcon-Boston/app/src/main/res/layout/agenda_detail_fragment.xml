@@ -101,6 +101,7 @@
                 tools:text="@tools:sample/full_names" />
 
             <View
+                android:id="@+id/v_agenda_detail_speaker_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"

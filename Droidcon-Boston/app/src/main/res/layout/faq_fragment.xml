@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.RecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/faq_recycler"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
-    <ExpandableListView
-        android:id="@+id/faqlist"
-        android:divider="@color/colorAccent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    </FrameLayout>
+    android:paddingBottom="16dp"
+    android:scrollbars="vertical"
+    android:background="@android:color/white" />

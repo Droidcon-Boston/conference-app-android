@@ -103,6 +103,7 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/avatar_layout"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_gravity="center_vertical">
@@ -138,18 +139,4 @@
         android:layout_gravity="top|end"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="24sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
-        android:id="@+id/bigtitle_text"
-        android:visibility="gone"
-        tools:text="LUNCH"/>
 </LinearLayout>
