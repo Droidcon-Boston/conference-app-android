@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.StringUtils
+import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import kotlinx.android.synthetic.main.coc_fragment.tv_coc
 
 class CocFragment : Fragment() {
@@ -32,7 +32,7 @@ class CocFragment : Fragment() {
     private fun fetchDataFromFirebase() {
         firebaseHelper.cocDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                tv_coc.text = StringUtils.getHtmlFormattedSpanned(dataSnapshot?.getValue(String::class.java) ?: "")
+                tv_coc.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
