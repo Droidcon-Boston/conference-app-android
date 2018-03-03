@@ -54,7 +54,7 @@ android {
 }
 
 dependencies {
-    final support = "27.0.2"
+    final support = "27.1.0"
     final playServices = "11.8.0"
     final butterKnife = "8.8.1"
     final junit = "4.12"
@@ -86,7 +86,7 @@ dependencies {
     implementation('com.twitter.sdk.android:twitter:2.3.2@aar') {
         transitive = true
     }
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 
