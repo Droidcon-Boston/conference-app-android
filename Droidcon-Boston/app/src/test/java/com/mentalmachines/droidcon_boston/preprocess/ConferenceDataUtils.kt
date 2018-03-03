@@ -19,12 +19,12 @@ class ConferenceDataUtils {
             return moshi
         }
 
-        fun processConferenceData(confData: ConferenceDataModel?, errorsFatal: Boolean) {
+        fun processConferenceData(confData: ConferenceDataModel?, errorsFatal: Boolean = true) {
             denormalizeConferenceData(confData, errorsFatal)
             fixSpeakerNames(confData)
         }
 
-        fun denormalizeConferenceData(confData: ConferenceDataModel?, errorsFatal: Boolean) {
+        fun denormalizeConferenceData(confData: ConferenceDataModel?, errorsFatal: Boolean = true) {
             confData?.events?.forEach {
                 // denormalize speakers
                 val speakerNames = HashMap<String, Boolean>()
