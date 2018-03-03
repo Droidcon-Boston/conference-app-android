@@ -101,7 +101,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                     val data = roomSnapshot.getValue(ScheduleEvent::class.java)
                     Log.d(TAG, "Event: " + data)
                     if (data != null) {
-                        val scheduleRow = data.toScheduleRow()
+                        val scheduleRow = data.toScheduleRow(key)
                         if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(scheduleRow.id))) {
                             rows.add(scheduleRow)
                         }
