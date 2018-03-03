@@ -69,11 +69,16 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         if (itemData.speakerNames.isEmpty()) {
             // For "Lunch" and "Registration" Sessions
-            holder.sessionLayout.visibility = View.GONE
-            holder.avatar.visibility = View.GONE
-            holder.bigTitle.visibility = View.VISIBLE
+            holder.avatarLayout.visibility = View.GONE
+            holder.bookmarkIndicator.visibility = View.GONE
+            holder.bigTitle.visibility = View.GONE
 
-            holder.bigTitle.text = itemData.talkTitle
+            holder.speaker.visibility = View.GONE
+            holder.time.visibility = View.GONE
+
+            holder.sessionLayout.visibility = View.VISIBLE
+            holder.title.text = itemData.talkTitle
+            holder.room.text = itemData.room
 
             if (itemData.photoUrlMap.size == 0) {
                 holder.rootLayout.background = null
@@ -81,7 +86,6 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                 addBackgroundRipple(holder)
             }
 
-            holder.bookmarkIndicator.visibility = View.INVISIBLE
         } else {
             // For normal talks/sessions with speakers
             holder.sessionLayout.visibility = View.VISIBLE
@@ -131,6 +135,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         lateinit var avatar: ImageView
 
+        lateinit var avatarLayout: View
+
         lateinit var title: TextView
 
         lateinit var time: TextView
@@ -159,6 +165,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             rootLayout = parent.findViewById(R.id.rootLayout)
             bookmarkIndicator = parent.findViewById(R.id.bookmark_indicator)
             avatar = parent.findViewById(R.id.speaker_image)
+            avatarLayout = parent.findViewById(R.id.avatar_layout)
             title = parent.findViewById(R.id.title_text)
             time = parent.findViewById(R.id.time_text)
             speaker = parent.findViewById(R.id.speaker_name_text)

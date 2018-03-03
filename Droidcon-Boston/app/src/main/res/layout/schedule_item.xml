@@ -103,6 +103,7 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/avatar_layout"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_gravity="center_vertical">
@@ -128,20 +129,10 @@
             tools:visibility="visible"/>
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/bookmark_indicator"
-        app:srcCompat="@drawable/ic_star_black_24dp"
-        android:contentDescription="@string/hint_bookmark"
-        android:tint="@color/colorStar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
         android:maxLines="1"
         android:ellipsize="end"
@@ -152,4 +143,15 @@
         android:id="@+id/bigtitle_text"
         android:visibility="gone"
         tools:text="LUNCH"/>
+
+    <ImageView
+        android:id="@+id/bookmark_indicator"
+        app:srcCompat="@drawable/ic_star_black_24dp"
+        android:contentDescription="@string/hint_bookmark"
+        android:tint="@color/colorStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"/>
 </LinearLayout>
