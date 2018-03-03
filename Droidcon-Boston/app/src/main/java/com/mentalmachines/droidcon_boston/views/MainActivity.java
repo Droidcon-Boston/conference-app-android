@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
   Toolbar toolbar;
 
-  private String lastFragmentSelected;
+  private String lastFragmentTitleSelected;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void replaceFragment(@NonNull String title) {
-    if (title.equals(lastFragmentSelected)) {
+    if (title.equals(lastFragmentTitleSelected)) {
       // Fragment currently selected, no action.
       return;
     }
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
           .commit();
     }
 
-    lastFragmentSelected = title;
+    lastFragmentTitleSelected = title;
   }
 
   private void updateToolbarTitle(String title) {
