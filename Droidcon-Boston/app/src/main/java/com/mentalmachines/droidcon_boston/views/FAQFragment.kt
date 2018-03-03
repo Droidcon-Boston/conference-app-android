@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
-import android.widget.ExpandableListView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,6 +20,7 @@ import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.FaqEvent
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.FaqEvent.Answer
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import kotlinx.android.synthetic.main.faq_fragment.faqlist
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -28,12 +28,9 @@ class FAQFragment : Fragment() {
 
     private val firebaseHelper = FirebaseHelper.instance
 
-    private lateinit var expandableListView: ExpandableListView
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.faq_fragment, container, false)
-        expandableListView = view.findViewById<ExpandableListView>(R.id.faqlist)
         fetchDataFromFirebase()
         return view
     }
@@ -49,7 +46,7 @@ class FAQFragment : Fragment() {
                     }
                 }
 
-                expandableListView.setAdapter(FaqExpandable(rows.toList()))
+                faqlist.setAdapter(FaqExpandable(rows.toList()))
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

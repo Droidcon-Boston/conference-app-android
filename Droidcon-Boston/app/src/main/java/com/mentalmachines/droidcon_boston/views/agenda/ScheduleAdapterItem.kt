@@ -24,11 +24,12 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                                header: ScheduleAdapterItemHeader) :
         AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
-    var startTime: Date? = null
+    var startTime: Date = Date()
 
     var roomSortOrder = itemData.trackSortOrder
 
-    val title: String? get() = itemData.talkTitle
+    val title: String
+        get() = itemData.talkTitle
 
     init {
         val dateTimeString = itemData.date + " " + itemData.startTime
@@ -44,7 +45,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
     override fun equals(other: Any?): Boolean {
         if (other is ScheduleAdapterItem) {
             val inItem = other as ScheduleAdapterItem?
-            return this.itemData.talkTitle == inItem!!.itemData.talkTitle
+            return this.itemData.talkTitle == inItem?.itemData?.talkTitle
         }
         return false
     }
@@ -66,14 +67,15 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                 position: Int,
                                 payloads: List<*>) {
 
-        if (!itemData.hasSpeaker()) {
+        if (itemData.speakerNames.isEmpty()) {
+            // For "Lunch" and "Registration" Sessions
             holder.sessionLayout.visibility = View.GONE
             holder.avatar.visibility = View.GONE
             holder.bigTitle.visibility = View.VISIBLE
 
             holder.bigTitle.text = itemData.talkTitle
 
-            if (itemData.photo == null) {
+            if (itemData.photoUrlMap.size == 0) {
                 holder.rootLayout.background = null
             } else {
                 addBackgroundRipple(holder)
@@ -81,21 +83,23 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
             holder.bookmarkIndicator.visibility = View.INVISIBLE
         } else {
+            // For normal talks/sessions with speakers
             holder.sessionLayout.visibility = View.VISIBLE
             holder.avatar.visibility = View.VISIBLE
             holder.bigTitle.visibility = View.GONE
 
             holder.title.text = itemData.talkTitle
             holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
-            holder.speaker.text = itemData.getSpeakerString()
+            holder.speaker.text = itemData.speakerNames.joinToString(separator = ", ")
             holder.room.text = itemData.room
 
             holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
-            holder.speakerCount.text = String.format("+%d", itemData.speakerCount-1)
+            holder.speakerCount.text = String.format("+%d", itemData.speakerCount - 1)
 
             val context = holder.title.context
+
             Glide.with(context)
-                    .load(itemData.photo)
+                    .load(itemData.photoUrlMap[itemData.primarySpeakerName])
                     .transform(CircleTransform(context))
                     .crossFade()
                     .into(holder.avatar)
@@ -108,6 +112,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
             addBackgroundRipple(holder)
         }
+
     }
 
     private fun addBackgroundRipple(holder: ViewHolder) {
