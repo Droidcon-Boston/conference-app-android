@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import com.mentalmachines.droidcon_boston.R;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
   NavigationView navigationView;
 
   Toolbar toolbar;
+
+  private String lastFragmentSelected;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +125,11 @@ public class MainActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  public void replaceFragment(String title) {
+  public void replaceFragment(@NonNull String title) {
+    if (title.equals(lastFragmentSelected)) {
+      return;
+    }
+
     updateToolbarTitle(title);
 
     // Get the fragment by tag
@@ -153,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
           // commit fragment transaction
           .commit();
     }
+
+    lastFragmentSelected = title;
   }
 
   private void updateToolbarTitle(String title) {
