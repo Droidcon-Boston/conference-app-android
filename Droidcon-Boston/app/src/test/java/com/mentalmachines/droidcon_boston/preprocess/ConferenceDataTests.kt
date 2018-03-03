@@ -21,7 +21,7 @@ class ConferenceDataTests {
         assert(confData?.speakers?.size ?: 0 > 0)
         assert(confData?.tracks?.size ?: 0 > 0)
 
-        denormalizeConferenceData(confData)
+        denormalizeConferenceData(confData, false)
 
         confData?.events?.forEach {
             assert(it.value.speakerNames?.size ?: 0 > 0)

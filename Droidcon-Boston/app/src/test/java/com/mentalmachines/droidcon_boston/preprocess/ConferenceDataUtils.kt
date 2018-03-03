@@ -19,12 +19,12 @@ class ConferenceDataUtils {
             return moshi
         }
 
-        fun processConferenceData(confData: ConferenceDataModel?) {
-            denormalizeConferenceData(confData)
+        fun processConferenceData(confData: ConferenceDataModel?, errorsFatal: Boolean) {
+            denormalizeConferenceData(confData, errorsFatal)
             fixSpeakerNames(confData)
         }
 
-        fun denormalizeConferenceData(confData: ConferenceDataModel?) {
+        fun denormalizeConferenceData(confData: ConferenceDataModel?, errorsFatal: Boolean) {
             confData?.events?.forEach {
                 // denormalize speakers
                 val speakerNames = HashMap<String, Boolean>()
@@ -55,7 +55,7 @@ class ConferenceDataUtils {
                             it.value.primarySpeakerName = "Kaan Mamikoglu"
                         } else if (speakerNames.containsKey("Adrián Catalan")) {
                             it.value.primarySpeakerName = "Adrián Catalan"
-                        } else {
+                        } else if (errorsFatal) {
                             throw IllegalStateException("Didn't handle case of speakernames: " + speakerNames)
                         }
                     }
