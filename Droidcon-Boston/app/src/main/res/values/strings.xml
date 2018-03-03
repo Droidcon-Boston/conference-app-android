@@ -40,4 +40,7 @@
     <string name="prefix_room">at</string>
     <string name="str_speakers">Speakers:</string>
     <string name="str_speaker">Speaker:</string>
+
+    <string name="str_agenda_detail_room">at %1$s</string>
+    <string name="str_agenda_detail_time">%1$s - %2$s</string>
 </resources>

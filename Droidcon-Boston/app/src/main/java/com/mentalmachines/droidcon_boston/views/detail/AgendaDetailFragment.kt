@@ -65,8 +65,8 @@ class AgendaDetailFragment : Fragment() {
 
     private fun populateView(itemData: ScheduleRow) {
         tv_agenda_detail_title.text = itemData.talkTitle
-        tv_agenda_detail_room.text = "at " + itemData.room
-        tv_agenda_detail_time.text = itemData.startTime + " - " + itemData.endTime
+        tv_agenda_detail_room.text = resources.getString(R.string.str_agenda_detail_room, itemData.room)
+        tv_agenda_detail_time.text = resources.getString(R.string.str_agenda_detail_time, itemData.startTime, itemData.endTime)
 
         fab_agenda_detail_bookmark.setOnClickListener({
 

@@ -51,7 +51,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+        when (item?.itemId) {
             android.R.id.home -> {
                 val fragmentManager = activity?.fragmentManager
                 if (fragmentManager?.backStackEntryCount!! > 0) {
@@ -150,7 +150,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val itemData = item?.itemData
             if (StringUtils.isNullorEmpty(itemData?.primarySpeakerName)) {
                 val url = itemData?.photoUrlMap?.get(itemData.primarySpeakerName)
-                
+
                 // event where info URL is in the photoUrls string
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)
