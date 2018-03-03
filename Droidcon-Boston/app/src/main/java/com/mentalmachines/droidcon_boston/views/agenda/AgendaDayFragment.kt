@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -152,7 +153,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             if (itemData?.primarySpeakerName.isNullorEmpty()) {
                 val url = itemData?.photoUrlMap?.get(itemData.primarySpeakerName)
 
-                if (!StringUtils.isNullorEmpty(url)) {
+                if (!url.isNullorEmpty()) {
                     // event where info URL is in the photoUrls string
                     val i = Intent(Intent.ACTION_VIEW)
                     i.data = Uri.parse(url)

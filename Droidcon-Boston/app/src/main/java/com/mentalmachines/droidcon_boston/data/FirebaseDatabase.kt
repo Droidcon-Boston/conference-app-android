@@ -78,9 +78,9 @@ open class FirebaseDatabase {
 
         data class Answer(
                 var answer: String = "",
-                var photoLink: String? = "",
-                var mapLink: String? = "",
-                var otherLink: String? = ""
+                var photoLink: String = "",
+                var mapLink: String = "",
+                var otherLink: String = ""
         )
 
         var answers: List<Answer> = emptyList()
