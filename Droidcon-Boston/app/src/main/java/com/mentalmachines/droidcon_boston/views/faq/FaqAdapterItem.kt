@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.faq
 
+import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -44,7 +45,7 @@ class FaqAdapterItem internal constructor(val itemData: Answer,
                                 payloads: List<*>) {
 
         holder.faq_text.text = itemData.answer
-        if (itemData.photoLink != null) {
+        if (!TextUtils.isEmpty(itemData.photoLink)) {
             val context = holder.faq_text.context
             Glide.with(context)
                     .load(itemData.photoLink)
@@ -56,7 +57,7 @@ class FaqAdapterItem internal constructor(val itemData: Answer,
             holder.faq_photo.visibility = View.GONE
         }
 
-        if ((itemData.otherLink != null) || (itemData.mapLink != null)) {
+        if (!TextUtils.isEmpty(itemData.otherLink) || !TextUtils.isEmpty(itemData.mapLink)) {
             addBackgroundRipple(holder)
         }
     }

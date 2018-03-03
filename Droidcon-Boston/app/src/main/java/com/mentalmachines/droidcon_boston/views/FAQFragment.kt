@@ -5,7 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +13,13 @@ import android.view.ViewGroup
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.mentalmachines.droidcon_boston.R
+import com.mentalmachines.droidcon_boston.R.layout
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.FaqEvent
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.views.faq.FaqAdapterItem
 import com.mentalmachines.droidcon_boston.views.faq.FaqAdapterItemHeader
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import kotlinx.android.synthetic.main.faq_fragment.faq_recycler
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -27,16 +28,17 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private val firebaseHelper = FirebaseHelper.instance
 
-    private lateinit var faqRecycler: RecyclerView
     private lateinit var headerAdapter: FlexibleAdapter<FaqAdapterItem>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.faq_fragment, container, false)
+        return inflater.inflate(layout.faq_fragment, container, false)
+    }
 
-        faqRecycler = view.findViewById(R.id.faq_recycler)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         fetchDataFromFirebase()
-        return view
     }
 
     private fun fetchDataFromFirebase() {
@@ -74,10 +76,10 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             }
         }
 
-        faqRecycler.layoutManager = LinearLayoutManager(faqRecycler.context)
+        faq_recycler.layoutManager = LinearLayoutManager(faq_recycler.context)
         headerAdapter = FlexibleAdapter(items)
         headerAdapter.addListener(this)
-        faqRecycler.adapter = headerAdapter
+        faq_recycler.adapter = headerAdapter
         headerAdapter.expandItemsAtStartUp()
                 .setDisplayHeadersAtStartUp(true)
     }
@@ -87,11 +89,11 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData
 
-            val url = itemData.otherLink ?: itemData.mapLink
+            val url = if (!TextUtils.isEmpty(itemData.otherLink)) itemData.otherLink else itemData.mapLink
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
 
-            if (faqRecycler.context.packageManager.queryIntentActivities(intent, 0).size > 0) {
+            if (faq_recycler.context.packageManager.queryIntentActivities(intent, 0).size > 0) {
                 startActivity(intent)
                 return false
             }
