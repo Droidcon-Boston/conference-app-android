@@ -22,7 +22,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.StringUtils
+import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
@@ -149,7 +149,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
             val item = headerAdapter.getItem(position)
             val itemData = item?.itemData
-            if (StringUtils.isNullorEmpty(itemData?.primarySpeakerName)) {
+            if (itemData?.primarySpeakerName.isNullorEmpty()) {
                 val url = itemData?.photoUrlMap?.get(itemData.primarySpeakerName)
 
                 // event where info URL is in the photoUrls string
@@ -195,3 +195,4 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
     }
 }
+

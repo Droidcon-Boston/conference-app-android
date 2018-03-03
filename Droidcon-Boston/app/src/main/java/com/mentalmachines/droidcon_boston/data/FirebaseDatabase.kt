@@ -42,7 +42,7 @@ open class FirebaseDatabase {
                 val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
                 row.endTime = timeFormat.format(endDateTime).toLowerCase()
             }
-          
+
             row.id = scheduleId
             row.room = roomNames.keys.first()
             row.trackSortOrder = trackSortOrder
