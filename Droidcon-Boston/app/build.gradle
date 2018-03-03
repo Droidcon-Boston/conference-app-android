@@ -1,93 +1,111 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 
+// Load variables defined in local.properties
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def fabricKey = properties.getProperty('FABRIC_KEY')
 
 android {
-  compileSdkVersion 27
-  buildToolsVersion "27.0.3"
-  defaultConfig {
-    applicationId "com.mentalmachines.droidcon_boston"
-    minSdkVersion 18
-    targetSdkVersion 27
-    versionCode 2
-    versionName "1.0"
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+    defaultConfig {
+        applicationId "com.mentalmachines.droidcon_boston"
+        minSdkVersion 18
+        targetSdkVersion 27
+        versionCode 2
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
-  }
+    buildTypes {
+        debug {
+            manifestPlaceholders = [
+                    fabricKey: fabricKey
+            ]
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-  buildTypes.each {
-    it.buildConfigField 'String', 'BASE_API_URL', BASE_API_URL
-  }
+            manifestPlaceholders = [
+                    fabricKey: fabricKey
+            ]
+        }
+    }
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+    buildTypes.each {
+        it.buildConfigField 'String', 'BASE_API_URL', BASE_API_URL
+    }
 
-  packagingOptions {
-    exclude 'META-INF/rxjava.properties'
-  }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 }
 
 dependencies {
-  final support = "27.0.2"
-  final playServices = "11.8.0"
-  final butterKnife = "8.8.1"
-  final junit = "4.12"
+    final support = "27.1.0"
+    final playServices = "11.8.0"
+    final junit = "4.12"
 
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-  // TESTING
-  testImplementation "junit:junit:$junit"
+    // TESTING
+    testImplementation "junit:junit:$junit"
 
+    // Support
+    implementation "com.android.support:appcompat-v7:$support"
+    implementation "com.android.support:support-v4:$support"
+    implementation "com.android.support:cardview-v7:$support"
+    implementation "com.android.support:design:$support"
+    implementation "com.android.support:customtabs:$support"
 
-  // Support
-  implementation "com.android.support:appcompat-v7:$support"
-  implementation "com.android.support:support-v4:$support"
-  implementation "com.android.support:cardview-v7:$support"
-  implementation "com.android.support:design:$support"
+    // Firebase cloud messaging
+    implementation "com.google.firebase:firebase-messaging:$playServices"
+    implementation "com.google.firebase:firebase-database:$playServices"
 
-  // Firebase cloud messaging
-  implementation "com.google.firebase:firebase-messaging:$playServices"
+    // Misc
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'eu.davidea:flexible-adapter:5.0.0-rc4'
+    implementation 'eu.davidea:flexible-adapter-ui:1.0.0-b2'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
 
-  // Misc
-  implementation "com.jakewharton:butterknife:$butterKnife"
-  annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnife"
-  implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
-  implementation 'eu.davidea:flexible-adapter:5.0.0-rc1'
-  implementation 'com.github.bumptech.glide:glide:3.7.0'
-  implementation 'com.android.support:customtabs:27.0.2'
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
 
-  implementation "com.squareup.moshi:moshi:$moshi_version"
-  implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-  implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
-
-  implementation('com.twitter.sdk.android:twitter:2.3.2@aar') {
-    transitive = true
-  }
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation('com.twitter.sdk.android:twitter:2.3.2@aar') {
+        transitive = true
+    }
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 
 buildscript {
-  repositories {
-    maven { url 'https://maven.fabric.io/public' }
-  }
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
 
-  dependencies {
-    classpath 'io.fabric.tools:gradle:1.+'
-  }
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
 }
 
 repositories {
-  maven { url 'https://maven.fabric.io/public' }
-  mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 apply plugin: 'com.google.gms.google-services'

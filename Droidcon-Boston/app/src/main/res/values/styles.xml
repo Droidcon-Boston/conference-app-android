@@ -16,12 +16,16 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="def_margin">16dp</dimen>
-    <dimen name="navigation_drawer_width">320dp</dimen>
-    <dimen name="def_padding">8dp</dimen>
 
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/colorPagerTabIndicator</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+        <item name="tabTextColor">@color/colorBackground</item>
     </style>
+
+    <style name="AppTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

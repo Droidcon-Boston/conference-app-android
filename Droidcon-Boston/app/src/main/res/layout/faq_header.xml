@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/question_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:paddingLeft="16dp"
-       android:paddingRight="16dp"
-       android:paddingTop="8dp"
-       android:paddingBottom="8dp"
-       android:textSize="20sp"
-       android:fontFamily="sans-serif"
-       android:textColor="@android:color/black"
-       android:background="@color/colorBackground"
-       android:id="@+id/question_text"
-       tools:text="Question"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"/>
-
-</LinearLayout>
+    android:paddingTop="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:fontFamily="sans-serif"
+    android:textColor="@color/colorGray"
+    android:textSize="16sp"
+    android:textStyle="bold"
+    tools:text="Why is the world round?" />

@@ -3,16 +3,6 @@
     <string name="drawer_close">Drawer Close</string>
     <string name="drawer_open">Drawer Open</string>
 
-    <string-array name="navigation_drawer">
-        <item>@string/agenda_fragment_title</item>
-        <item>@string/twitter_fragment_title</item>
-        <item>@string/faq_fragment_title</item>
-        <item>Contact Us</item>
-        <item>On Facebook</item>
-        <item>On Instagram</item>
-        <item>N.E. Android Devs</item>
-        <item>On Twitter</item>
-    </string-array>
     <string name="faq_fragment_title">FAQ</string>
     <string name="agenda_fragment_title">Agenda</string>
     <string name="chat_fragment_title">Chat</string>
@@ -22,6 +12,7 @@
 
     <string name="hint_bookmark">Add to Agenda</string>
     <string name="hint_bookmark_added">Added to Agenda</string>
+    <string name="hint_faq_photo">FAQ Photo</string>
 
     <string name="action_bar_speaker_title">Speaker Profile</string>
     <string name="conference_name">Droidcon Boston</string>
@@ -30,4 +21,27 @@
     <string name="twitter_link">https://twitter.com/droidconbos</string>
     <string name="linkedin_link">https://www.linkedin.com/groups/8586436</string>
     <string name="contact_link">http://www.droidcon-boston.com/#form_section</string>
+
+    <string name="str_agenda">Agenda</string>
+    <string name="str_my_schedule">My Schedule</string>
+    <string name="str_social">Social</string>
+    <string name="str_faq">FAQ</string>
+    <string name="str_about_us">About Us</string>
+    <string name="str_coc">Code Of Conduct</string>
+    <string name="path_to_coc_html_file">file:///android_asset/app/coc.html</string>
+    <string name="social_title_facebook">Facebook</string>
+    <string name="social_title_instagram">Instagram</string>
+    <string name="social_title_linkedin">LinkedIn</string>
+    <string name="social_title_twitter">Twitter</string>
+    <string name="saved_agenda_item">Saved to your Agenda</string>
+    <string name="removed_agenda_item">Removed from your Agenda</string>
+    <string name="hint_back">Go back</string>
+
+    <string name="prefix_speaker">talk by</string>
+    <string name="prefix_room">at</string>
+    <string name="str_speakers">Speakers:</string>
+    <string name="str_speaker">Speaker:</string>
+
+    <string name="str_agenda_detail_room">at %1$s</string>
+    <string name="str_agenda_detail_time">%1$s - %2$s</string>
 </resources>
