@@ -30,6 +30,7 @@ class DividerItemDecoration(context: Context, orientation: Int) : RecyclerView.I
             val child = parent.getChildAt(i)
             val params = child
                     .layoutParams as RecyclerView.LayoutParams
+            @Suppress("DEPRECATION")
             val left = child.right + params.rightMargin +
                     Math.round(ViewCompat.getTranslationX(child))
             val right = left + divider!!.intrinsicHeight
@@ -47,6 +48,7 @@ class DividerItemDecoration(context: Context, orientation: Int) : RecyclerView.I
             val child = parent.getChildAt(i)
             val params = child
                     .layoutParams as RecyclerView.LayoutParams
+            @Suppress("DEPRECATION")
             val top = child.bottom + params.bottomMargin +
                     Math.round(ViewCompat.getTranslationY(child))
             val bottom = top + divider!!.intrinsicHeight
