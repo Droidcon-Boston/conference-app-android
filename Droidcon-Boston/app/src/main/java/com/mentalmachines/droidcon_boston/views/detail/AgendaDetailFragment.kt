@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_sp
 import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_speaker_title
 import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_time
 import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_title
+import kotlinx.android.synthetic.main.agenda_detail_fragment.v_agenda_detail_speaker_divider
 
 
 class AgendaDetailFragment : Fragment() {
@@ -108,7 +109,10 @@ class AgendaDetailFragment : Fragment() {
 
 
     private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
-        itemData.speakerNames.size == 0 -> tv_agenda_detail_speaker_name.visibility = View.GONE
+        itemData.speakerNames.isEmpty() -> {
+            tv_agenda_detail_speaker_name.visibility = View.GONE
+            v_agenda_detail_speaker_divider.visibility = View.GONE
+        }
         else -> {
             var speakerNames = ""
             var marginValue = 28
