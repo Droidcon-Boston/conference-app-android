@@ -108,12 +108,12 @@ class AgendaDetailFragment : Fragment() {
 
 
     private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
-        itemData.speakerNames?.size == 0 -> tv_agenda_detail_speaker_name.visibility = View.GONE
+        itemData.speakerNames.size == 0 -> tv_agenda_detail_speaker_name.visibility = View.GONE
         else -> {
             var speakerNames = ""
             var marginValue = 28
-            itemData.speakerNames?.forEach {
-                val orgName: String? = itemData.speakerNameToOrgName?.get(it)
+            itemData.speakerNames.forEach {
+                val orgName: String? = itemData.speakerNameToOrgName.get(it)
                 // append org name to speaker name
                 speakerNames += it + when {
                     orgName != null -> " - $orgName"
@@ -122,11 +122,11 @@ class AgendaDetailFragment : Fragment() {
                     }
                 }
 
-                if (itemData.speakerNames?.size!! > 1) {
+                if (itemData.speakerNames.size > 1) {
                     tv_agenda_detail_speaker_title.text = getString(string.str_speakers)
 
                     // if the current speaker name is not the last then add a line break
-                    if (!it.equals(itemData.speakerNames?.last())) {
+                    if (!it.equals(itemData.speakerNames.last())) {
                         speakerNames += "\n"
                     }
                 } else {
@@ -137,7 +137,7 @@ class AgendaDetailFragment : Fragment() {
                 // Add an imageview to the relative layout
                 val tempImg = ImageView(activity)
                 val lp = RelativeLayout.LayoutParams(150, 150)
-                if (it.equals(itemData.speakerNames?.first())) {
+                if (it.equals(itemData.speakerNames.first())) {
                     lp.setMargins(28, 0, 0, 16)
                 } else {
                     marginValue += 120
@@ -152,7 +152,7 @@ class AgendaDetailFragment : Fragment() {
                 agendaDetailView.addView(tempImg)
 
                 Glide.with(this)
-                        .load(itemData.photoUrlMap?.get(it))
+                        .load(itemData.photoUrlMap.get(it))
                         .transform(CircleTransform(activity.applicationContext))
                         .placeholder(R.drawable.emo_im_cool)
                         .crossFade()
