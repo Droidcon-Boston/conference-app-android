@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
+    private var lastFragmentTitleSelected: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -91,6 +93,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun replaceFragment(title: String) {
+        if (title == lastFragmentTitleSelected) {
+            // Fragment currently selected, no action.
+            return
+        }
+
         updateToolbarTitle(title)
 
         // Get the fragment by tag
@@ -117,6 +124,8 @@ class MainActivity : AppCompatActivity() {
                     // commit fragment transaction
                     .commit()
         }
+
+        lastFragmentTitleSelected = title
     }
 
     private fun updateToolbarTitle(title: String) {
