@@ -14,7 +14,7 @@ import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 
 /**
- * Used for displaying the schedule with sticky headers with optional day filtering
+ * Used for displaying speaker list items on the all speakers "Speakers" page.
  */
 class SpeakerAdapterItem internal constructor(val itemData: SpeakerEvent) :
         AbstractFlexibleItem<SpeakerAdapterItem.ViewHolder>() {
