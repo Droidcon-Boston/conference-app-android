@@ -45,6 +45,5 @@
 
     <string name="str_agenda_detail_room">at %1$s</string>
     <string name="str_agenda_detail_time">%1$s - %2$s</string>
-    <string name="done">Done</string>
     <string name="close">Close</string>
 </resources>
