@@ -11,17 +11,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
-import com.mentalmachines.droidcon_boston.R.id.speaker_recycler
 import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.SpeakerEvent
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
-import com.mentalmachines.droidcon_boston.views.faq.FaqAdapterItem
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import kotlinx.android.synthetic.main.speaker_fragment.speaker_recycler
