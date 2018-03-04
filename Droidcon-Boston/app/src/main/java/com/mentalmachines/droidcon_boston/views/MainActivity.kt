@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
                 resources.getString(R.string.str_speakers) -> fragment = SpeakerFragment()
             }
             // Add fragment with tag
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment, title).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment, title).commit()
         } else {
             supportFragmentManager.beginTransaction()
                     // detach the fragment that is currently visible
