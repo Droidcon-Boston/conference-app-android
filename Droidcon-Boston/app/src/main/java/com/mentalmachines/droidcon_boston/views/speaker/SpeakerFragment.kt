@@ -61,9 +61,9 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int): Boolean {
-        val context = activity as Context
         val item = speakerAdapter.getItem(position)
         if (item is SpeakerAdapterItem) {
+            val context = activity as Context
             val simpleAlert = AlertDialog.Builder(context).create()
             simpleAlert.setTitle(item.itemData.name)
             simpleAlert.setMessage(item.itemData.bio.getHtmlFormattedSpanned())
