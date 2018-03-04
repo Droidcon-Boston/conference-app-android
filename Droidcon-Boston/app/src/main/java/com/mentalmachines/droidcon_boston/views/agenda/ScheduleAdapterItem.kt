@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
+import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
 import eu.davidea.viewholders.FlexibleViewHolder
@@ -158,7 +159,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         }
 
         private fun findViews(parent: View) {
-            rootLayout = parent.findViewById(R.id.rootLayout)
+            rootLayout = parent.findViewById(R.id.scheduleRootLayout)
             bookmarkIndicator = parent.findViewById(R.id.bookmark_indicator)
             avatar = parent.findViewById(R.id.speaker_image)
             avatarLayout = parent.findViewById(R.id.avatar_layout)

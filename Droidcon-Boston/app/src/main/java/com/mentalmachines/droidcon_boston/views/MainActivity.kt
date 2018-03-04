@@ -12,6 +12,7 @@ import android.view.View
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
+import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
 import kotlinx.android.synthetic.main.main_activity.drawer_layout
 import kotlinx.android.synthetic.main.main_activity.navView
 import kotlinx.android.synthetic.main.main_activity.toolbar
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_social -> replaceFragment(getString(R.string.str_social))
                 R.id.nav_coc -> replaceFragment(getString(R.string.str_coc))
                 R.id.nav_about -> replaceFragment(getString(R.string.str_about_us))
+                R.id.nav_speakers -> replaceFragment(getString(R.string.str_speakers))
             }
             true
         }
@@ -112,9 +114,10 @@ class MainActivity : AppCompatActivity() {
                 resources.getString(R.string.str_social) -> fragment = SocialFragment()
                 resources.getString(R.string.str_coc) -> fragment = CocFragment()
                 resources.getString(R.string.str_about_us) -> fragment = AboutFragment()
+                resources.getString(R.string.str_speakers) -> fragment = SpeakerFragment()
             }
             // Add fragment with tag
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment, title).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment, title).commit()
         } else {
             supportFragmentManager.beginTransaction()
                     // detach the fragment that is currently visible
