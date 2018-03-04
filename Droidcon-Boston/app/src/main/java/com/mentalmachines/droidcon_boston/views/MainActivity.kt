@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_coc -> replaceFragment(getString(R.string.str_coc))
                 R.id.nav_about -> replaceFragment(getString(R.string.str_about_us))
                 R.id.nav_speakers -> replaceFragment(getString(R.string.str_speakers))
+                R.id.nav_droid_ar -> startDroidAR()
             }
             true
         }
@@ -73,6 +74,10 @@ class MainActivity : AppCompatActivity() {
             supportActionBar?.setHomeButtonEnabled(true)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
+    }
+
+    private fun startDroidAR() {
+        startActivity(Intent(this, DroidArActivity::class.java))
     }
 
     public override fun onPostCreate(savedInstanceState: Bundle?) {

@@ -27,6 +27,7 @@
     <string name="str_social">Social</string>
     <string name="str_faq">FAQ</string>
     <string name="str_about_us">About Us</string>
+    <string name="str_droid_ar">Droid AR</string>
     <string name="str_speakers">Speakers</string>
     <string name="str_coc">Code Of Conduct</string>
     <string name="path_to_coc_html_file">file:///android_asset/app/coc.html</string>

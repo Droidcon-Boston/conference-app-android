@@ -23,6 +23,12 @@ android {
             useSupportLibrary = true
         }
     }
+
+
+    aaptOptions {
+        noCompress '.unity3d', '.ress', '.resource', '.obb','vuforia/vuforiamars_images.dat','vuforia/vuforiamars_images.xml','vuforia/vuforiamars_modeltarget.dat','vuforia/vuforiamars_modeltarget.xml','vuforia/vuforiamars_object_ot.dat','vuforia/vuforiamars_object_ot.xml','vuforia/vuforiamars_vumark.dat','vuforia/vuforiamars_vumark.xml','bin/data/sharedassets0.resource'
+    }
+
     buildTypes {
         debug {
             manifestPlaceholders = [
@@ -53,23 +59,19 @@ dependencies {
     final support = "27.1.0"
     final playServices = "11.8.0"
     final junit = "4.12"
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // TESTING
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation "junit:junit:$junit"
-
     // Support
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:support-v4:$support"
     implementation "com.android.support:cardview-v7:$support"
     implementation "com.android.support:design:$support"
     implementation "com.android.support:customtabs:$support"
-
     // Firebase cloud messaging
     implementation "com.google.firebase:firebase-messaging:$playServices"
     implementation "com.google.firebase:firebase-database:$playServices"
-
     // Misc
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'eu.davidea:flexible-adapter:5.0.0-rc4'
@@ -77,11 +79,11 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
     implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
-
     implementation('com.twitter.sdk.android:twitter:2.3.2@aar') {
         transitive = true
     }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation (name: 'VuforiaWrapper', ext:'aar')
 }
 
 
