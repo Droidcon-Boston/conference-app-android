@@ -70,7 +70,7 @@ class SpeakerAdapterItem internal constructor(val itemData: SpeakerEvent) :
         }
 
         private fun findViews(parent: View) {
-            rootLayout = parent.findViewById(R.id.rootLayout)
+            rootLayout = parent.findViewById(R.id.speakerRootLayout)
             avatar = parent.findViewById(R.id.speaker_image)
             avatarLayout = parent.findViewById(R.id.avatar_layout)
             bio = parent.findViewById(R.id.bio_text)

@@ -159,7 +159,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         }
 
         private fun findViews(parent: View) {
-            rootLayout = parent.findViewById(R.id.rootLayout)
+            rootLayout = parent.findViewById(R.id.scheduleRootLayout)
             bookmarkIndicator = parent.findViewById(R.id.bookmark_indicator)
             avatar = parent.findViewById(R.id.speaker_image)
             avatarLayout = parent.findViewById(R.id.avatar_layout)

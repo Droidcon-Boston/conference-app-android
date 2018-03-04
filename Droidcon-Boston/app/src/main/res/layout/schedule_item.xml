@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:background="?attr/selectableItemBackground"
-    android:id="@+id/rootLayout"
+    android:id="@+id/scheduleRootLayout"
     tools:ignore="RtlSymmetry">
 
     <ImageView
