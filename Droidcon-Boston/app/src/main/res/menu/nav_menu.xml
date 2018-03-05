@@ -29,6 +29,11 @@
             android:title="@string/str_speakers" />
 
         <item
+            android:id="@+id/nav_volunteers"
+            android:icon="@drawable/ic_volunteers"
+            android:title="@string/str_volunteers" />
+
+        <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_aboutus"
             android:title="@string/str_about_us" />

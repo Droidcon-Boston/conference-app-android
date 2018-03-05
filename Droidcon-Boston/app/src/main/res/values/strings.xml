@@ -9,6 +9,7 @@
     <string name="twitter_fragment_title">Twitter</string>
     <string name="environs_fragment_title">Environs</string>
     <string name="speaker_avatar">Speaker avatar</string>
+    <string name="volunteer_avatar">Volunteer avatar</string>
 
     <string name="hint_bookmark">Add to Agenda</string>
     <string name="hint_bookmark_added">Added to Agenda</string>
@@ -28,6 +29,7 @@
     <string name="str_faq">FAQ</string>
     <string name="str_about_us">About Us</string>
     <string name="str_speakers">Speakers</string>
+    <string name="str_volunteers">Volunteers</string>
     <string name="str_coc">Code Of Conduct</string>
     <string name="path_to_coc_html_file">file:///android_asset/app/coc.html</string>
     <string name="social_title_facebook">Facebook</string>
