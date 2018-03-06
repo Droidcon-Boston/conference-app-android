@@ -7,14 +7,13 @@ import java.io.IOException
 import java.time.Duration
 
 class IsoDurationJsonAdapter : JsonAdapter<Duration>() {
-    @Synchronized
+
     @Throws(IOException::class)
     override fun fromJson(reader: JsonReader): Duration? {
         val string = reader.nextString()
         return Duration.parse(string)
     }
 
-    @Synchronized
     @Throws(IOException::class)
     override fun toJson(writer: JsonWriter, value: Duration?) {
         writer.value(value?.toString())
