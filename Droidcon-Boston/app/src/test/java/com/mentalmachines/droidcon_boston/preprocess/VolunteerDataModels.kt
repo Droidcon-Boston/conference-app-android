@@ -12,7 +12,9 @@ data class CsvVolunteerModel(
         @Json(name = "Email")
         val email: String,
         @Json(name = "Twitter")
-        val twitter: String
+        val twitter: String,
+        @Json(name = "PhotoUrl")
+        val photoUrl: String?
 )
 
 data class VolunteerModel(
@@ -20,13 +22,15 @@ data class VolunteerModel(
         val lastName: String,
         val position: String,
         val email: String,
-        val twitter: String?
+        val twitter: String?,
+        val pictureUrl: String?
 ) {
     constructor(csvModel: CsvVolunteerModel): this(
             csvModel.firstName,
             csvModel.lastName,
             csvModel.position,
             csvModel.email,
-            if ("".equals(csvModel.twitter) || "---".equals(csvModel.twitter)) null else csvModel.twitter
+            if ("".equals(csvModel.twitter) || "---".equals(csvModel.twitter)) null else csvModel.twitter,
+            csvModel.photoUrl
     )
 }
