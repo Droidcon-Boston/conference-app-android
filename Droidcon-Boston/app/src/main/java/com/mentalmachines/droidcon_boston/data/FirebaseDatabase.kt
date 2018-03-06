@@ -57,7 +57,15 @@ open class FirebaseDatabase {
         }
     }
 
-    data class ScheduleEventDetail(
+    data class SpeakerEvent(
+            val socialProfiles: HashMap<String, String>? = HashMap(0),
+            val pictureUrl: String = "",
+            var bio: String = "",
+            var name: String = "") {
+
+    }
+
+    data class ScheduleEventDetail (
             val socialProfiles: HashMap<String, String>? = HashMap(0),
             var bio: String = "",
             var title: String = "",
@@ -78,9 +86,9 @@ open class FirebaseDatabase {
 
         data class Answer(
                 var answer: String = "",
-                var photoLink: String? = "",
-                var mapLink: String? = "",
-                var otherLink: String? = ""
+                var photoLink: String = "",
+                var mapLink: String = "",
+                var otherLink: String = ""
         )
 
         var answers: List<Answer> = emptyList()

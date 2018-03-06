@@ -25,7 +25,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
-import com.mentalmachines.droidcon_boston.views.agenda.CircleTransform
+import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.agendaDetailView
 import kotlinx.android.synthetic.main.agenda_detail_fragment.fab_agenda_detail_bookmark
 import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_description
@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_sp
 import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_speaker_title
 import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_time
 import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_title
+import kotlinx.android.synthetic.main.agenda_detail_fragment.v_agenda_detail_speaker_divider
 
 
 class AgendaDetailFragment : Fragment() {
@@ -51,7 +52,6 @@ class AgendaDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
         return inflater.inflate(R.layout.agenda_detail_fragment, container, false)
     }
 
@@ -108,7 +108,11 @@ class AgendaDetailFragment : Fragment() {
 
 
     private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
-        itemData.speakerNames?.size == 0 -> tv_agenda_detail_speaker_name.visibility = View.GONE
+
+        itemData.speakerNames.isEmpty() -> {
+            tv_agenda_detail_speaker_name.visibility = View.GONE
+            v_agenda_detail_speaker_divider.visibility = View.GONE
+        }
         else -> {
             var speakerNames = ""
             var marginValue = 28
@@ -123,14 +127,14 @@ class AgendaDetailFragment : Fragment() {
                 }
 
                 if (itemData.speakerNames.size > 1) {
-                    tv_agenda_detail_speaker_title.text = getString(string.str_speakers)
+                    tv_agenda_detail_speaker_title.text = getString(string.header_speakers)
 
                     // if the current speaker name is not the last then add a line break
                     if (it != itemData.speakerNames.last()) {
                         speakerNames += "\n"
                     }
                 } else {
-                    tv_agenda_detail_speaker_title.text = getString(string.str_speaker)
+                    tv_agenda_detail_speaker_title.text = getString(string.header_speaker)
                 }
 
 

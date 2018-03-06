@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -152,14 +153,16 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             if (itemData?.primarySpeakerName.isNullorEmpty()) {
                 val url = itemData?.photoUrlMap?.get(itemData.primarySpeakerName)
 
-                // event where info URL is in the photoUrls string
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(url)
-                val packageManager = activity?.packageManager
-                if (i.resolveActivity(packageManager) != null) {
-                    startActivity(i)
+                if (!url.isNullorEmpty()) {
+                    // event where info URL is in the photoUrls string
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    val packageManager = activity?.packageManager
+                    if (i.resolveActivity(packageManager) != null) {
+                        startActivity(i)
+                    }
+                    return false
                 }
-                return false
             }
             val arguments = Bundle()
             arguments.putString(Schedule.SCHEDULE_ITEM_ROW, gson.toJson(itemData, ScheduleRow::class.java))
