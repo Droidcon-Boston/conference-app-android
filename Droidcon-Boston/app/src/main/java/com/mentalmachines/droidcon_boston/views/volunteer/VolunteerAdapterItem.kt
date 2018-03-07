@@ -20,8 +20,19 @@ class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
 
     override fun bindViewHolder(adapter: FlexibleAdapter<out IFlexible<*>>?, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
 
-        holder.name.text = "${itemData.firstName} ${itemData.lastName}"
-        holder.bio.text = itemData.position
+
+
+        var bodyText = itemData.position
+        if (!itemData.twitter.isEmpty()) {
+            bodyText += "\nTwitter: @${itemData.twitter}"
+        }
+
+        if (!itemData.email.isEmpty()) {
+            bodyText += "\nEmail: ${itemData.email}"
+        }
+
+        holder.name.text = String.format("%s %s", itemData.firstName, itemData.lastName)
+        holder.bio.text = bodyText
 
         val context = holder.name.context
 
