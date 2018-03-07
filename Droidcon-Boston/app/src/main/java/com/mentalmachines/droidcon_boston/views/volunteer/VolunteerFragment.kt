@@ -65,9 +65,19 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val context = activity as Context
             val simpleAlert = AlertDialog.Builder(context).create()
             simpleAlert.setTitle("${item.itemData.firstName} ${item.itemData.lastName}")
-            val bodyText = "${item.itemData.position}\nTwitter: @${item.itemData.twitter}\nEmail: ${item.itemData.email}"
+
+            // Setup body text
+            var bodyText = item.itemData.position
+            if (!item.itemData.twitter.isNullOrEmpty()) {
+                bodyText += "\nTwitter: @${item.itemData.twitter}"
+            }
+
+            if (!item.itemData.email.isNullOrEmpty()) {
+                bodyText += "\nEmail: ${item.itemData.email}"
+            }
+
             simpleAlert.setMessage(bodyText)
-            simpleAlert.setButton(AlertDialog.BUTTON_POSITIVE, getString(string.close), { dialogInterface: DialogInterface, i: Int ->
+            simpleAlert.setButton(AlertDialog.BUTTON_POSITIVE, getString(string.close), { dialogInterface: DialogInterface, _: Int ->
                 simpleAlert.dismiss()
             })
             simpleAlert.show()
