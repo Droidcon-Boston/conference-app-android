@@ -17,7 +17,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:paddingEnd="90dp"
-        android:paddingStart="90dp"
+        android:paddingRight="90dp"
         android:scaleType="centerInside"
         android:src="@drawable/logo_text"
         android:contentDescription="Logo" />

@@ -10,20 +10,20 @@ import org.threeten.bp.format.DateTimeFormatter
 open class FirebaseDatabase {
 
     data class ScheduleEvent(
-            private var primarySpeakerName: String = "",
-            private var startTime: String = "",
+            var primarySpeakerName: String = "",
+            var startTime: String = "",
             var name: String = "",
 
-            private var speakerNames: HashMap<String, Boolean> = HashMap(0),
-            private var speakerNameToPhotoUrl: HashMap<String, String> = HashMap(0),
-            private var speakerNameToOrg: HashMap<String, String> = HashMap(0),
-            private var roomNames: HashMap<String, Boolean> = HashMap(0),
+            var speakerNames: HashMap<String, Boolean> = HashMap(0),
+            var speakerNameToPhotoUrl: HashMap<String, String> = HashMap(0),
+            var speakerNameToOrg: HashMap<String, String> = HashMap(0),
+            var roomNames: HashMap<String, Boolean> = HashMap(0),
             var speakerIds: HashMap<String, Boolean> = HashMap(0),
             var roomIds: HashMap<String, Boolean> = HashMap(0),
-            private var description: String = "",
+            var description: String = "",
             var photo: HashMap<String, String> = HashMap(0),
-            private var endTime: String = "",
-            private var trackSortOrder: Int = 0) {
+            var endTime: String = "",
+            var trackSortOrder: Int = 0) {
 
         fun toScheduleRow(scheduleId: String): ScheduleRow {
             val row = ScheduleRow()
@@ -72,8 +72,8 @@ open class FirebaseDatabase {
             var lastName: String = "")
 
     data class ScheduleEventDetail(
-            private val socialProfiles: HashMap<String, String>? = HashMap(0),
-            private var bio: String = "",
+            val socialProfiles: HashMap<String, String>? = HashMap(0),
+            var bio: String = "",
             var title: String = "",
             var org: String = "",
             var name: String = "") {
