@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/navigation_header_image" />
+            android:src="@drawable/navigation_header_image"
+            android:contentDescription="Navigation Header" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -22,7 +23,8 @@
             android:paddingEnd="50dp"
             android:paddingStart="50dp"
             android:scaleType="centerInside"
-            android:src="@drawable/logo_text" />
+            android:src="@drawable/logo_text"
+            android:contentDescription="Logo" />
 
         <TextView
             android:id="@+id/tv_about_description"

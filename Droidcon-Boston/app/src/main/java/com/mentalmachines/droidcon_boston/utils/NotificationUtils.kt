@@ -68,7 +68,7 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
     }
 
     companion object {
-        val ANDROID_CHANNEL_ID = "com.mentalmachines.droidcon_boston.ANDROID"
-        val ANDROID_CHANNEL_NAME = "ANDROID CHANNEL"
+        const val ANDROID_CHANNEL_ID = "com.mentalmachines.droidcon_boston.ANDROID"
+        const val ANDROID_CHANNEL_NAME = "ANDROID CHANNEL"
     }
 }

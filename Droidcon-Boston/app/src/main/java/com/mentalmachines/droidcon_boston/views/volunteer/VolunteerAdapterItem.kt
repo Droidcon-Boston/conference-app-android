@@ -1,4 +1,4 @@
-package com.mentalmachines.droidcon_boston.views.speaker
+package com.mentalmachines.droidcon_boston.views.volunteer
 
 import android.view.View
 import android.widget.ImageView
@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.VolunteerEvent
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
+import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerAdapterItem.ViewHolder
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible
@@ -16,7 +17,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
  * Used for displaying volunteer list items on the all volunteers "volunteers" page.
  */
 class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
-        AbstractFlexibleItem<VolunteerAdapterItem.ViewHolder>() {
+        AbstractFlexibleItem<ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<out IFlexible<*>>?, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
 
@@ -61,14 +62,14 @@ class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
     }
 
     override fun createViewHolder(view: View, adapter: FlexibleAdapter<*>): ViewHolder {
-        return VolunteerAdapterItem.ViewHolder(view, adapter)
+        return ViewHolder(view, adapter)
     }
 
     class ViewHolder : FlexibleViewHolder {
 
-        lateinit var rootLayout: View
+        private lateinit var rootLayout: View
         lateinit var avatar: ImageView
-        lateinit var avatarLayout: View
+        private lateinit var avatarLayout: View
         lateinit var name: TextView
         lateinit var bio: TextView
 

@@ -3,11 +3,6 @@
     <string name="drawer_close">Drawer Close</string>
     <string name="drawer_open">Drawer Open</string>
 
-    <string name="faq_fragment_title">FAQ</string>
-    <string name="agenda_fragment_title">Agenda</string>
-    <string name="chat_fragment_title">Chat</string>
-    <string name="twitter_fragment_title">Twitter</string>
-    <string name="environs_fragment_title">Environs</string>
     <string name="speaker_avatar">Speaker avatar</string>
     <string name="volunteer_avatar">Volunteer avatar</string>
 
@@ -15,13 +10,11 @@
     <string name="hint_bookmark_added">Added to Agenda</string>
     <string name="hint_faq_photo">FAQ Photo</string>
 
-    <string name="action_bar_speaker_title">Speaker Profile</string>
     <string name="conference_name">Droidcon Boston</string>
     <string name="instagram_link">https://www.instagram.com/droidconbos/</string>
     <string name="facebook_link">https://www.facebook.com/droidconbos/</string>
     <string name="twitter_link">https://twitter.com/</string>
     <string name="linkedin_link">https://www.linkedin.com/groups/8586436</string>
-    <string name="contact_link">http://www.droidcon-boston.com/#form_section</string>
 
     <string name="str_agenda">Agenda</string>
     <string name="str_my_schedule">My Schedule</string>
@@ -31,16 +24,13 @@
     <string name="str_speakers">Speakers</string>
     <string name="str_volunteers">Volunteers</string>
     <string name="str_coc">Code Of Conduct</string>
-    <string name="path_to_coc_html_file">file:///android_asset/app/coc.html</string>
     <string name="social_title_facebook">Facebook</string>
     <string name="social_title_instagram">Instagram</string>
     <string name="social_title_linkedin">LinkedIn</string>
     <string name="social_title_twitter">Twitter</string>
     <string name="saved_agenda_item">Saved to your Agenda</string>
     <string name="removed_agenda_item">Removed from your Agenda</string>
-    <string name="hint_back">Go back</string>
 
-    <string name="prefix_speaker">talk by</string>
     <string name="prefix_room">at</string>
     <string name="header_speakers">Speakers:</string>
     <string name="header_speaker">Speaker:</string>
