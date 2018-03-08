@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.speaker
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -14,12 +15,13 @@ import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.VolunteerEvent
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.utils.loadUriInCustomTab
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import kotlinx.android.synthetic.main.volunteer_fragment.volunteer_recycler
 
 
-class VolunteerFragment : Fragment() {
+class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private val firebaseHelper = FirebaseHelper.instance
     private lateinit var volunteerAdapter: FlexibleAdapter<VolunteerAdapterItem>
@@ -54,6 +56,18 @@ class VolunteerFragment : Fragment() {
             }
         })
     }
+
+    override fun onItemClick(position: Int): Boolean {
+        val item = volunteerAdapter.getItem(position)
+        if (item is VolunteerAdapterItem && !item.itemData.twitter.isEmpty()) {
+            val context = activity as Context
+            context.loadUriInCustomTab(String.format("%s%s", resources.getString(R.string.twitter_link), item.itemData.twitter))
+            return false
+        }
+
+        return true // propagate.
+    }
+
 
     private fun setupVolunteerAdapter(rows: ArrayList<VolunteerEvent>) {
         val items = rows.map { VolunteerAdapterItem(it) }

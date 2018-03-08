@@ -19,7 +19,7 @@
     <string name="conference_name">Droidcon Boston</string>
     <string name="instagram_link">https://www.instagram.com/droidconbos/</string>
     <string name="facebook_link">https://www.facebook.com/droidconbos/</string>
-    <string name="twitter_link">https://twitter.com/droidconbos</string>
+    <string name="twitter_link">https://twitter.com/</string>
     <string name="linkedin_link">https://www.linkedin.com/groups/8586436</string>
     <string name="contact_link">http://www.droidcon-boston.com/#form_section</string>
 
@@ -48,4 +48,5 @@
     <string name="str_agenda_detail_room">at %1$s</string>
     <string name="str_agenda_detail_time">%1$s - %2$s</string>
     <string name="close">Close</string>
+    <string name="droidconbos_twitter_handle">droidconbos</string>
 </resources>
