@@ -74,7 +74,7 @@
             android:layout_marginTop="10dp"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorLightGray"
-            app:srcCompat="@drawable/ic_star_black_24dp" />
+            app:srcCompat="@drawable/ic_star" />
 
 
         <LinearLayout

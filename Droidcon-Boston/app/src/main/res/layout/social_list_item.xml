@@ -10,7 +10,7 @@
         android:id="@+id/social_item_img"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        tools:src="@drawable/facebook" />
+        tools:src="@drawable/social_facebook" />
 
     <TextView
         android:id="@+id/social_item_tv"
