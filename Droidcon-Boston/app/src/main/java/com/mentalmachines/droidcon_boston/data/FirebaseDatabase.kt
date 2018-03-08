@@ -41,6 +41,10 @@ open class FirebaseDatabase {
             if (endDateTime != null) {
                 val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
                 row.endTime = timeFormat.format(endDateTime).toLowerCase()
+
+                if (ZonedDateTime.now().isAfter(endDateTime)) {
+                    row.isOver = true
+                }
             }
 
             row.id = scheduleId

@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -116,6 +117,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             addBackgroundRipple(holder)
         }
 
+        val availableColor = if (itemData.isOver) R.color.colorGray else R.color.colorAccent
+        holder.availableIndicator.setBackgroundColor(ContextCompat.getColor(holder.availableIndicator.context, availableColor))
     }
 
     private fun addBackgroundRipple(holder: ViewHolder) {
@@ -129,6 +132,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
     class ViewHolder : FlexibleViewHolder {
 
         lateinit var rootLayout: View
+
+        lateinit var availableIndicator: ImageView
 
         lateinit var bookmarkIndicator: ImageView
 
@@ -160,6 +165,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         private fun findViews(parent: View) {
             rootLayout = parent.findViewById(R.id.scheduleRootLayout)
+            availableIndicator = parent.findViewById(R.id.available_indicator)
             bookmarkIndicator = parent.findViewById(R.id.bookmark_indicator)
             avatar = parent.findViewById(R.id.speaker_image)
             avatarLayout = parent.findViewById(R.id.avatar_layout)

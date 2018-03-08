@@ -13,6 +13,7 @@
     <string name="hint_bookmark">Add to Agenda</string>
     <string name="hint_bookmark_added">Added to Agenda</string>
     <string name="hint_faq_photo">FAQ Photo</string>
+    <string name="hint_available">Available</string>
 
     <string name="action_bar_speaker_title">Speaker Profile</string>
     <string name="conference_name">Droidcon Boston</string>
