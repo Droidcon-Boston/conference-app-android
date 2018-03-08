@@ -1,19 +1,16 @@
 package com.mentalmachines.droidcon_boston.views
 
-import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
-import com.mentalmachines.droidcon_boston.views.speaker.VolunteerFragment
+import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerFragment
 import kotlinx.android.synthetic.main.main_activity.drawer_layout
 import kotlinx.android.synthetic.main.main_activity.navView
 import kotlinx.android.synthetic.main.main_activity.toolbar
@@ -96,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun replaceFragment(title: String) {
+    private fun replaceFragment(title: String) {
         if (title == lastFragmentTitleSelected) {
             // Fragment currently selected, no action.
             return
@@ -138,12 +135,5 @@ class MainActivity : AppCompatActivity() {
         if (supportActionBar != null) {
             supportActionBar?.title = title
         }
-    }
-
-
-    fun faqClick(v: View) {
-        val tnt = Intent(Intent.ACTION_VIEW)
-        tnt.data = Uri.parse(v.tag as String)
-        startActivity(tnt)
     }
 }

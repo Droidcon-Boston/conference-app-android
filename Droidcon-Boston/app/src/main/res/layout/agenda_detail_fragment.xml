@@ -17,6 +17,7 @@
             android:id="@+id/imgv_header_bg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:contentDescription="header Background"
             android:scaleType="centerCrop"
             android:src="@drawable/navigation_header_image" />
 
@@ -26,6 +27,7 @@
             style="@android:style/TextAppearance.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
@@ -41,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/tv_agenda_detail_time"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif"
             android:paddingEnd="16dp"
@@ -69,8 +72,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_agenda_detail_room"
             android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorLightGray"
@@ -80,16 +85,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:layout_below="@id/imgv_header_bg"
             android:orientation="vertical"
-            >
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/tv_agenda_detail_speaker_title"
                 android:layout_width="319dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
                 android:textColor="@color/colorGray"
                 android:textSize="18sp" />
 
@@ -98,6 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
                 tools:text="@tools:sample/full_names" />
 
             <View
@@ -111,9 +117,9 @@
                 android:id="@+id/tv_agenda_detail_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="8dp"
 
                 tools:text="@tools:sample/lorem/random" />
 

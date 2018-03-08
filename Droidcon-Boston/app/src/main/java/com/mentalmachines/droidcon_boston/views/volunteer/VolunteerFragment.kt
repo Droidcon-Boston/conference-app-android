@@ -1,4 +1,4 @@
-package com.mentalmachines.droidcon_boston.views.speaker
+package com.mentalmachines.droidcon_boston.views.volunteer
 
 
 import android.content.Context

@@ -25,7 +25,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                                header: ScheduleAdapterItemHeader) :
         AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
-    var startTime: Date = Date()
+    private var startTime: Date = Date()
 
     var roomSortOrder = itemData.trackSortOrder
 

@@ -17,7 +17,8 @@
         android:layout_marginStart="1dp"
         android:background="@color/colorAccent"
         android:visibility="visible"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        android:contentDescription="Side bar in list item" />
 
     <LinearLayout
         android:id="@+id/session_layout"

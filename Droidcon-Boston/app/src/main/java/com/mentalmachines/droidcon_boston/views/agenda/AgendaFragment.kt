@@ -50,9 +50,9 @@ class AgendaFragment : Fragment() {
 
     companion object {
 
-        val TAB_POSITION = "POSITION"
+        const val TAB_POSITION = "POSITION"
 
-        private val ARG_MY_AGENDA = "my_agenda"
+        private const val ARG_MY_AGENDA = "my_agenda"
 
         fun newInstance() = newInstance(false)
         fun newInstanceMySchedule() = newInstance(true)

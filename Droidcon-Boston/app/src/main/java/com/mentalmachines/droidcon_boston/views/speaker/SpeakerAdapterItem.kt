@@ -56,9 +56,9 @@ class SpeakerAdapterItem internal constructor(val itemData: SpeakerEvent) :
 
     class ViewHolder : FlexibleViewHolder {
 
-        lateinit var rootLayout: View
+        private lateinit var rootLayout: View
         lateinit var avatar: ImageView
-        lateinit var avatarLayout: View
+        private lateinit var avatarLayout: View
         lateinit var name: TextView
         lateinit var bio: TextView
 

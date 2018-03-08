@@ -57,7 +57,7 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
      * @param object the Fragment we want to check for
      * @return the position if found else -1
      */
-    protected fun findFragmentPositionHashMap(`object`: Fragment): Int {
+    private fun findFragmentPositionHashMap(`object`: Fragment): Int {
         for (position in mFragments.keys) {
             if (position != null &&
                     mFragments[position] != null &&
