@@ -16,6 +16,7 @@
         tools:ignore="RtlSymmetry,UselessParent">
 
         <ImageView
+            android:id="@+id/available_indicator"
             android:layout_width="5dp"
             android:layout_height="match_parent"
             android:layout_marginStart="1dp"
@@ -23,7 +24,7 @@
             android:layout_marginLeft="1dp"
             android:layout_marginRight="10dp"
             android:background="@color/colorAccent"
-            android:contentDescription="@string/hint_bookmark_added"
+            android:contentDescription="@string/hint_available"
             android:visibility="visible"
             tools:visibility="visible" />
 
