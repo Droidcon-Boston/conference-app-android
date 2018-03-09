@@ -20,8 +20,8 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
         return item
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        super.destroyItem(container, position, `object`)
+    override fun destroyItem(container: ViewGroup, position: Int, fragmentObj: Any) {
+        super.destroyItem(container, position, fragmentObj)
         val key = Integer.valueOf(position)
         if (mFragments.containsKey(key)) {
             mFragments.remove(key)
@@ -38,10 +38,10 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
         }
     }
 
-    override fun getItemPosition(`object`: Any): Int {
+    override fun getItemPosition(fragmentObj: Any): Int {
         //If the object is a fragment, check to see if we have it in the hashmap
-        if (`object` is Fragment) {
-            val position = findFragmentPositionHashMap(`object`)
+        if (fragmentObj is Fragment) {
+            val position = findFragmentPositionHashMap(fragmentObj)
             //If fragment found in the hashmap check if it should be shown
             if (position >= 0) {
                 //Return POSITION_NONE if it shouldn't be display
@@ -49,7 +49,7 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
             }
         }
 
-        return super.getItemPosition(`object`)
+        return super.getItemPosition(fragmentObj)
     }
 
     /**
@@ -57,11 +57,11 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
      * @param object the Fragment we want to check for
      * @return the position if found else -1
      */
-    protected fun findFragmentPositionHashMap(`object`: Fragment): Int {
+    private fun findFragmentPositionHashMap(fragmentObj: Fragment): Int {
         for (position in mFragments.keys) {
             if (position != null &&
                     mFragments[position] != null &&
-                    mFragments[position] === `object`) {
+                    mFragments[position] === fragmentObj) {
                 return position
             }
         }

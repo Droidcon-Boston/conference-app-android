@@ -65,11 +65,17 @@ open class FirebaseDatabase {
             val socialProfiles: HashMap<String, String>? = HashMap(0),
             val pictureUrl: String = "",
             var bio: String = "",
-            var name: String = "") {
+            var name: String = "")
 
-    }
+    data class VolunteerEvent(
+            val twitter: String = "",
+            val email: String = "",
+            val pictureUrl: String = "",
+            var position: String = "",
+            var firstName: String = "",
+            var lastName: String = "")
 
-    data class ScheduleEventDetail (
+    data class ScheduleEventDetail(
             val socialProfiles: HashMap<String, String>? = HashMap(0),
             var bio: String = "",
             var title: String = "",

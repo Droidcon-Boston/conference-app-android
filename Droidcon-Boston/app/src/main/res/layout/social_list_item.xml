@@ -10,7 +10,8 @@
         android:id="@+id/social_item_img"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        tools:src="@drawable/facebook" />
+        tools:src="@drawable/social_facebook"
+        android:contentDescription="Social Icon" />
 
     <TextView
         android:id="@+id/social_item_tv"
@@ -19,7 +20,9 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="1"
+        android:paddingRight="16dp"
         android:paddingLeft="16dp"
         android:textSize="20sp"
-        tools:text="Facebook" />
+        tools:text="Facebook"
+        android:paddingStart="16dp" />
 </LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/speakerRootLayout"
+    android:id="@+id/volunteerRootLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
@@ -64,11 +64,11 @@
         android:layout_gravity="center_vertical">
 
         <ImageView
-            android:id="@+id/speaker_image"
+            android:id="@+id/volunteer_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:contentDescription="@string/speaker_avatar"
+            android:contentDescription="@string/volunteer_avatar"
             tools:src="@drawable/bg_social_btn" />
 
     </FrameLayout>

@@ -26,7 +26,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                                header: ScheduleAdapterItemHeader) :
         AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
-    var startTime: Date = Date()
+    private var startTime: Date = Date()
 
     var roomSortOrder = itemData.trackSortOrder
 
@@ -105,6 +105,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             Glide.with(context)
                     .load(itemData.photoUrlMap[itemData.primarySpeakerName])
                     .transform(CircleTransform(context))
+                    .placeholder(R.drawable.emo_im_cool)
                     .crossFade()
                     .into(holder.avatar)
 

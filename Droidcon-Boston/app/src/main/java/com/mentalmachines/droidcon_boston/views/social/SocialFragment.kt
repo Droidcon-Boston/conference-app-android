@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mentalmachines.droidcon_boston.R
+import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.modal.SocialModal
 import com.mentalmachines.droidcon_boston.utils.DividerItemDecoration
 import com.mentalmachines.droidcon_boston.utils.RVItemClickListener
@@ -55,7 +56,7 @@ class SocialFragment : Fragment() {
         socialList.add(SocialModal(R.drawable.social_linkedin, getString(R.string.social_title_linkedin),
                 getString(R.string.linkedin_link)))
         socialList.add(SocialModal(R.drawable.social_twitter, getString(R.string.social_title_twitter),
-                getString(R.string.twitter_link)))
+                String.format("%s%s", resources.getString(R.string.twitter_link), getString(string.droidconbos_twitter_handle))))
         return socialList
     }
 }

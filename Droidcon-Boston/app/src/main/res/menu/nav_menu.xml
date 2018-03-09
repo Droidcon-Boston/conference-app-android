@@ -7,7 +7,7 @@
             android:title="@string/str_agenda" />
         <item
             android:id="@+id/nav_my_schedule"
-            android:icon="@drawable/ic_agenda"
+            android:icon="@drawable/ic_my_schedule"
             android:title="@string/str_my_schedule" />
         <item
             android:id="@+id/nav_faq"
@@ -25,8 +25,13 @@
 
         <item
             android:id="@+id/nav_speakers"
-            android:icon="@drawable/ic_star_black_24dp"
+            android:icon="@drawable/ic_speakers"
             android:title="@string/str_speakers" />
+
+        <item
+            android:id="@+id/nav_volunteers"
+            android:icon="@drawable/ic_volunteers"
+            android:title="@string/str_volunteers" />
 
         <item
             android:id="@+id/nav_about"
