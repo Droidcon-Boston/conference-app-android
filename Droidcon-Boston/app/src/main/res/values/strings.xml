@@ -36,6 +36,7 @@
     <string name="header_speakers">Speakers:</string>
     <string name="header_speaker">Speaker:</string>
 
+    <string name="str_session_start_soon">Starting soon: %1$s</string>
     <string name="str_agenda_detail_room">at %1$s</string>
     <string name="str_agenda_detail_time">%1$s - %2$s</string>
     <string name="close">Close</string>

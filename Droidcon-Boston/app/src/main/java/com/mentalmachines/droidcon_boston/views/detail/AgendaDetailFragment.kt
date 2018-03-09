@@ -24,6 +24,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.agendaDetailView
@@ -72,6 +73,12 @@ class AgendaDetailFragment : Fragment() {
 
             val nextBookmarkStatus = !userAgendaRepo.isSessionBookmarked(scheduleDetail.id)
             userAgendaRepo.bookmarkSession(scheduleDetail.id, nextBookmarkStatus)
+            val context = tv_agenda_detail_title.context
+            if (nextBookmarkStatus) {
+                NotificationUtils(context).scheduleMySessionNotifications()
+            } else {
+                NotificationUtils(context).cancelNotificationAlarm(itemData.id)
+            }
 
             Snackbar.make(agendaDetailView,
                     if (nextBookmarkStatus)

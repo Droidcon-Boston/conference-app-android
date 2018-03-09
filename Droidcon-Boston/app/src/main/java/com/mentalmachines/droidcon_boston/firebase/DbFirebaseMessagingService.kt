@@ -21,6 +21,7 @@ class DbFirebaseMessagingService : FirebaseMessagingService() {
                 for (key in payloadMap.keys) {
                     Log.d(TAG, "Key: " + key + ", Value: " + payloadMap[key])
                 }
+                NotificationUtils(applicationContext).scheduleMySessionNotifications()
             }
 
             // Check if message contains a notification payload.
