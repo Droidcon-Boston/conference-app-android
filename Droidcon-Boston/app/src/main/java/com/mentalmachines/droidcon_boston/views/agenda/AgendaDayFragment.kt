@@ -26,10 +26,8 @@ import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import kotlinx.android.synthetic.main.agenda_day_fragment.agenda_recycler
-import kotlinx.android.synthetic.main.agenda_day_fragment.refresh_layout
-import java.util.ArrayList
-import java.util.HashMap
+import kotlinx.android.synthetic.main.agenda_day_fragment.*
+import java.util.*
 
 /**
  * Fragment for an agenda day
