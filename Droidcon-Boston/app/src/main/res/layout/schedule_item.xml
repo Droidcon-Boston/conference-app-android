@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/scheduleRootLayout"
         tools:ignore="RtlSymmetry,UselessParent">
 
         <ImageView
@@ -142,7 +141,7 @@
 
         <ImageView
             android:id="@+id/bookmark_indicator"
-            app:srcCompat="@drawable/ic_star_black_24dp"
+            app:srcCompat="@drawable/ic_star"
             android:contentDescription="@string/hint_bookmark"
             android:tint="@color/colorStar"
             android:layout_width="wrap_content"
