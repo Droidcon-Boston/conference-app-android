@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_speaker_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgv_header_bg"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:contentDescription="Header Background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/navigation_header_image" />
+
+
+        <ImageView
+            android:id="@+id/imgv_speaker_detail_avatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:contentDescription="Header Background"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_speaker_detail_name"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgv_speaker_detail_avatar"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="@tools:sample/full_names" />
+
+
+        <TextView
+            android:id="@+id/tv_speaker_detail_designation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_speaker_detail_name"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            tools:text="Software Engineer @ Company" />
+
+        <LinearLayout
+            android:id="@+id/ll_social_links"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgv_header_bg"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:id="@+id/tv_twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="8dp"
+                android:paddingStart="0dp"
+                android:paddingTop="8dp"
+                android:text="@string/twitter"
+                android:textColor="@color/colorAccent"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_linkedin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="8dp"
+                android:paddingStart="0dp"
+                android:paddingTop="8dp"
+                android:text="@string/linkedin"
+                android:textColor="@color/colorAccent"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/v_speaker_detail__divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_below="@id/ll_social_links"
+            android:background="@color/colorLightGray" />
+
+        <TextView
+            android:id="@+id/tv_speaker_detail_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v_speaker_detail__divider"
+            android:fontFamily="sans-serif"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:paddingRight="16dp"
+            android:textColor="@android:color/black"
+            tools:text="@tools:sample/lorem/random" />
+
+
+    </RelativeLayout>
+</ScrollView>
