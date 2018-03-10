@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         navView.setCheckedItem(R.id.nav_agenda)
     }
 
-
     private fun initNavDrawerToggle() {
 
         setSupportActionBar(toolbar)

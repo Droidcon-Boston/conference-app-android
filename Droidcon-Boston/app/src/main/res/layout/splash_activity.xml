@@ -3,17 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/droidcon_blank"
-    android:tileMode="repeat"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:tileMode="repeat">
 
     <ImageView
         android:id="@+id/logo_text"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/logo_text"
-        android:layout_gravity="center"
-        android:layout_centerVertical="true"
-        android:padding="75dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:layout_centerInParent="true"
+        android:maxWidth="600dp"
+        android:adjustViewBounds="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:contentDescription="@string/app_name"
+        android:padding="75dp"
+        android:src="@drawable/logo_text"/>
 
 </RelativeLayout>
