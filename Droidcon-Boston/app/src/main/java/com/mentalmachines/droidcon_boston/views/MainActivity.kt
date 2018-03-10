@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.mentalmachines.droidcon_boston.R
+import com.mentalmachines.droidcon_boston.R.style.AppTheme
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Apply the app theme
+        setTheme(AppTheme)
         setContentView(R.layout.main_activity)
 
         initNavDrawerToggle()

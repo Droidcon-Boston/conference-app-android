@@ -4,7 +4,7 @@
     package="com.mentalmachines.droidcon_boston">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".MyApplication"
@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/SplashTheme">
         <activity
             android:name="com.mentalmachines.droidcon_boston.views.MainActivity"
             android:screenOrientation="sensorPortrait">
@@ -24,7 +25,8 @@
         </activity>
 
         <!-- Firebase Cloud Messaging -->
-        <service android:name=".firebase.DbFirebaseMessagingService"
+        <service
+            android:name=".firebase.DbFirebaseMessagingService"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -32,10 +34,11 @@
         </service>
 
         <receiver android:name=".receivers.NotificationPublisher" />
-        <receiver android:name=".receivers.BootReceiver"
+        <receiver
+            android:name=".receivers.BootReceiver"
             android:enabled="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
