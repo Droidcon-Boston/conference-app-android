@@ -42,6 +42,4 @@
     <string name="str_agenda_detail_time">%1$s - %2$s</string>
     <string name="close">Close</string>
     <string name="droidconbos_twitter_handle">droidconbos</string>
-    <string name="linkedin"><u>LinkedIn</u></string>
-    <string name="twitter"><u>Twitter</u></string>
 </resources>

@@ -13,13 +13,12 @@ import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.utils.loadUriInCustomTab
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
+import kotlinx.android.synthetic.main.speaker_detail_fragment.imgv_linkedin
 import kotlinx.android.synthetic.main.speaker_detail_fragment.imgv_speaker_detail_avatar
-import kotlinx.android.synthetic.main.speaker_detail_fragment.tv_linkedin
+import kotlinx.android.synthetic.main.speaker_detail_fragment.imgv_twitter
 import kotlinx.android.synthetic.main.speaker_detail_fragment.tv_speaker_detail_description
 import kotlinx.android.synthetic.main.speaker_detail_fragment.tv_speaker_detail_designation
 import kotlinx.android.synthetic.main.speaker_detail_fragment.tv_speaker_detail_name
-import kotlinx.android.synthetic.main.speaker_detail_fragment.tv_twitter
-import kotlinx.android.synthetic.main.speaker_detail_fragment.v_speaker_detail__divider
 
 
 class SpeakerDetailFragment : Fragment() {
@@ -46,27 +45,21 @@ class SpeakerDetailFragment : Fragment() {
 
         val twitterHandle = itemData.socialProfiles?.get("twitter")
         if (!twitterHandle.isNullOrEmpty()) {
-            tv_twitter.setOnClickListener({
+            imgv_twitter.setOnClickListener({
                 activity.loadUriInCustomTab(String.format("%s%s", resources.getString(R.string.twitter_link), twitterHandle))
             })
         } else {
-            tv_twitter.visibility = View.GONE
+            imgv_twitter.visibility = View.GONE
         }
 
 
         val linkedinHandle = itemData.socialProfiles?.get("linkedIn")
         if (!linkedinHandle.isNullOrEmpty()) {
-            tv_linkedin.setOnClickListener({
+            imgv_linkedin.setOnClickListener({
                 activity.loadUriInCustomTab(String.format("%s%s", resources.getString(R.string.linkedin_profile_link), linkedinHandle))
             })
         } else {
-            tv_linkedin.visibility = View.GONE
-        }
-
-
-        // Hide the divider if both twitter and linkedin info is not there
-        if (twitterHandle.isNullOrEmpty() && linkedinHandle.isNullOrEmpty()) {
-            v_speaker_detail__divider.visibility = View.GONE
+            imgv_linkedin.visibility = View.GONE
         }
 
         Glide.with(activity)
