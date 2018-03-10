@@ -15,13 +15,13 @@ import com.dinuscxj.refresh.RecyclerRefreshLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -140,8 +140,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         headerAdapter.addListener(this)
         agenda_recycler.adapter = headerAdapter
         agenda_recycler.addItemDecoration(FlexibleItemDecoration(agenda_recycler.context).withDefaultDivider())
-        headerAdapter.expandItemsAtStartUp()
-                .setDisplayHeadersAtStartUp(true)
+        headerAdapter.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
     }
 
     override fun onItemClick(position: Int): Boolean {
@@ -181,8 +180,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     companion object {
 
         private val TAG = AgendaDayFragment::class.java.name
-        private val gson = Gson()
-
         private const val ARG_DAY = "day"
         private const val ARG_MY_AGENDA = "my_agenda"
 

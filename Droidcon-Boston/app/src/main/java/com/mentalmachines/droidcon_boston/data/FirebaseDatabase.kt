@@ -77,10 +77,16 @@ open class FirebaseDatabase {
     }
 
     data class SpeakerEvent(
-            val socialProfiles: HashMap<String, String>? = HashMap(0),
             val pictureUrl: String = "",
+            val socialProfiles: HashMap<String, String>? = HashMap(0),
             var bio: String = "",
-            var name: String = "")
+            var title: String = "",
+            var org: String = "",
+            var name: String = "") {
+        companion object {
+            var SPEAKER_ITEM_ROW = "speaker_item_row"
+        }
+    }
 
     data class VolunteerEvent(
             val twitter: String = "",

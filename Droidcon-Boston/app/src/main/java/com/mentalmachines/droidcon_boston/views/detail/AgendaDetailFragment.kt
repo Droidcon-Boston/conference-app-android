@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEventDetail
@@ -24,6 +23,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
@@ -41,8 +41,6 @@ import kotlinx.android.synthetic.main.agenda_detail_fragment.v_agenda_detail_spe
 class AgendaDetailFragment : Fragment() {
 
     private lateinit var scheduleDetail: ScheduleDetail
-
-    private val gson: Gson = Gson()
 
     private val firebaseHelper = FirebaseHelper.instance
 
