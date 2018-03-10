@@ -25,6 +25,7 @@ class SplashActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         overridePendingTransition(0, 0);
+        finish()
     }
 
     private fun fadeImage() {
