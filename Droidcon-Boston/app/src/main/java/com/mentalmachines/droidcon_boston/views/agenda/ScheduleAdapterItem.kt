@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
+import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
 import eu.davidea.viewholders.FlexibleViewHolder
@@ -69,11 +70,15 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         if (itemData.speakerNames.isEmpty()) {
             // For "Lunch" and "Registration" Sessions
-            holder.sessionLayout.visibility = View.GONE
-            holder.avatar.visibility = View.GONE
-            holder.bigTitle.visibility = View.VISIBLE
+            holder.avatarLayout.visibility = View.GONE
+            holder.bookmarkIndicator.visibility = View.GONE
 
-            holder.bigTitle.text = itemData.talkTitle
+            holder.speaker.visibility = View.GONE
+            holder.time.visibility = View.GONE
+
+            holder.sessionLayout.visibility = View.VISIBLE
+            holder.title.text = itemData.talkTitle
+            holder.room.text = itemData.room
 
             if (itemData.photoUrlMap.size == 0) {
                 holder.rootLayout.background = null
@@ -81,12 +86,10 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                 addBackgroundRipple(holder)
             }
 
-            holder.bookmarkIndicator.visibility = View.INVISIBLE
         } else {
             // For normal talks/sessions with speakers
             holder.sessionLayout.visibility = View.VISIBLE
             holder.avatar.visibility = View.VISIBLE
-            holder.bigTitle.visibility = View.GONE
 
             holder.title.text = itemData.talkTitle
             holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
@@ -131,6 +134,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         lateinit var avatar: ImageView
 
+        lateinit var avatarLayout: View
+
         lateinit var title: TextView
 
         lateinit var time: TextView
@@ -143,8 +148,6 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         lateinit var sessionLayout: View
 
-        lateinit var bigTitle: TextView
-
         constructor(view: View, adapter: FlexibleAdapter<*>) : super(view, adapter) {
 
             findViews(view)
@@ -156,16 +159,16 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         }
 
         private fun findViews(parent: View) {
-            rootLayout = parent.findViewById(R.id.rootLayout)
+            rootLayout = parent.findViewById(R.id.scheduleRootLayout)
             bookmarkIndicator = parent.findViewById(R.id.bookmark_indicator)
             avatar = parent.findViewById(R.id.speaker_image)
+            avatarLayout = parent.findViewById(R.id.avatar_layout)
             title = parent.findViewById(R.id.title_text)
             time = parent.findViewById(R.id.time_text)
             speaker = parent.findViewById(R.id.speaker_name_text)
             speakerCount = parent.findViewById(R.id.speaker_count)
             room = parent.findViewById(R.id.room_text)
             sessionLayout = parent.findViewById(R.id.session_layout)
-            bigTitle = parent.findViewById(R.id.bigtitle_text)
         }
     }
 }

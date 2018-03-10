@@ -20,11 +20,11 @@ class AgendaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupDayPager(view, savedInstanceState)
+        setupDayPager(savedInstanceState)
     }
 
 
-    private fun setupDayPager(parent: View, savedInstanceState: Bundle?) {
+    private fun setupDayPager(savedInstanceState: Bundle?) {
         viewpager.adapter = AgendaDayPagerAdapter(childFragmentManager,
                 arguments?.getBoolean(ARG_MY_AGENDA) ?: false)
 

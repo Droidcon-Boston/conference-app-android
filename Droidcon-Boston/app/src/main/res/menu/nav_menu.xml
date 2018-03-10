@@ -24,6 +24,11 @@
             android:title="@string/str_coc" />
 
         <item
+            android:id="@+id/nav_speakers"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="@string/str_speakers" />
+
+        <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_aboutus"
             android:title="@string/str_about_us" />
