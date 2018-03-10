@@ -42,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     companion object {
-        val FADE_DURATION: Long = 500
-        val SPLASH_DURATION: Long = 2000
+        val FADE_DURATION: Long = 400
+        val SPLASH_DURATION: Long = 1100
     }
 }
