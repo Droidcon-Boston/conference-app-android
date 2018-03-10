@@ -1,14 +1,11 @@
 package com.mentalmachines.droidcon_boston.views
 
-import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
@@ -32,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(getString(R.string.str_agenda))
         navView.setCheckedItem(R.id.nav_agenda)
     }
-
 
     private fun initNavDrawerToggle() {
 
@@ -137,10 +133,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    fun faqClick(v: View) {
-        val tnt = Intent(Intent.ACTION_VIEW)
-        tnt.data = Uri.parse(v.tag as String)
-        startActivity(tnt)
-    }
 }

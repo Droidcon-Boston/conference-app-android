@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/droidcon_blank"
+    android:orientation="vertical"
+    android:tileMode="repeat">
+
+    <ImageView
+        android:id="@+id/logo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:layout_centerInParent="true"
+        android:maxWidth="600dp"
+        android:adjustViewBounds="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:contentDescription="@string/app_name"
+        android:padding="75dp"
+        android:src="@drawable/logo_text"/>
+
+</RelativeLayout>
