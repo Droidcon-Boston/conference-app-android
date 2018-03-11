@@ -39,10 +39,6 @@ android {
         }
     }
 
-    buildTypes.each {
-        it.buildConfigField 'String', 'BASE_API_URL', BASE_API_URL
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
