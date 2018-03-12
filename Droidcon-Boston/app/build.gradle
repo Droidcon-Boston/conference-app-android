@@ -3,11 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 
-// Load variables defined in local.properties
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def fabricKey = properties.getProperty('FABRIC_KEY')
-
 android {
     compileSdkVersion 27
 
@@ -15,8 +10,8 @@ android {
         applicationId "com.mentalmachines.droidcon_boston"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 8
-        versionName "2.0.0"
+        versionCode 9
+        versionName "2.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables {
