@@ -3,8 +3,10 @@ package com.mentalmachines.droidcon_boston.views
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
 import android.view.MenuItem
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
@@ -29,6 +31,17 @@ class MainActivity : AppCompatActivity() {
 
         replaceFragment(getString(R.string.str_agenda))
         navView.setCheckedItem(R.id.nav_agenda)
+    }
+
+
+    override fun onBackPressed() {
+        // If drawer is open
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            // close the drawer
+            drawer_layout.closeDrawer(Gravity.LEFT)
+        } else {
+            super.onBackPressed()
+        }
     }
 
 
