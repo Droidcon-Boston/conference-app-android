@@ -32,7 +32,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/imageView2"
-            android:padding="10dp"
+            android:padding="@dimen/def_padding_large"
+            android:textSize="18sp"
             tools:text="@tools:sample/lorem/random"
             android:layout_alignParentLeft="true" />
     </RelativeLayout>

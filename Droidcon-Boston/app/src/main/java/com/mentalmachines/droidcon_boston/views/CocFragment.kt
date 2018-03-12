@@ -30,7 +30,7 @@ class CocFragment : Fragment() {
     }
 
     private fun fetchDataFromFirebase() {
-        firebaseHelper.cocDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
+        firebaseHelper.cocDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 tv_coc.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
             }
