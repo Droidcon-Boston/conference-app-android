@@ -90,7 +90,6 @@ open class FirebaseDatabase {
 
     data class VolunteerEvent(
             val twitter: String = "",
-            val email: String = "",
             val pictureUrl: String = "",
             var position: String = "",
             var firstName: String = "",
