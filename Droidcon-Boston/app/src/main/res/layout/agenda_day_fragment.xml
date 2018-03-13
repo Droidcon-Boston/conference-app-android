@@ -10,12 +10,18 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/agenda_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:background="@color/colorBackground"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/agenda_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:background="@color/colorBackground"/>
+
+            <include layout="@layout/empty_view"/>
+        </FrameLayout>
 
     </com.dinuscxj.refresh.RecyclerRefreshLayout>
 

@@ -57,7 +57,7 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         })
     }
 
-    override fun onItemClick(position: Int): Boolean {
+    override fun onItemClick(view: View, position: Int): Boolean {
         val item = volunteerAdapter.getItem(position)
         if (item is VolunteerAdapterItem && !item.itemData.twitter.isEmpty()) {
             val context = activity as Context

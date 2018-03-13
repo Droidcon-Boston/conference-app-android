@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.volunteer
 
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,7 +20,8 @@ import eu.davidea.viewholders.FlexibleViewHolder
 class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
         AbstractFlexibleItem<ViewHolder>() {
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<out IFlexible<*>>?, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
+                                holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
 
 
 
@@ -57,7 +59,7 @@ class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
         return R.layout.volunteer_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<*>): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
         return ViewHolder(view, adapter)
     }
 
