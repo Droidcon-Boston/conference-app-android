@@ -74,7 +74,6 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         if (itemData.speakerNames.isEmpty()) {
             // For "Lunch" and "Registration" Sessions
             holder.avatarLayout.visibility = View.GONE
-
             holder.speaker.visibility = View.GONE
             holder.time.visibility = View.GONE
 
@@ -94,8 +93,9 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         } else {
             // For normal talks/sessions with speakers
-            holder.sessionLayout.visibility = View.VISIBLE
-            holder.avatar.visibility = View.VISIBLE
+            holder.avatarLayout.visibility = View.VISIBLE
+            holder.speaker.visibility = View.VISIBLE
+            holder.time.visibility = View.VISIBLE
 
             holder.title.text = itemData.talkTitle
             holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
