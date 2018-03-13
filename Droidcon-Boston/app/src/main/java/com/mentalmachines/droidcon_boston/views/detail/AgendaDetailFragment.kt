@@ -23,11 +23,19 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
+import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
-import kotlinx.android.synthetic.main.agenda_detail_fragment.*
+import kotlinx.android.synthetic.main.agenda_detail_fragment.agendaDetailView
+import kotlinx.android.synthetic.main.agenda_detail_fragment.fab_agenda_detail_bookmark
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_description
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_room
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_speaker_name
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_speaker_title
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_time
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_title
+import kotlinx.android.synthetic.main.agenda_detail_fragment.v_agenda_detail_speaker_divider
 
 
 class AgendaDetailFragment : Fragment() {

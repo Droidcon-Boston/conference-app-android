@@ -42,5 +42,4 @@
     <string name="str_agenda_detail_time">%1$s - %2$s</string>
     <string name="close">Close</string>
     <string name="droidconbos_twitter_handle">droidconbos</string>
-    <string name="no_bookmarked_items">No talks added to My Schedule\nfor this day</string>
 </resources>

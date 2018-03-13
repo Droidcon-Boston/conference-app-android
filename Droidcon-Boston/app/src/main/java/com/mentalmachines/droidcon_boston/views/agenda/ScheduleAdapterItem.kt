@@ -1,7 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -14,11 +13,11 @@ import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
-import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 /**
  * Used for displaying the schedule with sticky headers with optional day filtering
@@ -61,27 +60,23 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         return R.layout.schedule_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<*>): ViewHolder {
         return ScheduleAdapterItem.ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
-                                holder: ViewHolder,
+    override fun bindViewHolder(adapter: FlexibleAdapter<*>,
+                                holder: ScheduleAdapterItem.ViewHolder,
                                 position: Int,
-                                payloads: MutableList<Any>) {
+                                payloads: List<*>) {
 
-        val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
         if (itemData.speakerNames.isEmpty()) {
             // For "Lunch" and "Registration" Sessions
             holder.avatarLayout.visibility = View.GONE
+            holder.bookmarkIndicator.visibility = View.GONE
 
             holder.speaker.visibility = View.GONE
             holder.time.visibility = View.GONE
 
-            holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
-                View.VISIBLE
-            else
-                View.INVISIBLE
             holder.sessionLayout.visibility = View.VISIBLE
             holder.title.text = itemData.talkTitle
             holder.room.text = itemData.room
@@ -114,6 +109,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                     .crossFade()
                     .into(holder.avatar)
 
+            val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
             holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
                 View.VISIBLE
             else

@@ -1,12 +1,10 @@
 package com.mentalmachines.droidcon_boston.views.faq
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.mentalmachines.droidcon_boston.R
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem
-import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 
 /**
@@ -31,11 +29,11 @@ class FaqAdapterItemHeader internal constructor(private val question: String)
         return R.layout.faq_header
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<*>): ViewHolder {
         return FaqAdapterItemHeader.ViewHolder(view, adapter, true)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>,
+    override fun bindViewHolder(adapter: FlexibleAdapter<*>,
                                 holder: FaqAdapterItemHeader.ViewHolder,
                                 position: Int,
                                 payloads: List<*>) {

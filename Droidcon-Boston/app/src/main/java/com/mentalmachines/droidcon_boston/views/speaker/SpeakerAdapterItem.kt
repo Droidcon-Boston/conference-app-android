@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.speaker
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,8 +19,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
 class SpeakerAdapterItem internal constructor(val itemData: SpeakerEvent) :
         AbstractFlexibleItem<SpeakerAdapterItem.ViewHolder>() {
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
-                                holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
+    override fun bindViewHolder(adapter: FlexibleAdapter<out IFlexible<*>>?, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
 
         holder.name.text = itemData.name
         holder.bio.text = itemData.bio.getHtmlFormattedSpanned()
@@ -52,7 +50,7 @@ class SpeakerAdapterItem internal constructor(val itemData: SpeakerEvent) :
         return R.layout.speaker_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<*>): ViewHolder {
         return SpeakerAdapterItem.ViewHolder(view, adapter)
     }
 

@@ -84,7 +84,7 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 .setDisplayHeadersAtStartUp(true)
     }
 
-    override fun onItemClick(view: View, position: Int): Boolean {
+    override fun onItemClick(position: Int): Boolean {
         if (headerAdapter.getItem(position) is FaqAdapterItem) {
             val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData

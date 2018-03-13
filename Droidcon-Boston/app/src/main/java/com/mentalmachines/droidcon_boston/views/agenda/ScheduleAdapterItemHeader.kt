@@ -1,12 +1,10 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.mentalmachines.droidcon_boston.R
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem
-import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 
 /**
@@ -31,14 +29,14 @@ class ScheduleAdapterItemHeader internal constructor(private val sessionTime: St
         return R.layout.schedule_item_header
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<*>): ViewHolder {
         return ScheduleAdapterItemHeader.ViewHolder(view, adapter, true)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>,
+    override fun bindViewHolder(adapter: FlexibleAdapter<*>,
                                 holder: ScheduleAdapterItemHeader.ViewHolder,
                                 position: Int,
-                                payloads: MutableList<Any>) {
+                                payloads: List<*>) {
         holder.header.text = sessionTime
     }
 
