@@ -28,10 +28,6 @@ class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
             bodyText += "\nTwitter: @${itemData.twitter}"
         }
 
-        if (!itemData.email.isEmpty()) {
-            bodyText += "\nEmail: ${itemData.email}"
-        }
-
         holder.name.text = String.format("%s %s", itemData.firstName, itemData.lastName)
         holder.bio.text = bodyText
 

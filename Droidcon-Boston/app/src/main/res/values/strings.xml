@@ -6,8 +6,8 @@
     <string name="speaker_avatar">Speaker avatar</string>
     <string name="volunteer_avatar">Volunteer avatar</string>
 
-    <string name="hint_bookmark">Add to Agenda</string>
-    <string name="hint_bookmark_added">Added to Agenda</string>
+    <string name="hint_bookmark">Add to My Schedule</string>
+    <string name="hint_bookmark_added">Added to My Schedule</string>
     <string name="hint_faq_photo">FAQ Photo</string>
     <string name="hint_available">Available</string>
 
@@ -30,8 +30,8 @@
     <string name="social_title_instagram">Instagram</string>
     <string name="social_title_linkedin">LinkedIn</string>
     <string name="social_title_twitter">Twitter</string>
-    <string name="saved_agenda_item">Saved to your Agenda</string>
-    <string name="removed_agenda_item">Removed from your Agenda</string>
+    <string name="saved_agenda_item">Saved to My Schedule</string>
+    <string name="removed_agenda_item">Removed from My Schedule</string>
 
     <string name="prefix_room">at</string>
     <string name="header_speakers">Speakers:</string>

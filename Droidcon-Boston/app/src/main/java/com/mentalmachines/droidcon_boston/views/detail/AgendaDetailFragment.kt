@@ -23,8 +23,8 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
+import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.agendaDetailView
@@ -119,7 +119,7 @@ class AgendaDetailFragment : Fragment() {
         }
         else -> {
             var speakerNames = ""
-            var marginValue = 28
+            var marginValue = 55
             itemData.speakerNames.forEach {
                 val orgName: String? = itemData.speakerNameToOrgName[it]
                 // append org name to speaker name
@@ -144,11 +144,11 @@ class AgendaDetailFragment : Fragment() {
 
                 // Add an imageview to the relative layout
                 val tempImg = ImageView(activity)
-                val lp = RelativeLayout.LayoutParams(150, 150)
+                val lp = RelativeLayout.LayoutParams(230, 230)
                 if (it == itemData.speakerNames.first()) {
-                    lp.setMargins(28, 0, 0, 16)
+                    lp.setMargins(55, 0, 0, 16)
                 } else {
-                    marginValue += 120
+                    marginValue += 200
                     lp.setMargins(marginValue, 0, 0, 16)
                 }
 
