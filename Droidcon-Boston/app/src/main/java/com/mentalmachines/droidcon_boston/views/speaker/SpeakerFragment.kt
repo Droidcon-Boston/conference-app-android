@@ -57,7 +57,7 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         })
     }
 
-    override fun onItemClick(position: Int): Boolean {
+    override fun onItemClick(view: View, position: Int): Boolean {
 
         if (speakerAdapter.getItem(position) is SpeakerAdapterItem) {
             val item = speakerAdapter.getItem(position)

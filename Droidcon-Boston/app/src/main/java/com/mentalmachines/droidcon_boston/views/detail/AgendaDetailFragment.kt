@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
