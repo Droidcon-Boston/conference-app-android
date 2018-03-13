@@ -28,6 +28,9 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import kotlinx.android.synthetic.main.agenda_day_fragment.*
 import java.util.*
+import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
+import kotlinx.android.synthetic.main.empty_view.*
+
 
 /**
  * Fragment for an agenda day
@@ -74,6 +77,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
         fetchScheduleData(dayFilter, onlyMyAgenda)
+
+        refresh_layout.setEnabled(!onlyMyAgenda)
 
         refresh_layout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL)
 
@@ -141,9 +146,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agenda_recycler.adapter = headerAdapter
         agenda_recycler.addItemDecoration(FlexibleItemDecoration(agenda_recycler.context).withDefaultDivider())
         headerAdapter.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
+
+        EmptyViewHelper(headerAdapter, empty_view, null,null)
     }
 
-    override fun onItemClick(position: Int): Boolean {
+    override fun onItemClick(view: View, position: Int): Boolean {
         if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
             val item = headerAdapter.getItem(position)
             val itemData = item?.itemData

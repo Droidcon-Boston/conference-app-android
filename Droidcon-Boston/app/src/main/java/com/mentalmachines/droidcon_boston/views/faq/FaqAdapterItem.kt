@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.faq
 
+import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
@@ -10,6 +11,7 @@ import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.FaqEvent.Answer
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
+import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 
 /**
@@ -35,14 +37,14 @@ class FaqAdapterItem internal constructor(val itemData: Answer,
         return R.layout.faq_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<*>): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
         return FaqAdapterItem.ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<*>,
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>,
                                 holder: FaqAdapterItem.ViewHolder,
                                 position: Int,
-                                payloads: List<*>) {
+                                payloads: MutableList<Any>) {
 
         holder.faq_text.text = itemData.answer
         if (!TextUtils.isEmpty(itemData.photoLink)) {
