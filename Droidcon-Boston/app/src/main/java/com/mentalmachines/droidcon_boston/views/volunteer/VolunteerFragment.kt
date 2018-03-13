@@ -37,24 +37,32 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchDataFromFirebase()
     }
 
-    private fun fetchDataFromFirebase() {
-        firebaseHelper.volunteerDatabase.orderByChild("firstName").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val rows = ArrayList<VolunteerEvent>()
-                for (volunteerSnapshot in dataSnapshot.children) {
-                    val volunteer = volunteerSnapshot.getValue(VolunteerEvent::class.java)
-                    if (volunteer != null) {
-                        rows.add(volunteer)
-                    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        firebaseHelper.volunteerDatabase.removeEventListener(dataListener)
+    }
+
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val rows = ArrayList<VolunteerEvent>()
+            for (volunteerSnapshot in dataSnapshot.children) {
+                val volunteer = volunteerSnapshot.getValue(VolunteerEvent::class.java)
+                if (volunteer != null) {
+                    rows.add(volunteer)
                 }
-
-                setupVolunteerAdapter(rows)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
-            }
-        })
+            setupVolunteerAdapter(rows)
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchDataFromFirebase() {
+        firebaseHelper.volunteerDatabase.orderByChild("firstName").addValueEventListener(dataListener)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {

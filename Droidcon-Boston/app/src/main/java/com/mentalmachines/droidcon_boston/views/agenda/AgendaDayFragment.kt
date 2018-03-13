@@ -74,7 +74,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
-        fetchScheduleData(dayFilter, onlyMyAgenda)
+        fetchScheduleData()
     }
 
     override fun onDestroyView() {
@@ -111,7 +111,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
     }
 
-    private fun fetchScheduleData(dayFilter: String?, onlyMyAgenda: Boolean) {
+    private fun fetchScheduleData() {
         firebaseHelper.eventDatabase.addListenerForSingleValueEvent(dataListener)
     }
 

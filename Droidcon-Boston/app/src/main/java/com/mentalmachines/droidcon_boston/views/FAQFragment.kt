@@ -41,26 +41,33 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchDataFromFirebase()
     }
 
-    private fun fetchDataFromFirebase() {
-        firebaseHelper.faqDatabase.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val rows = ArrayList<FaqEvent>()
-                for (faqSnapshot in dataSnapshot.children) {
-                    val data = faqSnapshot.getValue(FaqEvent::class.java)
-                    if (data != null) {
-                        rows.add(data)
-                    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        firebaseHelper.faqDatabase.removeEventListener(dataListener)
+    }
+
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val rows = ArrayList<FaqEvent>()
+            for (faqSnapshot in dataSnapshot.children) {
+                val data = faqSnapshot.getValue(FaqEvent::class.java)
+                if (data != null) {
+                    rows.add(data)
                 }
-
-                val faqList = rows.toList()
-                setupHeaderAdapter(faqList)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(javaClass.canonicalName, "onCancelled", databaseError.toException())
-            }
-        })
+            val faqList = rows.toList()
+            setupHeaderAdapter(faqList)
+        }
 
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchDataFromFirebase() {
+        firebaseHelper.faqDatabase.addValueEventListener(dataListener)
     }
 
     private fun setupHeaderAdapter(faqs: List<FaqEvent>) {
