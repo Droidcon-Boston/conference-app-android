@@ -10,8 +10,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.dinuscxj.refresh.RecyclerRefreshLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -26,10 +24,10 @@ import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import kotlinx.android.synthetic.main.agenda_day_fragment.*
-import java.util.*
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
+import kotlinx.android.synthetic.main.agenda_day_fragment.*
 import kotlinx.android.synthetic.main.empty_view.*
+import java.util.*
 
 
 /**
@@ -77,50 +75,44 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
         fetchScheduleData(dayFilter, onlyMyAgenda)
+    }
 
-        refresh_layout.setEnabled(!onlyMyAgenda)
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-        refresh_layout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL)
-
-        refresh_layout.setOnRefreshListener {
-            headerAdapter.clear()
-            headerAdapter.notifyDataSetChanged()
-            refresh_layout.setRefreshing(true)
-            fetchScheduleData(dayFilter, onlyMyAgenda)
-            Toast.makeText(activity, "Refreshed Agenda", Toast.LENGTH_SHORT).show()
-        }
+        firebaseHelper.eventDatabase.removeEventListener(dataListener)
     }
 
     fun updateList() {
         agenda_recycler.adapter.notifyDataSetChanged()
     }
 
-    private fun fetchScheduleData(dayFilter: String?, onlyMyAgenda: Boolean) {
-        firebaseHelper.eventDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val rows = ArrayList<ScheduleRow>()
-                for (roomSnapshot in dataSnapshot.children) {
-                    val key = roomSnapshot.key
-                    val data = roomSnapshot.getValue(ScheduleEvent::class.java)
-                    Log.d(TAG, "Event: $data")
-                    if (data != null) {
-                        val scheduleRow = data.toScheduleRow(key)
-                        if (scheduleRow.date == dayFilter && (!onlyMyAgenda
-                                        || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(scheduleRow.id))) {
-                            rows.add(scheduleRow)
-                        }
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val rows = ArrayList<ScheduleRow>()
+            for (roomSnapshot in dataSnapshot.children) {
+                val key = roomSnapshot.key
+                val data = roomSnapshot.getValue(ScheduleEvent::class.java)
+                Log.d(TAG, "Event: $data")
+                if (data != null) {
+                    val scheduleRow = data.toScheduleRow(key)
+                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda
+                                    || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(scheduleRow.id))) {
+                        rows.add(scheduleRow)
                     }
                 }
-
-                refresh_layout.setRefreshing(false)
-                setupHeaderAdapter(rows)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(TAG, "scheduleQuery:onCancelled", databaseError.toException())
-            }
-        })
+            setupHeaderAdapter(rows)
+        }
 
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.w(TAG, "scheduleQuery:onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchScheduleData(dayFilter: String?, onlyMyAgenda: Boolean) {
+        firebaseHelper.eventDatabase.addListenerForSingleValueEvent(dataListener)
     }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
