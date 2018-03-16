@@ -112,7 +112,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun fetchScheduleData() {
-        firebaseHelper.eventDatabase.addListenerForSingleValueEvent(dataListener)
+        firebaseHelper.eventDatabase.addValueEventListener(dataListener)
     }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
