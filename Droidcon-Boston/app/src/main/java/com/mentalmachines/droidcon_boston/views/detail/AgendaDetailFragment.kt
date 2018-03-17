@@ -26,6 +26,7 @@ import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
+import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
@@ -53,6 +54,11 @@ class AgendaDetailFragment : Fragment() {
         scheduleRowItem = gson.fromJson(arguments!!.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow::class.java)
         fetchDataFromFirebase()
         populateView()
+
+        if (activity is MainActivity) {
+            val mainActivity = activity as MainActivity
+            mainActivity.uncheckAllMenuItems()
+        }
     }
 
     private fun populateView() {

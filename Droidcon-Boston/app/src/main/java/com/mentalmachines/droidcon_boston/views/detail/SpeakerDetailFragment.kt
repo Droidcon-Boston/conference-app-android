@@ -12,6 +12,7 @@ import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.utils.loadUriInCustomTab
+import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.speaker_detail_fragment.imgv_linkedin
 import kotlinx.android.synthetic.main.speaker_detail_fragment.imgv_speaker_detail_avatar
@@ -36,6 +37,11 @@ class SpeakerDetailFragment : Fragment() {
 
         val itemData = gson.fromJson(arguments!!.getString(SpeakerEvent.SPEAKER_ITEM_ROW), SpeakerEvent::class.java)
         populateView(itemData)
+
+        if (activity is MainActivity) {
+            val mainActivity = activity as MainActivity
+            mainActivity.uncheckAllMenuItems()
+        }
     }
 
     private fun populateView(itemData: SpeakerEvent) {

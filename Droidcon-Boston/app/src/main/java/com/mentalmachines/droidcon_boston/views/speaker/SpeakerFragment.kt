@@ -18,7 +18,7 @@ import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.views.detail.SpeakerDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import kotlinx.android.synthetic.main.speaker_fragment.speaker_recycler
+import kotlinx.android.synthetic.main.speaker_fragment.*
 
 
 class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {

@@ -13,15 +13,12 @@ import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
 import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerFragment
-import kotlinx.android.synthetic.main.main_activity.drawer_layout
-import kotlinx.android.synthetic.main.main_activity.navView
-import kotlinx.android.synthetic.main.main_activity.toolbar
+import kotlinx.android.synthetic.main.main_activity.*
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-
-    private var lastFragmentTitleSelected: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +35,65 @@ class MainActivity : AppCompatActivity() {
         // If drawer is open
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             // close the drawer
-            drawer_layout.closeDrawer(Gravity.LEFT)
+            drawer_layout.closeDrawer(Gravity.START)
         } else {
             super.onBackPressed()
+
+            val manager = supportFragmentManager
+            if (manager.backStackEntryCount == 0) {
+                // special handling where user clicks on back button in a detail fragment
+                val currentFragment = manager.findFragmentById(R.id.fragment_container)
+                if (currentFragment is AgendaFragment) {
+                    if (currentFragment.isMyAgenda()) {
+                        checkNavMenuItem(getString(R.string.str_my_schedule))
+                    } else {
+                        checkNavMenuItem(getString(R.string.str_agenda))
+                    }
+                } else if (currentFragment is SpeakerFragment) {
+                    checkNavMenuItem(getString(R.string.str_speakers))
+                }
+            }
         }
+    }
+
+    private fun checkNavMenuItem(title: String) {
+        processMenuItems({ item -> item.title == title }, { item -> item.setChecked(true).isChecked })
+    }
+
+    private fun isNavItemChecked(title: String): Boolean {
+        return processMenuItems({ item -> item.title == title }, { item -> item.isChecked })
+    }
+
+    fun uncheckAllMenuItems() {
+        processMenuItems({ item -> true }, { item -> item.setChecked(false).isChecked }, true)
+    }
+
+    private fun processMenuItems(titleMatcher: (MenuItem)->Boolean,
+                                 matchFunc: (MenuItem)->Boolean,
+                                 processAll: Boolean = false): Boolean {
+        val menu = navView.menu
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            if (item.hasSubMenu()) {
+                val subMenu = item.subMenu
+                for (j in 0 until subMenu.size()) {
+                    val subMenuItem = subMenu.getItem(j)
+
+                    if (titleMatcher(subMenuItem)) {
+                        val result = matchFunc(subMenuItem)
+                        if (!processAll) {
+                            return result
+                        }
+                    }
+                }
+            } else if (titleMatcher(item)) {
+                val result = matchFunc(item)
+                if (!processAll) {
+                    return result
+                }
+            }
+        }
+        return false
     }
 
 
@@ -54,8 +106,6 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(actionBarDrawerToggle)
 
         navView.setNavigationItemSelectedListener { item ->
-
-            navView.setCheckedItem(item.itemId)
 
             //Closing drawer on item click
             drawer_layout.closeDrawers()
@@ -78,6 +128,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_speakers -> replaceFragment(getString(R.string.str_speakers))
                 R.id.nav_volunteers -> replaceFragment(getString(R.string.str_volunteers))
             }
+
+            navView.setCheckedItem(item.itemId)
+
             true
         }
 
@@ -107,10 +160,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(title: String) {
-        if (title == lastFragmentTitleSelected) {
+        if (isNavItemChecked(title)) {
             // Fragment currently selected, no action.
             return
         }
+
+        checkNavMenuItem(title)
 
         updateToolbarTitle(title)
 
@@ -140,8 +195,6 @@ class MainActivity : AppCompatActivity() {
                     // commit fragment transaction
                     .commit()
         }
-
-        lastFragmentTitleSelected = title
     }
 
     private fun updateToolbarTitle(title: String) {
