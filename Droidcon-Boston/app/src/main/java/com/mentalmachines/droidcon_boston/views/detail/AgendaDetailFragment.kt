@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 class AgendaDetailFragment : Fragment() {
 
     private lateinit var scheduleDetail: ScheduleDetail
+    private lateinit var scheduleRowItem: ScheduleRow
 
     private val firebaseHelper = FirebaseHelper.instance
 
@@ -49,15 +50,15 @@ class AgendaDetailFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemData = gson.fromJson(arguments.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow::class.java)
-        fetchDataFromFirebase(itemData)
-        populateView(itemData)
+        scheduleRowItem = gson.fromJson(arguments.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow::class.java)
+        fetchDataFromFirebase()
+        populateView()
     }
 
-    private fun populateView(itemData: ScheduleRow) {
-        tv_agenda_detail_title.text = itemData.talkTitle
-        tv_agenda_detail_room.text = resources.getString(R.string.str_agenda_detail_room, itemData.room)
-        tv_agenda_detail_time.text = resources.getString(R.string.str_agenda_detail_time, itemData.startTime, itemData.endTime)
+    private fun populateView() {
+        tv_agenda_detail_title.text = scheduleRowItem.talkTitle
+        tv_agenda_detail_room.text = resources.getString(R.string.str_agenda_detail_room, scheduleRowItem.room)
+        tv_agenda_detail_time.text = resources.getString(R.string.str_agenda_detail_time, scheduleRowItem.startTime, scheduleRowItem.endTime)
 
         fab_agenda_detail_bookmark.setOnClickListener({
 
@@ -67,7 +68,7 @@ class AgendaDetailFragment : Fragment() {
             if (nextBookmarkStatus) {
                 NotificationUtils(context).scheduleMySessionNotifications()
             } else {
-                NotificationUtils(context).cancelNotificationAlarm(itemData.id)
+                NotificationUtils(context).cancelNotificationAlarm(scheduleRowItem.id)
             }
 
             Snackbar.make(agendaDetailView,
@@ -79,28 +80,30 @@ class AgendaDetailFragment : Fragment() {
             showBookmarkStatus(scheduleDetail)
         })
 
-        populateSpeakersInformation(itemData)
+        populateSpeakersInformation(scheduleRowItem)
     }
 
-    private fun fetchDataFromFirebase(itemData: ScheduleRow) {
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (speakerSnapshot in dataSnapshot.children) {
+                val detail = speakerSnapshot.getValue(ScheduleEventDetail::class.java)
+                if (detail != null) {
+                    scheduleDetail = detail.toScheduleDetail(scheduleRowItem)
+                    showAgendaDetail(scheduleDetail)
+                }
+
+            }
+
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchDataFromFirebase() {
         firebaseHelper.speakerDatabase.orderByChild("name")
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        for (speakerSnapshot in dataSnapshot.children) {
-                            val detail = speakerSnapshot.getValue(ScheduleEventDetail::class.java)
-                            if (detail != null) {
-                                scheduleDetail = detail.toScheduleDetail(itemData)
-                                showAgendaDetail(scheduleDetail)
-                            }
-
-                        }
-
-                    }
-
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
-                    }
-                })
+                .addValueEventListener(dataListener)
     }
 
 

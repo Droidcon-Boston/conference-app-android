@@ -37,24 +37,32 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchDataFromFirebase()
     }
 
-    private fun fetchDataFromFirebase() {
-        firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val rows = ArrayList<SpeakerEvent>()
-                for (speakerSnapshot in dataSnapshot.children) {
-                    val speaker = speakerSnapshot.getValue(SpeakerEvent::class.java)
-                    if (speaker != null) {
-                        rows.add(speaker)
-                    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        firebaseHelper.speakerDatabase.removeEventListener(dataListener)
+    }
+
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val rows = ArrayList<SpeakerEvent>()
+            for (speakerSnapshot in dataSnapshot.children) {
+                val speaker = speakerSnapshot.getValue(SpeakerEvent::class.java)
+                if (speaker != null) {
+                    rows.add(speaker)
                 }
-
-                setupSpeakerAdapter(rows)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
-            }
-        })
+            setupSpeakerAdapter(rows)
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchDataFromFirebase() {
+        firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(dataListener)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
