@@ -41,6 +41,9 @@ android {
                 signingConfig signingConfigs.release
             }
         }
+        debug {
+            ext.enableCrashlytics = false
+        }
     }
 
     compileOptions {
@@ -71,8 +74,8 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$playServices"
     implementation "com.google.firebase:firebase-core:$playServices"
 
-    // Crashlytics
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+    // Crashlytics only for release builds
+    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
 
