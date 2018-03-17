@@ -78,7 +78,7 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val speakerDetailFragment = SpeakerDetailFragment()
             speakerDetailFragment.arguments = arguments
 
-            val fragmentManager = activity?.fragmentManager
+            val fragmentManager = activity?.supportFragmentManager
             fragmentManager?.beginTransaction()
                     ?.add(R.id.fragment_container, speakerDetailFragment)
                     ?.addToBackStack(null)

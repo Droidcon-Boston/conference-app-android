@@ -1,9 +1,9 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
-import android.app.Fragment
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,10 +47,10 @@ class AgendaDetailFragment : Fragment() {
         return inflater.inflate(R.layout.agenda_detail_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        scheduleRowItem = gson.fromJson(arguments.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow::class.java)
+        scheduleRowItem = gson.fromJson(arguments!!.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow::class.java)
         fetchDataFromFirebase()
         populateView()
     }
@@ -156,7 +156,7 @@ class AgendaDetailFragment : Fragment() {
 
                 Glide.with(this)
                         .load(itemData.photoUrlMap[it])
-                        .transform(CircleTransform(activity.applicationContext))
+                        .transform(CircleTransform(tempImg.context))
                         .placeholder(R.drawable.emo_im_cool)
                         .crossFade()
                         .into(tempImg)
@@ -177,9 +177,10 @@ class AgendaDetailFragment : Fragment() {
 
     private fun showBookmarkStatus(scheduleDetail: ScheduleDetail) {
         val userAgendaRepo = userAgendaRepo
+        val context = fab_agenda_detail_bookmark.context
         fab_agenda_detail_bookmark.backgroundTintList = if (userAgendaRepo.isSessionBookmarked(scheduleDetail.id))
-            ColorStateList.valueOf(ContextCompat.getColor(activity, R.color.colorAccent))
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorAccent))
         else
-            ColorStateList.valueOf(ContextCompat.getColor(activity, R.color.colorLightGray))
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorLightGray))
     }
 }

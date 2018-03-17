@@ -41,7 +41,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private var onlyMyAgenda: Boolean = false
 
     private lateinit var userAgendaRepo: UserAgendaRepo
-    private lateinit var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>
+    private var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> {
-                val fragmentManager = activity?.fragmentManager
+                val fragmentManager = activity?.supportFragmentManager
                 if (fragmentManager?.backStackEntryCount!! > 0) {
                     fragmentManager.popBackStack()
                 }
@@ -75,12 +75,19 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
         fetchScheduleData()
+
+        activity?.supportFragmentManager?.addOnBackStackChangedListener(backStackChangeListener)
+    }
+
+    private val backStackChangeListener: () -> Unit = {
+        headerAdapter?.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
         firebaseHelper.eventDatabase.removeEventListener(dataListener)
+        activity?.supportFragmentManager?.removeOnBackStackChangedListener(backStackChangeListener)
     }
 
     fun updateList() {
@@ -134,17 +141,17 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                         .thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
-        headerAdapter.addListener(this)
+        headerAdapter!!.addListener(this)
         agenda_recycler.adapter = headerAdapter
         agenda_recycler.addItemDecoration(FlexibleItemDecoration(agenda_recycler.context).withDefaultDivider())
-        headerAdapter.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
+        headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
 
         EmptyViewHelper(headerAdapter, empty_view, null,null)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
-        if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
-            val item = headerAdapter.getItem(position)
+        if (headerAdapter?.getItem(position) is ScheduleAdapterItem) {
+            val item = headerAdapter?.getItem(position)
             val itemData = item?.itemData
             if (itemData?.primarySpeakerName.isNullorEmpty()) {
                 val url = itemData?.photoUrlMap?.get(itemData.primarySpeakerName)
@@ -166,7 +173,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val agendaDetailFragment = AgendaDetailFragment()
             agendaDetailFragment.arguments = arguments
 
-            val fragmentManager = activity?.fragmentManager
+            val fragmentManager = activity?.supportFragmentManager
             fragmentManager?.beginTransaction()
                     ?.add(R.id.fragment_container, agendaDetailFragment)
                     ?.addToBackStack(null)
