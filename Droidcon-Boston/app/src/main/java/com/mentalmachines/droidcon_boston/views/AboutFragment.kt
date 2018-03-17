@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.views
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,8 @@ class AboutFragment : Fragment() {
     val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             tv_about_description.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
+
+            tv_about_description.movementMethod = LinkMovementMethod.getInstance()
         }
 
         override fun onCancelled(databaseError: DatabaseError) {

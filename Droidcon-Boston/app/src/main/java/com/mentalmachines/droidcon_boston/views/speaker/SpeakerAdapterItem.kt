@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.speaker
 
 import android.support.v7.widget.RecyclerView
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,6 +26,8 @@ class SpeakerAdapterItem internal constructor(val itemData: SpeakerEvent) :
 
         holder.name.text = itemData.name
         holder.bio.text = itemData.bio.getHtmlFormattedSpanned()
+
+        holder.bio.movementMethod = LinkMovementMethod.getInstance()
 
         val context = holder.name.context
 

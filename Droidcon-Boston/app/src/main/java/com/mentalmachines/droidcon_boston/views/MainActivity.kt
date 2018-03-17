@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun uncheckAllMenuItems() {
-        processMenuItems({ item -> true }, { item -> item.setChecked(false).isChecked }, true)
+        processMenuItems({ _ -> true }, { item -> item.setChecked(false).isChecked }, true)
     }
 
     private fun processMenuItems(titleMatcher: (MenuItem)->Boolean,

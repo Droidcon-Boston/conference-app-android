@@ -3,6 +3,7 @@ package com.mentalmachines.droidcon_boston.views
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,8 @@ class CocFragment : Fragment() {
     val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             tv_coc.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
+
+            tv_coc.movementMethod = LinkMovementMethod.getInstance()
         }
 
         override fun onCancelled(databaseError: DatabaseError) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -179,6 +180,8 @@ class AgendaDetailFragment : Fragment() {
 
         tv_agenda_detail_title.text = scheduleDetail.listRow.talkTitle
         tv_agenda_detail_description.text = scheduleDetail.listRow.talkDescription.getHtmlFormattedSpanned()
+
+        tv_agenda_detail_description.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun showBookmarkStatus(scheduleDetail: ScheduleDetail) {
