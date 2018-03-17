@@ -18,7 +18,7 @@ import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.views.detail.SpeakerDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import kotlinx.android.synthetic.main.speaker_fragment.speaker_recycler
+import kotlinx.android.synthetic.main.speaker_fragment.*
 
 
 class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
@@ -37,27 +37,35 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchDataFromFirebase()
     }
 
-    private fun fetchDataFromFirebase() {
-        firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val rows = ArrayList<SpeakerEvent>()
-                for (speakerSnapshot in dataSnapshot.children) {
-                    val speaker = speakerSnapshot.getValue(SpeakerEvent::class.java)
-                    if (speaker != null) {
-                        rows.add(speaker)
-                    }
-                }
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-                setupSpeakerAdapter(rows)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
-            }
-        })
+        firebaseHelper.speakerDatabase.removeEventListener(dataListener)
     }
 
-    override fun onItemClick(position: Int): Boolean {
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val rows = ArrayList<SpeakerEvent>()
+            for (speakerSnapshot in dataSnapshot.children) {
+                val speaker = speakerSnapshot.getValue(SpeakerEvent::class.java)
+                if (speaker != null) {
+                    rows.add(speaker)
+                }
+            }
+
+            setupSpeakerAdapter(rows)
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchDataFromFirebase() {
+        firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(dataListener)
+    }
+
+    override fun onItemClick(view: View, position: Int): Boolean {
 
         if (speakerAdapter.getItem(position) is SpeakerAdapterItem) {
             val item = speakerAdapter.getItem(position)
@@ -70,7 +78,7 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val speakerDetailFragment = SpeakerDetailFragment()
             speakerDetailFragment.arguments = arguments
 
-            val fragmentManager = activity?.fragmentManager
+            val fragmentManager = activity?.supportFragmentManager
             fragmentManager?.beginTransaction()
                     ?.add(R.id.fragment_container, speakerDetailFragment)
                     ?.addToBackStack(null)

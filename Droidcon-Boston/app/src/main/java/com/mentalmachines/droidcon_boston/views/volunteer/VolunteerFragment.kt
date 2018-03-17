@@ -37,27 +37,35 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchDataFromFirebase()
     }
 
-    private fun fetchDataFromFirebase() {
-        firebaseHelper.volunteerDatabase.orderByChild("firstName").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val rows = ArrayList<VolunteerEvent>()
-                for (volunteerSnapshot in dataSnapshot.children) {
-                    val volunteer = volunteerSnapshot.getValue(VolunteerEvent::class.java)
-                    if (volunteer != null) {
-                        rows.add(volunteer)
-                    }
-                }
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-                setupVolunteerAdapter(rows)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
-            }
-        })
+        firebaseHelper.volunteerDatabase.removeEventListener(dataListener)
     }
 
-    override fun onItemClick(position: Int): Boolean {
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val rows = ArrayList<VolunteerEvent>()
+            for (volunteerSnapshot in dataSnapshot.children) {
+                val volunteer = volunteerSnapshot.getValue(VolunteerEvent::class.java)
+                if (volunteer != null) {
+                    rows.add(volunteer)
+                }
+            }
+
+            setupVolunteerAdapter(rows)
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchDataFromFirebase() {
+        firebaseHelper.volunteerDatabase.orderByChild("firstName").addValueEventListener(dataListener)
+    }
+
+    override fun onItemClick(view: View, position: Int): Boolean {
         val item = volunteerAdapter.getItem(position)
         if (item is VolunteerAdapterItem && !item.itemData.twitter.isEmpty()) {
             val context = activity as Context

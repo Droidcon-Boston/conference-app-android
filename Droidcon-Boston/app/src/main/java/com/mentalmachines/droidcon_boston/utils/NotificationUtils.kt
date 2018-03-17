@@ -96,10 +96,14 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                     }
                 }
                 enableBootReceiver(context, hasBookmarkedEvents)
+
+                firebaseHelper.eventDatabase.removeEventListener(this)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("Notification", "scheduleQuery:onCancelled", databaseError.toException())
+
+                firebaseHelper.eventDatabase.removeEventListener(this)
             }
         })
     }

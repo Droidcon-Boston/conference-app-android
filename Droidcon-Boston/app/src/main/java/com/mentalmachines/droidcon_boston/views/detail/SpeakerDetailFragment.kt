@@ -1,7 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
-import android.app.Fragment
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +12,7 @@ import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.utils.loadUriInCustomTab
+import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.speaker_detail_fragment.imgv_linkedin
 import kotlinx.android.synthetic.main.speaker_detail_fragment.imgv_speaker_detail_avatar
@@ -31,11 +32,16 @@ class SpeakerDetailFragment : Fragment() {
         return inflater.inflate(R.layout.speaker_detail_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemData = gson.fromJson(arguments.getString(SpeakerEvent.SPEAKER_ITEM_ROW), SpeakerEvent::class.java)
+        val itemData = gson.fromJson(arguments!!.getString(SpeakerEvent.SPEAKER_ITEM_ROW), SpeakerEvent::class.java)
         populateView(itemData)
+
+        if (activity is MainActivity) {
+            val mainActivity = activity as MainActivity
+            mainActivity.uncheckAllMenuItems()
+        }
     }
 
     private fun populateView(itemData: SpeakerEvent) {
@@ -46,7 +52,7 @@ class SpeakerDetailFragment : Fragment() {
         val twitterHandle = itemData.socialProfiles?.get("twitter")
         if (!twitterHandle.isNullOrEmpty()) {
             imgv_twitter.setOnClickListener({
-                activity.loadUriInCustomTab(String.format("%s%s", resources.getString(R.string.twitter_link), twitterHandle))
+                activity?.loadUriInCustomTab(String.format("%s%s", resources.getString(R.string.twitter_link), twitterHandle))
             })
         } else {
             imgv_twitter.visibility = View.GONE
@@ -56,7 +62,7 @@ class SpeakerDetailFragment : Fragment() {
         val linkedinHandle = itemData.socialProfiles?.get("linkedIn")
         if (!linkedinHandle.isNullOrEmpty()) {
             imgv_linkedin.setOnClickListener({
-                activity.loadUriInCustomTab(String.format("%s%s", resources.getString(R.string.linkedin_profile_link), linkedinHandle))
+                activity?.loadUriInCustomTab(String.format("%s%s", resources.getString(R.string.linkedin_profile_link), linkedinHandle))
             })
         } else {
             imgv_linkedin.visibility = View.GONE
@@ -64,7 +70,7 @@ class SpeakerDetailFragment : Fragment() {
 
         Glide.with(activity)
                 .load(itemData.pictureUrl)
-                .transform(CircleTransform(activity))
+                .transform(CircleTransform(imgv_speaker_detail_avatar.context))
                 .placeholder(R.drawable.emo_im_cool)
                 .crossFade()
                 .into(imgv_speaker_detail_avatar)

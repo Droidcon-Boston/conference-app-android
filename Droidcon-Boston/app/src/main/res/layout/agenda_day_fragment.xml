@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!-- FrameLayout is for FlexyAdapter sticky adapter -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FrameLayout is for FlexyAdapter sticky adapter -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="UselessParent">
-
-    <com.dinuscxj.refresh.RecyclerRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                android:id="@+id/refresh_layout"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/agenda_recycler"
@@ -17,6 +12,6 @@
         android:scrollbars="vertical"
         android:background="@color/colorBackground"/>
 
-    </com.dinuscxj.refresh.RecyclerRefreshLayout>
+    <include layout="@layout/empty_view"/>
 
 </FrameLayout>

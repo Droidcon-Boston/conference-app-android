@@ -31,6 +31,8 @@ open class FirebaseDatabase {
             var endTime: String = "",
             var trackSortOrder: Int = 0) {
 
+        val conferenceTZ = ZoneId.of( "America/New_York" )
+
         fun getLocalStartTime(): LocalDateTime {
             return ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime()
         }
@@ -41,8 +43,9 @@ open class FirebaseDatabase {
         }
 
         fun toScheduleRow(scheduleId: String): ScheduleRow {
+
             val row = ScheduleRow()
-            val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
+            val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(conferenceTZ)
             row.utcStartTimeString = startTime
 
             if (startDateTime != null) {
@@ -52,7 +55,7 @@ open class FirebaseDatabase {
                 row.startTime = timeFormat.format(startDateTime).toLowerCase()
             }
 
-            val endDateTime = ZonedDateTime.parse(endTime).withZoneSameInstant(ZoneId.systemDefault())
+            val endDateTime = ZonedDateTime.parse(endTime).withZoneSameInstant(conferenceTZ)
             if (endDateTime != null) {
                 val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
                 row.endTime = timeFormat.format(endDateTime).toLowerCase()
@@ -90,7 +93,6 @@ open class FirebaseDatabase {
 
     data class VolunteerEvent(
             val twitter: String = "",
-            val email: String = "",
             val pictureUrl: String = "",
             var position: String = "",
             var firstName: String = "",

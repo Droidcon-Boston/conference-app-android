@@ -26,7 +26,7 @@ class AgendaFragment : Fragment() {
 
     private fun setupDayPager(savedInstanceState: Bundle?) {
         viewpager.adapter = AgendaDayPagerAdapter(childFragmentManager,
-                arguments?.getBoolean(ARG_MY_AGENDA) ?: false)
+                isMyAgenda())
 
         tablayout.setupWithViewPager(viewpager)
 
@@ -42,6 +42,8 @@ class AgendaFragment : Fragment() {
             }
         }
     }
+
+    fun isMyAgenda() = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
