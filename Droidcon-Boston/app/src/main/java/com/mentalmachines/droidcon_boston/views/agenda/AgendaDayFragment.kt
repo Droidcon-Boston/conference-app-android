@@ -5,32 +5,30 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.dinuscxj.refresh.RecyclerRefreshLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import kotlinx.android.synthetic.main.agenda_day_fragment.agenda_recycler
-import kotlinx.android.synthetic.main.agenda_day_fragment.refresh_layout
-import java.util.ArrayList
-import java.util.HashMap
+import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
+import kotlinx.android.synthetic.main.agenda_day_fragment.*
+import kotlinx.android.synthetic.main.empty_view.*
+import java.util.*
+
 
 /**
  * Fragment for an agenda day
@@ -43,7 +41,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private var onlyMyAgenda: Boolean = false
 
     private lateinit var userAgendaRepo: UserAgendaRepo
-    private lateinit var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>
+    private var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +52,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> {
-                val fragmentManager = activity?.fragmentManager
+                val fragmentManager = activity?.supportFragmentManager
                 if (fragmentManager?.backStackEntryCount!! > 0) {
                     fragmentManager.popBackStack()
                 }
@@ -76,48 +74,52 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
-        fetchScheduleData(dayFilter, onlyMyAgenda)
+        fetchScheduleData()
 
-        refresh_layout.setRefreshStyle(RecyclerRefreshLayout.RefreshStyle.NORMAL)
+        activity?.supportFragmentManager?.addOnBackStackChangedListener(backStackChangeListener)
+    }
 
-        refresh_layout.setOnRefreshListener {
-            headerAdapter.clear()
-            headerAdapter.notifyDataSetChanged()
-            refresh_layout.setRefreshing(true)
-            fetchScheduleData(dayFilter, onlyMyAgenda)
-            Toast.makeText(activity, "Refreshed Agenda", Toast.LENGTH_SHORT).show()
-        }
+    private val backStackChangeListener: () -> Unit = {
+        headerAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        firebaseHelper.eventDatabase.removeEventListener(dataListener)
+        activity?.supportFragmentManager?.removeOnBackStackChangedListener(backStackChangeListener)
     }
 
     fun updateList() {
         agenda_recycler.adapter.notifyDataSetChanged()
     }
 
-    private fun fetchScheduleData(dayFilter: String?, onlyMyAgenda: Boolean) {
-        firebaseHelper.eventDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val rows = ArrayList<ScheduleRow>()
-                for (roomSnapshot in dataSnapshot.children) {
-                    val key = roomSnapshot.key
-                    val data = roomSnapshot.getValue(ScheduleEvent::class.java)
-                    Log.d(TAG, "Event: " + data)
-                    if (data != null) {
-                        val scheduleRow = data.toScheduleRow(key)
-                        if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(scheduleRow.id))) {
-                            rows.add(scheduleRow)
-                        }
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val rows = ArrayList<ScheduleRow>()
+            for (roomSnapshot in dataSnapshot.children) {
+                val key = roomSnapshot.key
+                val data = roomSnapshot.getValue(ScheduleEvent::class.java)
+                Log.d(TAG, "Event: $data")
+                if (data != null) {
+                    val scheduleRow = data.toScheduleRow(key)
+                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda
+                                    || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(scheduleRow.id))) {
+                        rows.add(scheduleRow)
                     }
                 }
-
-                refresh_layout.setRefreshing(false)
-                setupHeaderAdapter(rows)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(TAG, "scheduleQuery:onCancelled", databaseError.toException())
-            }
-        })
+            setupHeaderAdapter(rows)
+        }
 
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.w(TAG, "scheduleQuery:onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchScheduleData() {
+        firebaseHelper.eventDatabase.addValueEventListener(dataListener)
     }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
@@ -139,16 +141,17 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                         .thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
-        headerAdapter.addListener(this)
+        headerAdapter!!.addListener(this)
         agenda_recycler.adapter = headerAdapter
         agenda_recycler.addItemDecoration(FlexibleItemDecoration(agenda_recycler.context).withDefaultDivider())
-        headerAdapter.expandItemsAtStartUp()
-                .setDisplayHeadersAtStartUp(true)
+        headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
+
+        EmptyViewHelper(headerAdapter, empty_view, null,null)
     }
 
-    override fun onItemClick(position: Int): Boolean {
-        if (headerAdapter.getItem(position) is ScheduleAdapterItem) {
-            val item = headerAdapter.getItem(position)
+    override fun onItemClick(view: View, position: Int): Boolean {
+        if (headerAdapter?.getItem(position) is ScheduleAdapterItem) {
+            val item = headerAdapter?.getItem(position)
             val itemData = item?.itemData
             if (itemData?.primarySpeakerName.isNullorEmpty()) {
                 val url = itemData?.photoUrlMap?.get(itemData.primarySpeakerName)
@@ -170,7 +173,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val agendaDetailFragment = AgendaDetailFragment()
             agendaDetailFragment.arguments = arguments
 
-            val fragmentManager = activity?.fragmentManager
+            val fragmentManager = activity?.supportFragmentManager
             fragmentManager?.beginTransaction()
                     ?.add(R.id.fragment_container, agendaDetailFragment)
                     ?.addToBackStack(null)
@@ -183,8 +186,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     companion object {
 
         private val TAG = AgendaDayFragment::class.java.name
-        private val gson = Gson()
-
         private const val ARG_DAY = "day"
         private const val ARG_MY_AGENDA = "my_agenda"
 

@@ -20,7 +20,8 @@ class Schedule {
             var room: String = "",
             var date: String = "",
             var trackSortOrder: Int = 0,
-            var photoUrlMap: HashMap<String, String> = HashMap(0)) {
+            var photoUrlMap: HashMap<String, String> = HashMap(0),
+            var isOver: Boolean = false) {
 
         fun hasSpeaker(): Boolean = speakerNames.isNotEmpty()
 

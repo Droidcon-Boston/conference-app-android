@@ -1,5 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -12,11 +14,11 @@ import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
+import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 /**
  * Used for displaying the schedule with sticky headers with optional day filtering
@@ -25,7 +27,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
                                                header: ScheduleAdapterItemHeader) :
         AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
-    var startTime: Date = Date()
+    private var startTime: Date = Date()
 
     var roomSortOrder = itemData.trackSortOrder
 
@@ -59,23 +61,26 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         return R.layout.schedule_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<*>): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
         return ScheduleAdapterItem.ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<*>,
-                                holder: ScheduleAdapterItem.ViewHolder,
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
+                                holder: ViewHolder,
                                 position: Int,
-                                payloads: List<*>) {
+                                payloads: MutableList<Any>) {
 
+        val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
         if (itemData.speakerNames.isEmpty()) {
             // For "Lunch" and "Registration" Sessions
             holder.avatarLayout.visibility = View.GONE
-            holder.bookmarkIndicator.visibility = View.GONE
-
             holder.speaker.visibility = View.GONE
             holder.time.visibility = View.GONE
 
+            holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
+                View.VISIBLE
+            else
+                View.INVISIBLE
             holder.sessionLayout.visibility = View.VISIBLE
             holder.title.text = itemData.talkTitle
             holder.room.text = itemData.room
@@ -88,8 +93,9 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         } else {
             // For normal talks/sessions with speakers
-            holder.sessionLayout.visibility = View.VISIBLE
-            holder.avatar.visibility = View.VISIBLE
+            holder.avatarLayout.visibility = View.VISIBLE
+            holder.speaker.visibility = View.VISIBLE
+            holder.time.visibility = View.VISIBLE
 
             holder.title.text = itemData.talkTitle
             holder.time.text = String.format("%s - %s", itemData.startTime, itemData.endTime)
@@ -104,10 +110,10 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             Glide.with(context)
                     .load(itemData.photoUrlMap[itemData.primarySpeakerName])
                     .transform(CircleTransform(context))
+                    .placeholder(R.drawable.emo_im_cool)
                     .crossFade()
                     .into(holder.avatar)
 
-            val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
             holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
                 View.VISIBLE
             else
@@ -116,6 +122,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             addBackgroundRipple(holder)
         }
 
+        val availableColor = if (itemData.isOver) R.color.colorGray else R.color.colorAccent
+        holder.availableIndicator.setBackgroundColor(ContextCompat.getColor(holder.availableIndicator.context, availableColor))
     }
 
     private fun addBackgroundRipple(holder: ViewHolder) {
@@ -129,6 +137,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
     class ViewHolder : FlexibleViewHolder {
 
         lateinit var rootLayout: View
+
+        lateinit var availableIndicator: ImageView
 
         lateinit var bookmarkIndicator: ImageView
 
@@ -160,6 +170,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         private fun findViews(parent: View) {
             rootLayout = parent.findViewById(R.id.scheduleRootLayout)
+            availableIndicator = parent.findViewById(R.id.available_indicator)
             bookmarkIndicator = parent.findViewById(R.id.bookmark_indicator)
             avatar = parent.findViewById(R.id.speaker_image)
             avatarLayout = parent.findViewById(R.id.avatar_layout)

@@ -1,15 +1,21 @@
 package com.mentalmachines.droidcon_boston.data
 
+import android.content.Context
+import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
+import com.mentalmachines.droidcon_boston.utils.NotificationUtils
+import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 
 open class FirebaseDatabase {
-
     data class ScheduleEvent(
+            private val SESSION_REMINDER_MINUTES_BEFORE: Long = 10,
+
             var primarySpeakerName: String = "",
             var startTime: String = "",
             var name: String = "",
@@ -25,9 +31,21 @@ open class FirebaseDatabase {
             var endTime: String = "",
             var trackSortOrder: Int = 0) {
 
+        val conferenceTZ = ZoneId.of( "America/New_York" )
+
+        fun getLocalStartTime(): LocalDateTime {
+            return ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime()
+        }
+
+        fun scheduleNotification(context: Context, eventId: String) {
+            NotificationUtils(context).scheduleNotificationAlarm(getLocalStartTime().minusMinutes(SESSION_REMINDER_MINUTES_BEFORE),
+                    eventId, context.getString(R.string.str_session_start_soon, name), description.getHtmlFormattedSpanned().toString())
+        }
+
         fun toScheduleRow(scheduleId: String): ScheduleRow {
+
             val row = ScheduleRow()
-            val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
+            val startDateTime = ZonedDateTime.parse(startTime).withZoneSameInstant(conferenceTZ)
             row.utcStartTimeString = startTime
 
             if (startDateTime != null) {
@@ -37,10 +55,14 @@ open class FirebaseDatabase {
                 row.startTime = timeFormat.format(startDateTime).toLowerCase()
             }
 
-            val endDateTime = ZonedDateTime.parse(endTime).withZoneSameInstant(ZoneId.systemDefault())
+            val endDateTime = ZonedDateTime.parse(endTime).withZoneSameInstant(conferenceTZ)
             if (endDateTime != null) {
                 val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
                 row.endTime = timeFormat.format(endDateTime).toLowerCase()
+
+                if (ZonedDateTime.now().isAfter(endDateTime)) {
+                    row.isOver = true
+                }
             }
 
             row.id = scheduleId
@@ -58,14 +80,25 @@ open class FirebaseDatabase {
     }
 
     data class SpeakerEvent(
-            val socialProfiles: HashMap<String, String>? = HashMap(0),
             val pictureUrl: String = "",
+            val socialProfiles: HashMap<String, String>? = HashMap(0),
             var bio: String = "",
+            var title: String = "",
+            var org: String = "",
             var name: String = "") {
-
+        companion object {
+            var SPEAKER_ITEM_ROW = "speaker_item_row"
+        }
     }
 
-    data class ScheduleEventDetail (
+    data class VolunteerEvent(
+            val twitter: String = "",
+            val pictureUrl: String = "",
+            var position: String = "",
+            var firstName: String = "",
+            var lastName: String = "")
+
+    data class ScheduleEventDetail(
             val socialProfiles: HashMap<String, String>? = HashMap(0),
             var bio: String = "",
             var title: String = "",

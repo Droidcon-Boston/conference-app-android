@@ -1,11 +1,8 @@
 package com.mentalmachines.droidcon_boston.views.speaker
 
 
-import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,13 +12,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
-import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.SpeakerEvent
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
+import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
+import com.mentalmachines.droidcon_boston.views.detail.SpeakerDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import kotlinx.android.synthetic.main.speaker_fragment.speaker_recycler
+import kotlinx.android.synthetic.main.speaker_fragment.*
 
 
 class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
@@ -40,42 +37,55 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchDataFromFirebase()
     }
 
-    private fun fetchDataFromFirebase() {
-        firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val rows = ArrayList<SpeakerEvent>()
-                for (speakerSnapshot in dataSnapshot.children) {
-                    val speaker = speakerSnapshot.getValue(SpeakerEvent::class.java)
-                    if (speaker != null) {
-                        rows.add(speaker)
-                    }
-                }
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-                setupSpeakerAdapter(rows)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
-            }
-        })
+        firebaseHelper.speakerDatabase.removeEventListener(dataListener)
     }
 
-    override fun onItemClick(position: Int): Boolean {
-        val item = speakerAdapter.getItem(position)
-        if (item is SpeakerAdapterItem) {
-            val context = activity as Context
-            val simpleAlert = AlertDialog.Builder(context).create()
-            simpleAlert.setTitle(item.itemData.name)
-            simpleAlert.setMessage(item.itemData.bio.getHtmlFormattedSpanned())
-            simpleAlert.setButton(AlertDialog.BUTTON_POSITIVE, getString(string.close), { dialogInterface: DialogInterface, i: Int ->
-                simpleAlert.dismiss()
-            })
-            simpleAlert.show()
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val rows = ArrayList<SpeakerEvent>()
+            for (speakerSnapshot in dataSnapshot.children) {
+                val speaker = speakerSnapshot.getValue(SpeakerEvent::class.java)
+                if (speaker != null) {
+                    rows.add(speaker)
+                }
+            }
 
-            return false
+            setupSpeakerAdapter(rows)
         }
 
-        return true // propagate.
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
+        }
+    }
+
+    private fun fetchDataFromFirebase() {
+        firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(dataListener)
+    }
+
+    override fun onItemClick(view: View, position: Int): Boolean {
+
+        if (speakerAdapter.getItem(position) is SpeakerAdapterItem) {
+            val item = speakerAdapter.getItem(position)
+            val itemData = item?.itemData
+
+            val arguments = Bundle()
+
+            arguments.putString(SpeakerEvent.SPEAKER_ITEM_ROW, gson.toJson(itemData, SpeakerEvent::class.java))
+
+            val speakerDetailFragment = SpeakerDetailFragment()
+            speakerDetailFragment.arguments = arguments
+
+            val fragmentManager = activity?.supportFragmentManager
+            fragmentManager?.beginTransaction()
+                    ?.add(R.id.fragment_container, speakerDetailFragment)
+                    ?.addToBackStack(null)
+                    ?.commit()
+        }
+
+        return true
     }
 
     private fun setupSpeakerAdapter(rows: ArrayList<SpeakerEvent>) {

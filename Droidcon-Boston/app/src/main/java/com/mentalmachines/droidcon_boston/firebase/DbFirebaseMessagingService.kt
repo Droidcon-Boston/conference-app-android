@@ -16,11 +16,12 @@ class DbFirebaseMessagingService : FirebaseMessagingService() {
             var bodyStr: String? = "NA"
 
             // Check if message contains a data payload.
-            if (payloadMap.size > 0) {
+            if (payloadMap.isNotEmpty()) {
                 Log.d(TAG, "Payload: ")
                 for (key in payloadMap.keys) {
                     Log.d(TAG, "Key: " + key + ", Value: " + payloadMap[key])
                 }
+                NotificationUtils(applicationContext).scheduleMySessionNotifications()
             }
 
             // Check if message contains a notification payload.

@@ -28,16 +28,23 @@ class AboutFragment : Fragment() {
         fetchDataFromFirebase()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        firebaseHelper.aboutDatabase.removeEventListener(dataListener)
+    }
+
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            tv_about_description.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "onCancelled", databaseError.toException())
+        }
+    }
+
     private fun fetchDataFromFirebase() {
-        firebaseHelper.aboutDatabase.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                tv_about_description.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(javaClass.canonicalName, "onCancelled", databaseError.toException())
-            }
-        })
-
+        firebaseHelper.aboutDatabase.addValueEventListener(dataListener)
     }
 }

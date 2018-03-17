@@ -29,16 +29,23 @@ class CocFragment : Fragment() {
         fetchDataFromFirebase()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        firebaseHelper.cocDatabase.removeEventListener(dataListener)
+    }
+
+    val dataListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            tv_coc.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e(javaClass.canonicalName, "onCancelled", databaseError.toException())
+        }
+    }
+
     private fun fetchDataFromFirebase() {
-        firebaseHelper.cocDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                tv_coc.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(javaClass.canonicalName, "onCancelled", databaseError.toException())
-            }
-        })
-
+        firebaseHelper.cocDatabase.addValueEventListener(dataListener)
     }
 }

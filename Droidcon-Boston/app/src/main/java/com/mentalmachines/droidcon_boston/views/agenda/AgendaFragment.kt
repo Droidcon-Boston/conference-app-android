@@ -26,7 +26,7 @@ class AgendaFragment : Fragment() {
 
     private fun setupDayPager(savedInstanceState: Bundle?) {
         viewpager.adapter = AgendaDayPagerAdapter(childFragmentManager,
-                arguments?.getBoolean(ARG_MY_AGENDA) ?: false)
+                isMyAgenda())
 
         tablayout.setupWithViewPager(viewpager)
 
@@ -43,6 +43,8 @@ class AgendaFragment : Fragment() {
         }
     }
 
+    fun isMyAgenda() = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(TAB_POSITION, tablayout.selectedTabPosition)
@@ -50,9 +52,9 @@ class AgendaFragment : Fragment() {
 
     companion object {
 
-        val TAB_POSITION = "POSITION"
+        const val TAB_POSITION = "POSITION"
 
-        private val ARG_MY_AGENDA = "my_agenda"
+        private const val ARG_MY_AGENDA = "my_agenda"
 
         fun newInstance() = newInstance(false)
         fun newInstanceMySchedule() = newInstance(true)
