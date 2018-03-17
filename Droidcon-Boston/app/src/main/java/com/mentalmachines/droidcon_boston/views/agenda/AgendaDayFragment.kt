@@ -80,7 +80,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private val backStackChangeListener: () -> Unit = {
-        headerAdapter?.notifyDataSetChanged()
+        if (onlyMyAgenda) {
+            fetchScheduleData()
+        } else {
+            headerAdapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onDestroyView() {
@@ -150,11 +154,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
-        if (headerAdapter?.getItem(position) is ScheduleAdapterItem) {
-            val item = headerAdapter?.getItem(position)
-            val itemData = item?.itemData
-            if (itemData?.primarySpeakerName.isNullorEmpty()) {
-                val url = itemData?.photoUrlMap?.get(itemData.primarySpeakerName)
+        val adapterItem = try { headerAdapter?.getItem(position) } catch (e: Exception) { null }
+        if (adapterItem is ScheduleAdapterItem) {
+            val itemData = adapterItem.itemData
+            if (itemData.primarySpeakerName.isNullorEmpty()) {
+                val url = itemData.photoUrlMap.get(itemData.primarySpeakerName)
 
                 if (!url.isNullorEmpty()) {
                     // event where info URL is in the photoUrls string
