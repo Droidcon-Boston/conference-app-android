@@ -88,10 +88,6 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
 
-    implementation('com.twitter.sdk.android:twitter:2.3.2@aar') {
-        transitive = true
-    }
-
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
