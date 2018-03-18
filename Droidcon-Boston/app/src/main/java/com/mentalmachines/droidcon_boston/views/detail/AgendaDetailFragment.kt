@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.views.detail
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -29,13 +31,21 @@ import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
-import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
 
 class AgendaDetailFragment : Fragment() {
 
     private lateinit var scheduleDetail: ScheduleDetail
     private lateinit var scheduleRowItem: ScheduleRow
+    private lateinit var tv_agenda_detail_title: TextView
+    private lateinit var tv_agenda_detail_room: TextView
+    private lateinit var tv_agenda_detail_time: TextView
+    private lateinit var v_agenda_detail_speaker_divider: View
+    private lateinit var tv_agenda_detail_speaker_name: TextView
+    private lateinit var tv_agenda_detail_speaker_title: TextView
+    private lateinit var tv_agenda_detail_description: TextView
+    private lateinit var fab_agenda_detail_bookmark: FloatingActionButton
+    private lateinit var agendaDetailView: RelativeLayout
 
     private val firebaseHelper = FirebaseHelper.instance
 
@@ -51,6 +61,8 @@ class AgendaDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews(view)
+
 
         scheduleRowItem = gson.fromJson(arguments!!.getString(Schedule.SCHEDULE_ITEM_ROW), ScheduleRow::class.java)
         fetchDataFromFirebase()
@@ -60,6 +72,18 @@ class AgendaDetailFragment : Fragment() {
             val mainActivity = activity as MainActivity
             mainActivity.uncheckAllMenuItems()
         }
+    }
+
+    private fun initViews(view: View) {
+        tv_agenda_detail_title = view.findViewById(R.id.tv_agenda_detail_title)
+        tv_agenda_detail_room = view.findViewById(R.id.tv_agenda_detail_room)
+        tv_agenda_detail_time = view.findViewById(R.id.tv_agenda_detail_time)
+        fab_agenda_detail_bookmark = view.findViewById(R.id.fab_agenda_detail_bookmark)
+        agendaDetailView = view.findViewById(R.id.agendaDetailView)
+        tv_agenda_detail_speaker_name = view.findViewById(R.id.tv_agenda_detail_speaker_name)
+        v_agenda_detail_speaker_divider = view.findViewById(R.id.v_agenda_detail_speaker_divider)
+        tv_agenda_detail_speaker_title = view.findViewById(R.id.tv_agenda_detail_speaker_title)
+        tv_agenda_detail_description = view.findViewById(R.id.tv_agenda_detail_description)
     }
 
     private fun populateView() {
