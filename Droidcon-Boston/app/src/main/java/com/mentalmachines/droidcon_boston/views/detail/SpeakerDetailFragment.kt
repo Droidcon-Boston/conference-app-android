@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.views.detail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,8 @@ class SpeakerDetailFragment : Fragment() {
         tv_speaker_detail_name.text = itemData.name
         tv_speaker_detail_designation.text = String.format("%s \n@ %s", itemData.title, itemData.org)
         tv_speaker_detail_description.text = itemData.bio.getHtmlFormattedSpanned()
+
+        tv_speaker_detail_description.movementMethod = LinkMovementMethod.getInstance()
 
         val twitterHandle = itemData.socialProfiles?.get("twitter")
         if (!twitterHandle.isNullOrEmpty()) {

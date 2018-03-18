@@ -10,8 +10,8 @@ android {
         applicationId "com.mentalmachines.droidcon_boston"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 10
-        versionName "2.0.2"
+        versionCode 12
+        versionName "2.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables {
@@ -40,6 +40,9 @@ android {
             if (rootProject.file('upload.properties').exists()) {
                 signingConfig signingConfigs.release
             }
+        }
+        debug {
+            ext.enableCrashlytics = false
         }
     }
 
@@ -71,8 +74,8 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$playServices"
     implementation "com.google.firebase:firebase-core:$playServices"
 
-    // Crashlytics
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+    // Crashlytics only for release builds
+    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
 
