@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -25,8 +26,6 @@ import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
-import kotlinx.android.synthetic.main.agenda_day_fragment.*
-import kotlinx.android.synthetic.main.empty_view.*
 import java.util.*
 
 
@@ -42,6 +41,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private lateinit var userAgendaRepo: UserAgendaRepo
     private var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>? = null
+
+    private lateinit var agendaRecyler: RecyclerView
+    private lateinit var emptyStateView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +72,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        agenda_recycler.layoutManager = LinearLayoutManager(activity?.applicationContext)
+        // NOTE: Kotlin Extensions' agenda_vew is null in setupHeaderAdapter sporadically, so do this old school
+        agendaRecyler = view.findViewById(R.id.agenda_recycler)
+        emptyStateView = view.findViewById(R.id.empty_view)
+
+        agendaRecyler.layoutManager = LinearLayoutManager(activity?.applicationContext)
 
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
@@ -95,7 +101,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     fun updateList() {
-        agenda_recycler.adapter.notifyDataSetChanged()
+        agendaRecyler.adapter.notifyDataSetChanged()
     }
 
     val dataListener: ValueEventListener = object : ValueEventListener {
@@ -146,11 +152,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         headerAdapter = FlexibleAdapter(sortedItems)
         headerAdapter!!.addListener(this)
-        agenda_recycler.adapter = headerAdapter
-        agenda_recycler.addItemDecoration(FlexibleItemDecoration(agenda_recycler.context).withDefaultDivider())
+        agendaRecyler.adapter = headerAdapter
+        agendaRecyler.addItemDecoration(FlexibleItemDecoration(agendaRecyler.context).withDefaultDivider())
         headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
 
-        EmptyViewHelper(headerAdapter, empty_view, null,null)
+        EmptyViewHelper(headerAdapter, emptyStateView, null,null)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
