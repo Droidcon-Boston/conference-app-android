@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import com.mentalmachines.droidcon_boston.R
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
@@ -17,8 +18,12 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
-        Handler().postDelayed(this::fadeImage, SPLASH_DURATION - FADE_DURATION)
-        Handler().postDelayed(this::startMainActivity, SPLASH_DURATION)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Handler().postDelayed(this::fadeImage, SPLASH_DURATION)
     }
 
     private fun startMainActivity() {
@@ -31,18 +36,23 @@ class SplashActivity : AppCompatActivity() {
     private fun fadeImage() {
         val a = AlphaAnimation(1.00f, 0.00f)
 
+        a.interpolator = AccelerateDecelerateInterpolator()
         a.duration = FADE_DURATION
+
         a.setAnimationListener(object : AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationRepeat(animation: Animation) {}
-            override fun onAnimationEnd(animation: Animation) = logo_text.setVisibility(View.GONE)
+            override fun onAnimationEnd(animation: Animation) {
+                logo_text.setVisibility(View.GONE)
+                startMainActivity()
+            }
         })
 
         logo_text.startAnimation(a)
     }
 
     companion object {
-        val FADE_DURATION: Long = 400
-        val SPLASH_DURATION: Long = 1100
+        val FADE_DURATION: Long = 750
+        val SPLASH_DURATION: Long = 1500
     }
 }
