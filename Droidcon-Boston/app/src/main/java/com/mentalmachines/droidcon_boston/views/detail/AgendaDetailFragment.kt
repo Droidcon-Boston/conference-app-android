@@ -26,6 +26,7 @@ import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
+import com.mentalmachines.droidcon_boston.utils.convertDptoPx
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
@@ -121,7 +122,11 @@ class AgendaDetailFragment : Fragment() {
         }
         else -> {
             var speakerNames = ""
-            var marginValue = 55
+            val imgViewSize = context?.convertDptoPx(80) ?: 230
+            var marginValue = context?.convertDptoPx(16) ?: 55
+            val offsetImgView = context?.convertDptoPx(65) ?: 200
+            val defaultLeftMargin = context?.convertDptoPx(16) ?: 16
+
             itemData.speakerNames.forEach {
                 val orgName: String? = itemData.speakerNameToOrgName[it]
                 // append org name to speaker name
@@ -146,16 +151,16 @@ class AgendaDetailFragment : Fragment() {
 
                 // Add an imageview to the relative layout
                 val tempImg = ImageView(activity)
-                val lp = RelativeLayout.LayoutParams(230, 230)
+                val lp = RelativeLayout.LayoutParams(imgViewSize, imgViewSize)
                 if (it == itemData.speakerNames.first()) {
-                    lp.setMargins(55, 0, 0, 16)
+                    lp.setMargins(marginValue, 0, 0, defaultLeftMargin)
                 } else {
-                    marginValue += 200
-                    lp.setMargins(marginValue, 0, 0, 16)
+                    marginValue += offsetImgView
+                    lp.setMargins(marginValue, 0, 0, defaultLeftMargin)
                 }
 
                 // add the imageview above the textview for room data
-                lp.addRule(RelativeLayout.ABOVE, tv_agenda_detail_room.id)
+                lp?.addRule(RelativeLayout.ABOVE, tv_agenda_detail_room.id)
                 tempImg.layoutParams = lp
 
                 // add it as a child to the relative layout

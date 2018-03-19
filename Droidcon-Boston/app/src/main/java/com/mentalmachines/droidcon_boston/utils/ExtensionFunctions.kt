@@ -32,3 +32,6 @@ fun Context.loadUriInCustomTab(uriString: String) {
     customTabsIntent.launchUrl(this, data)
 }
 
+fun Context.convertDptoPx(dp: Int): Int {
+    return (dp * this.resources.displayMetrics.density).toInt()
+}
