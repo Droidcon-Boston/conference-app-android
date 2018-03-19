@@ -186,7 +186,7 @@ class AgendaDetailFragment : Fragment() {
                         .crossFade()
                         .into(tempImg)
 
-                tempImg.setOnClickListener { view ->
+                tempImg.setOnClickListener { _ ->
                     val eventSpeaker = eventSpeakers[speakerName]
                     val arguments = Bundle()
 
