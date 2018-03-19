@@ -27,8 +27,6 @@ class SpeakerAdapterItem internal constructor(val itemData: SpeakerEvent) :
         holder.name.text = itemData.name
         holder.bio.text = itemData.bio.getHtmlFormattedSpanned()
 
-        holder.bio.movementMethod = LinkMovementMethod.getInstance()
-
         val context = holder.name.context
 
         Glide.with(context)

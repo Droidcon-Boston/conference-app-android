@@ -13,4 +13,8 @@
     <dimen name="def_margin">16dp</dimen>
     <dimen name="def_padding">8dp</dimen>
     <dimen name="def_padding_large">16dp</dimen>
+
+    <!-- Dynamic speaker imageview in agenda details. -->
+    <dimen name="imgv_speaker_size">80dp</dimen>
+    <dimen name="imgv_speaker_offset">65dp</dimen>
 </resources>
