@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEventDetail
+import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.SpeakerEvent
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
@@ -36,6 +37,7 @@ class AgendaDetailFragment : Fragment() {
 
     private lateinit var scheduleDetail: ScheduleDetail
     private lateinit var scheduleRowItem: ScheduleRow
+    private val speakerEvents = HashMap<String, SpeakerEvent>()
 
     private val firebaseHelper = FirebaseHelper.instance
 
@@ -94,9 +96,13 @@ class AgendaDetailFragment : Fragment() {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (speakerSnapshot in dataSnapshot.children) {
                 val detail = speakerSnapshot.getValue(ScheduleEventDetail::class.java)
+                val speaker = speakerSnapshot.getValue(SpeakerEvent::class.java)
                 if (detail != null) {
                     scheduleDetail = detail.toScheduleDetail(scheduleRowItem)
                     showAgendaDetail(scheduleDetail)
+                }
+                if (speaker != null) {
+                    speakerEvents.put(speaker.name, speaker)
                 }
 
             }
@@ -168,9 +174,25 @@ class AgendaDetailFragment : Fragment() {
                         .crossFade()
                         .into(tempImg)
 
+                val tempIt = it
+
+                tempImg.setOnClickListener(View.OnClickListener {
+                    val speakerEvent = speakerEvents[tempIt]
+                    val arguments = Bundle()
+
+                    arguments.putString(SpeakerEvent.SPEAKER_ITEM_ROW, gson.toJson(speakerEvent, SpeakerEvent::class.java))
+
+                    val speakerDetailFragment = SpeakerDetailFragment()
+                    speakerDetailFragment.arguments = arguments
+
+                    val fragmentManager = activity?.supportFragmentManager
+                    fragmentManager?.beginTransaction()
+                            ?.add(R.id.fragment_container, speakerDetailFragment)
+                            ?.addToBackStack(null)
+                            ?.commit()
+                })
             }
             tv_agenda_detail_speaker_name.text = speakerNames
-
         }
     }
 
