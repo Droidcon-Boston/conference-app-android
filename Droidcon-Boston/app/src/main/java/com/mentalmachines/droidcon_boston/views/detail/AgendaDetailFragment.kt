@@ -26,11 +26,18 @@ import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
-import com.mentalmachines.droidcon_boston.utils.convertDptoPx
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
-import kotlinx.android.synthetic.main.agenda_detail_fragment.*
+import kotlinx.android.synthetic.main.agenda_detail_fragment.agendaDetailView
+import kotlinx.android.synthetic.main.agenda_detail_fragment.fab_agenda_detail_bookmark
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_description
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_room
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_speaker_name
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_speaker_title
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_time
+import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_title
+import kotlinx.android.synthetic.main.agenda_detail_fragment.v_agenda_detail_speaker_divider
 
 
 class AgendaDetailFragment : Fragment() {
@@ -122,10 +129,10 @@ class AgendaDetailFragment : Fragment() {
         }
         else -> {
             var speakerNames = ""
-            val imgViewSize = context?.convertDptoPx(80) ?: 230
-            var marginValue = context?.convertDptoPx(16) ?: 55
-            val offsetImgView = context?.convertDptoPx(65) ?: 200
-            val defaultLeftMargin = context?.convertDptoPx(16) ?: 16
+            val imgViewSize = resources.getDimension(R.dimen.imgv_speaker_size).toInt()
+            var marginValue = resources.getDimension(R.dimen.def_margin).toInt()
+            val offsetImgView = resources.getDimension(R.dimen.imgv_speaker_offset).toInt()
+            val defaultLeftMargin = resources.getDimension(R.dimen.def_margin).toInt()
 
             itemData.speakerNames.forEach {
                 val orgName: String? = itemData.speakerNameToOrgName[it]
@@ -160,7 +167,7 @@ class AgendaDetailFragment : Fragment() {
                 }
 
                 // add the imageview above the textview for room data
-                lp?.addRule(RelativeLayout.ABOVE, tv_agenda_detail_room.id)
+                lp.addRule(RelativeLayout.ABOVE, tv_agenda_detail_room.id)
                 tempImg.layoutParams = lp
 
                 // add it as a child to the relative layout
