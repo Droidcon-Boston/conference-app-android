@@ -31,4 +31,3 @@ fun Context.loadUriInCustomTab(uriString: String) {
             .build()
     customTabsIntent.launchUrl(this, data)
 }
-
