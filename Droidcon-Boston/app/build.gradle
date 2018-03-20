@@ -87,9 +87,9 @@ dependencies {
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
     implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
 
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
+    testImplementation "com.squareup.moshi:moshi:$moshi_version"
+    testImplementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    testImplementation "com.squareup.moshi:moshi-adapters:$moshi_version"
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
