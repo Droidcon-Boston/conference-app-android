@@ -1,13 +1,12 @@
 package com.mentalmachines.droidcon_boston.views.speaker
 
 import android.support.v7.widget.RecyclerView
-import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
-import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.SpeakerEvent
+import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.EventSpeaker
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -18,7 +17,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
 /**
  * Used for displaying speaker list items on the all speakers "Speakers" page.
  */
-class SpeakerAdapterItem internal constructor(val itemData: SpeakerEvent) :
+class SpeakerAdapterItem internal constructor(val itemData: EventSpeaker) :
         AbstractFlexibleItem<SpeakerAdapterItem.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,

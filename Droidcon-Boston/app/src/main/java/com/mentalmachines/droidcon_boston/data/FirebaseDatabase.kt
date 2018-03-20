@@ -79,7 +79,7 @@ open class FirebaseDatabase {
         }
     }
 
-    data class SpeakerEvent(
+    data class EventSpeaker(
             val pictureUrl: String = "",
             val socialProfiles: HashMap<String, String>? = HashMap(0),
             var bio: String = "",

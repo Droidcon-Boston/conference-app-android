@@ -12,7 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
-import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.SpeakerEvent
+import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.EventSpeaker
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.views.detail.SpeakerDetailFragment
@@ -45,9 +45,9 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val rows = ArrayList<SpeakerEvent>()
+            val rows = ArrayList<EventSpeaker>()
             for (speakerSnapshot in dataSnapshot.children) {
-                val speaker = speakerSnapshot.getValue(SpeakerEvent::class.java)
+                val speaker = speakerSnapshot.getValue(EventSpeaker::class.java)
                 if (speaker != null) {
                     rows.add(speaker)
                 }
@@ -73,7 +73,7 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
             val arguments = Bundle()
 
-            arguments.putString(SpeakerEvent.SPEAKER_ITEM_ROW, gson.toJson(itemData, SpeakerEvent::class.java))
+            arguments.putString(EventSpeaker.SPEAKER_ITEM_ROW, gson.toJson(itemData, EventSpeaker::class.java))
 
             val speakerDetailFragment = SpeakerDetailFragment()
             speakerDetailFragment.arguments = arguments
@@ -88,7 +88,7 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return true
     }
 
-    private fun setupSpeakerAdapter(rows: ArrayList<SpeakerEvent>) {
+    private fun setupSpeakerAdapter(rows: ArrayList<EventSpeaker>) {
         val items = rows.map { SpeakerAdapterItem(it) }
         speaker_recycler.layoutManager = LinearLayoutManager(speaker_recycler.context)
         speakerAdapter = FlexibleAdapter(items)

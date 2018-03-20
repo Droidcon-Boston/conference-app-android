@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
-import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.SpeakerEvent
+import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.EventSpeaker
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
@@ -36,7 +36,7 @@ class SpeakerDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemData = gson.fromJson(arguments!!.getString(SpeakerEvent.SPEAKER_ITEM_ROW), SpeakerEvent::class.java)
+        val itemData = gson.fromJson(arguments!!.getString(EventSpeaker.SPEAKER_ITEM_ROW), EventSpeaker::class.java)
         populateView(itemData)
 
         if (activity is MainActivity) {
@@ -45,7 +45,7 @@ class SpeakerDetailFragment : Fragment() {
         }
     }
 
-    private fun populateView(itemData: SpeakerEvent) {
+    private fun populateView(itemData: EventSpeaker) {
         tv_speaker_detail_name.text = itemData.name
         tv_speaker_detail_designation.text = String.format("%s \n@ %s", itemData.title, itemData.org)
         tv_speaker_detail_description.text = itemData.bio.getHtmlFormattedSpanned()

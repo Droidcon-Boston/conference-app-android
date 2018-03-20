@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEventDetail
+import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.EventSpeaker
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
@@ -44,6 +45,7 @@ class AgendaDetailFragment : Fragment() {
 
     private lateinit var scheduleDetail: ScheduleDetail
     private lateinit var scheduleRowItem: ScheduleRow
+    private val eventSpeakers = HashMap<String, EventSpeaker>()
 
     private val firebaseHelper = FirebaseHelper.instance
 
@@ -102,9 +104,13 @@ class AgendaDetailFragment : Fragment() {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (speakerSnapshot in dataSnapshot.children) {
                 val detail = speakerSnapshot.getValue(ScheduleEventDetail::class.java)
+                val speaker = speakerSnapshot.getValue(EventSpeaker::class.java)
                 if (detail != null) {
                     scheduleDetail = detail.toScheduleDetail(scheduleRowItem)
                     showAgendaDetail(scheduleDetail)
+                }
+                if (speaker != null) {
+                    eventSpeakers.put(speaker.name, speaker)
                 }
 
             }
@@ -135,10 +141,10 @@ class AgendaDetailFragment : Fragment() {
             val offsetImgView = resources.getDimension(R.dimen.imgv_speaker_offset).toInt()
             val defaultLeftMargin = resources.getDimension(R.dimen.def_margin).toInt()
 
-            itemData.speakerNames.forEach {
-                val orgName: String? = itemData.speakerNameToOrgName[it]
+            itemData.speakerNames.forEach { speakerName ->
+                val orgName: String? = itemData.speakerNameToOrgName[speakerName]
                 // append org name to speaker name
-                speakerNames += it + when {
+                speakerNames += speakerName + when {
                     orgName != null -> " - $orgName"
                     else -> {
                         // Do nothing
@@ -149,7 +155,7 @@ class AgendaDetailFragment : Fragment() {
                     tv_agenda_detail_speaker_title.text = getString(string.header_speakers)
 
                     // if the current speaker name is not the last then add a line break
-                    if (it != itemData.speakerNames.last()) {
+                    if (speakerName != itemData.speakerNames.last()) {
                         speakerNames += "\n"
                     }
                 } else {
@@ -160,7 +166,7 @@ class AgendaDetailFragment : Fragment() {
                 // Add an imageview to the relative layout
                 val tempImg = ImageView(activity)
                 val lp = RelativeLayout.LayoutParams(imgViewSize, imgViewSize)
-                if (it == itemData.speakerNames.first()) {
+                if (speakerName == itemData.speakerNames.first()) {
                     lp.setMargins(marginValue, 0, 0, defaultLeftMargin)
                 } else {
                     marginValue += offsetImgView
@@ -171,19 +177,33 @@ class AgendaDetailFragment : Fragment() {
                 lp.addRule(RelativeLayout.ABOVE, tv_agenda_detail_room.id)
                 tempImg.layoutParams = lp
 
-                // add it as a child to the relative layout
+                // add speakerName as a child to the relative layout
                 agendaDetailView.addView(tempImg)
 
                 Glide.with(this)
-                        .load(itemData.photoUrlMap[it])
+                        .load(itemData.photoUrlMap[speakerName])
                         .transform(CircleTransform(tempImg.context))
                         .placeholder(R.drawable.emo_im_cool)
                         .crossFade()
                         .into(tempImg)
 
+                tempImg.setOnClickListener { _ ->
+                    val eventSpeaker = eventSpeakers[speakerName]
+                    val arguments = Bundle()
+
+                    arguments.putString(EventSpeaker.SPEAKER_ITEM_ROW, gson.toJson(eventSpeaker, EventSpeaker::class.java))
+
+                    val speakerDetailFragment = SpeakerDetailFragment()
+                    speakerDetailFragment.arguments = arguments
+
+                    val fragmentManager = activity?.supportFragmentManager
+                    fragmentManager?.beginTransaction()
+                            ?.add(R.id.fragment_container, speakerDetailFragment)
+                            ?.addToBackStack(null)
+                            ?.commit()
+                }
             }
             tv_agenda_detail_speaker_name.text = speakerNames
-
         }
     }
 
