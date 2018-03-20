@@ -13,7 +13,9 @@ import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
 import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerFragment
-import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.main_activity.drawer_layout
+import kotlinx.android.synthetic.main.main_activity.navView
+import kotlinx.android.synthetic.main.main_activity.toolbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -68,8 +70,8 @@ class MainActivity : AppCompatActivity() {
         processMenuItems({ _ -> true }, { item -> item.setChecked(false).isChecked }, true)
     }
 
-    private fun processMenuItems(titleMatcher: (MenuItem)->Boolean,
-                                 matchFunc: (MenuItem)->Boolean,
+    private fun processMenuItems(titleMatcher: (MenuItem) -> Boolean,
+                                 matchFunc: (MenuItem) -> Boolean,
                                  processAll: Boolean = false): Boolean {
         val menu = navView.menu
         for (i in 0 until menu.size()) {
@@ -187,6 +189,16 @@ class MainActivity : AppCompatActivity() {
             // Add fragment with tag
             supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment, title).commit()
         } else {
+
+            // For Agenda and My Schedule Screen, which add more fragments to backstack.
+            // Remove all fragment except the last one when navigating via the nav drawer.
+            when (title) {
+                resources.getString(R.string.str_agenda) ->
+                    popUntilLastFragment()
+                resources.getString(R.string.str_my_schedule) ->
+                    popUntilLastFragment()
+            }
+
             supportFragmentManager.beginTransaction()
                     // detach the fragment that is currently visible
                     .detach(supportFragmentManager.findFragmentById(R.id.fragment_container))
@@ -194,6 +206,12 @@ class MainActivity : AppCompatActivity() {
                     .attach(fragment)
                     // commit fragment transaction
                     .commit()
+        }
+    }
+
+    private fun popUntilLastFragment() {
+        for (i in 0..supportFragmentManager.backStackEntryCount) {
+            supportFragmentManager.popBackStack()
         }
     }
 
