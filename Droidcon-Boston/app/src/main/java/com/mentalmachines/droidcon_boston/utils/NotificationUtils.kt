@@ -89,7 +89,8 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                     val eventId = roomSnapshot.key
                     val scheduleEvent = roomSnapshot.getValue(FirebaseDatabase.ScheduleEvent::class.java)
                     scheduleEvent?.let {
-                        if (userRepo.isSessionBookmarked(eventId)) {
+                        if (userRepo.isSessionBookmarked(eventId)
+                                && scheduleEvent.getLocalStartTime().isAfter(LocalDateTime.now())) {
                             scheduleEvent.scheduleNotification(context, eventId)
                             hasBookmarkedEvents = true
                         }
