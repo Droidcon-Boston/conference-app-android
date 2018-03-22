@@ -127,6 +127,11 @@ class AgendaDetailFragment : Fragment() {
                 .addValueEventListener(dataListener)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        firebaseHelper.speakerDatabase.removeEventListener(dataListener)
+    }
 
     private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
         itemData.speakerNames.isEmpty() -> {
