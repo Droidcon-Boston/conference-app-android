@@ -86,6 +86,16 @@ open class FirebaseDatabase {
             var title: String = "",
             var org: String = "",
             var name: String = "") {
+
+        fun toScheduleDetail(listRow: ScheduleRow): ScheduleDetail {
+            val detail = ScheduleDetail(listRow)
+            detail.facebook = socialProfiles?.get("facebook") ?: ""
+            detail.linkedIn = socialProfiles?.get("linkedIn") ?: ""
+            detail.twitter = socialProfiles?.get("twitter") ?: ""
+            detail.speakerBio = bio
+            return detail
+        }
+
         companion object {
             var SPEAKER_ITEM_ROW = "speaker_item_row"
         }
@@ -97,23 +107,6 @@ open class FirebaseDatabase {
             var position: String = "",
             var firstName: String = "",
             var lastName: String = "")
-
-    data class ScheduleEventDetail(
-            val socialProfiles: HashMap<String, String>? = HashMap(0),
-            var bio: String = "",
-            var title: String = "",
-            var org: String = "",
-            var name: String = "") {
-
-        fun toScheduleDetail(listRow: ScheduleRow): ScheduleDetail {
-            val detail = ScheduleDetail(listRow)
-            detail.facebook = socialProfiles?.get("facebook") ?: ""
-            detail.linkedIn = socialProfiles?.get("linkedIn") ?: ""
-            detail.twitter = socialProfiles?.get("twitter") ?: ""
-            detail.speakerBio = bio
-            return detail
-        }
-    }
 
     class FaqEvent {
 
