@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.string
-import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEventDetail
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.EventSpeaker
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
@@ -103,14 +102,14 @@ class AgendaDetailFragment : Fragment() {
     val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (speakerSnapshot in dataSnapshot.children) {
-                val detail = speakerSnapshot.getValue(ScheduleEventDetail::class.java)
                 val speaker = speakerSnapshot.getValue(EventSpeaker::class.java)
-                if (detail != null) {
-                    scheduleDetail = detail.toScheduleDetail(scheduleRowItem)
-                    showAgendaDetail(scheduleDetail)
-                }
                 if (speaker != null) {
                     eventSpeakers.put(speaker.name, speaker)
+
+                    if (scheduleRowItem.primarySpeakerName == speaker.name) {
+                        scheduleDetail = speaker.toScheduleDetail(scheduleRowItem)
+                        showAgendaDetail(scheduleDetail)
+                    }
                 }
 
             }
@@ -127,6 +126,11 @@ class AgendaDetailFragment : Fragment() {
                 .addValueEventListener(dataListener)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        firebaseHelper.speakerDatabase.removeEventListener(dataListener)
+    }
 
     private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
 
