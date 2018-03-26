@@ -5,6 +5,7 @@ import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
+import com.mentalmachines.droidcon_boston.utils.ServiceLocator
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
@@ -37,9 +38,10 @@ open class FirebaseDatabase {
             return ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime()
         }
 
-        fun scheduleNotification(context: Context, eventId: String) {
+        fun scheduleNotification(context: Context, eventId: String, sessionDetail: ScheduleRow) {
             NotificationUtils(context).scheduleNotificationAlarm(getLocalStartTime().minusMinutes(SESSION_REMINDER_MINUTES_BEFORE),
-                    eventId, context.getString(R.string.str_session_start_soon, name), description.getHtmlFormattedSpanned().toString())
+                    eventId, context.getString(R.string.str_session_start_soon, name), description.getHtmlFormattedSpanned().toString(),
+                    ServiceLocator.gson.toJson(sessionDetail, ScheduleRow::class.java))
         }
 
         fun toScheduleRow(scheduleId: String): ScheduleRow {

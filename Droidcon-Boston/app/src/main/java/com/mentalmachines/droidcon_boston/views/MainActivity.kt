@@ -1,15 +1,21 @@
 package com.mentalmachines.droidcon_boston.views
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.MenuItem
 import com.mentalmachines.droidcon_boston.R
+import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
+import com.mentalmachines.droidcon_boston.utils.ServiceLocator
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
+import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
 import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerFragment
@@ -29,7 +35,14 @@ class MainActivity : AppCompatActivity() {
         initNavDrawerToggle()
 
         replaceFragment(getString(R.string.str_agenda))
-        navView.setCheckedItem(R.id.nav_agenda)
+
+        val sessionDetails = intent.extras?.getString(EXTRA_SESSION_DETAILS)
+        if (!TextUtils.isEmpty(sessionDetails)) {
+            AgendaDetailFragment.addDetailFragmentToStack(supportFragmentManager,
+                    ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java))
+        } else {
+            navView.setCheckedItem(R.id.nav_agenda)
+        }
     }
 
 
@@ -218,6 +231,19 @@ class MainActivity : AppCompatActivity() {
     private fun updateToolbarTitle(title: String) {
         if (supportActionBar != null) {
             supportActionBar?.title = title
+        }
+    }
+
+    companion object {
+        private const val EXTRA_SESSIONID = "MainActivity.EXTRA_SESSIONID"
+        private const val EXTRA_SESSION_DETAILS = "MainActivity.EXTRA_SESSION_DETAILS"
+
+        fun getSessionDetailIntent(context: Context, sessionId: String, sessionDetail: String): Intent {
+            val intent = Intent(context, MainActivity::class.java).apply {
+                putExtra(EXTRA_SESSIONID, sessionId)
+                putExtra(EXTRA_SESSION_DETAILS, sessionDetail)
+            }
+            return intent
         }
     }
 }
