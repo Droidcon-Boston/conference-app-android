@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.text.method.LinkMovementMethod
 import android.util.Log
@@ -42,7 +43,7 @@ import kotlinx.android.synthetic.main.agenda_detail_fragment.v_agenda_detail_spe
 
 class AgendaDetailFragment : Fragment() {
 
-    private lateinit var scheduleDetail: ScheduleDetail
+    private var scheduleDetail: ScheduleDetail? = null
     private lateinit var scheduleRowItem: ScheduleRow
     private val eventSpeakers = HashMap<String, EventSpeaker>()
 
@@ -78,22 +79,24 @@ class AgendaDetailFragment : Fragment() {
 
         fab_agenda_detail_bookmark.setOnClickListener({
 
-            val nextBookmarkStatus = !userAgendaRepo.isSessionBookmarked(scheduleDetail.id)
-            userAgendaRepo.bookmarkSession(scheduleDetail.id, nextBookmarkStatus)
-            val context = tv_agenda_detail_title.context
-            if (nextBookmarkStatus) {
-                NotificationUtils(context).scheduleMySessionNotifications()
-            } else {
-                NotificationUtils(context).cancelNotificationAlarm(scheduleRowItem.id)
+            if (scheduleDetail != null) {
+                val nextBookmarkStatus = !userAgendaRepo.isSessionBookmarked(scheduleDetail!!.id)
+                userAgendaRepo.bookmarkSession(scheduleDetail!!.id, nextBookmarkStatus)
+                val context = tv_agenda_detail_title.context
+                if (nextBookmarkStatus) {
+                    NotificationUtils(context).scheduleMySessionNotifications()
+                } else {
+                    NotificationUtils(context).cancelNotificationAlarm(scheduleRowItem.id)
+                }
+
+                Snackbar.make(agendaDetailView,
+                        if (nextBookmarkStatus)
+                            getString(R.string.saved_agenda_item)
+                        else getString(R.string.removed_agenda_item),
+                        Snackbar.LENGTH_SHORT).show()
+
+                showBookmarkStatus(scheduleDetail!!)
             }
-
-            Snackbar.make(agendaDetailView,
-                    if (nextBookmarkStatus)
-                        getString(R.string.saved_agenda_item)
-                    else getString(R.string.removed_agenda_item),
-                    Snackbar.LENGTH_SHORT).show()
-
-            showBookmarkStatus(scheduleDetail)
         })
 
         populateSpeakersInformation(scheduleRowItem)
@@ -108,7 +111,7 @@ class AgendaDetailFragment : Fragment() {
 
                     if (scheduleRowItem.primarySpeakerName == speaker.name) {
                         scheduleDetail = speaker.toScheduleDetail(scheduleRowItem)
-                        showAgendaDetail(scheduleDetail)
+                        showAgendaDetail(scheduleDetail!!)
                     }
                 }
 
@@ -228,5 +231,20 @@ class AgendaDetailFragment : Fragment() {
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorAccent))
         else
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorLightGray))
+    }
+
+    companion object {
+        fun addDetailFragmentToStack(supportFragmentManager: FragmentManager, itemData: Schedule.ScheduleRow) {
+            val arguments = Bundle()
+            arguments.putString(Schedule.SCHEDULE_ITEM_ROW, gson.toJson(itemData, ScheduleRow::class.java))
+
+            val agendaDetailFragment = AgendaDetailFragment()
+            agendaDetailFragment.arguments = arguments
+
+            supportFragmentManager.beginTransaction()
+                    ?.add(R.id.fragment_container, agendaDetailFragment)
+                    ?.addToBackStack(null)
+                    ?.commit()
+        }
     }
 }

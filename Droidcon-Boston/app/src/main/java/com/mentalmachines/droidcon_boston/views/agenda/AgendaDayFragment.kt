@@ -177,17 +177,10 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                     return false
                 }
             }
-            val arguments = Bundle()
-            arguments.putString(Schedule.SCHEDULE_ITEM_ROW, gson.toJson(itemData, ScheduleRow::class.java))
 
-            val agendaDetailFragment = AgendaDetailFragment()
-            agendaDetailFragment.arguments = arguments
-
-            val fragmentManager = activity?.supportFragmentManager
-            fragmentManager?.beginTransaction()
-                    ?.add(R.id.fragment_container, agendaDetailFragment)
-                    ?.addToBackStack(null)
-                    ?.commit()
+            activity?.let {
+                AgendaDetailFragment.addDetailFragmentToStack(it.supportFragmentManager, itemData);
+            }
         }
 
         return true

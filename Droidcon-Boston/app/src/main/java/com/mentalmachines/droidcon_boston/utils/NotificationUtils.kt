@@ -1,29 +1,34 @@
 package com.mentalmachines.droidcon_boston.utils
 
 import android.annotation.TargetApi
-import android.app.*
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.support.v4.app.NotificationCompat
+import android.text.TextUtils
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.mentalmachines.droidcon_boston.receivers.NotificationPublisher
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.receivers.BootReceiver
+import com.mentalmachines.droidcon_boston.receivers.NotificationPublisher
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
-import android.content.pm.PackageManager
-import android.content.ComponentName
-import com.mentalmachines.droidcon_boston.receivers.BootReceiver
 
 
 class NotificationUtils(context: Context) : ContextWrapper(context) {
@@ -91,7 +96,7 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                     scheduleEvent?.let {
                         if (userRepo.isSessionBookmarked(eventId)
                                 && scheduleEvent.getLocalStartTime().isAfter(LocalDateTime.now())) {
-                            scheduleEvent.scheduleNotification(context, eventId)
+                            scheduleEvent.scheduleNotification(context, eventId, scheduleEvent.toScheduleRow(eventId))
                             hasBookmarkedEvents = true
                         }
                     }
@@ -109,9 +114,9 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
         })
     }
 
-    fun scheduleNotificationAlarm(alarmTime: LocalDateTime, sessionId: String, title: String, body: String) {
+    fun scheduleNotificationAlarm(alarmTime: LocalDateTime, sessionId: String, title: String, body: String, sessionDetail: String) {
         if (alarmTime.isAfter(LocalDateTime.now())) {
-            val pendingIntent = getAgendaSessionNotificationPendingIntent(sessionId, title, body)
+            val pendingIntent = getAgendaSessionNotificationPendingIntent(sessionId, title, body, sessionDetail)
             val utcInMillis = alarmTime.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.set(AlarmManager.RTC_WAKEUP, utcInMillis, pendingIntent)
@@ -134,7 +139,7 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                 PackageManager.DONT_KILL_APP)
     }
 
-    private fun getAgendaSessionNotificationPendingIntent(sessionId: String, title: String = "", body: String = ""): PendingIntent {
+    private fun getAgendaSessionNotificationPendingIntent(sessionId: String, title: String = "", body: String = "", sessionDetail: String = ""): PendingIntent {
         val builder = NotificationCompat.Builder(this, ANDROID_CHANNEL_ID)
                 .setContentText(title)
                 .setStyle(NotificationCompat.BigTextStyle()
@@ -142,6 +147,14 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                         .setBigContentTitle(title))
                 .setSmallIcon(R.drawable.ic_notification_session_start)
                 .setAutoCancel(true)
+
+        if (!TextUtils.isEmpty(sessionDetail)) {
+            val sessionIntent = MainActivity.getSessionDetailIntent(this, sessionId, sessionDetail)
+            val contentIntent = PendingIntent.getActivity(this, 0,
+                    sessionIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            builder.setContentIntent(contentIntent)
+        }
 
         val notificationIntent = Intent(this, NotificationPublisher::class.java).apply {
             putExtra(NotificationPublisher.NOTIFICATION_ID, sessionId.hashCode())
