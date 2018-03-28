@@ -12,6 +12,8 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.view.MenuItem
 import com.mentalmachines.droidcon_boston.R
+import com.mentalmachines.droidcon_boston.R.id
+import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
@@ -34,14 +36,26 @@ class MainActivity : AppCompatActivity() {
 
         initNavDrawerToggle()
 
-        replaceFragment(getString(R.string.str_agenda))
+        initFragmentsFromIntent(intent)
+    }
 
-        val sessionDetails = intent.extras?.getString(EXTRA_SESSION_DETAILS)
+    private fun initFragmentsFromIntent(initialIntent: Intent) {
+        replaceFragment(getString(string.str_agenda))
+
+        val sessionDetails = initialIntent.extras?.getString(EXTRA_SESSION_DETAILS)
         if (!TextUtils.isEmpty(sessionDetails)) {
             AgendaDetailFragment.addDetailFragmentToStack(supportFragmentManager,
                     ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java))
         } else {
-            navView.setCheckedItem(R.id.nav_agenda)
+            navView.setCheckedItem(id.nav_agenda)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        intent?.let {
+            initFragmentsFromIntent(it)
         }
     }
 
@@ -239,11 +253,11 @@ class MainActivity : AppCompatActivity() {
         private const val EXTRA_SESSION_DETAILS = "MainActivity.EXTRA_SESSION_DETAILS"
 
         fun getSessionDetailIntent(context: Context, sessionId: String, sessionDetail: String): Intent {
-            val intent = Intent(context, MainActivity::class.java).apply {
+            return Intent(context, MainActivity::class.java).apply {
                 putExtra(EXTRA_SESSIONID, sessionId)
                 putExtra(EXTRA_SESSION_DETAILS, sessionDetail)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
-            return intent
         }
     }
 }
