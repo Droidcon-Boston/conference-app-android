@@ -38,7 +38,7 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
     }
 
     @TargetApi(VERSION_CODES.O)
-    fun createChannels() {
+    private fun createChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // create android channel
             val androidChannel = NotificationChannel(ANDROID_CHANNEL_ID,
@@ -132,7 +132,7 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
 
     fun enableBootReceiver(context: Context, enabled: Boolean = true) {
         val receiver = ComponentName(context, BootReceiver::class.java)
-        val pm = context.getPackageManager()
+        val pm = context.packageManager
 
         pm.setComponentEnabledSetting(receiver,
                 if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -148,21 +148,21 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                 .setSmallIcon(R.drawable.ic_notification_session_start)
                 .setAutoCancel(true)
 
+        val notificationId = sessionId.hashCode()
         if (!TextUtils.isEmpty(sessionDetail)) {
             val sessionIntent = MainActivity.getSessionDetailIntent(this, sessionId, sessionDetail)
-            val contentIntent = PendingIntent.getActivity(this, 0,
+            val contentIntent = PendingIntent.getActivity(this, notificationId,
                     sessionIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
             builder.setContentIntent(contentIntent)
         }
 
         val notificationIntent = Intent(this, NotificationPublisher::class.java).apply {
-            putExtra(NotificationPublisher.NOTIFICATION_ID, sessionId.hashCode())
+            putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId)
             putExtra(NotificationPublisher.SESSION_ID, sessionId)
             putExtra(NotificationPublisher.NOTIFICATION, builder.build())
         }
-        val pendingIntent = PendingIntent.getBroadcast(this, sessionId.hashCode(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        return pendingIntent
+        return PendingIntent.getBroadcast(this, notificationId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     companion object {
