@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.mentalmachines.droidcon_boston"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 17
         versionName "2.0.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -53,16 +53,13 @@ android {
 }
 
 dependencies {
-    final support = "27.1.0"
-    final playServices = "11.8.0"
-    final junit = "4.12"
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // TESTING
-    testImplementation "junit:junit:$junit"
+    testImplementation "junit:junit:4.12"
 
     // Support
+    final support = "28.0.0"
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:support-v4:$support"
     implementation "com.android.support:cardview-v7:$support"
@@ -70,9 +67,9 @@ dependencies {
     implementation "com.android.support:customtabs:$support"
 
     // Firebase
-    implementation "com.google.firebase:firebase-messaging:$playServices"
-    implementation "com.google.firebase:firebase-database:$playServices"
-    implementation "com.google.firebase:firebase-core:$playServices"
+    implementation "com.google.firebase:firebase-messaging:17.3.4"
+    implementation "com.google.firebase:firebase-database:16.0.4"
+    implementation "com.google.firebase:firebase-core:16.0.4"
 
     // Crashlytics only for release builds
     releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
