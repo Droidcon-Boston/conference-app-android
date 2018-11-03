@@ -1,11 +1,7 @@
 package com.mentalmachines.droidcon_boston.utils
 
 import android.annotation.TargetApi
-import android.app.AlarmManager
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.ComponentName
 import android.content.Context
 import android.content.ContextWrapper
@@ -91,7 +87,7 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var hasBookmarkedEvents = false
                 for (roomSnapshot in dataSnapshot.children) {
-                    val eventId = roomSnapshot.key
+                    val eventId = roomSnapshot.key ?: ""
                     val scheduleEvent = roomSnapshot.getValue(FirebaseDatabase.ScheduleEvent::class.java)
                     scheduleEvent?.let {
                         if (userRepo.isSessionBookmarked(eventId)

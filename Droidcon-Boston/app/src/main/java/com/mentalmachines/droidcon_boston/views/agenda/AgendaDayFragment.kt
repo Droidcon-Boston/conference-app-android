@@ -16,11 +16,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent
-import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -56,7 +54,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             android.R.id.home -> {
                 val fragmentManager = activity?.supportFragmentManager
                 if (fragmentManager?.backStackEntryCount!! > 0) {
-                    fragmentManager.popBackStack()
+                    fragmentManager?.popBackStack()
                 }
             }
         }
@@ -101,14 +99,14 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     fun updateList() {
-        agendaRecyler.adapter.notifyDataSetChanged()
+        agendaRecyler.adapter?.notifyDataSetChanged()
     }
 
     val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val rows = ArrayList<ScheduleRow>()
             for (roomSnapshot in dataSnapshot.children) {
-                val key = roomSnapshot.key
+                val key = roomSnapshot.key ?: ""
                 val data = roomSnapshot.getValue(ScheduleEvent::class.java)
                 Log.d(TAG, "Event: $data")
                 if (data != null) {
@@ -171,7 +169,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                     val i = Intent(Intent.ACTION_VIEW)
                     i.data = Uri.parse(url)
                     val packageManager = activity?.packageManager
-                    if (i.resolveActivity(packageManager) != null) {
+                    if (packageManager !=null && i.resolveActivity(packageManager) != null) {
                         startActivity(i)
                     }
                     return false

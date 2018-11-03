@@ -30,15 +30,7 @@ import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
-import kotlinx.android.synthetic.main.agenda_detail_fragment.agendaDetailView
-import kotlinx.android.synthetic.main.agenda_detail_fragment.fab_agenda_detail_bookmark
-import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_description
-import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_room
-import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_speaker_name
-import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_speaker_title
-import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_time
-import kotlinx.android.synthetic.main.agenda_detail_fragment.tv_agenda_detail_title
-import kotlinx.android.synthetic.main.agenda_detail_fragment.v_agenda_detail_speaker_divider
+import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
 
 class AgendaDetailFragment : Fragment() {
@@ -241,9 +233,9 @@ class AgendaDetailFragment : Fragment() {
             agendaDetailFragment.arguments = arguments
 
             supportFragmentManager.beginTransaction()
-                    ?.add(R.id.fragment_container, agendaDetailFragment)
-                    ?.addToBackStack(null)
-                    ?.commit()
+                    .add(R.id.fragment_container, agendaDetailFragment)
+                    .addToBackStack(null)
+                    .commit()
         }
     }
 }

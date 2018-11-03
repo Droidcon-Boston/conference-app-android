@@ -21,9 +21,7 @@ import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
 import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerFragment
-import kotlinx.android.synthetic.main.main_activity.drawer_layout
-import kotlinx.android.synthetic.main.main_activity.navView
-import kotlinx.android.synthetic.main.main_activity.toolbar
+import kotlinx.android.synthetic.main.main_activity.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -141,9 +139,9 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
             // Respond to the action bar's Up/Home button
-                android.R.id.home -> if (fragmentManager.backStackEntryCount > 0) {
-                    fragmentManager.popBackStack()
-                } else if (fragmentManager.backStackEntryCount == 1) {
+                android.R.id.home -> if (supportFragmentManager.backStackEntryCount > 0) {
+                    supportFragmentManager.popBackStack()
+                } else if (supportFragmentManager?.backStackEntryCount == 1) {
                     // to avoid looping below on initScreen
                     super.onBackPressed()
                     finish()
@@ -214,7 +212,13 @@ class MainActivity : AppCompatActivity() {
                 resources.getString(R.string.str_volunteers) -> fragment = VolunteerFragment()
             }
             // Add fragment with tag
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment, title).commit()
+            fragment?.let{
+                supportFragmentManager?.beginTransaction()
+                    // replace in container
+                    ?.replace(R.id.fragment_container, it, title)
+                    // commit fragment transaction
+                    ?.commit()
+            }
         } else {
 
             // For Agenda and My Schedule Screen, which add more fragments to backstack.
@@ -226,13 +230,16 @@ class MainActivity : AppCompatActivity() {
                     popUntilLastFragment()
             }
 
-            supportFragmentManager.beginTransaction()
+            val fragmentInContainer = supportFragmentManager?.findFragmentById(R.id.fragment_container)
+            fragmentInContainer?.let{
+                supportFragmentManager?.beginTransaction()
                     // detach the fragment that is currently visible
-                    .detach(supportFragmentManager.findFragmentById(R.id.fragment_container))
+                    ?.detach(it)
                     // attach the fragment found as per the tag
-                    .attach(fragment)
+                    ?.attach(it)
                     // commit fragment transaction
-                    .commit()
+                    ?.commit()
+            }
         }
     }
 
