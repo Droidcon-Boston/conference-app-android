@@ -8,11 +8,11 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         style="@style/AppTabLayout"
-        app:tabTextAppearance="@style/AppTabText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabIndicatorHeight="4dp"
         app:tabMode="fixed"
-        app:tabIndicatorHeight="4dp" />
+        app:tabTextAppearance="@style/AppTabText" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

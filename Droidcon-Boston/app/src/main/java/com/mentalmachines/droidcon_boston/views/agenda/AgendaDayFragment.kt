@@ -61,7 +61,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.agenda_day_fragment, container, false)
     }
@@ -111,8 +112,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 Log.d(TAG, "Event: $data")
                 if (data != null) {
                     val scheduleRow = data.toScheduleRow(key)
-                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda
-                                    || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(scheduleRow.id))) {
+                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(
+                            scheduleRow.id))) {
                         rows.add(scheduleRow)
                     }
                 }
@@ -144,9 +145,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             items.add(item)
         }
 
-        val sortedItems = items.sortedWith(
-                compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }
-                        .thenBy { it.roomSortOrder })
+        val sortedItems =
+            items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }.thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
         headerAdapter!!.addListener(this)
@@ -154,11 +154,15 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agendaRecyler.addItemDecoration(FlexibleItemDecoration(agendaRecyler.context).withDefaultDivider())
         headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
 
-        EmptyViewHelper(headerAdapter, emptyStateView, null,null)
+        EmptyViewHelper(headerAdapter, emptyStateView, null, null)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
-        val adapterItem = try { headerAdapter?.getItem(position) } catch (e: Exception) { null }
+        val adapterItem = try {
+            headerAdapter?.getItem(position)
+        } catch (e: Exception) {
+            null
+        }
         if (adapterItem is ScheduleAdapterItem) {
             val itemData = adapterItem.itemData
             if (itemData.primarySpeakerName.isNullorEmpty()) {
@@ -169,7 +173,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                     val i = Intent(Intent.ACTION_VIEW)
                     i.data = Uri.parse(url)
                     val packageManager = activity?.packageManager
-                    if (packageManager !=null && i.resolveActivity(packageManager) != null) {
+                    if (packageManager != null && i.resolveActivity(packageManager) != null) {
                         startActivity(i)
                     }
                     return false

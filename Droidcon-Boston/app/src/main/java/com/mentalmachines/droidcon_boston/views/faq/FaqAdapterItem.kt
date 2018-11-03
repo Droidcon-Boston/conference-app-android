@@ -17,9 +17,8 @@ import eu.davidea.viewholders.FlexibleViewHolder
 /**
  * Used for displaying the FAQ items
  */
-class FaqAdapterItem internal constructor(val itemData: Answer,
-                                          header: FaqAdapterItemHeader) :
-        AbstractSectionableItem<FaqAdapterItem.ViewHolder, FaqAdapterItemHeader>(header) {
+class FaqAdapterItem internal constructor(val itemData: Answer, header: FaqAdapterItemHeader) :
+    AbstractSectionableItem<FaqAdapterItem.ViewHolder, FaqAdapterItemHeader>(header) {
 
     override fun equals(other: Any?): Boolean {
         if (other is FaqAdapterItem) {
@@ -37,7 +36,8 @@ class FaqAdapterItem internal constructor(val itemData: Answer,
         return R.layout.faq_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(view: View,
+                                  adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
         return FaqAdapterItem.ViewHolder(view, adapter)
     }
 
@@ -49,11 +49,8 @@ class FaqAdapterItem internal constructor(val itemData: Answer,
         holder.faq_text.text = itemData.answer
         if (!TextUtils.isEmpty(itemData.photoLink)) {
             val context = holder.faq_text.context
-            Glide.with(context)
-                    .load(itemData.photoLink)
-                    .crossFade()
-                    .centerCrop()
-                    .into(holder.faq_photo)
+            Glide.with(context).load(itemData.photoLink).crossFade().centerCrop()
+                .into(holder.faq_photo)
             holder.faq_photo.visibility = View.VISIBLE
         } else {
             holder.faq_photo.visibility = View.GONE

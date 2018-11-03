@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val sessionDetails = initialIntent.extras?.getString(EXTRA_SESSION_DETAILS)
         if (!TextUtils.isEmpty(sessionDetails)) {
             AgendaDetailFragment.addDetailFragmentToStack(supportFragmentManager,
-                    ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java))
+                ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java))
         } else {
             navView.setCheckedItem(id.nav_agenda)
         }
@@ -84,7 +84,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkNavMenuItem(title: String) {
-        processMenuItems({ item -> item.title == title }, { item -> item.setChecked(true).isChecked })
+        processMenuItems({ item -> item.title == title },
+            { item -> item.setChecked(true).isChecked })
     }
 
     private fun isNavItemChecked(title: String): Boolean {
@@ -128,8 +129,10 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawer_layout,
-                R.string.drawer_open, R.string.drawer_close)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this,
+            drawer_layout,
+            R.string.drawer_open,
+            R.string.drawer_close)
         drawer_layout.addDrawerListener(actionBarDrawerToggle)
 
         navView.setNavigationItemSelectedListener { item ->
@@ -138,7 +141,7 @@ class MainActivity : AppCompatActivity() {
             drawer_layout.closeDrawers()
 
             when (item.itemId) {
-            // Respond to the action bar's Up/Home button
+                // Respond to the action bar's Up/Home button
                 android.R.id.home -> if (supportFragmentManager.backStackEntryCount > 0) {
                     supportFragmentManager.popBackStack()
                 } else if (supportFragmentManager?.backStackEntryCount == 1) {
@@ -203,7 +206,8 @@ class MainActivity : AppCompatActivity() {
             // Initialize the fragment based on tag
             when (title) {
                 resources.getString(R.string.str_agenda) -> fragment = AgendaFragment.newInstance()
-                resources.getString(R.string.str_my_schedule) -> fragment = AgendaFragment.newInstanceMySchedule()
+                resources.getString(R.string.str_my_schedule) -> fragment =
+                        AgendaFragment.newInstanceMySchedule()
                 resources.getString(R.string.str_faq) -> fragment = FAQFragment()
                 resources.getString(R.string.str_social) -> fragment = SocialFragment()
                 resources.getString(R.string.str_coc) -> fragment = CocFragment()
@@ -212,7 +216,7 @@ class MainActivity : AppCompatActivity() {
                 resources.getString(R.string.str_volunteers) -> fragment = VolunteerFragment()
             }
             // Add fragment with tag
-            fragment?.let{
+            fragment?.let {
                 supportFragmentManager?.beginTransaction()
                     // replace in container
                     ?.replace(R.id.fragment_container, it, title)
@@ -224,14 +228,13 @@ class MainActivity : AppCompatActivity() {
             // For Agenda and My Schedule Screen, which add more fragments to backstack.
             // Remove all fragment except the last one when navigating via the nav drawer.
             when (title) {
-                resources.getString(R.string.str_agenda) ->
-                    popUntilLastFragment()
-                resources.getString(R.string.str_my_schedule) ->
-                    popUntilLastFragment()
+                resources.getString(R.string.str_agenda) -> popUntilLastFragment()
+                resources.getString(R.string.str_my_schedule) -> popUntilLastFragment()
             }
 
-            val fragmentInContainer = supportFragmentManager?.findFragmentById(R.id.fragment_container)
-            fragmentInContainer?.let{
+            val fragmentInContainer =
+                supportFragmentManager?.findFragmentById(R.id.fragment_container)
+            fragmentInContainer?.let {
                 supportFragmentManager?.beginTransaction()
                     // detach the fragment that is currently visible
                     ?.detach(it)
@@ -259,7 +262,9 @@ class MainActivity : AppCompatActivity() {
         private const val EXTRA_SESSIONID = "MainActivity.EXTRA_SESSIONID"
         private const val EXTRA_SESSION_DETAILS = "MainActivity.EXTRA_SESSION_DETAILS"
 
-        fun getSessionDetailIntent(context: Context, sessionId: String, sessionDetail: String): Intent {
+        fun getSessionDetailIntent(context: Context,
+                                   sessionId: String,
+                                   sessionDetail: String): Intent {
             return Intent(context, MainActivity::class.java).apply {
                 putExtra(EXTRA_SESSIONID, sessionId)
                 putExtra(EXTRA_SESSION_DETAILS, sessionDetail)

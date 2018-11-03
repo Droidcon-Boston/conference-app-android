@@ -5,8 +5,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.PagerAdapter
 import android.view.ViewGroup
-
-import java.util.WeakHashMap
+import java.util.*
 
 /**
  * See https://stackoverflow.com/questions/13695649/refresh-images-on-fragmentstatepageradapter-on-resuming-activity
@@ -59,9 +58,7 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
      */
     private fun findFragmentPositionHashMap(fragmentObj: Fragment): Int {
         for (position in mFragments.keys) {
-            if (position != null &&
-                    mFragments[position] != null &&
-                    mFragments[position] === fragmentObj) {
+            if (position != null && mFragments[position] != null && mFragments[position] === fragmentObj) {
                 return position
             }
         }

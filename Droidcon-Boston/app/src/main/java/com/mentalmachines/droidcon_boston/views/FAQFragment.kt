@@ -19,9 +19,8 @@ import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.views.faq.FaqAdapterItem
 import com.mentalmachines.droidcon_boston.views.faq.FaqAdapterItemHeader
 import eu.davidea.flexibleadapter.FlexibleAdapter
-import kotlinx.android.synthetic.main.faq_fragment.faq_recycler
-import java.util.ArrayList
-import java.util.HashMap
+import kotlinx.android.synthetic.main.faq_fragment.*
+import java.util.*
 
 
 class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
@@ -30,7 +29,9 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private lateinit var headerAdapter: FlexibleAdapter<FaqAdapterItem>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(layout.faq_fragment, container, false)
     }
@@ -75,7 +76,8 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         val items = ArrayList<FaqAdapterItem>(faqs.size)
         faqs.forEach { faq ->
             faq.answers.forEach { answer ->
-                val header: FaqAdapterItemHeader = questionHeaders[faq.question] ?: FaqAdapterItemHeader(faq.question)
+                val header: FaqAdapterItemHeader =
+                    questionHeaders[faq.question] ?: FaqAdapterItemHeader(faq.question)
                 questionHeaders[faq.question] = header
 
                 val item = FaqAdapterItem(answer, header)
@@ -87,8 +89,7 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         headerAdapter = FlexibleAdapter(items)
         headerAdapter.addListener(this)
         faq_recycler.adapter = headerAdapter
-        headerAdapter.expandItemsAtStartUp()
-                .setDisplayHeadersAtStartUp(true)
+        headerAdapter.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
@@ -96,7 +97,8 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData
 
-            val url = if (!TextUtils.isEmpty(itemData.otherLink)) itemData.otherLink else itemData.mapLink
+            val url =
+                if (!TextUtils.isEmpty(itemData.otherLink)) itemData.otherLink else itemData.mapLink
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
 

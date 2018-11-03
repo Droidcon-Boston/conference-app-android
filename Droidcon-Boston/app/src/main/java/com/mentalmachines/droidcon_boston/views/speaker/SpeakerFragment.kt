@@ -26,7 +26,8 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val firebaseHelper = FirebaseHelper.instance
     private lateinit var speakerAdapter: FlexibleAdapter<SpeakerAdapterItem>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.speaker_fragment, container, false)
@@ -73,16 +74,15 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
             val arguments = Bundle()
 
-            arguments.putString(EventSpeaker.SPEAKER_ITEM_ROW, gson.toJson(itemData, EventSpeaker::class.java))
+            arguments.putString(EventSpeaker.SPEAKER_ITEM_ROW,
+                gson.toJson(itemData, EventSpeaker::class.java))
 
             val speakerDetailFragment = SpeakerDetailFragment()
             speakerDetailFragment.arguments = arguments
 
             val fragmentManager = activity?.supportFragmentManager
-            fragmentManager?.beginTransaction()
-                    ?.add(R.id.fragment_container, speakerDetailFragment)
-                    ?.addToBackStack(null)
-                    ?.commit()
+            fragmentManager?.beginTransaction()?.add(R.id.fragment_container, speakerDetailFragment)
+                ?.addToBackStack(null)?.commit()
         }
 
         return true

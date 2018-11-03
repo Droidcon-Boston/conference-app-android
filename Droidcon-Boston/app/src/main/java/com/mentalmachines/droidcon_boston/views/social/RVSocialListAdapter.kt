@@ -9,9 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.modal.SocialModal
-import java.util.ArrayList
+import java.util.*
 
-internal class RVSocialListAdapter(private var socialList: ArrayList<SocialModal>) : Adapter<RVSocialListAdapter.ListViewHolder>() {
+internal class RVSocialListAdapter(private var socialList: ArrayList<SocialModal>) :
+    Adapter<RVSocialListAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : ViewHolder(itemView) {
 

@@ -6,11 +6,11 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import com.mentalmachines.droidcon_boston.R
+import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
-import android.view.animation.AlphaAnimation
-import kotlinx.android.synthetic.main.splash_activity.logo_text
+import com.mentalmachines.droidcon_boston.R
+import kotlinx.android.synthetic.main.splash_activity.*
 
 
 class SplashActivity : AppCompatActivity() {

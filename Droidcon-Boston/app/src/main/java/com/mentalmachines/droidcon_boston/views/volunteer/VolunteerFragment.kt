@@ -18,7 +18,7 @@ import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.loadUriInCustomTab
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import kotlinx.android.synthetic.main.volunteer_fragment.volunteer_recycler
+import kotlinx.android.synthetic.main.volunteer_fragment.*
 
 
 class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
@@ -26,7 +26,8 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val firebaseHelper = FirebaseHelper.instance
     private lateinit var volunteerAdapter: FlexibleAdapter<VolunteerAdapterItem>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.volunteer_fragment, container, false)
@@ -62,14 +63,17 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun fetchDataFromFirebase() {
-        firebaseHelper.volunteerDatabase.orderByChild("firstName").addValueEventListener(dataListener)
+        firebaseHelper.volunteerDatabase.orderByChild("firstName")
+            .addValueEventListener(dataListener)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
         val item = volunteerAdapter.getItem(position)
         if (item is VolunteerAdapterItem && !item.itemData.twitter.isEmpty()) {
             val context = activity as Context
-            context.loadUriInCustomTab(String.format("%s%s", resources.getString(R.string.twitter_link), item.itemData.twitter))
+            context.loadUriInCustomTab(String.format("%s%s",
+                resources.getString(R.string.twitter_link),
+                item.itemData.twitter))
             return false
         }
 

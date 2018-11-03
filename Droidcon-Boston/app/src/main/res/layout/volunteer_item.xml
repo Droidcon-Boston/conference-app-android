@@ -11,14 +11,14 @@
     <ImageView
         android:layout_width="5dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="10dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="10dp"
         android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:background="@color/colorAccent"
+        android:contentDescription="Side bar in list item"
         android:visibility="visible"
-        tools:visibility="visible"
-        android:contentDescription="Side bar in list item" />
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/session_layout"
@@ -29,8 +29,8 @@
         android:layout_marginRight="8dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/name_text"

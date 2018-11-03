@@ -13,7 +13,7 @@ class FirebaseHelper private constructor() {
     val aboutDatabase: DatabaseReference
     val faqDatabase: DatabaseReference
     val cocDatabase: DatabaseReference
-    val volunteerDatabase : DatabaseReference
+    val volunteerDatabase: DatabaseReference
 
     init {
         this.database = FirebaseDatabase.getInstance()

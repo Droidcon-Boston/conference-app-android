@@ -18,22 +18,20 @@ import eu.davidea.viewholders.FlexibleViewHolder
  * Used for displaying speaker list items on the all speakers "Speakers" page.
  */
 class SpeakerAdapterItem internal constructor(val itemData: EventSpeaker) :
-        AbstractFlexibleItem<SpeakerAdapterItem.ViewHolder>() {
+    AbstractFlexibleItem<SpeakerAdapterItem.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
-                                holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
+                                holder: ViewHolder,
+                                position: Int,
+                                payloads: MutableList<Any>?) {
 
         holder.name.text = itemData.name
         holder.bio.text = itemData.bio.getHtmlFormattedSpanned()
 
         val context = holder.name.context
 
-        Glide.with(context)
-                .load(itemData.pictureUrl)
-                .transform(CircleTransform(context))
-                .placeholder(R.drawable.emo_im_cool)
-                .crossFade()
-                .into(holder.avatar)
+        Glide.with(context).load(itemData.pictureUrl).transform(CircleTransform(context))
+            .placeholder(R.drawable.emo_im_cool).crossFade().into(holder.avatar)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -52,7 +50,8 @@ class SpeakerAdapterItem internal constructor(val itemData: EventSpeaker) :
         return R.layout.speaker_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(view: View,
+                                  adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
         return SpeakerAdapterItem.ViewHolder(view, adapter)
     }
 
@@ -68,7 +67,9 @@ class SpeakerAdapterItem internal constructor(val itemData: EventSpeaker) :
             findViews(view)
         }
 
-        constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(view, adapter, stickyHeader) {
+        constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(view,
+            adapter,
+            stickyHeader) {
             findViews(view)
         }
 

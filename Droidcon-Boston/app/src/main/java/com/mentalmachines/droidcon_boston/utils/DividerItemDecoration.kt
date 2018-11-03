@@ -30,11 +30,9 @@ class DividerItemDecoration(context: Context, orientation: Int) : RecyclerView.I
         val childCount = parent.childCount
         for (i in 0 until childCount) {
             val child = parent.getChildAt(i)
-            val params = child
-                    .layoutParams as RecyclerView.LayoutParams
-            @Suppress("DEPRECATION")
-            val left = child.right + params.rightMargin +
-                    Math.round(ViewCompat.getTranslationX(child))
+            val params = child.layoutParams as RecyclerView.LayoutParams
+            @Suppress("DEPRECATION") val left =
+                child.right + params.rightMargin + Math.round(ViewCompat.getTranslationX(child))
             val right = left + divider!!.intrinsicHeight
             divider.setBounds(left, top, right, bottom)
             divider.draw(c!!)
@@ -48,11 +46,9 @@ class DividerItemDecoration(context: Context, orientation: Int) : RecyclerView.I
         val childCount = parent.childCount
         for (i in 0 until childCount) {
             val child = parent.getChildAt(i)
-            val params = child
-                    .layoutParams as RecyclerView.LayoutParams
-            @Suppress("DEPRECATION")
-            val top = child.bottom + params.bottomMargin +
-                    Math.round(ViewCompat.getTranslationY(child))
+            val params = child.layoutParams as RecyclerView.LayoutParams
+            @Suppress("DEPRECATION") val top =
+                child.bottom + params.bottomMargin + Math.round(ViewCompat.getTranslationY(child))
             val bottom = top + divider!!.intrinsicHeight
             divider.setBounds(left, top, right, bottom)
             divider.draw(c!!)
@@ -61,10 +57,10 @@ class DividerItemDecoration(context: Context, orientation: Int) : RecyclerView.I
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: State) {
         if (orientationValue == VERTICAL_LIST) {
-                        outRect.set(0, 0, 0, divider!!.intrinsicHeight)
-                    } else {
-                        outRect.set(0, 0, divider!!.intrinsicWidth, 0)
-                    }
+            outRect.set(0, 0, 0, divider!!.intrinsicHeight)
+        } else {
+            outRect.set(0, 0, divider!!.intrinsicWidth, 0)
+        }
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: State) {

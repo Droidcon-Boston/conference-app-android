@@ -12,8 +12,8 @@ import eu.davidea.viewholders.FlexibleViewHolder
 /**
  * Header for FAQ view
  */
-class FaqAdapterItemHeader internal constructor(private val question: String)
-    : AbstractHeaderItem<FaqAdapterItemHeader.ViewHolder>() {
+class FaqAdapterItemHeader internal constructor(private val question: String) :
+    AbstractHeaderItem<FaqAdapterItemHeader.ViewHolder>() {
 
     override fun equals(other: Any?): Boolean {
         if (other is FaqAdapterItemHeader) {
@@ -31,7 +31,8 @@ class FaqAdapterItemHeader internal constructor(private val question: String)
         return R.layout.faq_header
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(view: View,
+                                  adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
         return FaqAdapterItemHeader.ViewHolder(view, adapter, true)
     }
 
@@ -47,13 +48,13 @@ class FaqAdapterItemHeader internal constructor(private val question: String)
 
         lateinit var header: TextView
 
-        constructor(view: View, adapter: FlexibleAdapter<*>)
-                : super(view, adapter) {
+        constructor(view: View, adapter: FlexibleAdapter<*>) : super(view, adapter) {
             findViews(view)
         }
 
-        internal constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean)
-                : super(view, adapter, stickyHeader) {
+        internal constructor(view: View,
+                             adapter: FlexibleAdapter<*>,
+                             stickyHeader: Boolean) : super(view, adapter, stickyHeader) {
             findViews(view)
         }
 

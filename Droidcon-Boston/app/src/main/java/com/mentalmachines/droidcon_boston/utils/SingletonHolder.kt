@@ -4,7 +4,8 @@ package com.mentalmachines.droidcon_boston.utils
 // Kotlin singletons really should have a constructor :-P
 open class SingletonHolder<out T, in A>(creator: (A) -> T) {
     private var creator: ((A) -> T)? = creator
-    @Volatile private var instance: T? = null
+    @Volatile
+    private var instance: T? = null
 
     fun getInstance(arg: A): T {
         val i = instance
