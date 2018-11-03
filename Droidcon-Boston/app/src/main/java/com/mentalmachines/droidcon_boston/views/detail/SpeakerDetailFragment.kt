@@ -52,11 +52,11 @@ class SpeakerDetailFragment : Fragment() {
 
         val twitterHandle = itemData.socialProfiles?.get("twitter")
         if (!twitterHandle.isNullOrEmpty()) {
-            imgv_twitter.setOnClickListener({
+            imgv_twitter.setOnClickListener {
                 activity?.loadUriInCustomTab(String.format("%s%s",
                     resources.getString(R.string.twitter_link),
                     twitterHandle))
-            })
+            }
         } else {
             imgv_twitter.visibility = View.GONE
         }
@@ -64,11 +64,11 @@ class SpeakerDetailFragment : Fragment() {
 
         val linkedinHandle = itemData.socialProfiles?.get("linkedIn")
         if (!linkedinHandle.isNullOrEmpty()) {
-            imgv_linkedin.setOnClickListener({
+            imgv_linkedin.setOnClickListener {
                 activity?.loadUriInCustomTab(String.format("%s%s",
                     resources.getString(R.string.linkedin_profile_link),
                     linkedinHandle))
-            })
+            }
         } else {
             imgv_linkedin.visibility = View.GONE
         }

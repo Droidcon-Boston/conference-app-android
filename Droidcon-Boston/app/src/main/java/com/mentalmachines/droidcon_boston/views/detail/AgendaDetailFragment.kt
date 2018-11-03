@@ -74,7 +74,7 @@ class AgendaDetailFragment : Fragment() {
             scheduleRowItem.startTime,
             scheduleRowItem.endTime)
 
-        fab_agenda_detail_bookmark.setOnClickListener({
+        fab_agenda_detail_bookmark.setOnClickListener {
 
             if (scheduleDetail != null) {
                 val nextBookmarkStatus = !userAgendaRepo.isSessionBookmarked(scheduleDetail!!.id)
@@ -86,24 +86,22 @@ class AgendaDetailFragment : Fragment() {
                     NotificationUtils(context).cancelNotificationAlarm(scheduleRowItem.id)
                 }
 
-                Snackbar.make(agendaDetailView,
-                    if (nextBookmarkStatus) getString(R.string.saved_agenda_item)
-                    else getString(R.string.removed_agenda_item),
-                    Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(agendaDetailView, if (nextBookmarkStatus) getString(R.string.saved_agenda_item)
+                else getString(R.string.removed_agenda_item), Snackbar.LENGTH_SHORT).show()
 
                 showBookmarkStatus(scheduleDetail!!)
             }
-        })
+        }
 
         populateSpeakersInformation(scheduleRowItem)
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (speakerSnapshot in dataSnapshot.children) {
                 val speaker = speakerSnapshot.getValue(EventSpeaker::class.java)
                 if (speaker != null) {
-                    eventSpeakers.put(speaker.name, speaker)
+                    eventSpeakers[speaker.name] = speaker
 
                     if (scheduleRowItem.primarySpeakerName == speaker.name) {
                         scheduleDetail = speaker.toScheduleDetail(scheduleRowItem)
@@ -185,7 +183,7 @@ class AgendaDetailFragment : Fragment() {
                     .transform(CircleTransform(tempImg.context)).placeholder(R.drawable.emo_im_cool)
                     .crossFade().into(tempImg)
 
-                tempImg.setOnClickListener { _ ->
+                tempImg.setOnClickListener {
                     val eventSpeaker = eventSpeakers[speakerName]
                     val arguments = Bundle()
 

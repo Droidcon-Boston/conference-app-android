@@ -31,7 +31,7 @@ open class FirebaseDatabase {
                              var endTime: String = "",
                              var trackSortOrder: Int = 0) {
 
-        val conferenceTZ = ZoneId.of("America/New_York")
+        private val conferenceTZ: ZoneId = ZoneId.of("America/New_York")
 
         fun getLocalStartTime(): LocalDateTime {
             return ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())

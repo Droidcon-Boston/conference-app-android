@@ -44,7 +44,7 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         firebaseHelper.speakerDatabase.removeEventListener(dataListener)
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val rows = ArrayList<EventSpeaker>()
             for (speakerSnapshot in dataSnapshot.children) {

@@ -36,7 +36,7 @@ class AboutFragment : Fragment() {
         firebaseHelper.aboutDatabase.removeEventListener(dataListener)
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             tv_about_description.text =
                     dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()

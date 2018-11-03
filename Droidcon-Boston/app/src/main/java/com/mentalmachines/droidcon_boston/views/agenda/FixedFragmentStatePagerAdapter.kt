@@ -53,7 +53,7 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
 
     /**
      * Find the location of a fragment in the hashmap if it being view
-     * @param object the Fragment we want to check for
+     * @param fragmentObj the Fragment we want to check for
      * @return the position if found else -1
      */
     private fun findFragmentPositionHashMap(fragmentObj: Fragment): Int {

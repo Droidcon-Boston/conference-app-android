@@ -16,12 +16,11 @@ internal class RVSocialListAdapter(private var socialList: ArrayList<SocialModal
 
     inner class ListViewHolder(itemView: View) : ViewHolder(itemView) {
 
-        internal var imageView: ImageView
+        internal var imageView: ImageView = itemView.findViewById(R.id.social_item_img)
 
         internal var txtView: TextView
 
         init {
-            imageView = itemView.findViewById(R.id.social_item_img)
             txtView = itemView.findViewById(R.id.social_item_tv)
         }
     }

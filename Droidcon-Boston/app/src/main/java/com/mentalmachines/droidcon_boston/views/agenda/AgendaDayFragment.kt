@@ -54,7 +54,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             android.R.id.home -> {
                 val fragmentManager = activity?.supportFragmentManager
                 if (fragmentManager?.backStackEntryCount!! > 0) {
-                    fragmentManager?.popBackStack()
+                    fragmentManager.popBackStack()
                 }
             }
         }
@@ -103,7 +103,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agendaRecyler.adapter?.notifyDataSetChanged()
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val rows = ArrayList<ScheduleRow>()
             for (roomSnapshot in dataSnapshot.children) {
@@ -166,7 +166,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if (adapterItem is ScheduleAdapterItem) {
             val itemData = adapterItem.itemData
             if (itemData.primarySpeakerName.isNullorEmpty()) {
-                val url = itemData.photoUrlMap.get(itemData.primarySpeakerName)
+                val url = itemData.photoUrlMap[itemData.primarySpeakerName]
 
                 if (!url.isNullorEmpty()) {
                     // event where info URL is in the photoUrls string
@@ -181,7 +181,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             }
 
             activity?.let {
-                AgendaDetailFragment.addDetailFragmentToStack(it.supportFragmentManager, itemData);
+                AgendaDetailFragment.addDetailFragmentToStack(it.supportFragmentManager, itemData)
             }
         }
 

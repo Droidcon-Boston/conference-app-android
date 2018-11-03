@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
     private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        overridePendingTransition(0, 0);
+        overridePendingTransition(0, 0)
         finish()
     }
 
@@ -43,7 +43,7 @@ class SplashActivity : AppCompatActivity() {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationRepeat(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
-                logo_text.setVisibility(View.GONE)
+                logo_text.visibility = View.GONE
                 startMainActivity()
             }
         })
@@ -52,7 +52,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     companion object {
-        val FADE_DURATION: Long = 750
-        val SPLASH_DURATION: Long = 1500
+        const val FADE_DURATION: Long = 750
+        const val SPLASH_DURATION: Long = 1500
     }
 }

@@ -44,7 +44,7 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         firebaseHelper.volunteerDatabase.removeEventListener(dataListener)
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val rows = ArrayList<VolunteerEvent>()
             for (volunteerSnapshot in dataSnapshot.children) {

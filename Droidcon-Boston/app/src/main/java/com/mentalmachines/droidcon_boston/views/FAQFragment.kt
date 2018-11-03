@@ -48,7 +48,7 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         firebaseHelper.faqDatabase.removeEventListener(dataListener)
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val rows = ArrayList<FaqEvent>()
             for (faqSnapshot in dataSnapshot.children) {

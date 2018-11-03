@@ -38,7 +38,7 @@ class CocFragment : Fragment() {
         firebaseHelper.cocDatabase.removeEventListener(dataListener)
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             tv_coc.text = dataSnapshot.getValue(String::class.java)?.getHtmlFormattedSpanned()
 
