@@ -1,10 +1,10 @@
 package com.mentalmachines.droidcon_boston.utils
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
 open class RVItemClickListener(context: Context,
                                private val itemClickListener: OnItemClickListener?) :

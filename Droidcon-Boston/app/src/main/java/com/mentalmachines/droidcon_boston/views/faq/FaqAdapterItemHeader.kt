@@ -1,8 +1,8 @@
 package com.mentalmachines.droidcon_boston.views.faq
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.mentalmachines.droidcon_boston.R
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem

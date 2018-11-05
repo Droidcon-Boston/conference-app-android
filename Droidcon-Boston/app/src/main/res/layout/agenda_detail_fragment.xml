@@ -67,7 +67,7 @@
             android:textSize="18sp"
             tools:text="10:30 am - 11:15 am" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_agenda_detail_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

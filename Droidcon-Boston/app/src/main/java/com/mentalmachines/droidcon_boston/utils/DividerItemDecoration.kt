@@ -4,11 +4,12 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.support.v4.view.ViewCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.State
 import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.State
 
 class DividerItemDecoration(context: Context, orientation: Int) : RecyclerView.ItemDecoration() {
 
@@ -82,8 +83,8 @@ class DividerItemDecoration(context: Context, orientation: Int) : RecyclerView.I
 
         private val ATTRS = intArrayOf(android.R.attr.listDivider)
 
-        const val HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL
+        const val HORIZONTAL_LIST = HORIZONTAL
 
-        const val VERTICAL_LIST = LinearLayoutManager.VERTICAL
+        const val VERTICAL_LIST = VERTICAL
     }
 }

@@ -3,12 +3,11 @@ package com.mentalmachines.droidcon_boston.views.volunteer
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -83,7 +82,8 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun setupVolunteerAdapter(rows: ArrayList<VolunteerEvent>) {
         val items = rows.map { VolunteerAdapterItem(it) }
-        volunteer_recycler.layoutManager = LinearLayoutManager(volunteer_recycler.context)
+        volunteer_recycler.layoutManager =
+                androidx.recyclerview.widget.LinearLayoutManager(volunteer_recycler.context)
         volunteerAdapter = FlexibleAdapter(items)
         volunteerAdapter.addListener(this)
         volunteer_recycler.adapter = volunteerAdapter

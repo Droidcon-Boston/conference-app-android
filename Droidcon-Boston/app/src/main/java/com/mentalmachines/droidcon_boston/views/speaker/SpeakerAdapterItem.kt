@@ -1,9 +1,9 @@
 package com.mentalmachines.droidcon_boston.views.speaker
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.EventSpeaker

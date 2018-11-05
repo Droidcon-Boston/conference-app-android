@@ -1,12 +1,12 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule

@@ -2,12 +2,11 @@ package com.mentalmachines.droidcon_boston.views.speaker
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -90,7 +89,8 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun setupSpeakerAdapter(rows: ArrayList<EventSpeaker>) {
         val items = rows.map { SpeakerAdapterItem(it) }
-        speaker_recycler.layoutManager = LinearLayoutManager(speaker_recycler.context)
+        speaker_recycler.layoutManager =
+                androidx.recyclerview.widget.LinearLayoutManager(speaker_recycler.context)
         speakerAdapter = FlexibleAdapter(items)
         speakerAdapter.addListener(this)
         speaker_recycler.adapter = speakerAdapter

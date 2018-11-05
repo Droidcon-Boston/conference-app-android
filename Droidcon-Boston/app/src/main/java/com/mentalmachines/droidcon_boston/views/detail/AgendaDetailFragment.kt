@@ -2,10 +2,10 @@ package com.mentalmachines.droidcon_boston.views.detail
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.core.content.ContextCompat
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -86,8 +86,8 @@ class AgendaDetailFragment : Fragment() {
                     NotificationUtils(context).cancelNotificationAlarm(scheduleRowItem.id)
                 }
 
-                Snackbar.make(agendaDetailView, if (nextBookmarkStatus) getString(R.string.saved_agenda_item)
-                else getString(R.string.removed_agenda_item), Snackbar.LENGTH_SHORT).show()
+                com.google.android.material.snackbar.Snackbar.make(agendaDetailView, if (nextBookmarkStatus) getString(R.string.saved_agenda_item)
+                else getString(R.string.removed_agenda_item), com.google.android.material.snackbar.Snackbar.LENGTH_SHORT).show()
 
                 showBookmarkStatus(scheduleDetail!!)
             }
@@ -224,7 +224,7 @@ class AgendaDetailFragment : Fragment() {
     }
 
     companion object {
-        fun addDetailFragmentToStack(supportFragmentManager: FragmentManager,
+        fun addDetailFragmentToStack(supportFragmentManager: androidx.fragment.app.FragmentManager,
                                      itemData: Schedule.ScheduleRow) {
             val arguments = Bundle()
             arguments.putString(Schedule.SCHEDULE_ITEM_ROW,

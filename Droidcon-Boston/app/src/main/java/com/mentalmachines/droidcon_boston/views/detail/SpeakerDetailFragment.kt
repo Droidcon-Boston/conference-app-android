@@ -1,7 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,7 @@ import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.speaker_detail_fragment.*
 
 
-class SpeakerDetailFragment : Fragment() {
+class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
 
     private val firebaseHelper = FirebaseHelper.instance
 

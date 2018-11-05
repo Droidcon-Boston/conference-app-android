@@ -3,13 +3,12 @@ package com.mentalmachines.droidcon_boston.views
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -85,7 +84,8 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             }
         }
 
-        faq_recycler.layoutManager = LinearLayoutManager(faq_recycler.context)
+        faq_recycler.layoutManager =
+                androidx.recyclerview.widget.LinearLayoutManager(faq_recycler.context)
         headerAdapter = FlexibleAdapter(items)
         headerAdapter.addListener(this)
         faq_recycler.adapter = headerAdapter

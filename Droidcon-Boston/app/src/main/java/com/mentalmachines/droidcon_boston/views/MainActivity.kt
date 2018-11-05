@@ -4,13 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.id
 import com.mentalmachines.droidcon_boston.R.string
@@ -200,7 +199,7 @@ class MainActivity : AppCompatActivity() {
         updateToolbarTitle(title)
 
         // Get the fragment by tag
-        var fragment: Fragment? = supportFragmentManager.findFragmentByTag(title)
+        var fragment: androidx.fragment.app.Fragment? = supportFragmentManager.findFragmentByTag(title)
 
         if (fragment == null) {
             // Initialize the fragment based on tag

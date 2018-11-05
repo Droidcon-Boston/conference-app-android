@@ -1,7 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.mentalmachines.droidcon_boston.data.Schedule
 
 class AgendaDayPagerAdapter internal constructor(fm: FragmentManager,

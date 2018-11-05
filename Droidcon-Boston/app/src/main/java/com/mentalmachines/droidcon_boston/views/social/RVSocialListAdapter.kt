@@ -1,12 +1,12 @@
 package com.mentalmachines.droidcon_boston.views.social
 
-import android.support.v7.widget.RecyclerView.Adapter
-import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.modal.SocialModal
 import java.util.*

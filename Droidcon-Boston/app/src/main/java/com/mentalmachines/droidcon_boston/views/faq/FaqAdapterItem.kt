@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.faq
 
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
@@ -37,11 +36,11 @@ class FaqAdapterItem internal constructor(val itemData: Answer, header: FaqAdapt
     }
 
     override fun createViewHolder(view: View,
-                                  adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+                                  adapter: FlexibleAdapter<IFlexible<androidx.recyclerview.widget.RecyclerView.ViewHolder>>): ViewHolder {
         return FaqAdapterItem.ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>,
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<androidx.recyclerview.widget.RecyclerView.ViewHolder>>,
                                 holder: FaqAdapterItem.ViewHolder,
                                 position: Int,
                                 payloads: MutableList<Any>) {

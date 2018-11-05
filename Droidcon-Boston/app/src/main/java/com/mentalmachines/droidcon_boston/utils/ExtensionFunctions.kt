@@ -2,8 +2,8 @@ package com.mentalmachines.droidcon_boston.utils
 
 import android.content.Context
 import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
-import android.support.v4.content.ContextCompat
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import android.text.Html
 import android.text.Spanned
 import com.mentalmachines.droidcon_boston.R

@@ -12,7 +12,7 @@ android {
         targetSdkVersion 28
         versionCode 17
         versionName "2.0.9"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -59,12 +59,12 @@ dependencies {
     testImplementation "junit:junit:4.12"
 
     // Support
-    final support = "28.0.0"
-    implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support:support-v4:$support"
-    implementation "com.android.support:cardview-v7:$support"
-    implementation "com.android.support:design:$support"
-    implementation "com.android.support:customtabs:$support"
+    final support = '1.0.0'
+    implementation "androidx.appcompat:appcompat:1.0.1"
+    implementation "androidx.legacy:legacy-support-v4:$support"
+    implementation "androidx.cardview:cardview:$support"
+    implementation "com.google.android.material:material:$support"
+    implementation "androidx.browser:browser:$support"
 
     // Firebase
     implementation "com.google.firebase:firebase-messaging:17.3.4"

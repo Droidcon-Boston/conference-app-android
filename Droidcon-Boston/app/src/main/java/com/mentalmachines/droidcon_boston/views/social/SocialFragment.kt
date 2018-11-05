@@ -1,11 +1,11 @@
 package com.mentalmachines.droidcon_boston.views.social
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.modal.SocialModal
@@ -32,10 +32,10 @@ class SocialFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Set Layout Manager
-        social_rv.layoutManager = LinearLayoutManager(activity)
+        social_rv.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
 
         // Set the divider
-        social_rv.addItemDecoration(DividerItemDecoration(activity!!, LinearLayoutManager.VERTICAL))
+        social_rv.addItemDecoration(DividerItemDecoration(activity!!, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL))
 
         socialList = prepareSocialList()
         // Set Adapter
