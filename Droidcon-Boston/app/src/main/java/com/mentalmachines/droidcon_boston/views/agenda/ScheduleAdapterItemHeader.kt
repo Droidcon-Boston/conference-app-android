@@ -13,7 +13,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
  * Sticky header for schedule view
  */
 class ScheduleAdapterItemHeader internal constructor(private val sessionTime: String) :
-    AbstractHeaderItem<ScheduleAdapterItemHeader.ViewHolder>() {
+        AbstractHeaderItem<ScheduleAdapterItemHeader.ViewHolder>() {
 
     override fun equals(other: Any?): Boolean {
         if (other is ScheduleAdapterItemHeader) {

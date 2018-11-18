@@ -18,7 +18,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
  * Used for displaying speaker list items on the all speakers "Speakers" page.
  */
 class SpeakerAdapterItem internal constructor(val itemData: EventSpeaker) :
-    AbstractFlexibleItem<SpeakerAdapterItem.ViewHolder>() {
+        AbstractFlexibleItem<SpeakerAdapterItem.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
                                 holder: ViewHolder,
@@ -31,7 +31,7 @@ class SpeakerAdapterItem internal constructor(val itemData: EventSpeaker) :
         val context = holder.name.context
 
         Glide.with(context).load(itemData.pictureUrl).transform(CircleTransform(context))
-            .placeholder(R.drawable.emo_im_cool).crossFade().into(holder.avatar)
+                .placeholder(R.drawable.emo_im_cool).crossFade().into(holder.avatar)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -68,8 +68,8 @@ class SpeakerAdapterItem internal constructor(val itemData: EventSpeaker) :
         }
 
         constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(view,
-            adapter,
-            stickyHeader) {
+                adapter,
+                stickyHeader) {
             findViews(view)
         }
 

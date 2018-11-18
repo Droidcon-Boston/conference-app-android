@@ -18,7 +18,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
  * Used for displaying volunteer list items on the all volunteers "volunteers" page.
  */
 class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
-    AbstractFlexibleItem<ViewHolder>() {
+        AbstractFlexibleItem<ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
                                 holder: ViewHolder,
@@ -37,7 +37,7 @@ class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
         val context = holder.name.context
 
         Glide.with(context).load(itemData.pictureUrl).transform(CircleTransform(context))
-            .placeholder(R.drawable.emo_im_cool).crossFade().into(holder.avatar)
+                .placeholder(R.drawable.emo_im_cool).crossFade().into(holder.avatar)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -74,8 +74,8 @@ class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
         }
 
         constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(view,
-            adapter,
-            stickyHeader) {
+                adapter,
+                stickyHeader) {
             findViews(view)
         }
 

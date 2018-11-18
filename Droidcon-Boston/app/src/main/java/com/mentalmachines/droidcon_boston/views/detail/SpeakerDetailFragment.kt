@@ -32,7 +32,7 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val itemData = gson.fromJson(arguments!!.getString(EventSpeaker.SPEAKER_ITEM_ROW),
-            EventSpeaker::class.java)
+                EventSpeaker::class.java)
         populateView(itemData)
 
         if (activity is MainActivity) {
@@ -53,8 +53,8 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
         if (!twitterHandle.isNullOrEmpty()) {
             imgv_twitter.setOnClickListener {
                 activity?.loadUriInCustomTab(String.format("%s%s",
-                    resources.getString(R.string.twitter_link),
-                    twitterHandle))
+                        resources.getString(R.string.twitter_link),
+                        twitterHandle))
             }
         } else {
             imgv_twitter.visibility = View.GONE
@@ -65,16 +65,16 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
         if (!linkedinHandle.isNullOrEmpty()) {
             imgv_linkedin.setOnClickListener {
                 activity?.loadUriInCustomTab(String.format("%s%s",
-                    resources.getString(R.string.linkedin_profile_link),
-                    linkedinHandle))
+                        resources.getString(R.string.linkedin_profile_link),
+                        linkedinHandle))
             }
         } else {
             imgv_linkedin.visibility = View.GONE
         }
 
         Glide.with(activity).load(itemData.pictureUrl)
-            .transform(CircleTransform(imgv_speaker_detail_avatar.context))
-            .placeholder(R.drawable.emo_im_cool).crossFade().into(imgv_speaker_detail_avatar)
+                .transform(CircleTransform(imgv_speaker_detail_avatar.context))
+                .placeholder(R.drawable.emo_im_cool).crossFade().into(imgv_speaker_detail_avatar)
 
     }
 }

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         val sessionDetails = initialIntent.extras?.getString(EXTRA_SESSION_DETAILS)
         if (!TextUtils.isEmpty(sessionDetails)) {
             AgendaDetailFragment.addDetailFragmentToStack(supportFragmentManager,
-                ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java))
+                    ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java))
         } else {
             navView.setCheckedItem(id.nav_agenda)
         }
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkNavMenuItem(title: String) {
         processMenuItems({ item -> item.title == title },
-            { item -> item.setChecked(true).isChecked })
+                { item -> item.setChecked(true).isChecked })
     }
 
     private fun isNavItemChecked(title: String): Boolean {
@@ -129,9 +129,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         actionBarDrawerToggle = ActionBarDrawerToggle(this,
-            drawer_layout,
-            R.string.drawer_open,
-            R.string.drawer_close)
+                drawer_layout,
+                R.string.drawer_open,
+                R.string.drawer_close)
         drawer_layout.addDrawerListener(actionBarDrawerToggle)
 
         navView.setNavigationItemSelectedListener { item ->
@@ -217,10 +217,10 @@ class MainActivity : AppCompatActivity() {
             // Add fragment with tag
             fragment?.let {
                 supportFragmentManager?.beginTransaction()
-                    // replace in container
-                    ?.replace(R.id.fragment_container, it, title)
-                    // commit fragment transaction
-                    ?.commit()
+                        // replace in container
+                        ?.replace(R.id.fragment_container, it, title)
+                        // commit fragment transaction
+                        ?.commit()
             }
         } else {
 
@@ -232,15 +232,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             val fragmentInContainer =
-                supportFragmentManager?.findFragmentById(R.id.fragment_container)
+                    supportFragmentManager?.findFragmentById(R.id.fragment_container)
             fragmentInContainer?.let {
                 supportFragmentManager?.beginTransaction()
-                    // detach the fragment that is currently visible
-                    ?.detach(it)
-                    // attach the fragment found as per the tag
-                    ?.attach(it)
-                    // commit fragment transaction
-                    ?.commit()
+                        // detach the fragment that is currently visible
+                        ?.detach(it)
+                        // attach the fragment found as per the tag
+                        ?.attach(it)
+                        // commit fragment transaction
+                        ?.commit()
             }
         }
     }

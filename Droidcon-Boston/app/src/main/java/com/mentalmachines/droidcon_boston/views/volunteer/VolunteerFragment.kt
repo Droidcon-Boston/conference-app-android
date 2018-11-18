@@ -63,7 +63,7 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun fetchDataFromFirebase() {
         firebaseHelper.volunteerDatabase.orderByChild("firstName")
-            .addValueEventListener(dataListener)
+                .addValueEventListener(dataListener)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
@@ -71,8 +71,8 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if (item is VolunteerAdapterItem && !item.itemData.twitter.isEmpty()) {
             val context = activity as Context
             context.loadUriInCustomTab(String.format("%s%s",
-                resources.getString(R.string.twitter_link),
-                item.itemData.twitter))
+                    resources.getString(R.string.twitter_link),
+                    item.itemData.twitter))
             return false
         }
 

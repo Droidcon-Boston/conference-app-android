@@ -10,9 +10,9 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Build.VERSION_CODES
-import androidx.core.app.NotificationCompat
 import android.text.TextUtils
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -38,8 +38,8 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // create android channel
             val androidChannel = NotificationChannel(ANDROID_CHANNEL_ID,
-                ANDROID_CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT)
+                    ANDROID_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT)
             // Sets whether notifications posted to this channel should display notification lights
             androidChannel.enableLights(true)
             // Sets whether notification posted to this channel should vibrate.
@@ -66,11 +66,11 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
         val pi = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder =
-            NotificationCompat.Builder(applicationContext, channelId).setContentTitle(title)
-                .setContentText(body).setTicker(getString(R.string.conference_name))
-                .setSmallIcon(android.R.drawable.stat_notify_more).setAutoCancel(true)
-                // for notification click action, also required on Gingerbread and below
-                .setContentIntent(pi)
+                NotificationCompat.Builder(applicationContext, channelId).setContentTitle(title)
+                        .setContentText(body).setTicker(getString(R.string.conference_name))
+                        .setSmallIcon(android.R.drawable.stat_notify_more).setAutoCancel(true)
+                        // for notification click action, also required on Gingerbread and below
+                        .setContentIntent(pi)
 
         getNotificationManager().notify(notificationId, builder.build())
     }
@@ -89,13 +89,13 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                 for (roomSnapshot in dataSnapshot.children) {
                     val eventId = roomSnapshot.key ?: ""
                     val scheduleEvent =
-                        roomSnapshot.getValue(FirebaseDatabase.ScheduleEvent::class.java)
+                            roomSnapshot.getValue(FirebaseDatabase.ScheduleEvent::class.java)
                     scheduleEvent?.let {
                         if (userRepo.isSessionBookmarked(eventId) && scheduleEvent.getLocalStartTime().isAfter(
-                                LocalDateTime.now())) {
+                                        LocalDateTime.now())) {
                             scheduleEvent.scheduleNotification(context,
-                                eventId,
-                                scheduleEvent.toScheduleRow(eventId))
+                                    eventId,
+                                    scheduleEvent.toScheduleRow(eventId))
                             hasBookmarkedEvents = true
                         }
                     }
@@ -120,7 +120,7 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                                   sessionDetail: String) {
         if (alarmTime.isAfter(LocalDateTime.now())) {
             val pendingIntent =
-                getAgendaSessionNotificationPendingIntent(sessionId, title, body, sessionDetail)
+                    getAgendaSessionNotificationPendingIntent(sessionId, title, body, sessionDetail)
             val utcInMillis = alarmTime.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.set(AlarmManager.RTC_WAKEUP, utcInMillis, pendingIntent)
@@ -139,8 +139,8 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
         val pm = context.packageManager
 
         pm.setComponentEnabledSetting(receiver,
-            if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-            PackageManager.DONT_KILL_APP)
+                if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP)
     }
 
     private fun getAgendaSessionNotificationPendingIntent(sessionId: String,
@@ -148,16 +148,16 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
                                                           body: String = "",
                                                           sessionDetail: String = ""): PendingIntent {
         val builder = NotificationCompat.Builder(this, ANDROID_CHANNEL_ID).setContentText(title)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(body).setBigContentTitle(title))
-            .setSmallIcon(R.drawable.ic_notification_session_start).setAutoCancel(true)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(body).setBigContentTitle(title))
+                .setSmallIcon(R.drawable.ic_notification_session_start).setAutoCancel(true)
 
         val notificationId = sessionId.hashCode()
         if (!TextUtils.isEmpty(sessionDetail)) {
             val sessionIntent = MainActivity.getSessionDetailIntent(this, sessionId, sessionDetail)
             val contentIntent = PendingIntent.getActivity(this,
-                notificationId,
-                sessionIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+                    notificationId,
+                    sessionIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT)
 
             builder.setContentIntent(contentIntent)
         }
@@ -168,9 +168,9 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
             putExtra(NotificationPublisher.NOTIFICATION, builder.build())
         }
         return PendingIntent.getBroadcast(this,
-            notificationId,
-            notificationIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT)
+                notificationId,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     companion object {

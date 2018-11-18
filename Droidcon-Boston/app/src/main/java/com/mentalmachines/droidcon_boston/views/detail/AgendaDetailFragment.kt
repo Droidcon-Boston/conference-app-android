@@ -2,10 +2,6 @@ package com.mentalmachines.droidcon_boston.views.detail
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.core.content.ContextCompat
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -56,7 +54,7 @@ class AgendaDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         scheduleRowItem = gson.fromJson(arguments!!.getString(Schedule.SCHEDULE_ITEM_ROW),
-            ScheduleRow::class.java)
+                ScheduleRow::class.java)
         fetchDataFromFirebase()
         populateView()
 
@@ -71,8 +69,8 @@ class AgendaDetailFragment : Fragment() {
         tv_agenda_detail_room.text =
                 resources.getString(R.string.str_agenda_detail_room, scheduleRowItem.room)
         tv_agenda_detail_time.text = resources.getString(R.string.str_agenda_detail_time,
-            scheduleRowItem.startTime,
-            scheduleRowItem.endTime)
+                scheduleRowItem.startTime,
+                scheduleRowItem.endTime)
 
         fab_agenda_detail_bookmark.setOnClickListener {
 
@@ -180,23 +178,23 @@ class AgendaDetailFragment : Fragment() {
                 agendaDetailView.addView(tempImg)
 
                 Glide.with(this).load(itemData.photoUrlMap[speakerName])
-                    .transform(CircleTransform(tempImg.context)).placeholder(R.drawable.emo_im_cool)
-                    .crossFade().into(tempImg)
+                        .transform(CircleTransform(tempImg.context)).placeholder(R.drawable.emo_im_cool)
+                        .crossFade().into(tempImg)
 
                 tempImg.setOnClickListener {
                     val eventSpeaker = eventSpeakers[speakerName]
                     val arguments = Bundle()
 
                     arguments.putString(EventSpeaker.SPEAKER_ITEM_ROW,
-                        gson.toJson(eventSpeaker, EventSpeaker::class.java))
+                            gson.toJson(eventSpeaker, EventSpeaker::class.java))
 
                     val speakerDetailFragment = SpeakerDetailFragment()
                     speakerDetailFragment.arguments = arguments
 
                     val fragmentManager = activity?.supportFragmentManager
                     fragmentManager?.beginTransaction()
-                        ?.add(R.id.fragment_container, speakerDetailFragment)?.addToBackStack(null)
-                        ?.commit()
+                            ?.add(R.id.fragment_container, speakerDetailFragment)?.addToBackStack(null)
+                            ?.commit()
                 }
             }
             tv_agenda_detail_speaker_name.text = speakerNames
@@ -219,7 +217,7 @@ class AgendaDetailFragment : Fragment() {
         val context = fab_agenda_detail_bookmark.context
         fab_agenda_detail_bookmark.backgroundTintList =
                 if (userAgendaRepo.isSessionBookmarked(scheduleDetail.id)) ColorStateList.valueOf(
-                    ContextCompat.getColor(context, R.color.colorAccent))
+                        ContextCompat.getColor(context, R.color.colorAccent))
                 else ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorLightGray))
     }
 
@@ -228,13 +226,13 @@ class AgendaDetailFragment : Fragment() {
                                      itemData: Schedule.ScheduleRow) {
             val arguments = Bundle()
             arguments.putString(Schedule.SCHEDULE_ITEM_ROW,
-                gson.toJson(itemData, ScheduleRow::class.java))
+                    gson.toJson(itemData, ScheduleRow::class.java))
 
             val agendaDetailFragment = AgendaDetailFragment()
             agendaDetailFragment.arguments = arguments
 
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, agendaDetailFragment).addToBackStack(null).commit()
+                    .add(R.id.fragment_container, agendaDetailFragment).addToBackStack(null).commit()
         }
     }
 }

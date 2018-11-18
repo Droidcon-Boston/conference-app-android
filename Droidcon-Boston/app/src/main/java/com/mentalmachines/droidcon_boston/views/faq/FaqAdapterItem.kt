@@ -17,7 +17,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
  * Used for displaying the FAQ items
  */
 class FaqAdapterItem internal constructor(val itemData: Answer, header: FaqAdapterItemHeader) :
-    AbstractSectionableItem<FaqAdapterItem.ViewHolder, FaqAdapterItemHeader>(header) {
+        AbstractSectionableItem<FaqAdapterItem.ViewHolder, FaqAdapterItemHeader>(header) {
 
     override fun equals(other: Any?): Boolean {
         if (other is FaqAdapterItem) {
@@ -49,7 +49,7 @@ class FaqAdapterItem internal constructor(val itemData: Answer, header: FaqAdapt
         if (!TextUtils.isEmpty(itemData.photoLink)) {
             val context = holder.faq_text.context
             Glide.with(context).load(itemData.photoLink).crossFade().centerCrop()
-                .into(holder.faq_photo)
+                    .into(holder.faq_photo)
             holder.faq_photo.visibility = View.VISIBLE
         } else {
             holder.faq_photo.visibility = View.GONE

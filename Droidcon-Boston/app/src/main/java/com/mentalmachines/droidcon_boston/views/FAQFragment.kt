@@ -76,7 +76,7 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         faqs.forEach { faq ->
             faq.answers.forEach { answer ->
                 val header: FaqAdapterItemHeader =
-                    questionHeaders[faq.question] ?: FaqAdapterItemHeader(faq.question)
+                        questionHeaders[faq.question] ?: FaqAdapterItemHeader(faq.question)
                 questionHeaders[faq.question] = header
 
                 val item = FaqAdapterItem(answer, header)
@@ -98,7 +98,7 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val itemData = item!!.itemData
 
             val url =
-                if (!TextUtils.isEmpty(itemData.otherLink)) itemData.otherLink else itemData.mapLink
+                    if (!TextUtils.isEmpty(itemData.otherLink)) itemData.otherLink else itemData.mapLink
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
 

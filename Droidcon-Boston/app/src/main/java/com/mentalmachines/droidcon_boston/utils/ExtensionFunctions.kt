@@ -2,10 +2,10 @@ package com.mentalmachines.droidcon_boston.utils
 
 import android.content.Context
 import android.net.Uri
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.ContextCompat
 import android.text.Html
 import android.text.Spanned
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import com.mentalmachines.droidcon_boston.R
 
 
@@ -26,6 +26,6 @@ fun String.getHtmlFormattedSpanned(): Spanned {
 fun Context.loadUriInCustomTab(uriString: String) {
     val data = Uri.parse(uriString)
     val customTabsIntent = CustomTabsIntent.Builder()
-        .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary)).build()
+            .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary)).build()
     customTabsIntent.launchUrl(this, data)
 }

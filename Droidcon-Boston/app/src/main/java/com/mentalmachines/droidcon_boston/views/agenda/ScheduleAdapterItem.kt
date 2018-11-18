@@ -25,7 +25,7 @@ import java.util.*
  */
 class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRow,
                                                header: ScheduleAdapterItemHeader) :
-    AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
+        AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
     private var startTime: Date = Date()
 
@@ -109,8 +109,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             val context = holder.title.context
 
             Glide.with(context).load(itemData.photoUrlMap[itemData.primarySpeakerName])
-                .transform(CircleTransform(context)).placeholder(R.drawable.emo_im_cool).crossFade()
-                .into(holder.avatar)
+                    .transform(CircleTransform(context)).placeholder(R.drawable.emo_im_cool).crossFade()
+                    .into(holder.avatar)
 
             holder.bookmarkIndicator.visibility =
                     if (userAgendaRepo.isSessionBookmarked(itemData.id)) View.VISIBLE
@@ -121,7 +121,7 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
 
         val availableColor = if (itemData.isOver) R.color.colorGray else R.color.colorAccent
         holder.availableIndicator.setBackgroundColor(ContextCompat.getColor(holder.availableIndicator.context,
-            availableColor))
+                availableColor))
     }
 
     private fun addBackgroundRipple(holder: ViewHolder) {
@@ -162,8 +162,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         }
 
         constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(view,
-            adapter,
-            stickyHeader) {
+                adapter,
+                stickyHeader) {
 
             findViews(view)
         }

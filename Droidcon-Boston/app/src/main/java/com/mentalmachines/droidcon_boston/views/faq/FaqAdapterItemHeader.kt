@@ -13,7 +13,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
  * Header for FAQ view
  */
 class FaqAdapterItemHeader internal constructor(private val question: String) :
-    AbstractHeaderItem<FaqAdapterItemHeader.ViewHolder>() {
+        AbstractHeaderItem<FaqAdapterItemHeader.ViewHolder>() {
 
     override fun equals(other: Any?): Boolean {
         if (other is FaqAdapterItemHeader) {

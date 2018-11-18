@@ -35,16 +35,16 @@ open class FirebaseDatabase {
 
         fun getLocalStartTime(): LocalDateTime {
             return ZonedDateTime.parse(startTime).withZoneSameInstant(ZoneId.systemDefault())
-                .toLocalDateTime()
+                    .toLocalDateTime()
         }
 
         fun scheduleNotification(context: Context, eventId: String, sessionDetail: ScheduleRow) {
             NotificationUtils(context).scheduleNotificationAlarm(getLocalStartTime().minusMinutes(
-                SESSION_REMINDER_MINUTES_BEFORE),
-                eventId,
-                context.getString(R.string.str_session_start_soon, name),
-                description.getHtmlFormattedSpanned().toString(),
-                ServiceLocator.gson.toJson(sessionDetail, ScheduleRow::class.java))
+                    SESSION_REMINDER_MINUTES_BEFORE),
+                    eventId,
+                    context.getString(R.string.str_session_start_soon, name),
+                    description.getHtmlFormattedSpanned().toString(),
+                    ServiceLocator.gson.toJson(sessionDetail, ScheduleRow::class.java))
         }
 
         fun toScheduleRow(scheduleId: String): ScheduleRow {

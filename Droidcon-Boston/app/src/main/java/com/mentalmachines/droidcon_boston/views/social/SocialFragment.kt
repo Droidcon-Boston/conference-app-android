@@ -43,29 +43,29 @@ class SocialFragment : Fragment() {
 
         // Set On Click
         social_rv.addOnItemTouchListener(RVItemClickListener(context!!,
-            object : OnItemClickListener {
-                override fun onItemClick(view: View, position: Int) {
-                    context?.loadUriInCustomTab(socialList[position].link.toString())
-                }
-            }))
+                object : OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        context?.loadUriInCustomTab(socialList[position].link.toString())
+                    }
+                }))
     }
 
     private fun prepareSocialList(): ArrayList<SocialModal> {
         val socialList = ArrayList<SocialModal>()
         socialList.add(SocialModal(R.drawable.social_facebook,
-            getString(R.string.social_title_facebook),
-            getString(R.string.facebook_link)))
+                getString(R.string.social_title_facebook),
+                getString(R.string.facebook_link)))
         socialList.add(SocialModal(R.drawable.social_instagram,
-            getString(R.string.social_title_instagram),
-            getString(R.string.instagram_link)))
+                getString(R.string.social_title_instagram),
+                getString(R.string.instagram_link)))
         socialList.add(SocialModal(R.drawable.social_linkedin,
-            getString(R.string.social_title_linkedin),
-            getString(R.string.linkedin_link)))
+                getString(R.string.social_title_linkedin),
+                getString(R.string.linkedin_link)))
         socialList.add(SocialModal(R.drawable.social_twitter,
-            getString(R.string.social_title_twitter),
-            String.format("%s%s",
-                resources.getString(R.string.twitter_link),
-                getString(string.droidconbos_twitter_handle))))
+                getString(R.string.social_title_twitter),
+                String.format("%s%s",
+                        resources.getString(R.string.twitter_link),
+                        getString(string.droidconbos_twitter_handle))))
         return socialList
     }
 }

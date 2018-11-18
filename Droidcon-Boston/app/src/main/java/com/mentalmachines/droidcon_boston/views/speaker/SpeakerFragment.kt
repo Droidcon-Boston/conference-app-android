@@ -74,14 +74,14 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val arguments = Bundle()
 
             arguments.putString(EventSpeaker.SPEAKER_ITEM_ROW,
-                gson.toJson(itemData, EventSpeaker::class.java))
+                    gson.toJson(itemData, EventSpeaker::class.java))
 
             val speakerDetailFragment = SpeakerDetailFragment()
             speakerDetailFragment.arguments = arguments
 
             val fragmentManager = activity?.supportFragmentManager
             fragmentManager?.beginTransaction()?.add(R.id.fragment_container, speakerDetailFragment)
-                ?.addToBackStack(null)?.commit()
+                    ?.addToBackStack(null)?.commit()
         }
 
         return true
