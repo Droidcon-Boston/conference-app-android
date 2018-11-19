@@ -21,9 +21,11 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
 
     private val firebaseHelper = FirebaseHelper.instance
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.speaker_detail_fragment, container, false)
     }
@@ -31,8 +33,10 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemData = gson.fromJson(arguments!!.getString(EventSpeaker.SPEAKER_ITEM_ROW),
-                EventSpeaker::class.java)
+        val itemData = gson.fromJson(
+            arguments!!.getString(EventSpeaker.SPEAKER_ITEM_ROW),
+            EventSpeaker::class.java
+        )
         populateView(itemData)
 
         if (activity is MainActivity) {
@@ -52,9 +56,13 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
         val twitterHandle = itemData.socialProfiles?.get("twitter")
         if (!twitterHandle.isNullOrEmpty()) {
             imgv_twitter.setOnClickListener {
-                activity?.loadUriInCustomTab(String.format("%s%s",
+                activity?.loadUriInCustomTab(
+                    String.format(
+                        "%s%s",
                         resources.getString(R.string.twitter_link),
-                        twitterHandle))
+                        twitterHandle
+                    )
+                )
             }
         } else {
             imgv_twitter.visibility = View.GONE
@@ -64,17 +72,21 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
         val linkedinHandle = itemData.socialProfiles?.get("linkedIn")
         if (!linkedinHandle.isNullOrEmpty()) {
             imgv_linkedin.setOnClickListener {
-                activity?.loadUriInCustomTab(String.format("%s%s",
+                activity?.loadUriInCustomTab(
+                    String.format(
+                        "%s%s",
                         resources.getString(R.string.linkedin_profile_link),
-                        linkedinHandle))
+                        linkedinHandle
+                    )
+                )
             }
         } else {
             imgv_linkedin.visibility = View.GONE
         }
 
         Glide.with(activity).load(itemData.pictureUrl)
-                .transform(CircleTransform(imgv_speaker_detail_avatar.context))
-                .placeholder(R.drawable.emo_im_cool).crossFade().into(imgv_speaker_detail_avatar)
+            .transform(CircleTransform(imgv_speaker_detail_avatar.context))
+            .placeholder(R.drawable.emo_im_cool).crossFade().into(imgv_speaker_detail_avatar)
 
     }
 }

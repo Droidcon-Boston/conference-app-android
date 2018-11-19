@@ -23,9 +23,11 @@ import java.util.*
 /**
  * Used for displaying the schedule with sticky headers with optional day filtering
  */
-class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRow,
-                                               header: ScheduleAdapterItemHeader) :
-        AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
+class ScheduleAdapterItem internal constructor(
+    val itemData: Schedule.ScheduleRow,
+    header: ScheduleAdapterItemHeader
+) :
+    AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
     private var startTime: Date = Date()
 
@@ -61,15 +63,19 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         return R.layout.schedule_item
     }
 
-    override fun createViewHolder(view: View,
-                                  adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(
+        view: View,
+        adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>
+    ): ViewHolder {
         return ScheduleAdapterItem.ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
-                                holder: ViewHolder,
-                                position: Int,
-                                payloads: MutableList<Any>) {
+    override fun bindViewHolder(
+        adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
+        holder: ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
 
         val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
         if (itemData.speakerNames.isEmpty()) {
@@ -109,8 +115,8 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             val context = holder.title.context
 
             Glide.with(context).load(itemData.photoUrlMap[itemData.primarySpeakerName])
-                    .transform(CircleTransform(context)).placeholder(R.drawable.emo_im_cool).crossFade()
-                    .into(holder.avatar)
+                .transform(CircleTransform(context)).placeholder(R.drawable.emo_im_cool).crossFade()
+                .into(holder.avatar)
 
             holder.bookmarkIndicator.visibility =
                     if (userAgendaRepo.isSessionBookmarked(itemData.id)) View.VISIBLE
@@ -120,8 +126,12 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         }
 
         val availableColor = if (itemData.isOver) R.color.colorGray else R.color.colorAccent
-        holder.availableIndicator.setBackgroundColor(ContextCompat.getColor(holder.availableIndicator.context,
-                availableColor))
+        holder.availableIndicator.setBackgroundColor(
+            ContextCompat.getColor(
+                holder.availableIndicator.context,
+                availableColor
+            )
+        )
     }
 
     private fun addBackgroundRipple(holder: ViewHolder) {
@@ -161,9 +171,11 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             findViews(view)
         }
 
-        constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(view,
-                adapter,
-                stickyHeader) {
+        constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(
+            view,
+            adapter,
+            stickyHeader
+        ) {
 
             findViews(view)
         }

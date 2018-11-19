@@ -41,8 +41,10 @@ class MainActivity : AppCompatActivity() {
 
         val sessionDetails = initialIntent.extras?.getString(EXTRA_SESSION_DETAILS)
         if (!TextUtils.isEmpty(sessionDetails)) {
-            AgendaDetailFragment.addDetailFragmentToStack(supportFragmentManager,
-                    ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java))
+            AgendaDetailFragment.addDetailFragmentToStack(
+                supportFragmentManager,
+                ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java)
+            )
         } else {
             navView.setCheckedItem(id.nav_agenda)
         }
@@ -84,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkNavMenuItem(title: String) {
         processMenuItems({ item -> item.title == title },
-                { item -> item.setChecked(true).isChecked })
+            { item -> item.setChecked(true).isChecked })
     }
 
     private fun isNavItemChecked(title: String): Boolean {
@@ -95,9 +97,11 @@ class MainActivity : AppCompatActivity() {
         processMenuItems({ true }, { item -> item.setChecked(false).isChecked }, true)
     }
 
-    private fun processMenuItems(titleMatcher: (MenuItem) -> Boolean,
-                                 matchFunc: (MenuItem) -> Boolean,
-                                 processAll: Boolean = false): Boolean {
+    private fun processMenuItems(
+        titleMatcher: (MenuItem) -> Boolean,
+        matchFunc: (MenuItem) -> Boolean,
+        processAll: Boolean = false
+    ): Boolean {
         val menu = navView.menu
         for (i in 0 until menu.size()) {
             val item = menu.getItem(i)
@@ -128,10 +132,12 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        actionBarDrawerToggle = ActionBarDrawerToggle(this,
-                drawer_layout,
-                R.string.drawer_open,
-                R.string.drawer_close)
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawer_layout,
+            R.string.drawer_open,
+            R.string.drawer_close
+        )
         drawer_layout.addDrawerListener(actionBarDrawerToggle)
 
         navView.setNavigationItemSelectedListener { item ->
@@ -199,7 +205,8 @@ class MainActivity : AppCompatActivity() {
         updateToolbarTitle(title)
 
         // Get the fragment by tag
-        var fragment: androidx.fragment.app.Fragment? = supportFragmentManager.findFragmentByTag(title)
+        var fragment: androidx.fragment.app.Fragment? =
+            supportFragmentManager.findFragmentByTag(title)
 
         if (fragment == null) {
             // Initialize the fragment based on tag
@@ -217,10 +224,10 @@ class MainActivity : AppCompatActivity() {
             // Add fragment with tag
             fragment?.let {
                 supportFragmentManager?.beginTransaction()
-                        // replace in container
-                        ?.replace(R.id.fragment_container, it, title)
-                        // commit fragment transaction
-                        ?.commit()
+                    // replace in container
+                    ?.replace(R.id.fragment_container, it, title)
+                    // commit fragment transaction
+                    ?.commit()
             }
         } else {
 
@@ -232,15 +239,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             val fragmentInContainer =
-                    supportFragmentManager?.findFragmentById(R.id.fragment_container)
+                supportFragmentManager?.findFragmentById(R.id.fragment_container)
             fragmentInContainer?.let {
                 supportFragmentManager?.beginTransaction()
-                        // detach the fragment that is currently visible
-                        ?.detach(it)
-                        // attach the fragment found as per the tag
-                        ?.attach(it)
-                        // commit fragment transaction
-                        ?.commit()
+                    // detach the fragment that is currently visible
+                    ?.detach(it)
+                    // attach the fragment found as per the tag
+                    ?.attach(it)
+                    // commit fragment transaction
+                    ?.commit()
             }
         }
     }
@@ -261,9 +268,11 @@ class MainActivity : AppCompatActivity() {
         private const val EXTRA_SESSIONID = "MainActivity.EXTRA_SESSIONID"
         private const val EXTRA_SESSION_DETAILS = "MainActivity.EXTRA_SESSION_DETAILS"
 
-        fun getSessionDetailIntent(context: Context,
-                                   sessionId: String,
-                                   sessionDetail: String): Intent {
+        fun getSessionDetailIntent(
+            context: Context,
+            sessionId: String,
+            sessionDetail: String
+        ): Intent {
             return Intent(context, MainActivity::class.java).apply {
                 putExtra(EXTRA_SESSIONID, sessionId)
                 putExtra(EXTRA_SESSION_DETAILS, sessionDetail)

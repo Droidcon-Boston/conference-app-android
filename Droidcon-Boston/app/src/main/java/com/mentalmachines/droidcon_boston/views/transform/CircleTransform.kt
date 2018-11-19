@@ -12,10 +12,12 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 
 class CircleTransform(context: Context) : BitmapTransformation(context) {
 
-    override fun transform(pool: BitmapPool,
-                           toTransform: Bitmap,
-                           outWidth: Int,
-                           outHeight: Int): Bitmap? {
+    override fun transform(
+        pool: BitmapPool,
+        toTransform: Bitmap,
+        outWidth: Int,
+        outHeight: Int
+    ): Bitmap? {
         return circleCrop(pool, toTransform)
     }
 

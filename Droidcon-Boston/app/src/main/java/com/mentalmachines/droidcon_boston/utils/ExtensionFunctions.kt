@@ -26,6 +26,6 @@ fun String.getHtmlFormattedSpanned(): Spanned {
 fun Context.loadUriInCustomTab(uriString: String) {
     val data = Uri.parse(uriString)
     val customTabsIntent = CustomTabsIntent.Builder()
-            .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary)).build()
+        .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary)).build()
     customTabsIntent.launchUrl(this, data)
 }

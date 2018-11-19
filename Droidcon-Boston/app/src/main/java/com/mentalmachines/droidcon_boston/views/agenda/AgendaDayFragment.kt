@@ -60,9 +60,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.agenda_day_fragment, container, false)
     }
 
@@ -113,7 +115,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 if (data != null) {
                     val scheduleRow = data.toScheduleRow(key)
                     if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(
-                                    scheduleRow.id))) {
+                            scheduleRow.id
+                        ))
+                    ) {
                         rows.add(scheduleRow)
                     }
                 }
@@ -146,7 +150,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         val sortedItems =
-                items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }.thenBy { it.roomSortOrder })
+            items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }.thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
         headerAdapter!!.addListener(this)

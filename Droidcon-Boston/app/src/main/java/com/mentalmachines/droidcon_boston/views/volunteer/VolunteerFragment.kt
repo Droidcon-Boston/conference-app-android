@@ -25,9 +25,11 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val firebaseHelper = FirebaseHelper.instance
     private lateinit var volunteerAdapter: FlexibleAdapter<VolunteerAdapterItem>
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.volunteer_fragment, container, false)
     }
@@ -63,16 +65,20 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun fetchDataFromFirebase() {
         firebaseHelper.volunteerDatabase.orderByChild("firstName")
-                .addValueEventListener(dataListener)
+            .addValueEventListener(dataListener)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
         val item = volunteerAdapter.getItem(position)
         if (item is VolunteerAdapterItem && !item.itemData.twitter.isEmpty()) {
             val context = activity as Context
-            context.loadUriInCustomTab(String.format("%s%s",
+            context.loadUriInCustomTab(
+                String.format(
+                    "%s%s",
                     resources.getString(R.string.twitter_link),
-                    item.itemData.twitter))
+                    item.itemData.twitter
+                )
+            )
             return false
         }
 

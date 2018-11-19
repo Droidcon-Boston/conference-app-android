@@ -19,9 +19,11 @@ class AboutFragment : Fragment() {
 
     private val firebaseHelper = FirebaseHelper.instance
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.about_fragment, container, false)
     }
 

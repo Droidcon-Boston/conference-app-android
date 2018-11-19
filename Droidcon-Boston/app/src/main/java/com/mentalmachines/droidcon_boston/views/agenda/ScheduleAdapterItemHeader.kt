@@ -13,7 +13,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
  * Sticky header for schedule view
  */
 class ScheduleAdapterItemHeader internal constructor(private val sessionTime: String) :
-        AbstractHeaderItem<ScheduleAdapterItemHeader.ViewHolder>() {
+    AbstractHeaderItem<ScheduleAdapterItemHeader.ViewHolder>() {
 
     override fun equals(other: Any?): Boolean {
         if (other is ScheduleAdapterItemHeader) {
@@ -31,15 +31,19 @@ class ScheduleAdapterItemHeader internal constructor(private val sessionTime: St
         return R.layout.schedule_item_header
     }
 
-    override fun createViewHolder(view: View,
-                                  adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(
+        view: View,
+        adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>
+    ): ViewHolder {
         return ScheduleAdapterItemHeader.ViewHolder(view, adapter, true)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>,
-                                holder: ScheduleAdapterItemHeader.ViewHolder,
-                                position: Int,
-                                payloads: MutableList<Any>) {
+    override fun bindViewHolder(
+        adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>,
+        holder: ScheduleAdapterItemHeader.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
         holder.header.text = sessionTime
     }
 
@@ -52,9 +56,11 @@ class ScheduleAdapterItemHeader internal constructor(private val sessionTime: St
             findViews(view)
         }
 
-        internal constructor(view: View,
-                             adapter: FlexibleAdapter<*>,
-                             stickyHeader: Boolean) : super(view, adapter, stickyHeader) {
+        internal constructor(
+            view: View,
+            adapter: FlexibleAdapter<*>,
+            stickyHeader: Boolean
+        ) : super(view, adapter, stickyHeader) {
             findViews(view)
         }
 
