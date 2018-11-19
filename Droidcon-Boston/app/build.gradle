@@ -55,37 +55,54 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //region Version
+    final junit = "4.12"
+    final support = '1.0.0'
+    final appCompat = '1.0.2'
+    final firebaseDatabase = '16.0.5'
+    final firebaseCore = '16.0.5'
+    final firebaseMessaging = '17.3.4'
+    final crashlytics = '2.9.1'
+    final gson = '2.8.2'
+    final flexibleAdapter = '5.0.1'
+    final flexibleAdapterUi = '1.0.0-b3'
+    final glide = '3.7.0'
+    final threeTenAbp = '1.0.5'
+    final recyclerRefreshLayout = '2.0.5'
+    //endregion
+
+    //region Dependencies
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     // TESTING
-    testImplementation "junit:junit:4.12"
+    testImplementation "junit:junit:$junit"
 
     // Support
-    final support = '1.0.0'
-    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.appcompat:appcompat:$appCompat"
     implementation "androidx.legacy:legacy-support-v4:$support"
     implementation "androidx.cardview:cardview:$support"
     implementation "com.google.android.material:material:$support"
     implementation "androidx.browser:browser:$support"
 
     // Firebase
-    implementation "com.google.firebase:firebase-messaging:17.3.4"
-    implementation "com.google.firebase:firebase-database:16.0.5"
-    implementation "com.google.firebase:firebase-core:16.0.5"
+    implementation "com.google.firebase:firebase-messaging:$firebaseMessaging"
+    implementation "com.google.firebase:firebase-database:$firebaseDatabase"
+    implementation "com.google.firebase:firebase-core:$firebaseCore"
 
     // Crashlytics only for release builds
-    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+    releaseImplementation("com.crashlytics.sdk.android:crashlytics:$crashlytics@aar") {
         transitive = true
     }
 
     // Misc
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'eu.davidea:flexible-adapter:5.0.1'
-    implementation 'eu.davidea:flexible-adapter-ui:1.0.0-b3'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
-    implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
-
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.code.gson:gson:$gson"
+    implementation "eu.davidea:flexible-adapter:$flexibleAdapter"
+    implementation "eu.davidea:flexible-adapter-ui:$flexibleAdapterUi"
+    implementation "com.github.bumptech.glide:glide:$glide"
+    implementation "com.jakewharton.threetenabp:threetenabp:$threeTenAbp"
+    implementation "com.dinuscxj:recyclerrefreshlayout:$recyclerRefreshLayout"
+    //endregion
 }
 
 apply plugin: 'com.google.gms.google-services'
