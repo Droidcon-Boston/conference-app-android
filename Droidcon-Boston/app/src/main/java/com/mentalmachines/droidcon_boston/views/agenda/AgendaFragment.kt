@@ -1,19 +1,21 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.mentalmachines.droidcon_boston.R
-import kotlinx.android.synthetic.main.agenda_fragment.tablayout
-import kotlinx.android.synthetic.main.agenda_fragment.viewpager
-import java.util.Calendar
+import kotlinx.android.synthetic.main.agenda_fragment.*
+import java.util.*
 
 class AgendaFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.agenda_fragment, container, false)
     }
 
@@ -25,8 +27,7 @@ class AgendaFragment : Fragment() {
 
 
     private fun setupDayPager(savedInstanceState: Bundle?) {
-        viewpager.adapter = AgendaDayPagerAdapter(childFragmentManager,
-                isMyAgenda())
+        viewpager.adapter = AgendaDayPagerAdapter(childFragmentManager, isMyAgenda())
 
         tablayout.setupWithViewPager(viewpager)
 

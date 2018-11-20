@@ -3,24 +3,21 @@ package com.mentalmachines.droidcon_boston.views.agenda
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent
-import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -63,8 +60,11 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.agenda_day_fragment, container, false)
     }
 
@@ -76,7 +76,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agendaRecyler = view.findViewById(R.id.agenda_recycler)
         emptyStateView = view.findViewById(R.id.empty_view)
 
-        agendaRecyler.layoutManager = LinearLayoutManager(activity?.applicationContext)
+        agendaRecyler.layoutManager =
+                androidx.recyclerview.widget.LinearLayoutManager(activity?.applicationContext)
 
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
@@ -101,20 +102,22 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     fun updateList() {
-        agendaRecyler.adapter.notifyDataSetChanged()
+        agendaRecyler.adapter?.notifyDataSetChanged()
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val rows = ArrayList<ScheduleRow>()
             for (roomSnapshot in dataSnapshot.children) {
-                val key = roomSnapshot.key
+                val key = roomSnapshot.key ?: ""
                 val data = roomSnapshot.getValue(ScheduleEvent::class.java)
                 Log.d(TAG, "Event: $data")
                 if (data != null) {
                     val scheduleRow = data.toScheduleRow(key)
-                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda
-                                    || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(scheduleRow.id))) {
+                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(
+                            scheduleRow.id
+                        ))
+                    ) {
                         rows.add(scheduleRow)
                     }
                 }
@@ -146,9 +149,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             items.add(item)
         }
 
-        val sortedItems = items.sortedWith(
-                compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }
-                        .thenBy { it.roomSortOrder })
+        val sortedItems =
+            items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }.thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
         headerAdapter!!.addListener(this)
@@ -156,22 +158,26 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agendaRecyler.addItemDecoration(FlexibleItemDecoration(agendaRecyler.context).withDefaultDivider())
         headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
 
-        EmptyViewHelper(headerAdapter, emptyStateView, null,null)
+        EmptyViewHelper(headerAdapter, emptyStateView, null, null)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
-        val adapterItem = try { headerAdapter?.getItem(position) } catch (e: Exception) { null }
+        val adapterItem = try {
+            headerAdapter?.getItem(position)
+        } catch (e: Exception) {
+            null
+        }
         if (adapterItem is ScheduleAdapterItem) {
             val itemData = adapterItem.itemData
             if (itemData.primarySpeakerName.isNullorEmpty()) {
-                val url = itemData.photoUrlMap.get(itemData.primarySpeakerName)
+                val url = itemData.photoUrlMap[itemData.primarySpeakerName]
 
                 if (!url.isNullorEmpty()) {
                     // event where info URL is in the photoUrls string
                     val i = Intent(Intent.ACTION_VIEW)
                     i.data = Uri.parse(url)
                     val packageManager = activity?.packageManager
-                    if (i.resolveActivity(packageManager) != null) {
+                    if (packageManager != null && i.resolveActivity(packageManager) != null) {
                         startActivity(i)
                     }
                     return false
@@ -179,7 +185,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             }
 
             activity?.let {
-                AgendaDetailFragment.addDetailFragmentToStack(it.supportFragmentManager, itemData);
+                AgendaDetailFragment.addDetailFragmentToStack(it.supportFragmentManager, itemData)
             }
         }
 

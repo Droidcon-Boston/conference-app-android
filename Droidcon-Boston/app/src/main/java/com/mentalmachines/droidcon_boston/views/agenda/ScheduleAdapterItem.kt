@@ -1,12 +1,12 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule
@@ -23,9 +23,11 @@ import java.util.*
 /**
  * Used for displaying the schedule with sticky headers with optional day filtering
  */
-class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRow,
-                                               header: ScheduleAdapterItemHeader) :
-        AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
+class ScheduleAdapterItem internal constructor(
+    val itemData: Schedule.ScheduleRow,
+    header: ScheduleAdapterItemHeader
+) :
+    AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
     private var startTime: Date = Date()
 
@@ -61,14 +63,19 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
         return R.layout.schedule_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(
+        view: View,
+        adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>
+    ): ViewHolder {
         return ScheduleAdapterItem.ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
-                                holder: ViewHolder,
-                                position: Int,
-                                payloads: MutableList<Any>) {
+    override fun bindViewHolder(
+        adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
+        holder: ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
 
         val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
         if (itemData.speakerNames.isEmpty()) {
@@ -77,10 +84,9 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             holder.speaker.visibility = View.GONE
             holder.time.visibility = View.GONE
 
-            holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
-                View.VISIBLE
-            else
-                View.INVISIBLE
+            holder.bookmarkIndicator.visibility =
+                    if (userAgendaRepo.isSessionBookmarked(itemData.id)) View.VISIBLE
+                    else View.INVISIBLE
             holder.sessionLayout.visibility = View.VISIBLE
             holder.title.text = itemData.talkTitle
             holder.room.text = itemData.room
@@ -102,28 +108,30 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             holder.speaker.text = itemData.speakerNames.joinToString(separator = ", ")
             holder.room.text = itemData.room
 
-            holder.speakerCount.visibility = if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
+            holder.speakerCount.visibility =
+                    if (itemData.speakerCount > 1) View.VISIBLE else View.GONE
             holder.speakerCount.text = String.format("+%d", itemData.speakerCount - 1)
 
             val context = holder.title.context
 
-            Glide.with(context)
-                    .load(itemData.photoUrlMap[itemData.primarySpeakerName])
-                    .transform(CircleTransform(context))
-                    .placeholder(R.drawable.emo_im_cool)
-                    .crossFade()
-                    .into(holder.avatar)
+            Glide.with(context).load(itemData.photoUrlMap[itemData.primarySpeakerName])
+                .transform(CircleTransform(context)).placeholder(R.drawable.emo_im_cool).crossFade()
+                .into(holder.avatar)
 
-            holder.bookmarkIndicator.visibility = if (userAgendaRepo.isSessionBookmarked(itemData.id))
-                View.VISIBLE
-            else
-                View.INVISIBLE
+            holder.bookmarkIndicator.visibility =
+                    if (userAgendaRepo.isSessionBookmarked(itemData.id)) View.VISIBLE
+                    else View.INVISIBLE
 
             addBackgroundRipple(holder)
         }
 
         val availableColor = if (itemData.isOver) R.color.colorGray else R.color.colorAccent
-        holder.availableIndicator.setBackgroundColor(ContextCompat.getColor(holder.availableIndicator.context, availableColor))
+        holder.availableIndicator.setBackgroundColor(
+            ContextCompat.getColor(
+                holder.availableIndicator.context,
+                availableColor
+            )
+        )
     }
 
     private fun addBackgroundRipple(holder: ViewHolder) {
@@ -163,7 +171,11 @@ class ScheduleAdapterItem internal constructor(val itemData: Schedule.ScheduleRo
             findViews(view)
         }
 
-        constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(view, adapter, stickyHeader) {
+        constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(
+            view,
+            adapter,
+            stickyHeader
+        ) {
 
             findViews(view)
         }

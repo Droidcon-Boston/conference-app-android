@@ -7,21 +7,22 @@ package com.mentalmachines.droidcon_boston.data
 class Schedule {
 
     data class ScheduleRow(
-            var primarySpeakerName: String = "",
-            var id: String = "",
-            var startTime: String = "",
-            var talkTitle: String = "",
-            var speakerCount: Int = 0,
-            var talkDescription: String = "",
-            var speakerNames: List<String> = emptyList(),
-            var speakerNameToOrgName: HashMap<String, String> = HashMap(0),
-            var utcStartTimeString: String = "",
-            var endTime: String = "",
-            var room: String = "",
-            var date: String = "",
-            var trackSortOrder: Int = 0,
-            var photoUrlMap: HashMap<String, String> = HashMap(0),
-            var isOver: Boolean = false) {
+        var primarySpeakerName: String = "",
+        var id: String = "",
+        var startTime: String = "",
+        var talkTitle: String = "",
+        var speakerCount: Int = 0,
+        var talkDescription: String = "",
+        var speakerNames: List<String> = emptyList(),
+        var speakerNameToOrgName: HashMap<String, String> = HashMap(0),
+        var utcStartTimeString: String = "",
+        var endTime: String = "",
+        var room: String = "",
+        var date: String = "",
+        var trackSortOrder: Int = 0,
+        var photoUrlMap: HashMap<String, String> = HashMap(0),
+        var isOver: Boolean = false
+    ) {
 
         fun hasSpeaker(): Boolean = speakerNames.isNotEmpty()
 

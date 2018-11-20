@@ -1,26 +1,26 @@
 package com.mentalmachines.droidcon_boston.views.social
 
-import android.support.v7.widget.RecyclerView.Adapter
-import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.modal.SocialModal
-import java.util.ArrayList
+import java.util.*
 
-internal class RVSocialListAdapter(private var socialList: ArrayList<SocialModal>) : Adapter<RVSocialListAdapter.ListViewHolder>() {
+internal class RVSocialListAdapter(private var socialList: ArrayList<SocialModal>) :
+    Adapter<RVSocialListAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : ViewHolder(itemView) {
 
-        internal var imageView: ImageView
+        internal var imageView: ImageView = itemView.findViewById(R.id.social_item_img)
 
         internal var txtView: TextView
 
         init {
-            imageView = itemView.findViewById(R.id.social_item_img)
             txtView = itemView.findViewById(R.id.social_item_tv)
         }
     }

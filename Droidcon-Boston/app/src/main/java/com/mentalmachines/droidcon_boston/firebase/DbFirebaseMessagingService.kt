@@ -32,7 +32,11 @@ class DbFirebaseMessagingService : FirebaseMessagingService() {
 
             // Show the notification here
             val notificationUtils = NotificationUtils(this)
-            notificationUtils.sendAndroidChannelNotification(getString(R.string.conference_name), bodyStr!!, 101)
+            notificationUtils.sendAndroidChannelNotification(
+                getString(R.string.conference_name),
+                bodyStr!!,
+                101
+            )
         }
     }
 }

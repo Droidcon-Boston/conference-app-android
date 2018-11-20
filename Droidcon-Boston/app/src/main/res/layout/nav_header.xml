@@ -7,19 +7,19 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="Navigation Header Image"
         android:scaleType="centerCrop"
-        android:src="@drawable/navigation_header_image"
-        android:contentDescription="Navigation Header Image" />
+        android:src="@drawable/navigation_header_image" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
+        android:contentDescription="Logo"
         android:paddingEnd="90dp"
         android:paddingRight="90dp"
         android:scaleType="centerInside"
-        android:src="@drawable/logo_text"
-        android:contentDescription="Logo" />
+        android:src="@drawable/logo_text" />
 
 </FrameLayout>

@@ -1,17 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- FrameLayout is for FlexyAdapter sticky adapter -->
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- FrameLayout is for FlexyAdapter sticky adapter -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/agenda_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:background="@color/colorBackground"/>
+        android:background="@color/colorBackground"
+        android:scrollbars="vertical" />
 
-    <include layout="@layout/empty_view"/>
+    <include layout="@layout/empty_view" />
 
 </FrameLayout>
