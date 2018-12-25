@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="Navigation Header Image"
+        android:contentDescription="@string/navigation_header_image"
         android:scaleType="centerCrop"
         android:src="@drawable/navigation_header_image" />
 
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:contentDescription="Logo"
+        android:contentDescription="@string/logo"
         android:paddingEnd="90dp"
         android:paddingRight="90dp"
         android:scaleType="centerInside"
