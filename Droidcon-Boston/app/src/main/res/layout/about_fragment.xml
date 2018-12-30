@@ -13,14 +13,14 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:contentDescription="Navigation Header"
+            android:contentDescription="@string/navigation_header"
             android:scaleType="centerCrop"
             android:src="@drawable/navigation_header_image" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:contentDescription="Logo"
+            android:contentDescription="@string/logo"
             android:paddingStart="50dp"
             android:paddingEnd="50dp"
             android:scaleType="centerInside"
