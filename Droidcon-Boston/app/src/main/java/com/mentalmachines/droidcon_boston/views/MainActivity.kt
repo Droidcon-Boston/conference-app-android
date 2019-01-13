@@ -1,11 +1,13 @@
 package com.mentalmachines.droidcon_boston.views
 
 import android.app.AlertDialog
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +44,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFragmentsFromIntent(initialIntent: Intent) {
+        if (Intent.ACTION_SEARCH == initialIntent.action) {
+            val query = initialIntent.getStringExtra(SearchManager.QUERY)
+            //use the query to search your data somehow
+            Log.v("ADAM_MCNEILLY", "Queried: $query")
+        }
+
+
         replaceFragment(getString(string.str_agenda))
 
         val sessionDetails = initialIntent.extras?.getString(EXTRA_SESSION_DETAILS)
