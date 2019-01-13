@@ -13,6 +13,7 @@ import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
+import eu.davidea.flexibleadapter.items.IFilterable
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 import timber.log.Timber
@@ -29,7 +30,8 @@ class ScheduleAdapterItem internal constructor(
     val itemData: Schedule.ScheduleRow,
     header: ScheduleAdapterItemHeader
 ) :
-    AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
+    AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header),
+    IFilterable<String> {
 
     private var startTime: Date = Date()
 
@@ -203,6 +205,16 @@ class ScheduleAdapterItem internal constructor(
             speakerCount = parent.findViewById(R.id.speaker_count)
             room = parent.findViewById(R.id.room_text)
             sessionLayout = parent.findViewById(R.id.session_layout)
+        }
+    }
+
+    override fun filter(constraint: String?): Boolean {
+        return if (constraint == null) {
+            true
+        } else {
+            (itemData.talkTitle.contains(constraint, ignoreCase = true)
+                    || itemData.talkDescription.contains(constraint, ignoreCase = true)
+                    || itemData.speakerNames.any { it.contains(constraint, ignoreCase = true) })
         }
     }
 }

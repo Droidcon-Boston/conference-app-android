@@ -7,11 +7,12 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.fragment.app.FragmentManager
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.id
@@ -32,6 +33,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var authController: AuthController
 
+    private val _currentQuery = MutableLiveData<String>()
+    val searchQuery: LiveData<String> = _currentQuery
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -47,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         if (Intent.ACTION_SEARCH == initialIntent.action) {
             val query = initialIntent.getStringExtra(SearchManager.QUERY)
             //use the query to search your data somehow
-            Log.v("ADAM_MCNEILLY", "Queried: $query")
+            _currentQuery.value = query
+            return
         }
 
 

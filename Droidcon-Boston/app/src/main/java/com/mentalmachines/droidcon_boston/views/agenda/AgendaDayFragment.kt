@@ -29,6 +29,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
+import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
@@ -136,6 +137,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchScheduleData()
 
         activity?.supportFragmentManager?.addOnBackStackChangedListener(backStackChangeListener)
+        listenForSearchQueries()
     }
 
     private val backStackChangeListener: () -> Unit = {
@@ -362,6 +364,15 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         return true
+    }
+
+    private fun listenForSearchQueries() {
+        (activity as? MainActivity)?.searchQuery?.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                headerAdapter?.setFilter(it)
+                headerAdapter?.filterItems()
+            })
     }
 
     companion object {
