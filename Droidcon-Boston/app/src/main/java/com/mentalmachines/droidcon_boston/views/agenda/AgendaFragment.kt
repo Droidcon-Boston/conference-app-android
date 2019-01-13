@@ -1,9 +1,11 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mentalmachines.droidcon_boston.R
 import kotlinx.android.synthetic.main.agenda_fragment.*
@@ -23,8 +25,8 @@ class AgendaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupDayPager(savedInstanceState)
+        setHasOptionsMenu(true)
     }
-
 
     private fun setupDayPager(savedInstanceState: Bundle?) {
         viewpager.adapter = AgendaDayPagerAdapter(childFragmentManager, isMyAgenda())
@@ -49,6 +51,20 @@ class AgendaFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(TAB_POSITION, tablayout.selectedTabPosition)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_search, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.search -> {
+                activity?.onSearchRequested()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     companion object {
