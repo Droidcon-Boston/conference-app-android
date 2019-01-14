@@ -1,5 +1,7 @@
 package com.mentalmachines.droidcon_boston.views
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -10,6 +12,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.id
 import com.mentalmachines.droidcon_boston.R.string
@@ -26,6 +33,7 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private var user: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager,
                 ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java)
             )
+            updateSelectedNavItem(supportFragmentManager)
         } else {
             navView.setCheckedItem(id.nav_agenda)
         }
@@ -63,30 +72,35 @@ class MainActivity : AppCompatActivity() {
         // If drawer is open
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             // close the drawer
-            drawer_layout.closeDrawer(Gravity.START)
+            drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
 
             val manager = supportFragmentManager
             if (manager.backStackEntryCount == 0) {
                 // special handling where user clicks on back button in a detail fragment
-                val currentFragment = manager.findFragmentById(R.id.fragment_container)
-                if (currentFragment is AgendaFragment) {
-                    if (currentFragment.isMyAgenda()) {
-                        checkNavMenuItem(getString(R.string.str_my_schedule))
-                    } else {
-                        checkNavMenuItem(getString(R.string.str_agenda))
-                    }
-                } else if (currentFragment is SpeakerFragment) {
-                    checkNavMenuItem(getString(R.string.str_speakers))
-                }
+                updateSelectedNavItem(manager)
             }
+        }
+    }
+
+    private fun updateSelectedNavItem(manager: FragmentManager) {
+        val currentFragment = manager.findFragmentById(id.fragment_container)
+        if (currentFragment is AgendaFragment) {
+            if (currentFragment.isMyAgenda()) {
+                checkNavMenuItem(getString(string.str_my_schedule))
+            } else {
+                checkNavMenuItem(getString(string.str_agenda))
+            }
+        } else if (currentFragment is SpeakerFragment) {
+            checkNavMenuItem(getString(string.str_speakers))
         }
     }
 
     private fun checkNavMenuItem(title: String) {
         processMenuItems({ item -> item.title == title },
-            { item -> item.setChecked(true).isChecked })
+            { item -> item.setChecked(true).isChecked },
+            processAll = true)
     }
 
     private fun isNavItemChecked(title: String): Boolean {
@@ -122,9 +136,11 @@ class MainActivity : AppCompatActivity() {
                 if (!processAll) {
                     return result
                 }
+            } else {
+                item.isChecked = false
             }
         }
-        return false
+        return processAll
     }
 
 
@@ -162,9 +178,20 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_about -> replaceFragment(getString(R.string.str_about_us))
                 R.id.nav_speakers -> replaceFragment(getString(R.string.str_speakers))
                 R.id.nav_volunteers -> replaceFragment(getString(R.string.str_volunteers))
+                R.id.nav_login_logout -> {
+                    if (user != null) {
+                        logout()
+                    } else {
+                        login()
+                    }
+                }
             }
 
-            navView.setCheckedItem(item.itemId)
+            if (item.itemId != R.id.nav_login_logout) {
+                navView.setCheckedItem(item.itemId)
+            } else {
+                updateSelectedNavItem(supportFragmentManager)
+            }
 
             true
         }
@@ -264,9 +291,51 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun login() {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.GoogleBuilder().build())
+
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setLogo(R.mipmap.ic_launcher)
+                .build(),
+            RC_SIGN_IN)
+    }
+
+    fun logout() {
+        AuthUI.getInstance()
+            .signOut(this)
+        user = null
+        navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_login)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val response = IdpResponse.fromResultIntent(data)
+
+            if (resultCode == Activity.RESULT_OK) {
+                user = FirebaseAuth.getInstance().currentUser
+                navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_logout)
+            } else {
+                response?.let {
+                    AlertDialog.Builder(this)
+                        .setTitle(R.string.str_title_error)
+                        .setMessage(it.error?.message)
+                        .show()
+                }
+            }
+        }
+    }
+
     companion object {
         private const val EXTRA_SESSIONID = "MainActivity.EXTRA_SESSIONID"
         private const val EXTRA_SESSION_DETAILS = "MainActivity.EXTRA_SESSION_DETAILS"
+
+        private const val RC_SIGN_IN = 1
 
         fun getSessionDetailIntent(
             context: Context,
