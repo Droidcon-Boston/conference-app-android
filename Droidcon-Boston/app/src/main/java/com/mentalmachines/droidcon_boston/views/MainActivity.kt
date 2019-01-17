@@ -1,26 +1,21 @@
 package com.mentalmachines.droidcon_boston.views
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.Gravity
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.id
 import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
+import com.mentalmachines.droidcon_boston.firebase.AuthController
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
@@ -33,11 +28,13 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    private var user: FirebaseUser? = null
+    private lateinit var authController: AuthController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+        authController = AuthController(R.mipmap.ic_launcher)
 
         initNavDrawerToggle()
 
@@ -119,25 +116,27 @@ class MainActivity : AppCompatActivity() {
         val menu = navView.menu
         for (i in 0 until menu.size()) {
             val item = menu.getItem(i)
-            if (item.hasSubMenu()) {
-                val subMenu = item.subMenu
-                for (j in 0 until subMenu.size()) {
-                    val subMenuItem = subMenu.getItem(j)
+            when {
+                item.hasSubMenu() -> {
+                    val subMenu = item.subMenu
+                    for (j in 0 until subMenu.size()) {
+                        val subMenuItem = subMenu.getItem(j)
 
-                    if (titleMatcher(subMenuItem)) {
-                        val result = matchFunc(subMenuItem)
-                        if (!processAll) {
-                            return result
+                        if (titleMatcher(subMenuItem)) {
+                            val result = matchFunc(subMenuItem)
+                            if (!processAll) {
+                                return result
+                            }
                         }
                     }
                 }
-            } else if (titleMatcher(item)) {
-                val result = matchFunc(item)
-                if (!processAll) {
-                    return result
+                titleMatcher(item) -> {
+                    val result = matchFunc(item)
+                    if (!processAll) {
+                        return result
+                    }
                 }
-            } else {
-                item.isChecked = false
+                else -> item.isChecked = false
             }
         }
         return processAll
@@ -179,7 +178,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_speakers -> replaceFragment(getString(R.string.str_speakers))
                 R.id.nav_volunteers -> replaceFragment(getString(R.string.str_volunteers))
                 R.id.nav_login_logout -> {
-                    if (user != null) {
+                    if (authController.isLoggedIn) {
                         logout()
                     } else {
                         login()
@@ -291,43 +290,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun login() {
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.GoogleBuilder().build())
-
-        startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setLogo(R.mipmap.ic_launcher)
-                .build(),
-            RC_SIGN_IN)
+    private fun login() {
+        authController.login(this, RC_SIGN_IN)
     }
 
-    fun logout() {
-        AuthUI.getInstance()
-            .signOut(this)
-        user = null
+    private fun logout() {
+        authController.logout(this)
         navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_login)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RC_SIGN_IN) {
-            val response = IdpResponse.fromResultIntent(data)
-
-            if (resultCode == Activity.RESULT_OK) {
-                user = FirebaseAuth.getInstance().currentUser
-                navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_logout)
-            } else {
-                response?.let {
-                    AlertDialog.Builder(this)
-                        .setTitle(R.string.str_title_error)
-                        .setMessage(it.error?.message)
-                        .show()
-                }
-            }
+        authController.handleLoginResult(resultCode, data)?.let {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.str_title_error)
+                .setMessage(it)
+                .show()
+        } ?: run {
+            navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_logout)
         }
     }
 
