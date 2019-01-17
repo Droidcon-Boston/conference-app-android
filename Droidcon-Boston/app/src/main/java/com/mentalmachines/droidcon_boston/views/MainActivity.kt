@@ -1,19 +1,21 @@
 package com.mentalmachines.droidcon_boston.views
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.Gravity
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.id
 import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
+import com.mentalmachines.droidcon_boston.firebase.AuthController
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
@@ -26,10 +28,13 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var authController: AuthController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+        authController = AuthController(R.mipmap.ic_launcher)
 
         initNavDrawerToggle()
 
@@ -45,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager,
                 ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java)
             )
+            updateSelectedNavItem(supportFragmentManager)
         } else {
             navView.setCheckedItem(id.nav_agenda)
         }
@@ -63,30 +69,35 @@ class MainActivity : AppCompatActivity() {
         // If drawer is open
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             // close the drawer
-            drawer_layout.closeDrawer(Gravity.START)
+            drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
 
             val manager = supportFragmentManager
             if (manager.backStackEntryCount == 0) {
                 // special handling where user clicks on back button in a detail fragment
-                val currentFragment = manager.findFragmentById(R.id.fragment_container)
-                if (currentFragment is AgendaFragment) {
-                    if (currentFragment.isMyAgenda()) {
-                        checkNavMenuItem(getString(R.string.str_my_schedule))
-                    } else {
-                        checkNavMenuItem(getString(R.string.str_agenda))
-                    }
-                } else if (currentFragment is SpeakerFragment) {
-                    checkNavMenuItem(getString(R.string.str_speakers))
-                }
+                updateSelectedNavItem(manager)
             }
+        }
+    }
+
+    private fun updateSelectedNavItem(manager: FragmentManager) {
+        val currentFragment = manager.findFragmentById(id.fragment_container)
+        if (currentFragment is AgendaFragment) {
+            if (currentFragment.isMyAgenda()) {
+                checkNavMenuItem(getString(string.str_my_schedule))
+            } else {
+                checkNavMenuItem(getString(string.str_agenda))
+            }
+        } else if (currentFragment is SpeakerFragment) {
+            checkNavMenuItem(getString(string.str_speakers))
         }
     }
 
     private fun checkNavMenuItem(title: String) {
         processMenuItems({ item -> item.title == title },
-            { item -> item.setChecked(true).isChecked })
+            { item -> item.setChecked(true).isChecked },
+            processAll = true)
     }
 
     private fun isNavItemChecked(title: String): Boolean {
@@ -105,26 +116,30 @@ class MainActivity : AppCompatActivity() {
         val menu = navView.menu
         for (i in 0 until menu.size()) {
             val item = menu.getItem(i)
-            if (item.hasSubMenu()) {
-                val subMenu = item.subMenu
-                for (j in 0 until subMenu.size()) {
-                    val subMenuItem = subMenu.getItem(j)
+            when {
+                item.hasSubMenu() -> {
+                    val subMenu = item.subMenu
+                    for (j in 0 until subMenu.size()) {
+                        val subMenuItem = subMenu.getItem(j)
 
-                    if (titleMatcher(subMenuItem)) {
-                        val result = matchFunc(subMenuItem)
-                        if (!processAll) {
-                            return result
+                        if (titleMatcher(subMenuItem)) {
+                            val result = matchFunc(subMenuItem)
+                            if (!processAll) {
+                                return result
+                            }
                         }
                     }
                 }
-            } else if (titleMatcher(item)) {
-                val result = matchFunc(item)
-                if (!processAll) {
-                    return result
+                titleMatcher(item) -> {
+                    val result = matchFunc(item)
+                    if (!processAll) {
+                        return result
+                    }
                 }
+                else -> item.isChecked = false
             }
         }
-        return false
+        return processAll
     }
 
 
@@ -162,9 +177,20 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_about -> replaceFragment(getString(R.string.str_about_us))
                 R.id.nav_speakers -> replaceFragment(getString(R.string.str_speakers))
                 R.id.nav_volunteers -> replaceFragment(getString(R.string.str_volunteers))
+                R.id.nav_login_logout -> {
+                    if (authController.isLoggedIn) {
+                        logout()
+                    } else {
+                        login()
+                    }
+                }
             }
 
-            navView.setCheckedItem(item.itemId)
+            if (item.itemId != R.id.nav_login_logout) {
+                navView.setCheckedItem(item.itemId)
+            } else {
+                updateSelectedNavItem(supportFragmentManager)
+            }
 
             true
         }
@@ -264,9 +290,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun login() {
+        authController.login(this, RC_SIGN_IN)
+    }
+
+    private fun logout() {
+        authController.logout(this)
+        navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_login)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        authController.handleLoginResult(resultCode, data)?.let {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.str_title_error)
+                .setMessage(it)
+                .show()
+        } ?: run {
+            navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_logout)
+        }
+    }
+
     companion object {
         private const val EXTRA_SESSIONID = "MainActivity.EXTRA_SESSIONID"
         private const val EXTRA_SESSION_DETAILS = "MainActivity.EXTRA_SESSION_DETAILS"
+
+        private const val RC_SIGN_IN = 1
 
         fun getSessionDetailIntent(
             context: Context,

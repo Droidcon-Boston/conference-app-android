@@ -60,7 +60,7 @@ dependencies {
     final support = '1.0.0'
     final appCompat = '1.0.2'
     final firebaseDatabase = '16.0.5'
-    final firebaseCore = '16.0.5'
+    final firebaseCore = '16.0.6'
     final firebaseMessaging = '17.3.4'
     final crashlytics = '2.9.1'
     final gson = '2.8.2'
@@ -89,6 +89,9 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging:$firebaseMessaging"
     implementation "com.google.firebase:firebase-database:$firebaseDatabase"
     implementation "com.google.firebase:firebase-core:$firebaseCore"
+
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
 
     // Crashlytics only for release builds
     releaseImplementation("com.crashlytics.sdk.android:crashlytics:$crashlytics@aar") {
