@@ -27,8 +27,12 @@ jobs:
         key: jars-{{ checksum "Droidcon-Boston/build.gradle" }}-{{ checksum  "Droidcon-Boston/app/build.gradle" }}
 
     - run:
+        name: Static Analysis Checks
+        command: cd Droidcon-Boston && ./gradlew detekt ktlintCheck lint
+        
+    - run:
         name: Run Tests
-        command: cd Droidcon-Boston && ./gradlew lint test
+        command: cd Droidcon-Boston && ./gradlew test
 
     - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
         path: Droidcon-Boston/app/build/reports
