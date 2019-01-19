@@ -31,8 +31,8 @@ jobs:
         command: cd Droidcon-Boston && ./gradlew lint test
 
     - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-        path: app/build/reports
+        path: Droidcon-Boston/app/build/reports
         destination: reports
 
     - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-        path: app/build/test-results
+        path: Droidcon-Boston/app/build/test-results
