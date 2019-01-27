@@ -17,4 +17,10 @@
     <!-- Dynamic speaker imageview in agenda details. -->
     <dimen name="imgv_speaker_size">80dp</dimen>
     <dimen name="imgv_speaker_offset">65dp</dimen>
+
+    <!-- Jump to Current button dimensions -->
+    <dimen name="jump_btn_corner_radius">20dp</dimen>
+    <dimen name="jump_btn_margin_bottom">16dp</dimen>
+    <dimen name="jump_btn_horizontal_padding">20dp</dimen>
+
 </resources>

@@ -50,4 +50,5 @@
     <string name="social_icon">Social Icon</string>
     <string name="linkedin_icon">LinkedIn Icon</string>
     <string name="twitter_icon">Twitter Icon</string>
+    <string name="jump_btn_title">Jump to Current</string>
 </resources>
