@@ -10,7 +10,8 @@ import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import java.util.*
+import java.util.UUID
+import kotlin.collections.HashSet
 
 @RunWith(JUnit4::class)
 class UserProfileTest : TestCase() {

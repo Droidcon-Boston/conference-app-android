@@ -20,11 +20,7 @@ class AuthController {
     val isLoggedIn: Boolean
         get() = (user != null)
 
-    fun login(
-        activity: AppCompatActivity, resultCode: Int,
-        @DrawableRes loginScreenAppIcon: Int
-    ) {
-
+    fun login(activity: AppCompatActivity, resultCode: Int, @DrawableRes loginScreenAppIcon: Int) {
         val providers = arrayListOf(
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
