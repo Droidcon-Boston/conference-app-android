@@ -26,6 +26,9 @@
     <string name="str_speakers">Speakers</string>
     <string name="str_volunteers">Volunteers</string>
     <string name="str_coc">Code Of Conduct</string>
+    <string name="str_login">Log In</string>
+    <string name="str_logout">Log Out</string>
+    <string name="str_title_error">Error</string>
     <string name="social_title_facebook">Facebook</string>
     <string name="social_title_instagram">Instagram</string>
     <string name="social_title_linkedin">LinkedIn</string>
