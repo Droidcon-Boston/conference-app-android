@@ -15,10 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:contentDescription="@string/logo"
         android:paddingEnd="90dp"
-        android:paddingRight="90dp"
         android:scaleType="centerInside"
         android:src="@drawable/logo_text" />
 
