@@ -32,7 +32,6 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/imageView2"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:lineSpacingMultiplier="1.2"
             android:padding="@dimen/def_padding_large"
             android:textSize="17sp"
