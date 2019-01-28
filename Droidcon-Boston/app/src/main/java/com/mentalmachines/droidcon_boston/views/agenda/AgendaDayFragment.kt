@@ -3,12 +3,14 @@ package com.mentalmachines.droidcon_boston.views.agenda
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.database.DataSnapshot
@@ -25,6 +27,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
 import java.util.*
+import androidx.recyclerview.widget.LinearSmoothScroller
 
 
 /**
@@ -63,13 +66,24 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.agenda_day_fragment, container, false)
     }
 
+    private fun setupSmoothScroller(): RecyclerView.SmoothScroller {
+        return object : LinearSmoothScroller(context) {
+            override fun getVerticalSnapPreference(): Int {
+                return SNAP_TO_START
+            }
+
+            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics?): Float {
+                return 50f / displayMetrics?.densityDpi!!
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,8 +95,13 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         agendaRecyler.layoutManager =
                 androidx.recyclerview.widget.LinearLayoutManager(activity?.applicationContext)
-
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
+        val linearSmoothScroller = setupSmoothScroller()
+        scrollToCurrentButton.setOnClickListener {
+
+            linearSmoothScroller.targetPosition = 12
+            (agendaRecyler.layoutManager as LinearLayoutManager).startSmoothScroll(linearSmoothScroller)
+        }
 
         fetchScheduleData()
 
@@ -118,8 +137,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 if (data != null) {
                     val scheduleRow = data.toScheduleRow(key)
                     if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(
-                            scheduleRow.id
-                        ))
+                                    scheduleRow.id
+                            ))
                     ) {
                         rows.add(scheduleRow)
                     }
@@ -153,7 +172,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         val sortedItems =
-            items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }.thenBy { it.roomSortOrder })
+                items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }.thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
         headerAdapter!!.addListener(this)
@@ -200,6 +219,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         private val TAG = AgendaDayFragment::class.java.name
         private const val ARG_DAY = "day"
         private const val ARG_MY_AGENDA = "my_agenda"
+        private const val MILLISECONDS_PER_INCH = 50f
 
         fun newInstance(myAgenda: Boolean, day: String): AgendaDayFragment {
             val fragment = AgendaDayFragment()

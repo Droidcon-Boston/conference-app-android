@@ -27,4 +27,11 @@
 
     <include layout="@layout/empty_view" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/floating_action_current"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="15dp"/>
+
 </FrameLayout>
