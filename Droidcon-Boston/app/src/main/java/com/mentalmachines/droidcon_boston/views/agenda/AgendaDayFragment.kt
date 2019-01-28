@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationSet
+import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -121,7 +122,17 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics?): Float {
                 return MILLISECONDS_PER_INCH / displayMetrics?.densityDpi!!
             }
+
+            override fun onStop() {
+                super.onStop()
+                fadeOutJumpToCurrentButton()
+            }
         }
+    }
+
+    private fun fadeOutJumpToCurrentButton() {
+        scrollToCurrentButton.animate().alpha(0f).setDuration(2000)
+                .setInterpolator(DecelerateInterpolator()).start()
     }
 
     private fun addFloatingAnimation() {
@@ -132,14 +143,14 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         floatUpAnimator.interpolator = LinearInterpolator()
         //Float down
         val downFloatValues = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -30f, 30f)
-        val floatDownAnimator  = ObjectAnimator.ofPropertyValuesHolder(scrollToCurrentButton, downFloatValues)
+        val floatDownAnimator = ObjectAnimator.ofPropertyValuesHolder(scrollToCurrentButton, downFloatValues)
         floatDownAnimator.duration = 3000
         floatDownAnimator.interpolator = LinearInterpolator()
 
         val floatAnimation = AnimatorSet()
         floatAnimation.playSequentially(floatUpAnimator, floatDownAnimator)
         floatAnimation.start()
-        floatAnimation.addListener(object : Animator.AnimatorListener{
+        floatAnimation.addListener(object : Animator.AnimatorListener {
 
             override fun onAnimationRepeat(animation: Animator?) {
 
