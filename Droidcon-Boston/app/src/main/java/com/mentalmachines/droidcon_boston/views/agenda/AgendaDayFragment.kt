@@ -1,5 +1,9 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationSet
+import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -73,18 +79,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return inflater.inflate(R.layout.agenda_day_fragment, container, false)
     }
 
-    private fun setupSmoothScroller(): RecyclerView.SmoothScroller {
-        return object : LinearSmoothScroller(context) {
-            override fun getVerticalSnapPreference(): Int {
-                return SNAP_TO_START
-            }
-
-            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics?): Float {
-                return 50f / displayMetrics?.densityDpi!!
-            }
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -97,8 +91,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 androidx.recyclerview.widget.LinearLayoutManager(activity?.applicationContext)
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
         val linearSmoothScroller = setupSmoothScroller()
+        addFloatingAnimation()
         scrollToCurrentButton.setOnClickListener {
-
+            //Position need to be found by comparing current time and the agenda's time
             linearSmoothScroller.targetPosition = 12
             (agendaRecyler.layoutManager as LinearLayoutManager).startSmoothScroll(linearSmoothScroller)
         }
@@ -108,12 +103,60 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         activity?.supportFragmentManager?.addOnBackStackChangedListener(backStackChangeListener)
     }
 
+
     private val backStackChangeListener: () -> Unit = {
         if (onlyMyAgenda) {
             fetchScheduleData()
         } else {
             headerAdapter?.notifyDataSetChanged()
         }
+    }
+
+    private fun setupSmoothScroller(): RecyclerView.SmoothScroller {
+        return object : LinearSmoothScroller(context) {
+            override fun getVerticalSnapPreference(): Int {
+                return SNAP_TO_START
+            }
+
+            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics?): Float {
+                return MILLISECONDS_PER_INCH / displayMetrics?.densityDpi!!
+            }
+        }
+    }
+
+    private fun addFloatingAnimation() {
+        //Float up
+        val propertyValuesHolder = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 30f, -30f)
+        val floatUpAnimator = ObjectAnimator.ofPropertyValuesHolder(scrollToCurrentButton, propertyValuesHolder)
+        floatUpAnimator.duration = 3000
+        floatUpAnimator.interpolator = LinearInterpolator()
+        //Float down
+        val downFloatValues = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -30f, 30f)
+        val floatDownAnimator  = ObjectAnimator.ofPropertyValuesHolder(scrollToCurrentButton, downFloatValues)
+        floatDownAnimator.duration = 3000
+        floatDownAnimator.interpolator = LinearInterpolator()
+
+        val floatAnimation = AnimatorSet()
+        floatAnimation.playSequentially(floatUpAnimator, floatDownAnimator)
+        floatAnimation.start()
+        floatAnimation.addListener(object : Animator.AnimatorListener{
+
+            override fun onAnimationRepeat(animation: Animator?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                floatAnimation.start()
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+
+            }
+
+            override fun onAnimationStart(animation: Animator?) {
+
+            }
+        })
     }
 
     override fun onDestroyView() {
