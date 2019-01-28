@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -41,6 +42,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private lateinit var agendaRecyler: RecyclerView
     private lateinit var emptyStateView: View
+    private lateinit var scrollToCurrentButton: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +77,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         // NOTE: Kotlin Extensions' agenda_vew is null in setupHeaderAdapter sporadically, so do this old school
         agendaRecyler = view.findViewById(R.id.agenda_recycler)
         emptyStateView = view.findViewById(R.id.empty_view)
+        scrollToCurrentButton = view.findViewById(R.id.scroll_to_current_session)
 
         agendaRecyler.layoutManager =
                 androidx.recyclerview.widget.LinearLayoutManager(activity?.applicationContext)
