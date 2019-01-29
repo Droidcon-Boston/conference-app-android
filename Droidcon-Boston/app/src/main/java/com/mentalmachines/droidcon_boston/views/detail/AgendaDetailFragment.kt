@@ -1,9 +1,9 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +11,13 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.android.material.snackbar.Snackbar
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.string
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.EventSpeaker
@@ -22,8 +25,6 @@ import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
-import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
@@ -31,15 +32,24 @@ import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
 class AgendaDetailFragment : Fragment() {
+    private val requireContext: Context
+        get() = context!!
 
-    private var scheduleDetail: ScheduleDetail? = null
-    private lateinit var scheduleRowItem: ScheduleRow
-    private val eventSpeakers = HashMap<String, EventSpeaker>()
+    private val viewModelFactory = object : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            val scheduleRowItem = gson.fromJson(
+                arguments?.getString(Schedule.SCHEDULE_ITEM_ROW),
+                ScheduleRow::class.java
+            )
 
-    private val firebaseHelper = FirebaseHelper.instance
+            val userAgendaRepo = UserAgendaRepo.getInstance(requireContext)
 
-    private val userAgendaRepo: UserAgendaRepo
-        get() = UserAgendaRepo.getInstance(fab_agenda_detail_bookmark.context)
+            @Suppress("UNCHECKED_CAST")
+            return AgendaDetailViewModel(scheduleRowItem, userAgendaRepo) as T
+        }
+    }
+
+    private lateinit var viewModel: AgendaDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,89 +63,59 @@ class AgendaDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        scheduleRowItem = gson.fromJson(
-            arguments!!.getString(Schedule.SCHEDULE_ITEM_ROW),
-            ScheduleRow::class.java
-        )
-        fetchDataFromFirebase()
+        initializeViewModel()
+        loadData()
         populateView()
 
-        if (activity is MainActivity) {
-            val mainActivity = activity as MainActivity
-            mainActivity.uncheckAllMenuItems()
-        }
+        (activity as? MainActivity)?.uncheckAllMenuItems()
+    }
+
+    private fun loadData() {
+        viewModel.loadData()
+    }
+
+    private fun initializeViewModel() {
+        viewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(AgendaDetailViewModel::class.java)
+
+        viewModel.scheduleDetail.observe(viewLifecycleOwner, Observer {
+            it?.let(this::showAgendaDetail)
+        })
     }
 
     private fun populateView() {
-        tv_agenda_detail_title.text = scheduleRowItem.talkTitle
+        tv_agenda_detail_title.text = viewModel.talkTitle
         tv_agenda_detail_room.text =
-                resources.getString(R.string.str_agenda_detail_room, scheduleRowItem.room)
+                resources.getString(R.string.str_agenda_detail_room, viewModel.room)
         tv_agenda_detail_time.text = resources.getString(
             R.string.str_agenda_detail_time,
-            scheduleRowItem.startTime,
-            scheduleRowItem.endTime
+            viewModel.startTime,
+            viewModel.endTime
         )
 
         fab_agenda_detail_bookmark.setOnClickListener {
+            viewModel.toggleBookmark(requireContext)
 
-            if (scheduleDetail != null) {
-                val nextBookmarkStatus = !userAgendaRepo.isSessionBookmarked(scheduleDetail!!.id)
-                userAgendaRepo.bookmarkSession(scheduleDetail!!.id, nextBookmarkStatus)
-                val context = tv_agenda_detail_title.context
-                if (nextBookmarkStatus) {
-                    NotificationUtils(context).scheduleMySessionNotifications()
-                } else {
-                    NotificationUtils(context).cancelNotificationAlarm(scheduleRowItem.id)
-                }
+            Snackbar.make(
+                agendaDetailView,
+                viewModel.bookmarkSnackbarRes,
+                Snackbar.LENGTH_SHORT
+            ).show()
 
-                com.google.android.material.snackbar.Snackbar.make(
-                    agendaDetailView,
-                    if (nextBookmarkStatus) getString(R.string.saved_agenda_item)
-                    else getString(R.string.removed_agenda_item),
-                    com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
-                ).show()
-
-                showBookmarkStatus(scheduleDetail!!)
-            }
+            showBookmarkStatus()
         }
 
-        populateSpeakersInformation(scheduleRowItem)
-    }
-
-    private val dataListener: ValueEventListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            for (speakerSnapshot in dataSnapshot.children) {
-                val speaker = speakerSnapshot.getValue(EventSpeaker::class.java)
-                if (speaker != null) {
-                    eventSpeakers[speaker.name] = speaker
-
-                    if (scheduleRowItem.primarySpeakerName == speaker.name) {
-                        scheduleDetail = speaker.toScheduleDetail(scheduleRowItem)
-                        showAgendaDetail(scheduleDetail!!)
-                    }
-                }
-
-            }
-
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
-        }
-    }
-
-    private fun fetchDataFromFirebase() {
-        firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(dataListener)
+        populateSpeakersInformation()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
-        firebaseHelper.speakerDatabase.removeEventListener(dataListener)
+        viewModel.removeListener()
     }
 
-    private fun populateSpeakersInformation(itemData: ScheduleRow) = when {
-        itemData.speakerNames.isEmpty() -> {
+    private fun populateSpeakersInformation() = when {
+        viewModel.speakerNames.isEmpty() -> {
             tv_agenda_detail_speaker_name.visibility = View.GONE
             v_agenda_detail_speaker_divider.visibility = View.GONE
         }
@@ -146,8 +126,8 @@ class AgendaDetailFragment : Fragment() {
             val offsetImgView = resources.getDimension(R.dimen.imgv_speaker_offset).toInt()
             val defaultLeftMargin = resources.getDimension(R.dimen.def_margin).toInt()
 
-            itemData.speakerNames.forEach { speakerName ->
-                val orgName: String? = itemData.speakerNameToOrgName[speakerName]
+            viewModel.speakerNames.forEach { speakerName ->
+                val orgName: String? = viewModel.getOrganizationForSpeaker(speakerName)
                 // append org name to speaker name
                 speakerNames += speakerName + when {
                     orgName != null -> " - $orgName"
@@ -156,11 +136,11 @@ class AgendaDetailFragment : Fragment() {
                     }
                 }
 
-                if (itemData.speakerNames.size > 1) {
+                if (viewModel.speakerNames.size > 1) {
                     tv_agenda_detail_speaker_title.text = getString(string.header_speakers)
 
                     // if the current speaker name is not the last then add a line break
-                    if (speakerName != itemData.speakerNames.last()) {
+                    if (speakerName != viewModel.speakerNames.last()) {
                         speakerNames += "\n"
                     }
                 } else {
@@ -170,7 +150,7 @@ class AgendaDetailFragment : Fragment() {
                 // Add an imageview to the relative layout
                 val tempImg = ImageView(activity)
                 val lp = RelativeLayout.LayoutParams(imgViewSize, imgViewSize)
-                if (speakerName == itemData.speakerNames.first()) {
+                if (speakerName == viewModel.speakerNames.first()) {
                     lp.setMargins(marginValue, 0, 0, defaultLeftMargin)
                 } else {
                     marginValue += offsetImgView
@@ -184,12 +164,15 @@ class AgendaDetailFragment : Fragment() {
                 // add speakerName as a child to the relative layout
                 agendaDetailView.addView(tempImg)
 
-                Glide.with(this).load(itemData.photoUrlMap[speakerName])
-                    .transform(CircleTransform(tempImg.context)).placeholder(R.drawable.emo_im_cool)
-                    .crossFade().into(tempImg)
+                Glide.with(this)
+                    .load(viewModel.getPhotoForSpeaker(speakerName))
+                    .transform(CircleTransform(tempImg.context))
+                    .placeholder(R.drawable.emo_im_cool)
+                    .crossFade()
+                    .into(tempImg)
 
                 tempImg.setOnClickListener {
-                    val eventSpeaker = eventSpeakers[speakerName]
+                    val eventSpeaker = viewModel.getSpeaker(speakerName)
                     val arguments = Bundle()
 
                     arguments.putString(
@@ -201,18 +184,21 @@ class AgendaDetailFragment : Fragment() {
                     speakerDetailFragment.arguments = arguments
 
                     val fragmentManager = activity?.supportFragmentManager
+
                     fragmentManager?.beginTransaction()
-                        ?.add(R.id.fragment_container, speakerDetailFragment)?.addToBackStack(null)
+                        ?.add(R.id.fragment_container, speakerDetailFragment)
+                        ?.addToBackStack(null)
                         ?.commit()
                 }
             }
+
             tv_agenda_detail_speaker_name.text = speakerNames
         }
     }
 
-    fun showAgendaDetail(scheduleDetail: ScheduleDetail) {
-        populateSpeakersInformation(scheduleDetail.listRow)
-        showBookmarkStatus(scheduleDetail)
+    private fun showAgendaDetail(scheduleDetail: ScheduleDetail) {
+        populateSpeakersInformation()
+        showBookmarkStatus()
 
         tv_agenda_detail_title.text = scheduleDetail.listRow.talkTitle
         tv_agenda_detail_description.text =
@@ -221,19 +207,15 @@ class AgendaDetailFragment : Fragment() {
         tv_agenda_detail_description.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    private fun showBookmarkStatus(scheduleDetail: ScheduleDetail) {
-        val userAgendaRepo = userAgendaRepo
-        val context = fab_agenda_detail_bookmark.context
-        fab_agenda_detail_bookmark.backgroundTintList =
-                if (userAgendaRepo.isSessionBookmarked(scheduleDetail.id)) ColorStateList.valueOf(
-                    ContextCompat.getColor(context, R.color.colorAccent)
-                )
-                else ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorLightGray))
+    private fun showBookmarkStatus() {
+        val color = ContextCompat.getColor(requireContext, viewModel.bookmarkColorRes)
+
+        fab_agenda_detail_bookmark.backgroundTintList = ColorStateList.valueOf(color)
     }
 
     companion object {
         fun addDetailFragmentToStack(
-            supportFragmentManager: androidx.fragment.app.FragmentManager,
+            supportFragmentManager: FragmentManager,
             itemData: Schedule.ScheduleRow
         ) {
             val arguments = Bundle()
