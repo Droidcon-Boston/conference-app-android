@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.data
 
 import android.content.Context
+import android.util.Log
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
@@ -11,6 +12,7 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import java.util.*
 
 
 open class FirebaseDatabase {
@@ -85,6 +87,15 @@ open class FirebaseDatabase {
             row.talkTitle = name
             row.speakerNameToOrgName = speakerNameToOrg
             row.photoUrlMap = speakerNameToPhotoUrl
+
+            if(startDateTime != null && endDateTime != null) {
+                val now = ZonedDateTime.now()
+                if (now.isAfter(startDateTime) && now.isBefore(endDateTime)) {
+                    Log.d("RV", "Session ${row.talkTitle} marked as current")
+                    row.isCurrentSession = true
+                }
+            }
+
             return row
         }
     }

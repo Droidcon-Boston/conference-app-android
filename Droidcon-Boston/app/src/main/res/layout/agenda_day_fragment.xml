@@ -23,7 +23,9 @@
         android:text="@string/jump_btn_title"
         app:cornerRadius="@dimen/jump_btn_corner_radius"
         android:layout_marginBottom="@dimen/jump_btn_margin_bottom"
-        android:layout_gravity="bottom|center" />
+        android:layout_gravity="bottom|center"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <include layout="@layout/empty_view" />
 </FrameLayout>

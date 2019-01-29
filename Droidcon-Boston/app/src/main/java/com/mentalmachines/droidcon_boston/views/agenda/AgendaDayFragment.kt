@@ -13,11 +13,12 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationSet
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.database.DataSnapshot
@@ -33,8 +34,8 @@ import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
+import kotlinx.android.synthetic.main.schedule_item.*
 import java.util.*
-import androidx.recyclerview.widget.LinearSmoothScroller
 
 
 /**
@@ -49,10 +50,32 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private lateinit var userAgendaRepo: UserAgendaRepo
     private var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>? = null
+    private lateinit var layoutManager: LinearLayoutManager
 
     private lateinit var agendaRecyler: RecyclerView
     private lateinit var emptyStateView: View
     private lateinit var scrollToCurrentButton: MaterialButton
+
+    private var currentSessionPosition = 0
+    private val visibleViewCount get() = layoutManager.findLastCompletelyVisibleItemPosition() - layoutManager.findFirstVisibleItemPosition()
+    private val currentSessionTargetPosition: Int
+        get() {
+
+            var targetPosition = currentSessionPosition + visibleViewCount
+
+            val timeDisplayHeaderOffset = if(targetPosition > layoutManager.findLastCompletelyVisibleItemPosition()) 1 else 0
+            targetPosition -= timeDisplayHeaderOffset
+
+            // keep target position within bounds
+            if (targetPosition >= headerAdapter!!.itemCount) {
+                targetPosition = headerAdapter!!.itemCount - 1
+            } else if (targetPosition < 0) {
+                targetPosition = 0
+            }
+
+
+            return targetPosition
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,14 +111,16 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         emptyStateView = view.findViewById(R.id.empty_view)
         scrollToCurrentButton = view.findViewById(R.id.scroll_to_current_session)
 
-        agendaRecyler.layoutManager =
-                androidx.recyclerview.widget.LinearLayoutManager(activity?.applicationContext)
+        layoutManager = LinearLayoutManager(requireActivity().applicationContext)
+        agendaRecyler.layoutManager = layoutManager
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
         val linearSmoothScroller = setupSmoothScroller()
         addFloatingAnimation()
         scrollToCurrentButton.setOnClickListener {
-            //Position need to be found by comparing current time and the agenda's time
-            linearSmoothScroller.targetPosition = 12
+
+            var targetPosition = currentSessionTargetPosition
+
+            linearSmoothScroller.targetPosition = targetPosition
             (agendaRecyler.layoutManager as LinearLayoutManager).startSmoothScroll(linearSmoothScroller)
         }
 
@@ -122,17 +147,34 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics?): Float {
                 return MILLISECONDS_PER_INCH / displayMetrics?.densityDpi!!
             }
+        }
+    }
 
-            override fun onStop() {
-                super.onStop()
-                fadeOutJumpToCurrentButton()
-            }
+    private fun updateJumpToCurrentButtonVisibility(isCurrentSessionVisible: Boolean) {
+        if(isCurrentSessionVisible) {
+            fadeOutJumpToCurrentButton()
+        } else {
+            fadeInJumpToCurrentButton()
         }
     }
 
     private fun fadeOutJumpToCurrentButton() {
-        scrollToCurrentButton.animate().alpha(0f).setDuration(2000)
-                .setInterpolator(DecelerateInterpolator()).start()
+        if(scrollToCurrentButton.visibility == View.VISIBLE) {
+            val viewPropAnimator = scrollToCurrentButton
+                    .animate().alpha(0.0f).setDuration(750)
+                    .setInterpolator(DecelerateInterpolator())
+            viewPropAnimator.withEndAction { scrollToCurrentButton.visibility = View.GONE }
+            viewPropAnimator.start()
+        }
+    }
+
+    private fun fadeInJumpToCurrentButton() {
+        if(scrollToCurrentButton.visibility != View.VISIBLE) {
+            val viewPropAnimator = scrollToCurrentButton
+                    .animate().alpha(1.0f).setDuration(750)
+                    .setInterpolator(DecelerateInterpolator())
+            viewPropAnimator.withStartAction { scrollToCurrentButton.visibility = View.VISIBLE }
+        }
     }
 
     private fun addFloatingAnimation() {
@@ -172,7 +214,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
+        agendaRecyler.removeOnChildAttachStateChangeListener(currentSessionVisibleListener)
         firebaseHelper.eventDatabase.removeEventListener(dataListener)
         activity?.supportFragmentManager?.removeOnBackStackChangedListener(backStackChangeListener)
     }
@@ -198,7 +240,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                     }
                 }
             }
-
+            updateJumpToCurrentButtonVisibility(false)
             setupHeaderAdapter(rows)
         }
 
@@ -209,6 +251,30 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun fetchScheduleData() {
         firebaseHelper.eventDatabase.addValueEventListener(dataListener)
+    }
+
+    private val currentSessionVisibleListener = object : RecyclerView.OnChildAttachStateChangeListener {
+
+        override fun onChildViewAttachedToWindow(view: View) {
+
+            // I think there is a better way to determine this without relying on TAGs,
+            // just  by calculating the targetCurrentSession view == this view that is attaching.
+            if(view.tag == CURRENT_ITEM_MARKER_TAG) {
+
+                updateJumpToCurrentButtonVisibility(true)
+            }
+        }
+
+        override fun onChildViewDetachedFromWindow(view: View) {
+
+            // I think there is a better way to do this, see attach commment.
+            if(view.tag == CURRENT_ITEM_MARKER_TAG) {
+                val currentTalkTitle = view.findViewById<TextView>(R.id.title_text)?.text?.toString()
+                Log.d("RV", "${currentTalkTitle} is not visible")
+                updateJumpToCurrentButtonVisibility(false)
+            }
+        }
+
     }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
@@ -229,12 +295,15 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }.thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
+        agendaRecyler.addOnChildAttachStateChangeListener(currentSessionVisibleListener)
         headerAdapter!!.addListener(this)
         agendaRecyler.adapter = headerAdapter
         agendaRecyler.addItemDecoration(FlexibleItemDecoration(agendaRecyler.context).withDefaultDivider())
         headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
 
         EmptyViewHelper(headerAdapter, emptyStateView, null, null)
+
+        currentSessionPosition = sortedItems.indexOfFirst { it.itemData.isCurrentSession }
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
