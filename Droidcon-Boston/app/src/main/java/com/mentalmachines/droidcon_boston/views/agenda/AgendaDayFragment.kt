@@ -56,26 +56,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private lateinit var emptyStateView: View
     private lateinit var scrollToCurrentButton: MaterialButton
 
-    private var currentSessionPosition = 0
-    private val visibleViewCount get() = layoutManager.findLastCompletelyVisibleItemPosition() - layoutManager.findFirstVisibleItemPosition()
-    private val currentSessionTargetPosition: Int
-        get() {
-
-            var targetPosition = currentSessionPosition + visibleViewCount
-
-            val timeDisplayHeaderOffset = if(targetPosition > layoutManager.findLastCompletelyVisibleItemPosition()) 1 else 0
-            targetPosition -= timeDisplayHeaderOffset
-
-            // keep target position within bounds
-            if (targetPosition >= headerAdapter!!.itemCount) {
-                targetPosition = headerAdapter!!.itemCount - 1
-            } else if (targetPosition < 0) {
-                targetPosition = 0
-            }
-
-
-            return targetPosition
-        }
+    private var hasAnyCurrentSessions = false
+    private var targetCurrentSesssionPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,10 +99,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         val linearSmoothScroller = setupSmoothScroller()
         addFloatingAnimation()
         scrollToCurrentButton.setOnClickListener {
-
-            var targetPosition = currentSessionTargetPosition
-
-            linearSmoothScroller.targetPosition = targetPosition
+            linearSmoothScroller.targetPosition = calculateActualTargetPosition(targetCurrentSesssionPosition)
             (agendaRecyler.layoutManager as LinearLayoutManager).startSmoothScroll(linearSmoothScroller)
         }
 
@@ -154,7 +133,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if(isCurrentSessionVisible) {
             fadeOutJumpToCurrentButton()
         } else {
-            fadeInJumpToCurrentButton()
+            if(hasAnyCurrentSessions) {
+                fadeInJumpToCurrentButton()
+            }
         }
     }
 
@@ -240,7 +221,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                     }
                 }
             }
-            updateJumpToCurrentButtonVisibility(false)
             setupHeaderAdapter(rows)
         }
 
@@ -256,25 +236,16 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val currentSessionVisibleListener = object : RecyclerView.OnChildAttachStateChangeListener {
 
         override fun onChildViewAttachedToWindow(view: View) {
-
-            // I think there is a better way to determine this without relying on TAGs,
-            // just  by calculating the targetCurrentSession view == this view that is attaching.
             if(view.tag == CURRENT_ITEM_MARKER_TAG) {
-
                 updateJumpToCurrentButtonVisibility(true)
             }
         }
 
         override fun onChildViewDetachedFromWindow(view: View) {
-
-            // I think there is a better way to do this, see attach commment.
             if(view.tag == CURRENT_ITEM_MARKER_TAG) {
-                val currentTalkTitle = view.findViewById<TextView>(R.id.title_text)?.text?.toString()
-                Log.d("RV", "${currentTalkTitle} is not visible")
                 updateJumpToCurrentButtonVisibility(false)
             }
         }
-
     }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
@@ -303,8 +274,27 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         EmptyViewHelper(headerAdapter, emptyStateView, null, null)
 
-        currentSessionPosition = sortedItems.indexOfFirst { it.itemData.isCurrentSession }
+        hasAnyCurrentSessions = sortedItems.any { it.itemData.isCurrentSession }
+        val currentSessionItemsPosition = sortedItems.indexOfFirst { it.itemData.isCurrentSession }
+        targetCurrentSesssionPosition = currentSessionItemsPosition
+        updateJumpToCurrentButtonVisibility(false)
     }
+
+    private fun calculateActualTargetPosition(currentSessionPosition: Int) : Int {
+
+        val minIdx = 0
+        val maxIdx = headerAdapter!!.itemCount - 1
+
+        val visibleViewCount = layoutManager.findLastVisibleItemPosition() - layoutManager.findFirstVisibleItemPosition()
+        val targetPosition = wrapBounds(currentSessionPosition + visibleViewCount, minIdx, maxIdx)
+
+        return targetPosition
+    }
+
+    private fun wrapBounds(pos: Int, min: Int, max: Int) =
+            if (pos >= max) { max }
+            else if (pos < 0) { min }
+            else { pos }
 
     override fun onItemClick(view: View, position: Int): Boolean {
         val adapterItem = try {
