@@ -4,7 +4,7 @@ package com.mentalmachines.droidcon_boston.firebase
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class FirebaseHelper private constructor() {
+open class FirebaseHelper private constructor() {
 
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val mainDatabase: DatabaseReference
