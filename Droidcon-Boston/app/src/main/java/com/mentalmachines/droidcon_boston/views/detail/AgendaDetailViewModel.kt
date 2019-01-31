@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -96,14 +95,8 @@ class AgendaDetailViewModel(
         return scheduleRowItem.photoUrlMap[speakerName]
     }
 
-    fun toggleBookmark(context: Context) {
+    fun toggleBookmark() {
         val nextBookmarkStatus = !isBookmarked
         userAgendaRepo.bookmarkSession(sessionId, nextBookmarkStatus)
-
-        if (nextBookmarkStatus) {
-            NotificationUtils(context).scheduleMySessionNotifications()
-        } else {
-            NotificationUtils(context).cancelNotificationAlarm(schedulerowId)
-        }
     }
 }

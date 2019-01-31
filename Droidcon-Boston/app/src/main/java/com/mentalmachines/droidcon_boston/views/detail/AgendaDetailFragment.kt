@@ -25,6 +25,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
+import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
@@ -94,7 +95,13 @@ class AgendaDetailFragment : Fragment() {
         )
 
         fab_agenda_detail_bookmark.setOnClickListener {
-            viewModel.toggleBookmark(requireContext)
+            viewModel.toggleBookmark()
+
+            if (viewModel.isBookmarked) {
+                NotificationUtils(requireContext).scheduleMySessionNotifications()
+            } else {
+                NotificationUtils(requireContext).cancelNotificationAlarm(viewModel.schedulerowId)
+            }
 
             Snackbar.make(
                 agendaDetailView,
