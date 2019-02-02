@@ -4,12 +4,10 @@
     android:layout_height="192dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/navigation_header_image"
-        android:scaleType="centerCrop"
-        android:src="@drawable/navigation_header_image" />
+        android:background="@color/colorPrimary" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -18,6 +16,6 @@
         android:contentDescription="@string/logo"
         android:paddingEnd="90dp"
         android:scaleType="centerInside"
-        android:src="@drawable/logo_text" />
+        android:src="@drawable/splash_text" />
 
 </FrameLayout>
