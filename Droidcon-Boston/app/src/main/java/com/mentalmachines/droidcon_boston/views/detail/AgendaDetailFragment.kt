@@ -30,7 +30,6 @@ import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
-
 class AgendaDetailFragment : Fragment() {
 
     private var scheduleDetail: ScheduleDetail? = null
@@ -41,7 +40,6 @@ class AgendaDetailFragment : Fragment() {
 
     private val userAgendaRepo: UserAgendaRepo
         get() = UserAgendaRepo.getInstance(fab_agenda_detail_bookmark.context)
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -168,7 +166,6 @@ class AgendaDetailFragment : Fragment() {
                 } else {
                     tv_agenda_detail_speaker_title.text = getString(string.header_speaker)
                 }
-
 
                 // Add an imageview to the relative layout
                 val tempImg = ImageView(activity)
