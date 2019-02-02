@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
