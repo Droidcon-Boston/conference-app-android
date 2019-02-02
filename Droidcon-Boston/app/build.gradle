@@ -102,6 +102,7 @@ dependencies {
     final threeTenAbp = '1.0.5'
     final recyclerRefreshLayout = '2.0.5'
     final mockitoCore = '2.23.4'
+    final archCore = '2.0.0'
     //endregion
 
     //region Dependencies
@@ -112,6 +113,7 @@ dependencies {
     testImplementation "junit:junit:$junit"
     testImplementation "org.threeten:threetenbp:$threeTen"
     testImplementation "org.mockito:mockito-core:$mockitoCore"
+    testImplementation "androidx.arch.core:core-testing:$archCore"
 
     // Support
     implementation "androidx.appcompat:appcompat:$appCompat"

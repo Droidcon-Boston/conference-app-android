@@ -23,7 +23,6 @@ import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
-import java.util.*
 
 
 /**
@@ -45,7 +44,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dayFilter = arguments?.getString(ARG_DAY) ?: ""
-        userAgendaRepo = UserAgendaRepo.getInstance(context!!)
+        userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -114,10 +113,12 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 Log.d(TAG, "Event: $data")
                 if (data != null) {
                     val scheduleRow = data.toScheduleRow(key)
-                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(
-                            scheduleRow.id
-                        ))
-                    ) {
+                    val matchesDay = scheduleRow.date == dayFilter
+                    val isPublicView = !onlyMyAgenda
+                    val isPrivateAndBookmarked = onlyMyAgenda && userAgendaRepo
+                        .isSessionBookmarked(scheduleRow.id)
+
+                    if (matchesDay && (isPublicView || isPrivateAndBookmarked)) {
                         rows.add(scheduleRow)
                     }
                 }
