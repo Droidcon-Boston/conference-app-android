@@ -12,7 +12,6 @@ import com.mentalmachines.droidcon_boston.data.FirebaseDatabase
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
-import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 
 class AgendaDetailViewModel(
     private val scheduleRowItem: Schedule.ScheduleRow,
