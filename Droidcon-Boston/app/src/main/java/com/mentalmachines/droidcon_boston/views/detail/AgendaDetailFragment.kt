@@ -33,8 +33,6 @@ import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
 class AgendaDetailFragment : Fragment() {
-    private val requireContext: Context
-        get() = context!!
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -43,7 +41,7 @@ class AgendaDetailFragment : Fragment() {
                 ScheduleRow::class.java
             )
 
-            val userAgendaRepo = UserAgendaRepo.getInstance(requireContext)
+            val userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
 
             @Suppress("UNCHECKED_CAST")
             return AgendaDetailViewModel(scheduleRowItem, userAgendaRepo) as T
@@ -98,9 +96,9 @@ class AgendaDetailFragment : Fragment() {
             viewModel.toggleBookmark()
 
             if (viewModel.isBookmarked) {
-                NotificationUtils(requireContext).scheduleMySessionNotifications()
+                NotificationUtils(requireContext()).scheduleMySessionNotifications()
             } else {
-                NotificationUtils(requireContext).cancelNotificationAlarm(viewModel.schedulerowId)
+                NotificationUtils(requireContext()).cancelNotificationAlarm(viewModel.schedulerowId)
             }
 
             Snackbar.make(
@@ -215,7 +213,7 @@ class AgendaDetailFragment : Fragment() {
     }
 
     private fun showBookmarkStatus() {
-        val color = ContextCompat.getColor(requireContext, viewModel.bookmarkColorRes)
+        val color = ContextCompat.getColor(requireContext(), viewModel.bookmarkColorRes)
 
         fab_agenda_detail_bookmark.backgroundTintList = ColorStateList.valueOf(color)
     }
