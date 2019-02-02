@@ -53,4 +53,6 @@
     <string name="social_icon">Social Icon</string>
     <string name="linkedin_icon">LinkedIn Icon</string>
     <string name="twitter_icon">Twitter Icon</string>
+
+    <string name="content_description_logo">Droidcon Boston Android logo</string>
 </resources>
