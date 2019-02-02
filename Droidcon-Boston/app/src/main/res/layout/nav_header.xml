@@ -12,9 +12,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
         android:contentDescription="@string/logo"
-        android:paddingEnd="90dp"
         android:scaleType="centerInside"
         android:src="@drawable/splash_text" />
 
