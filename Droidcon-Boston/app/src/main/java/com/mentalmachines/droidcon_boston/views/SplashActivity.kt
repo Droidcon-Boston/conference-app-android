@@ -4,11 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.view.animation.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import androidx.appcompat.app.AppCompatActivity
 import com.mentalmachines.droidcon_boston.R
-
 
 class SplashActivity : AppCompatActivity() {
 
@@ -22,24 +23,19 @@ class SplashActivity : AppCompatActivity() {
         logoText = findViewById(R.id.logoText)
         logoImage = findViewById(R.id.logoImage)
 
-        logoImage.translationY = 1000f
+        logoImage.translationY = LOGO_START_TRANSLATION_Y
 
         logoImage.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-            override fun onViewDetachedFromWindow(v: View?) {
-
-            }
+            override fun onViewDetachedFromWindow(v: View?) {}
 
             override fun onViewAttachedToWindow(v: View?) {
-                        logoImage.animate()
-                            .translationY(0f)
-                            .setDuration(500L)
-                            .setInterpolator(AccelerateDecelerateInterpolator())
-                            .start()
+                logoImage.animate()
+                    .translationY(LOGO_END_TRANSLATION_Y)
+                    .setDuration(LOGO_ENTER_DURATION)
+                    .setInterpolator(AccelerateDecelerateInterpolator())
+                    .start()
             }
-
         })
-
-
     }
 
     override fun onStart() {
@@ -83,7 +79,6 @@ class SplashActivity : AppCompatActivity() {
 
         logoText.startAnimation(textAnimation)
         logoImage.startAnimation(logoAnimation)
-
     }
 
     companion object {
@@ -92,5 +87,9 @@ class SplashActivity : AppCompatActivity() {
 
         const val VISIBLE_OPACITY = 1.00f
         const val GONE_OPACITY = 0.00f
+
+        const val LOGO_ENTER_DURATION = 500L
+        const val LOGO_START_TRANSLATION_Y = 1000f
+        const val LOGO_END_TRANSLATION_Y = 0f
     }
 }
