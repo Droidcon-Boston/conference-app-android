@@ -1,14 +1,12 @@
 package com.mentalmachines.droidcon_boston.firebase
 
-import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
+import timber.log.Timber
 
 class DbFirebaseMessagingService : FirebaseMessagingService() {
-
-    private val TAG = javaClass.simpleName
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         if (remoteMessage != null) {
@@ -17,9 +15,9 @@ class DbFirebaseMessagingService : FirebaseMessagingService() {
 
             // Check if message contains a data payload.
             if (payloadMap.isNotEmpty()) {
-                Log.d(TAG, "Payload: ")
+                Timber.d("Payload: ")
                 for (key in payloadMap.keys) {
-                    Log.d(TAG, "Key: " + key + ", Value: " + payloadMap[key])
+                    Timber.d("Key: $key, Value: ${payloadMap[key]}")
                 }
                 NotificationUtils(applicationContext).scheduleMySessionNotifications()
             }
@@ -27,7 +25,7 @@ class DbFirebaseMessagingService : FirebaseMessagingService() {
             // Check if message contains a notification payload.
             if (remoteMessage.notification != null) {
                 bodyStr = remoteMessage.notification!!.body
-                Log.d(TAG, "Body: " + bodyStr!!)
+                Timber.d("Body: $bodyStr")
             }
 
             // Show the notification here

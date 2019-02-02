@@ -2,7 +2,6 @@ package com.mentalmachines.droidcon_boston.views.speaker
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.mentalmachines.droidcon_boston.views.detail.SpeakerDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import kotlinx.android.synthetic.main.speaker_fragment.*
+import timber.log.Timber
 
 
 class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
@@ -59,7 +59,7 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
+            Timber.e(databaseError.toException())
         }
     }
 

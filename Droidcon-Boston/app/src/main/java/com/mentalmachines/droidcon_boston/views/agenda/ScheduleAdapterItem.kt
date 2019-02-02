@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -16,6 +15,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
+import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,7 +42,7 @@ class ScheduleAdapterItem internal constructor(
         try {
             startTime = format.parse(dateTimeString)
         } catch (e: ParseException) {
-            Log.e("ScheduleAdapterItem", "Parse error: $e for $dateTimeString")
+            Timber.e("Parse error: $e for $dateTimeString")
         }
 
     }

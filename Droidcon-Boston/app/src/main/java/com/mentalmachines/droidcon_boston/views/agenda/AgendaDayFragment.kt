@@ -3,7 +3,6 @@ package com.mentalmachines.droidcon_boston.views.agenda
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -23,6 +22,7 @@ import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
+import timber.log.Timber
 
 
 /**
@@ -110,7 +110,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             for (roomSnapshot in dataSnapshot.children) {
                 val key = roomSnapshot.key ?: ""
                 val data = roomSnapshot.getValue(ScheduleEvent::class.java)
-                Log.d(TAG, "Event: $data")
+                Timber.d("Event: $data")
                 if (data != null) {
                     val scheduleRow = data.toScheduleRow(key)
                     val matchesDay = scheduleRow.date == dayFilter
@@ -128,7 +128,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.w(TAG, "scheduleQuery:onCancelled", databaseError.toException())
+            Timber.e(databaseError.toException())
         }
     }
 
@@ -194,8 +194,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     companion object {
-
-        private val TAG = AgendaDayFragment::class.java.name
         private const val ARG_DAY = "day"
         private const val ARG_MY_AGENDA = "my_agenda"
 

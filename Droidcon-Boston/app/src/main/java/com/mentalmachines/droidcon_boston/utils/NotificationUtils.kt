@@ -11,7 +11,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.text.TextUtils
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,6 +24,7 @@ import com.mentalmachines.droidcon_boston.receivers.NotificationPublisher
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
+import timber.log.Timber
 
 
 class NotificationUtils(context: Context) : ContextWrapper(context) {
@@ -114,7 +114,7 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.w("Notification", "scheduleQuery:onCancelled", databaseError.toException())
+                Timber.e(databaseError.toException())
 
                 firebaseHelper.eventDatabase.removeEventListener(this)
             }
