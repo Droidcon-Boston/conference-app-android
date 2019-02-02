@@ -5,7 +5,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import com.mentalmachines.droidcon_boston.utils.SingletonHolder
 
-open class UserAgendaRepo private constructor(context: Context) {
+class UserAgendaRepo private constructor(context: Context) {
     private val prefsKey = "UserAgenda"
     private val sessionIdsKey = "savedSessionsIds"
     private val sharedPrefs: SharedPreferences =
