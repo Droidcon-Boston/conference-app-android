@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,7 @@ import com.mentalmachines.droidcon_boston.data.FirebaseDatabase
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import timber.log.Timber
 
 class AgendaDetailViewModel(
     private val scheduleRowItem: Schedule.ScheduleRow,
@@ -25,7 +25,7 @@ class AgendaDetailViewModel(
 
     private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.e(javaClass.canonicalName, "detailQuery:onCancelled", databaseError.toException())
+            Timber.e(databaseError.toException())
         }
 
         override fun onDataChange(databaseSnapshot: DataSnapshot) {
