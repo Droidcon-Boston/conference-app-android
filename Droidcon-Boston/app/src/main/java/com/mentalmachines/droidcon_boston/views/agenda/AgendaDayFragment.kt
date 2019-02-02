@@ -113,10 +113,12 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 Log.d(TAG, "Event: $data")
                 if (data != null) {
                     val scheduleRow = data.toScheduleRow(key)
-                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(
-                            scheduleRow.id
-                        ))
-                    ) {
+                    val matchesDay = scheduleRow.date == dayFilter
+                    val isPublicView = !onlyMyAgenda
+                    val isPrivateAndBookmarked = onlyMyAgenda && userAgendaRepo
+                        .isSessionBookmarked(scheduleRow.id)
+
+                    if (matchesDay && (isPublicView || isPrivateAndBookmarked)) {
                         rows.add(scheduleRow)
                     }
                 }
