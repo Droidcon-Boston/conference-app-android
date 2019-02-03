@@ -103,6 +103,7 @@ dependencies {
     final recyclerRefreshLayout = '2.0.5'
     final mockitoCore = '2.23.4'
     final archCore = '2.0.0'
+    final timber = '4.7.1'
     //endregion
 
     //region Dependencies
@@ -142,6 +143,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide"
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenAbp"
     implementation "com.dinuscxj:recyclerrefreshlayout:$recyclerRefreshLayout"
+    implementation "com.jakewharton.timber:timber:$timber"
     //endregion
 }
 

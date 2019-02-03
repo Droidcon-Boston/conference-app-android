@@ -2,7 +2,6 @@ package com.mentalmachines.droidcon_boston.views
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import kotlinx.android.synthetic.main.about_fragment.*
+import timber.log.Timber
 
 class AboutFragment : Fragment() {
 
@@ -47,7 +47,7 @@ class AboutFragment : Fragment() {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.e(javaClass.canonicalName, "onCancelled", databaseError.toException())
+            Timber.e(databaseError.toException())
         }
     }
 
