@@ -1,8 +1,7 @@
 package com.mentalmachines.droidcon_boston.data
 
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Test
 import java.util.*
 
@@ -46,12 +45,22 @@ class ScheduleTest {
     }
 
     @Test
+    fun getSpeakerStringNoSpeaker() {
+        val row = ScheduleRow()
+        assertEquals("", row.getSpeakerString())
+    }
+
+    @Test
+    fun getSpeakerStringOneSpeaker() {
+        val row = ScheduleRow()
+        row.speakerNames = Arrays.asList(s1)
+        assertEquals(s1, row.getSpeakerString())
+    }
+
+    @Test
     fun getSpeakerStringMultipleSpeakers() {
         val row = ScheduleRow()
-
         row.speakerNames = Arrays.asList(s1, s2)
-        val speakerNameString = row.getSpeakerString()!!
-        assertTrue(speakerNameString.contains(s1))
-        assertTrue(speakerNameString.contains(s2))
+        assertEquals("$s1, $s2", row.getSpeakerString())
     }
 }

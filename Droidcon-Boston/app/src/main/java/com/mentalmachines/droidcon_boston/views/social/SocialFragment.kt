@@ -50,7 +50,7 @@ class SocialFragment : Fragment() {
 
         // Set On Click
         social_rv.addOnItemTouchListener(
-            RVItemClickListener(context!!,
+            RVItemClickListener(requireContext(),
                 object : OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         context?.loadUriInCustomTab(socialList[position].link.toString())

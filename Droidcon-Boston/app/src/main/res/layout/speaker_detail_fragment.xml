@@ -17,7 +17,7 @@
             android:layout_height="300dp"
             android:contentDescription="@string/header_background"
             android:scaleType="centerCrop"
-            android:src="@drawable/navigation_header_image" />
+            android:src="@drawable/gradient_splash_background" />
 
 
         <ImageView

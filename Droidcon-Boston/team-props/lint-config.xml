@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
 
+    <!-- Ignore the ObsoleteLayoutParam issue in the given files -->
+    <issue id="VectorPath">
+        <ignore path="res/drawable/ic_launcher_foreground.xml" />
+        <ignore path="res/drawable/splash_logo.xml" />
+        <ignore path="res/drawable/splash_text.xml" />
+    </issue>
+
 </lint>

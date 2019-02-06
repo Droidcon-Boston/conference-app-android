@@ -10,20 +10,38 @@ import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import androidx.appcompat.app.AppCompatActivity
 import com.mentalmachines.droidcon_boston.R
-import kotlinx.android.synthetic.main.splash_activity.*
-
 
 class SplashActivity : AppCompatActivity() {
+
+    lateinit var logoText: View
+    lateinit var logoImage: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
+
+        logoText = findViewById(R.id.logoText)
+        logoImage = findViewById(R.id.logoImage)
+
+        logoImage.translationY = LOGO_START_TRANSLATION_Y
+
+        logoImage.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewDetachedFromWindow(v: View?) {}
+
+            override fun onViewAttachedToWindow(v: View?) {
+                logoImage.animate()
+                    .translationY(LOGO_END_TRANSLATION_Y)
+                    .setDuration(LOGO_ENTER_DURATION)
+                    .setInterpolator(AccelerateDecelerateInterpolator())
+                    .start()
+            }
+        })
     }
 
     override fun onStart() {
         super.onStart()
 
-        Handler().postDelayed(this::fadeImage, SPLASH_DURATION)
+        Handler().postDelayed(this::fadeScreenElements, SPLASH_DURATION)
     }
 
     private fun startMainActivity() {
@@ -33,26 +51,45 @@ class SplashActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun fadeImage() {
-        val a = AlphaAnimation(1.00f, 0.00f)
+    private fun fadeScreenElements() {
+        fun createFadeAnimation() = AlphaAnimation(VISIBLE_OPACITY, GONE_OPACITY).apply {
+            interpolator = AccelerateDecelerateInterpolator()
+            duration = FADE_DURATION
+        }
 
-        a.interpolator = AccelerateDecelerateInterpolator()
-        a.duration = FADE_DURATION
+        val textAnimation = createFadeAnimation()
+        val logoAnimation = createFadeAnimation()
 
-        a.setAnimationListener(object : AnimationListener {
+        textAnimation.setAnimationListener(object : AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationRepeat(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
-                logo_text.visibility = View.GONE
+                logoText.visibility = View.GONE
                 startMainActivity()
             }
         })
 
-        logo_text.startAnimation(a)
+        logoAnimation.setAnimationListener(object : AnimationListener {
+            override fun onAnimationStart(animation: Animation) {}
+            override fun onAnimationRepeat(animation: Animation) {}
+            override fun onAnimationEnd(animation: Animation) {
+                logoImage.visibility = View.GONE
+            }
+        })
+
+        logoText.startAnimation(textAnimation)
+        logoImage.startAnimation(logoAnimation)
     }
 
     companion object {
         const val FADE_DURATION: Long = 750
-        const val SPLASH_DURATION: Long = 1500
+        const val SPLASH_DURATION: Long = 2000
+
+        const val VISIBLE_OPACITY = 1.00f
+        const val GONE_OPACITY = 0.00f
+
+        const val LOGO_ENTER_DURATION = 500L
+        const val LOGO_START_TRANSLATION_Y = 1000f
+        const val LOGO_END_TRANSLATION_Y = 0f
     }
 }

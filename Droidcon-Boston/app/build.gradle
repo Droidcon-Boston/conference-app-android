@@ -18,6 +18,7 @@ android {
         versionCode 17
         versionName "2.0.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
         vectorDrawables {
             useSupportLibrary = true
@@ -97,8 +98,12 @@ dependencies {
     final flexibleAdapter = '5.0.1'
     final flexibleAdapterUi = '1.0.0-b3'
     final glide = '3.7.0'
+    final threeTen = '1.3.3'
     final threeTenAbp = '1.0.5'
     final recyclerRefreshLayout = '2.0.5'
+    final mockitoCore = '2.23.4'
+    final archCore = '2.0.0'
+    final timber = '4.7.1'
     //endregion
 
     //region Dependencies
@@ -107,6 +112,9 @@ dependencies {
 
     // TESTING
     testImplementation "junit:junit:$junit"
+    testImplementation "org.threeten:threetenbp:$threeTen"
+    testImplementation "org.mockito:mockito-core:$mockitoCore"
+    testImplementation "androidx.arch.core:core-testing:$archCore"
 
     // Support
     implementation "androidx.appcompat:appcompat:$appCompat"
@@ -135,6 +143,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide"
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenAbp"
     implementation "com.dinuscxj:recyclerrefreshlayout:$recyclerRefreshLayout"
+    implementation "com.jakewharton.timber:timber:$timber"
     //endregion
 }
 

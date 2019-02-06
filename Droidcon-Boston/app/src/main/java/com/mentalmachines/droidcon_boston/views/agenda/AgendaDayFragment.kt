@@ -7,8 +7,6 @@ import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -34,8 +32,7 @@ import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
-import kotlinx.android.synthetic.main.schedule_item.*
-import java.util.*
+import timber.log.Timber
 
 
 /**
@@ -62,7 +59,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dayFilter = arguments?.getString(ARG_DAY) ?: ""
-        userAgendaRepo = UserAgendaRepo.getInstance(context!!)
+        userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -210,13 +207,15 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             for (roomSnapshot in dataSnapshot.children) {
                 val key = roomSnapshot.key ?: ""
                 val data = roomSnapshot.getValue(ScheduleEvent::class.java)
-                Log.d(TAG, "Event: $data")
+                Timber.d("Event: $data")
                 if (data != null) {
                     val scheduleRow = data.toScheduleRow(key)
-                    if (scheduleRow.date == dayFilter && (!onlyMyAgenda || onlyMyAgenda && userAgendaRepo.isSessionBookmarked(
-                                    scheduleRow.id
-                            ))
-                    ) {
+                    val matchesDay = scheduleRow.date == dayFilter
+                    val isPublicView = !onlyMyAgenda
+                    val isPrivateAndBookmarked = onlyMyAgenda && userAgendaRepo
+                        .isSessionBookmarked(scheduleRow.id)
+
+                    if (matchesDay && (isPublicView || isPrivateAndBookmarked)) {
                         rows.add(scheduleRow)
                     }
                 }
@@ -225,7 +224,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.w(TAG, "scheduleQuery:onCancelled", databaseError.toException())
+            Timber.e(databaseError.toException())
         }
     }
 
@@ -328,8 +327,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     companion object {
-
-        private val TAG = AgendaDayFragment::class.java.name
         private const val ARG_DAY = "day"
         private const val ARG_MY_AGENDA = "my_agenda"
         private const val MILLISECONDS_PER_INCH = 50f

@@ -34,13 +34,13 @@ class Schedule {
         fun getSpeakerString(): String? = speakerNames.joinToString(", ")
     }
 
-    class ScheduleDetail(val listRow: ScheduleRow) {
-
-        var speakerBio: String = ""
-        var twitter: String = ""
-        var linkedIn: String = ""
+    data class ScheduleDetail(
+        val listRow: ScheduleRow,
+        var speakerBio: String = "",
+        var twitter: String = "",
+        var linkedIn: String = "",
         var facebook: String = ""
-
+    ) {
         val id: String get() = listRow.id
     }
 
