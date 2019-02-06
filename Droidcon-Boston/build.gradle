@@ -21,7 +21,7 @@ buildscript {
 
     classpath 'com.google.gms:google-services:4.0.1'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'io.fabric.tools:gradle:1.25.4'\
+    classpath 'io.fabric.tools:gradle:1.25.4'
 
     // static analysis plugins
     classpath 'com.novoda:gradle-static-analysis-plugin:0.8'

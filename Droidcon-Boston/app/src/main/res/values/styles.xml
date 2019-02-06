@@ -44,7 +44,8 @@
         <item name="android:paddingEnd">@dimen/jump_btn_horizontal_padding</item>
         <item name="android:paddingRight">@dimen/jump_btn_horizontal_padding</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/tw__solid_white</item>
     </style>
 
     <style name="ThemeOverlay.AppCompat.navTheme">

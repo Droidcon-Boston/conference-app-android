@@ -12,6 +12,7 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import timber.log.Timber
 import java.util.*
 
 
@@ -91,7 +92,6 @@ open class FirebaseDatabase {
             if(startDateTime != null && endDateTime != null) {
                 val now = ZonedDateTime.now()
                 if (now.isAfter(startDateTime) && now.isBefore(endDateTime)) {
-                    Log.d("RV", "Session ${row.talkTitle} marked as current")
                     row.isCurrentSession = true
                 }
             }

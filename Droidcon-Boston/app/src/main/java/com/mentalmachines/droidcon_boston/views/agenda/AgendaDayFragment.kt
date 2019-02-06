@@ -7,13 +7,13 @@ import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
@@ -96,7 +96,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         val linearSmoothScroller = setupSmoothScroller()
         addFloatingAnimation()
         scrollToCurrentButton.setOnClickListener {
-            linearSmoothScroller.targetPosition = calculateActualTargetPosition(targetCurrentSesssionPosition)
+            linearSmoothScroller.targetPosition = targetCurrentSesssionPosition
             (agendaRecyler.layoutManager as LinearLayoutManager).startSmoothScroll(linearSmoothScroller)
         }
 
@@ -120,8 +120,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 return SNAP_TO_START
             }
 
-            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics?): Float {
-                return MILLISECONDS_PER_INCH / displayMetrics?.densityDpi!!
+            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
+                return MILLISECONDS_PER_INCH / displayMetrics.densityDpi
             }
         }
     }
@@ -278,22 +278,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         targetCurrentSesssionPosition = currentSessionItemsPosition
         updateJumpToCurrentButtonVisibility(false)
     }
-
-    private fun calculateActualTargetPosition(currentSessionPosition: Int) : Int {
-
-        val minIdx = 0
-        val maxIdx = headerAdapter!!.itemCount - 1
-
-        val visibleViewCount = layoutManager.findLastVisibleItemPosition() - layoutManager.findFirstVisibleItemPosition()
-        val targetPosition = wrapBounds(currentSessionPosition + visibleViewCount, minIdx, maxIdx)
-
-        return targetPosition
-    }
-
-    private fun wrapBounds(pos: Int, min: Int, max: Int) =
-            if (pos >= max) { max }
-            else if (pos < 0) { min }
-            else { pos }
 
     override fun onItemClick(view: View, position: Int): Boolean {
         val adapterItem = try {
