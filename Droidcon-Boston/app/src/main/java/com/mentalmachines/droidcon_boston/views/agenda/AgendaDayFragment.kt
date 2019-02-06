@@ -137,22 +137,18 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun fadeOutJumpToCurrentButton() {
-        if(scrollToCurrentButton.visibility == View.VISIBLE) {
-            val viewPropAnimator = scrollToCurrentButton
-                    .animate().alpha(0.0f).setDuration(750)
-                    .setInterpolator(DecelerateInterpolator())
-            viewPropAnimator.withEndAction { scrollToCurrentButton.visibility = View.GONE }
-            viewPropAnimator.start()
-        }
+        val viewPropAnimator = scrollToCurrentButton
+                .animate().alpha(0.0f).setDuration(750)
+                .setInterpolator(DecelerateInterpolator())
+        viewPropAnimator.withEndAction { scrollToCurrentButton.visibility = View.GONE }
+        viewPropAnimator.start()
     }
 
     private fun fadeInJumpToCurrentButton() {
-        if(scrollToCurrentButton.visibility != View.VISIBLE) {
-            val viewPropAnimator = scrollToCurrentButton
-                    .animate().alpha(1.0f).setDuration(750)
-                    .setInterpolator(DecelerateInterpolator())
-            viewPropAnimator.withStartAction { scrollToCurrentButton.visibility = View.VISIBLE }
-        }
+        val viewPropAnimator = scrollToCurrentButton
+                .animate().alpha(1.0f).setDuration(750)
+                .setInterpolator(DecelerateInterpolator())
+        viewPropAnimator.withStartAction { scrollToCurrentButton.visibility = View.VISIBLE }
     }
 
     private fun addFloatingAnimation() {
