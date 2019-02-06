@@ -33,6 +33,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
 import timber.log.Timber
+import kotlin.math.min
 
 
 /**
@@ -46,15 +47,45 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private var onlyMyAgenda: Boolean = false
 
     private lateinit var userAgendaRepo: UserAgendaRepo
-    private var headerAdapter: FlexibleAdapter<ScheduleAdapterItem>? = null
+    private var headerAdapter: FlexibleAdapter<*>? = null
     private lateinit var layoutManager: LinearLayoutManager
 
     private lateinit var agendaRecyler: RecyclerView
     private lateinit var emptyStateView: View
     private lateinit var scrollToCurrentButton: MaterialButton
 
-    private var hasAnyCurrentSessions = false
+    /**
+     * Total number of sessions that begin after now and end before now.
+     * where 'now' was determined when these items were loaded from Firebase.
+     */
+    private var totalCurrentSessionCount = 0
+
+    /**
+     * Target scroll to position when Jump to current is clicked.
+     */
     private var targetCurrentSesssionPosition = 0
+
+    /**
+     * Number of sessions that begin after now and end before now, which are currently
+     * attached to the RecyclerView (in the users view).
+     */
+    private var visibleCurrentSessionCount = 0
+        set(value) {
+            field = wrapBounds(value, 0, totalCurrentSessionCount)
+            field = value
+            updateJumpToCurrentButtonVisibility(value > 0)
+        }
+
+    private fun wrapBounds(value: Int, min: Int, max: Int) =
+            if (value >= max) {
+                Timber.w("Value out of bounds value=${value}, min=${min}, max=${max}")
+                max
+            }
+            else if (value < 0) {
+                Timber.w("Value out of bounds value=${value}, min=${min}, max=${max}")
+                min
+            }
+            else { value }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,7 +161,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         if(isCurrentSessionVisible) {
             fadeOutJumpToCurrentButton()
         } else {
-            if(hasAnyCurrentSessions) {
+            if(totalCurrentSessionCount > 0) {
                 fadeInJumpToCurrentButton()
             }
         }
@@ -232,13 +263,13 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         override fun onChildViewAttachedToWindow(view: View) {
             if(view.tag == CURRENT_ITEM_MARKER_TAG) {
-                updateJumpToCurrentButtonVisibility(true)
+                visibleCurrentSessionCount++
             }
         }
 
         override fun onChildViewDetachedFromWindow(view: View) {
             if(view.tag == CURRENT_ITEM_MARKER_TAG) {
-                updateJumpToCurrentButtonVisibility(false)
+                visibleCurrentSessionCount--
             }
         }
     }
@@ -269,10 +300,26 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         EmptyViewHelper(headerAdapter, emptyStateView, null, null)
 
-        hasAnyCurrentSessions = sortedItems.any { it.itemData.isCurrentSession }
-        val currentSessionItemsPosition = sortedItems.indexOfFirst { it.itemData.isCurrentSession }
-        targetCurrentSesssionPosition = currentSessionItemsPosition
-        updateJumpToCurrentButtonVisibility(false)
+        initializeJumpButtonVariables(sortedItems)
+    }
+
+    private fun initializeJumpButtonVariables(sortedItems: List<ScheduleAdapterItem>) {
+
+        // Total number of sessions that begin before now and end after now.
+        // where 'now' was determined when these items were loaded from Firebase.
+        totalCurrentSessionCount = sortedItems.count { it.itemData.isCurrentSession }
+
+        if (totalCurrentSessionCount > 0) {
+            // Scroll target when jump to now selected.
+            val currentItems = headerAdapter!!.currentItems
+            val indexOfFirstCurrentSession = currentItems.indexOfFirst {
+                (it is ScheduleAdapterItem) && it.itemData.isCurrentSession
+            }
+            targetCurrentSesssionPosition = minOf(indexOfFirstCurrentSession, currentItems.lastIndex )
+        }
+
+        // Initialize the number of visible current sessions to zero.
+        visibleCurrentSessionCount = 0
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
