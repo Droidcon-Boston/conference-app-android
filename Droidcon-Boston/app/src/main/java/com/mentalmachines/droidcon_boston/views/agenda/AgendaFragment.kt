@@ -1,11 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mentalmachines.droidcon_boston.R
 import kotlinx.android.synthetic.main.agenda_fragment.*
