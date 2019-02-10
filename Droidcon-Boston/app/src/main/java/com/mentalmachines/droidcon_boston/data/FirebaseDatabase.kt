@@ -15,6 +15,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 import java.util.*
 
+const val TIME_BETWEEN_SESSIONS: Long = 15
 
 open class FirebaseDatabase {
     data class ScheduleEvent(
@@ -91,7 +92,7 @@ open class FirebaseDatabase {
 
             if(startDateTime != null && endDateTime != null) {
                 val now = ZonedDateTime.now()
-                if (now.isAfter(startDateTime) && now.isBefore(endDateTime)) {
+                if (now.isAfter(startDateTime.minusMinutes(TIME_BETWEEN_SESSIONS)) && now.isBefore(endDateTime)) {
                     row.isCurrentSession = true
                 }
             }

@@ -137,6 +137,23 @@ class FirebaseDatabaseTest {
         assertFalse(testRow.isCurrentSession)
     }
 
+    @Test
+    fun scheduleEventToScheduleRow_isCurrentSession_true_ifItBeginsInLessThan15Minutes() {
+
+        // Set startTime to 14 minutes from now in order to simulate the scenario where now is in between sessions.
+        val now = ZonedDateTime.now(UTC)
+        val startTime = now.plusMinutes(TIME_BETWEEN_SESSIONS - 1)
+        val endTime = now.plusMinutes(60)
+
+        val testEvent = createDummyScheduleEvent().copy(
+                startTime = startTime.format(firebaseDateFormatter),
+                endTime = endTime.format(firebaseDateFormatter)
+        )
+
+        val testRow = testEvent.toScheduleRow(scheduleId)
+
+        assertTrue(testRow.isCurrentSession)
+    }
 
     @Test
     fun eventSpeakerToScheduleDetail() {
