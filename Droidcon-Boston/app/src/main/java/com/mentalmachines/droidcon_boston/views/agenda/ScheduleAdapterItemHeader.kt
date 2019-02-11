@@ -47,7 +47,6 @@ class ScheduleAdapterItemHeader internal constructor(private val sessionTime: St
         holder.header.text = sessionTime
     }
 
-
     class ViewHolder : FlexibleViewHolder {
 
         lateinit var header: TextView

@@ -169,7 +169,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun fadeOutJumpToCurrentButton() {
         val viewPropAnimator = scrollToCurrentButton
-                .animate().alpha(0.0f).setDuration(750)
+                .animate()
+                .alpha(JumpToCurrent.ButtonVisibility.minAlpha)
+                .setDuration(JumpToCurrent.ButtonVisibility.duration)
                 .setInterpolator(DecelerateInterpolator())
         viewPropAnimator.withEndAction { scrollToCurrentButton.visibility = View.GONE }
         viewPropAnimator.start()
@@ -177,21 +179,33 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun fadeInJumpToCurrentButton() {
         val viewPropAnimator = scrollToCurrentButton
-                .animate().alpha(1.0f).setDuration(750)
+                .animate().alpha(JumpToCurrent.ButtonVisibility.maxAlpha)
+                .setDuration(JumpToCurrent.ButtonVisibility.duration)
                 .setInterpolator(DecelerateInterpolator())
         viewPropAnimator.withStartAction { scrollToCurrentButton.visibility = View.VISIBLE }
     }
 
     private fun addFloatingAnimation() {
+
         //Float up
-        val propertyValuesHolder = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 30f, -30f)
-        val floatUpAnimator = ObjectAnimator.ofPropertyValuesHolder(scrollToCurrentButton, propertyValuesHolder)
-        floatUpAnimator.duration = 3000
+        val propertyValuesHolder = PropertyValuesHolder.ofFloat(
+            View.TRANSLATION_Y,
+            JumpToCurrent.ButtonTranslation.translationY,
+            -JumpToCurrent.ButtonTranslation.translationY)
+
+        val floatUpAnimator = ObjectAnimator.ofPropertyValuesHolder(
+            scrollToCurrentButton, propertyValuesHolder)
+        floatUpAnimator.duration = JumpToCurrent.ButtonTranslation.duration
         floatUpAnimator.interpolator = LinearInterpolator()
+
+
         //Float down
-        val downFloatValues = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -30f, 30f)
-        val floatDownAnimator = ObjectAnimator.ofPropertyValuesHolder(scrollToCurrentButton, downFloatValues)
-        floatDownAnimator.duration = 3000
+        val downFloatValues = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y,
+            -JumpToCurrent.ButtonTranslation.translationY,
+            JumpToCurrent.ButtonTranslation.translationY)
+        val floatDownAnimator = ObjectAnimator.ofPropertyValuesHolder(
+            scrollToCurrentButton, downFloatValues)
+        floatDownAnimator.duration = JumpToCurrent.ButtonTranslation.duration
         floatDownAnimator.interpolator = LinearInterpolator()
 
         val floatAnimation = AnimatorSet()
@@ -289,7 +303,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         val sortedItems =
-                items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }.thenBy { it.roomSortOrder })
+                items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }
+                    .thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
         agendaRecyler.addOnChildAttachStateChangeListener(currentSessionVisibleListener)
@@ -365,6 +380,20 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             args.putString(ARG_DAY, day)
             fragment.arguments = args
             return fragment
+        }
+    }
+
+    object JumpToCurrent {
+
+        object ButtonVisibility {
+            const val minAlpha = 0.0f
+            const val maxAlpha = 1.0f
+            const val duration = 750L
+        }
+
+        object ButtonTranslation {
+            const val duration = 3000L
+            const val translationY = 30.0f
         }
     }
 }

@@ -135,7 +135,7 @@ class ScheduleAdapterItem internal constructor(
             )
         )
 
-        if(itemData.isCurrentSession) {
+        if (itemData.isCurrentSession) {
             holder.root.tag = CURRENT_ITEM_MARKER_TAG
         } else {
             holder.root.tag = null

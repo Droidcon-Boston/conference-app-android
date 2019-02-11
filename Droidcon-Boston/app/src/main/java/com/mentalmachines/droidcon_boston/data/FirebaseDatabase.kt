@@ -1,7 +1,6 @@
 package com.mentalmachines.droidcon_boston.data
 
 import android.content.Context
-import android.util.Log
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
@@ -12,7 +11,6 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import timber.log.Timber
 import java.util.*
 
 const val TIME_BETWEEN_SESSIONS: Long = 15
@@ -90,9 +88,11 @@ open class FirebaseDatabase {
             row.speakerNameToOrgName = speakerNameToOrg
             row.photoUrlMap = speakerNameToPhotoUrl
 
-            if(startDateTime != null && endDateTime != null) {
+            if (startDateTime != null && endDateTime != null) {
                 val now = ZonedDateTime.now()
-                if (now.isAfter(startDateTime.minusMinutes(TIME_BETWEEN_SESSIONS)) && now.isBefore(endDateTime)) {
+                if (now.isAfter(startDateTime.minusMinutes(TIME_BETWEEN_SESSIONS)) &&
+                        now.isBefore(endDateTime)
+                ) {
                     row.isCurrentSession = true
                 }
             }
