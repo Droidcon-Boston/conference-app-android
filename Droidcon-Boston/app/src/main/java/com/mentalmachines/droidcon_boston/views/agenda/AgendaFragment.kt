@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.mentalmachines.droidcon_boston.R
+import com.mentalmachines.droidcon_boston.views.search.SearchDialog
 import kotlinx.android.synthetic.main.agenda_fragment.*
 import java.util.*
 
@@ -56,7 +57,7 @@ class AgendaFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.search -> {
-                activity?.onSearchRequested()
+                SearchDialog().show(fragmentManager, "SEARCH")
                 true
             }
             else -> super.onOptionsItemSelected(item)

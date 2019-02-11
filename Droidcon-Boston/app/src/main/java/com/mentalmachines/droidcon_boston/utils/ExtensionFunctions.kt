@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.text.Html
 import android.text.Spanned
+import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.mentalmachines.droidcon_boston.R
@@ -28,4 +29,8 @@ fun Context.loadUriInCustomTab(uriString: String) {
     val customTabsIntent = CustomTabsIntent.Builder()
         .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary)).build()
     customTabsIntent.launchUrl(this, data)
+}
+
+fun View?.visibleIf(condition: Boolean?) {
+    this?.visibility = if (condition == true) View.VISIBLE else View.GONE
 }
