@@ -1,7 +1,6 @@
 package com.mentalmachines.droidcon_boston.views
 
 import android.app.AlertDialog
-import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -11,8 +10,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.fragment.app.FragmentManager
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.id
@@ -33,9 +30,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var authController: AuthController
 
-    private val _currentQuery = MutableLiveData<String>()
-    val searchQuery: LiveData<String> = _currentQuery
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -48,14 +42,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFragmentsFromIntent(initialIntent: Intent) {
-        if (Intent.ACTION_SEARCH == initialIntent.action) {
-            val query = initialIntent.getStringExtra(SearchManager.QUERY)
-            //use the query to search your data somehow
-            _currentQuery.value = query
-            return
-        }
-
-
         replaceFragment(getString(string.str_agenda))
 
         val sessionDetails = initialIntent.extras?.getString(EXTRA_SESSION_DETAILS)
@@ -255,7 +241,7 @@ class MainActivity : AppCompatActivity() {
             when (title) {
                 resources.getString(R.string.str_agenda) -> fragment = AgendaFragment.newInstance()
                 resources.getString(R.string.str_my_schedule) -> fragment =
-                        AgendaFragment.newInstanceMySchedule()
+                    AgendaFragment.newInstanceMySchedule()
                 resources.getString(R.string.str_faq) -> fragment = FAQFragment()
                 resources.getString(R.string.str_social) -> fragment = SocialFragment()
                 resources.getString(R.string.str_coc) -> fragment = CocFragment()

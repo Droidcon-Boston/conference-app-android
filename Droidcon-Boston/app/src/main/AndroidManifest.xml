@@ -31,18 +31,7 @@
             android:name=".views.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:taskAffinity="">
-
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-
-        </activity>
+            android:taskAffinity="" />
 
         <!-- Firebase Cloud Messaging -->
         <service
