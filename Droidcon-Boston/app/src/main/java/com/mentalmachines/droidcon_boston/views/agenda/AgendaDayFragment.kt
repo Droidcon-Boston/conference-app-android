@@ -34,7 +34,6 @@ import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
 import timber.log.Timber
 
-
 /**
  * Fragment for an agenda day
  */
@@ -138,7 +137,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         activity?.supportFragmentManager?.addOnBackStackChangedListener(backStackChangeListener)
     }
 
-
     private val backStackChangeListener: () -> Unit = {
         if (onlyMyAgenda) {
             fetchScheduleData()
@@ -189,7 +187,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun addFloatingAnimation() {
 
-        //Float up
+        // Float up
         val propertyValuesHolder = PropertyValuesHolder.ofFloat(
             View.TRANSLATION_Y,
             JumpToCurrent.ButtonTranslation.translationY,
@@ -202,8 +200,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         floatUpAnimator.duration = JumpToCurrent.ButtonTranslation.duration
         floatUpAnimator.interpolator = LinearInterpolator()
 
-
-        //Float down
+        // Float down
         val downFloatValues = PropertyValuesHolder.ofFloat(
             View.TRANSLATION_Y,
             -JumpToCurrent.ButtonTranslation.translationY,
@@ -221,7 +218,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         floatAnimation.addListener(object : Animator.AnimatorListener {
 
             override fun onAnimationRepeat(animation: Animator?) {
-
             }
 
             override fun onAnimationEnd(animation: Animator?) {
@@ -229,11 +225,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             }
 
             override fun onAnimationCancel(animation: Animator?) {
-
             }
 
             override fun onAnimationStart(animation: Animator?) {
-
             }
         })
     }
@@ -318,7 +312,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agendaRecyler.addOnChildAttachStateChangeListener(currentSessionVisibleListener)
         headerAdapter!!.addListener(this)
         agendaRecyler.adapter = headerAdapter
-        agendaRecyler.addItemDecoration(FlexibleItemDecoration(agendaRecyler.context).withDefaultDivider())
+        agendaRecyler
+            .addItemDecoration(FlexibleItemDecoration(agendaRecyler.context)
+            .withDefaultDivider())
         headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
 
         EmptyViewHelper(headerAdapter, emptyStateView, null, null)
@@ -406,4 +402,3 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
     }
 }
-
