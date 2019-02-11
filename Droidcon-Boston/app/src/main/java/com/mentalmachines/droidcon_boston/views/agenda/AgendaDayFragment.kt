@@ -29,8 +29,8 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
-import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
+import com.mentalmachines.droidcon_boston.views.search.SearchDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
@@ -87,10 +87,13 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             value
         }
 
+    private val searchDialog = SearchDialog()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dayFilter = arguments?.getString(ARG_DAY) ?: ""
         userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
+        setHasOptionsMenu(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -100,6 +103,10 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 if (fragmentManager?.backStackEntryCount!! > 0) {
                     fragmentManager.popBackStack()
                 }
+            }
+            R.id.search -> {
+                searchDialog.show(fragmentManager, SEARCH_DIALOG_TAG)
+                return true
             }
         }
         return super.onOptionsItemSelected(item)
@@ -367,18 +374,21 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun listenForSearchQueries() {
-        (activity as? MainActivity)?.searchQuery?.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer {
-                headerAdapter?.setFilter(it)
-                headerAdapter?.filterItems()
-            })
+        searchDialog.queryListener = { query ->
+            headerAdapter?.setFilter(query)
+            headerAdapter?.filterItems()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_search, menu)
     }
 
     companion object {
         private const val ARG_DAY = "day"
         private const val ARG_MY_AGENDA = "my_agenda"
         private const val MILLISECONDS_PER_INCH = 50f
+        private const val SEARCH_DIALOG_TAG = "agenda_search_tag"
 
         fun newInstance(myAgenda: Boolean, day: String): AgendaDayFragment {
             val fragment = AgendaDayFragment()

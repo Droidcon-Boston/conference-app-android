@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.search
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,16 +12,22 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import com.mentalmachines.droidcon_boston.utils.visibleIf
+import timber.log.Timber
 
 class SearchDialog : DialogFragment() {
     private var backButton: ImageView? = null
     private var clearButton: ImageView? = null
     private var searchInput: AutoCompleteTextView? = null
 
+    var queryListener: ((String) -> Unit)? = null
+
+    private val currentQuery: String
+        get() = searchInput?.text?.toString().orEmpty()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle)
     }
 
     override fun onCreateView(
@@ -71,5 +78,29 @@ class SearchDialog : DialogFragment() {
                 clearButton?.visibleIf(s?.isNotEmpty())
             }
         })
+
+        searchInput?.setOnEditorActionListener { _, _, _ ->
+            handleQuery()
+            true
+        }
+    }
+
+    private fun handleQuery() {
+        Timber.d("Searched for: $currentQuery")
+        queryListener?.invoke(currentQuery)
+        dismiss()
+    }
+
+    /**
+     * In general, we can just dismiss the dialog without performing a search. However, if we
+     * dismiss the dialog and there is no search, we should send that out so we can clear any
+     * current searches.
+     */
+    override fun onDismiss(dialog: DialogInterface?) {
+        if (currentQuery.isEmpty()) {
+            handleQuery()
+        } else {
+            super.dismiss()
+        }
     }
 }
