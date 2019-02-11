@@ -6,14 +6,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.DialogFragment
-import com.mentalmachines.droidcon_boston.R
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
+import androidx.fragment.app.DialogFragment
+import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.utils.visibleIf
-import timber.log.Timber
 
+/**
+ * A full screen dialog that is used to provide searching functionality in the app.
+ *
+ * @property[queryListener] A callback that should be used to be notified of any queries made by
+ * this dialog.
+ */
 class SearchDialog : DialogFragment() {
     private var backButton: ImageView? = null
     private var clearButton: ImageView? = null
@@ -56,6 +61,9 @@ class SearchDialog : DialogFragment() {
         dialog?.window?.setLayout(width, height)
     }
 
+    /**
+     * Sets all the button click and text listeners relevant to the views within our search dialog.
+     */
     private fun setupViewListeners() {
         backButton?.setOnClickListener {
             dismiss()
@@ -85,8 +93,10 @@ class SearchDialog : DialogFragment() {
         }
     }
 
+    /**
+     * Notifies our [queryListener] that a query has been made and dismisses the dialog.
+     */
     private fun handleQuery() {
-        Timber.d("Searched for: $currentQuery")
         queryListener?.invoke(currentQuery)
         dismiss()
     }
