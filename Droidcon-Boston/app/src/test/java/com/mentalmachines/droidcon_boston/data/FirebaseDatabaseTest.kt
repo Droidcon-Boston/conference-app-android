@@ -1,6 +1,8 @@
 package com.mentalmachines.droidcon_boston.data
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.threeten.bp.ZoneOffset.UTC
 import org.threeten.bp.ZonedDateTime

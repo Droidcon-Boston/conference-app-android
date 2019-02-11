@@ -33,7 +33,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
 import timber.log.Timber
-import kotlin.math.min
 
 
 /**
@@ -77,15 +76,15 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
     private fun wrapBounds(value: Int, min: Int, max: Int) =
-            if (value >= max) {
-                Timber.w("Value out of bounds value=${value}, min=${min}, max=${max}")
-                max
-            }
-            else if (value < 0) {
-                Timber.w("Value out of bounds value=${value}, min=${min}, max=${max}")
-                min
-            }
-            else { value }
+        if (value >= max) {
+            Timber.w("Value out of bounds value=$value, min=$min, max=$max")
+            max
+        } else if (value < 0) {
+            Timber.w("Value out of bounds value=$value, min=$min, max=$max")
+            min
+        } else {
+            value
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,9 +105,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.agenda_day_fragment, container, false)
     }
@@ -124,11 +123,14 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         agendaRecyler.layoutManager = layoutManager
         onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
+
         val linearSmoothScroller = setupSmoothScroller()
         addFloatingAnimation()
         scrollToCurrentButton.setOnClickListener {
             linearSmoothScroller.targetPosition = targetCurrentSesssionPosition
-            (agendaRecyler.layoutManager as LinearLayoutManager).startSmoothScroll(linearSmoothScroller)
+            (agendaRecyler.layoutManager as LinearLayoutManager).startSmoothScroll(
+                linearSmoothScroller
+            )
         }
 
         fetchScheduleData()
@@ -158,10 +160,10 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun updateJumpToCurrentButtonVisibility(isCurrentSessionVisible: Boolean) {
-        if(isCurrentSessionVisible) {
+        if (isCurrentSessionVisible) {
             fadeOutJumpToCurrentButton()
         } else {
-            if(totalCurrentSessionCount > 0) {
+            if (totalCurrentSessionCount > 0) {
                 fadeInJumpToCurrentButton()
             }
         }
@@ -169,19 +171,19 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun fadeOutJumpToCurrentButton() {
         val viewPropAnimator = scrollToCurrentButton
-                .animate()
-                .alpha(JumpToCurrent.ButtonVisibility.minAlpha)
-                .setDuration(JumpToCurrent.ButtonVisibility.duration)
-                .setInterpolator(DecelerateInterpolator())
+            .animate()
+            .alpha(JumpToCurrent.ButtonVisibility.minAlpha)
+            .setDuration(JumpToCurrent.ButtonVisibility.duration)
+            .setInterpolator(DecelerateInterpolator())
         viewPropAnimator.withEndAction { scrollToCurrentButton.visibility = View.GONE }
         viewPropAnimator.start()
     }
 
     private fun fadeInJumpToCurrentButton() {
         val viewPropAnimator = scrollToCurrentButton
-                .animate().alpha(JumpToCurrent.ButtonVisibility.maxAlpha)
-                .setDuration(JumpToCurrent.ButtonVisibility.duration)
-                .setInterpolator(DecelerateInterpolator())
+            .animate().alpha(JumpToCurrent.ButtonVisibility.maxAlpha)
+            .setDuration(JumpToCurrent.ButtonVisibility.duration)
+            .setInterpolator(DecelerateInterpolator())
         viewPropAnimator.withStartAction { scrollToCurrentButton.visibility = View.VISIBLE }
     }
 
@@ -191,20 +193,25 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         val propertyValuesHolder = PropertyValuesHolder.ofFloat(
             View.TRANSLATION_Y,
             JumpToCurrent.ButtonTranslation.translationY,
-            -JumpToCurrent.ButtonTranslation.translationY)
+            -JumpToCurrent.ButtonTranslation.translationY
+        )
 
         val floatUpAnimator = ObjectAnimator.ofPropertyValuesHolder(
-            scrollToCurrentButton, propertyValuesHolder)
+            scrollToCurrentButton, propertyValuesHolder
+        )
         floatUpAnimator.duration = JumpToCurrent.ButtonTranslation.duration
         floatUpAnimator.interpolator = LinearInterpolator()
 
 
         //Float down
-        val downFloatValues = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y,
+        val downFloatValues = PropertyValuesHolder.ofFloat(
+            View.TRANSLATION_Y,
             -JumpToCurrent.ButtonTranslation.translationY,
-            JumpToCurrent.ButtonTranslation.translationY)
+            JumpToCurrent.ButtonTranslation.translationY
+        )
         val floatDownAnimator = ObjectAnimator.ofPropertyValuesHolder(
-            scrollToCurrentButton, downFloatValues)
+            scrollToCurrentButton, downFloatValues
+        )
         floatDownAnimator.duration = JumpToCurrent.ButtonTranslation.duration
         floatDownAnimator.interpolator = LinearInterpolator()
 
@@ -273,20 +280,21 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         firebaseHelper.eventDatabase.addValueEventListener(dataListener)
     }
 
-    private val currentSessionVisibleListener = object : RecyclerView.OnChildAttachStateChangeListener {
+    private val currentSessionVisibleListener =
+        object : RecyclerView.OnChildAttachStateChangeListener {
 
-        override fun onChildViewAttachedToWindow(view: View) {
-            if(view.tag == CURRENT_ITEM_MARKER_TAG) {
-                visibleCurrentSessionCount++
+            override fun onChildViewAttachedToWindow(view: View) {
+                if (view.tag == CURRENT_ITEM_MARKER_TAG) {
+                    visibleCurrentSessionCount++
+                }
+            }
+
+            override fun onChildViewDetachedFromWindow(view: View) {
+                if (view.tag == CURRENT_ITEM_MARKER_TAG) {
+                    visibleCurrentSessionCount--
+                }
             }
         }
-
-        override fun onChildViewDetachedFromWindow(view: View) {
-            if(view.tag == CURRENT_ITEM_MARKER_TAG) {
-                visibleCurrentSessionCount--
-            }
-        }
-    }
 
     private fun setupHeaderAdapter(rows: List<ScheduleRow>) {
         val items = ArrayList<ScheduleAdapterItem>(rows.size)
@@ -303,8 +311,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         val sortedItems =
-                items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }
-                    .thenBy { it.roomSortOrder })
+            items.sortedWith(compareBy<ScheduleAdapterItem> { it.itemData.utcStartTimeString }
+                .thenBy { it.roomSortOrder })
 
         headerAdapter = FlexibleAdapter(sortedItems)
         agendaRecyler.addOnChildAttachStateChangeListener(currentSessionVisibleListener)
@@ -330,7 +338,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val indexOfFirstCurrentSession = currentItems.indexOfFirst {
                 (it is ScheduleAdapterItem) && it.itemData.isCurrentSession
             }
-            targetCurrentSesssionPosition = minOf(indexOfFirstCurrentSession, currentItems.lastIndex )
+            targetCurrentSesssionPosition =
+                    minOf(indexOfFirstCurrentSession, currentItems.lastIndex)
         }
 
         // Initialize the number of visible current sessions to zero.
