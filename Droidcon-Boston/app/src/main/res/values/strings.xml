@@ -59,4 +59,5 @@
     <string name="search_hint">Speaker, Talk, Topic…</string>
     <string name="close_search">Close Search</string>
     <string name="clear_search">Clear Search</string>
+    <string name="there_are_no_talks_that_match_this_search">There are no talks that match this search.</string>
 </resources>

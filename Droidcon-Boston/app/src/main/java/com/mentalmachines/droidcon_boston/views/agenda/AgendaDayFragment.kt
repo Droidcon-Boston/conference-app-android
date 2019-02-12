@@ -53,6 +53,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private lateinit var agendaRecyler: RecyclerView
     private lateinit var emptyStateView: View
+    private lateinit var emptyFilterView: View
     private lateinit var scrollToCurrentButton: MaterialButton
 
     /**
@@ -120,6 +121,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         // NOTE: Kotlin Extensions' agenda_vew is null in setupHeaderAdapter sporadically, so do this old school
         agendaRecyler = view.findViewById(R.id.agenda_recycler)
         emptyStateView = view.findViewById(R.id.empty_view)
+        emptyFilterView = view.findViewById(R.id.empty_filter_view)
         scrollToCurrentButton = view.findViewById(R.id.scroll_to_current_session)
 
         layoutManager = LinearLayoutManager(requireActivity().applicationContext)
@@ -311,7 +313,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             .withDefaultDivider())
         headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
 
-        EmptyViewHelper(headerAdapter, emptyStateView, null, null)
+        EmptyViewHelper(headerAdapter, emptyStateView, emptyFilterView, null)
 
         initializeJumpButtonVariables(sortedItems)
     }
