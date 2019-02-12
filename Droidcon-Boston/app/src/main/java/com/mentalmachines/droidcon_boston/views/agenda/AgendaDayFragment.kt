@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -29,8 +30,8 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
+import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
-import com.mentalmachines.droidcon_boston.views.search.SearchDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.helpers.EmptyViewHelper
@@ -87,13 +88,10 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             value
         }
 
-    private val searchDialog = SearchDialog()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dayFilter = arguments?.getString(ARG_DAY) ?: ""
         userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
-        setHasOptionsMenu(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -103,10 +101,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 if (fragmentManager?.backStackEntryCount!! > 0) {
                     fragmentManager.popBackStack()
                 }
-            }
-            R.id.search -> {
-                searchDialog.show(fragmentManager, SEARCH_DIALOG_TAG)
-                return true
             }
         }
         return super.onOptionsItemSelected(item)
@@ -371,14 +365,12 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun listenForSearchQueries() {
-        searchDialog.queryListener = { query ->
-            headerAdapter?.setFilter(query)
-            headerAdapter?.filterItems()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_search, menu)
+        (activity as? MainActivity)?.searchQuery?.observe(
+            viewLifecycleOwner,
+            Observer {
+                headerAdapter?.setFilter(it)
+                headerAdapter?.filterItems()
+            })
     }
 
     companion object {

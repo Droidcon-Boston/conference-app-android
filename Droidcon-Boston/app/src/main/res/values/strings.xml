@@ -57,4 +57,6 @@
     <string name="jump_btn_title">Jump to Current</string>
     <string name="search">Search</string>
     <string name="search_hint">Speaker, Talk, Topic…</string>
+    <string name="close_search">Close Search</string>
+    <string name="clear_search">Clear Search</string>
 </resources>
