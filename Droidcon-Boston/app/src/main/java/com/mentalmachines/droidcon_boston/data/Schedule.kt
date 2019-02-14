@@ -1,5 +1,7 @@
 package com.mentalmachines.droidcon_boston.data
 
+import java.util.*
+
 
 /*
  * View models for schedule and schedule detail items.
@@ -21,7 +23,8 @@ class Schedule {
         var date: String = "",
         var trackSortOrder: Int = 0,
         var photoUrlMap: HashMap<String, String> = HashMap(0),
-        var isOver: Boolean = false
+        var isOver: Boolean = false,
+        var isCurrentSession: Boolean = false
     ) {
 
         fun hasSpeaker(): Boolean = speakerNames.isNotEmpty()

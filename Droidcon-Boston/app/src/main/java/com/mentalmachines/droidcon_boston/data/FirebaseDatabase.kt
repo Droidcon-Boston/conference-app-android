@@ -11,7 +11,9 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import java.util.*
 
+const val TIME_BETWEEN_SESSIONS: Long = 15
 
 open class FirebaseDatabase {
     data class ScheduleEvent(
@@ -85,6 +87,16 @@ open class FirebaseDatabase {
             row.talkTitle = name
             row.speakerNameToOrgName = speakerNameToOrg
             row.photoUrlMap = speakerNameToPhotoUrl
+
+            if (startDateTime != null && endDateTime != null) {
+                val now = ZonedDateTime.now()
+                if (now.isAfter(startDateTime.minusMinutes(TIME_BETWEEN_SESSIONS)) &&
+                        now.isBefore(endDateTime)
+                ) {
+                    row.isCurrentSession = true
+                }
+            }
+
             return row
         }
     }

@@ -20,6 +20,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+const val CURRENT_ITEM_MARKER_TAG = "CURRENT_ITEM_MARKER_TAG"
+
 /**
  * Used for displaying the schedule with sticky headers with optional day filtering
  */
@@ -132,6 +134,12 @@ class ScheduleAdapterItem internal constructor(
                 availableColor
             )
         )
+
+        if (itemData.isCurrentSession) {
+            holder.root.tag = CURRENT_ITEM_MARKER_TAG
+        } else {
+            holder.root.tag = null
+        }
     }
 
     private fun addBackgroundRipple(holder: ViewHolder) {
@@ -143,6 +151,8 @@ class ScheduleAdapterItem internal constructor(
 
 
     class ViewHolder : FlexibleViewHolder {
+
+        lateinit var root: View
 
         lateinit var rootLayout: View
 
@@ -181,6 +191,7 @@ class ScheduleAdapterItem internal constructor(
         }
 
         private fun findViews(parent: View) {
+            root = parent
             rootLayout = parent.findViewById(R.id.scheduleRootLayout)
             availableIndicator = parent.findViewById(R.id.available_indicator)
             bookmarkIndicator = parent.findViewById(R.id.bookmark_indicator)

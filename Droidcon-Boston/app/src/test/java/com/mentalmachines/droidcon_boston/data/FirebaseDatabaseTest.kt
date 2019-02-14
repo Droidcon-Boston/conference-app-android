@@ -1,10 +1,17 @@
 package com.mentalmachines.droidcon_boston.data
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.threeten.bp.ZoneOffset.UTC
+import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
 
 class FirebaseDatabaseTest {
+
+    private val firebaseDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.S'Z'")
+
     private val notifTime = 10L
     private val primarySpeakerName = "Primary Speaker"
     private val startTime = "2018-03-26T15:00:00.000Z"
@@ -37,24 +44,29 @@ class FirebaseDatabaseTest {
         "twitter" to twitterProfile
     )
 
+    private fun createDummyScheduleEvent(): FirebaseDatabase.ScheduleEvent {
+        return FirebaseDatabase.ScheduleEvent(
+                notifTime,
+                primarySpeakerName,
+                startTime,
+                talkTitle,
+                speakerNames,
+                speakerNamesToPhotos,
+                speakerNameToOrg,
+                roomNames,
+                speakerIds,
+                roomIds,
+                description,
+                photo,
+                endTime,
+                trackSortOrder
+        )
+    }
+
     @Test
     fun scheduleEventToScheduleRow() {
-        val testEvent = FirebaseDatabase.ScheduleEvent(
-            notifTime,
-            primarySpeakerName,
-            startTime,
-            talkTitle,
-            speakerNames,
-            speakerNamesToPhotos,
-            speakerNameToOrg,
-            roomNames,
-            speakerIds,
-            roomIds,
-            description,
-            photo,
-            endTime,
-            trackSortOrder
-        )
+
+        val testEvent = createDummyScheduleEvent()
 
         val testRow = testEvent.toScheduleRow(scheduleId)
 
@@ -73,6 +85,76 @@ class FirebaseDatabaseTest {
         assertEquals(trackSortOrder, testRow.trackSortOrder)
         assertEquals(speakerNamesToPhotos, testRow.photoUrlMap)
         assertTrue(testRow.isOver)
+    }
+
+    @Test
+    fun scheduleEventToScheduleRow_isCurrentSession_true_whenNowIsBetweenStartAndEndTime() {
+
+        val now = ZonedDateTime.now(UTC)
+        val startTime = now.minusMinutes(30)
+        val endTime = now.plusMinutes(30)
+
+        val testEvent = createDummyScheduleEvent().copy(
+                startTime = startTime.format(firebaseDateFormatter),
+                endTime = endTime.format(firebaseDateFormatter)
+        )
+
+        val testRow = testEvent.toScheduleRow(scheduleId)
+
+        assertTrue(testRow.isCurrentSession)
+    }
+
+
+    @Test
+    fun scheduleEventToScheduleRow_isCurrentSession_false_whenNowIsBeforeStartTime() {
+
+        val now = ZonedDateTime.now(UTC)
+        val startTime = now.plusMinutes(30)
+        val endTime = now.plusMinutes(90)
+
+        val testEvent = createDummyScheduleEvent().copy(
+                startTime = startTime.format(firebaseDateFormatter),
+                endTime = endTime.format(firebaseDateFormatter)
+        )
+
+        val testRow = testEvent.toScheduleRow(scheduleId)
+
+        assertFalse(testRow.isCurrentSession)
+    }
+
+    @Test
+    fun scheduleEventToScheduleRow_isCurrentSession_false_whenNowIsAfterEndTime() {
+
+        val now = ZonedDateTime.now(UTC)
+        val startTime = now.minusMinutes(90)
+        val endTime = now.minusMinutes(30)
+
+        val testEvent = createDummyScheduleEvent().copy(
+                startTime = startTime.format(firebaseDateFormatter),
+                endTime = endTime.format(firebaseDateFormatter)
+        )
+
+        val testRow = testEvent.toScheduleRow(scheduleId)
+
+        assertFalse(testRow.isCurrentSession)
+    }
+
+    @Test
+    fun scheduleEventToScheduleRow_isCurrentSession_true_ifItBeginsInLessThan15Minutes() {
+
+        // Set startTime to 14 minutes from now in order to simulate the scenario where now is in between sessions.
+        val now = ZonedDateTime.now(UTC)
+        val startTime = now.plusMinutes(TIME_BETWEEN_SESSIONS - 1)
+        val endTime = now.plusMinutes(60)
+
+        val testEvent = createDummyScheduleEvent().copy(
+                startTime = startTime.format(firebaseDateFormatter),
+                endTime = endTime.format(firebaseDateFormatter)
+        )
+
+        val testRow = testEvent.toScheduleRow(scheduleId)
+
+        assertTrue(testRow.isCurrentSession)
     }
 
     @Test

@@ -55,4 +55,5 @@
     <string name="twitter_icon">Twitter Icon</string>
 
     <string name="content_description_logo">Droidcon Boston Android logo</string>
+    <string name="jump_btn_title">Jump to Current</string>
 </resources>

@@ -5,7 +5,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.any
+import org.mockito.Mockito.doAnswer
+import org.mockito.Mockito.mock
 
 /**
  * A robot class that can be used to extract out firebase functionality from the tests.

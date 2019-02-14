@@ -1,7 +1,9 @@
 package com.mentalmachines.droidcon_boston.data
 
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.*
 
