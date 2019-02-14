@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
@@ -215,19 +216,9 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         val floatAnimation = AnimatorSet()
         floatAnimation.playSequentially(floatUpAnimator, floatDownAnimator)
         floatAnimation.start()
-        floatAnimation.addListener(object : Animator.AnimatorListener {
-
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
-
+        floatAnimation.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
                 floatAnimation.start()
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-            }
-
-            override fun onAnimationStart(animation: Animator?) {
             }
         })
     }
