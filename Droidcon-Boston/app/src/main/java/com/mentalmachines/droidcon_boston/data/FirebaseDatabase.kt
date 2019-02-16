@@ -144,5 +144,14 @@ open class FirebaseDatabase {
         var answers: List<Answer> = emptyList()
         var question: String = ""
     }
+
+    data class User(
+        val id: String? = "",
+        val username: String? = "",
+        val pictureUrl: String? = "",
+        val displayName: String? = "",
+        val twitter: String? = "",
+        val savedSessionIds: List<String> = ArrayList()
+    )
 }
 

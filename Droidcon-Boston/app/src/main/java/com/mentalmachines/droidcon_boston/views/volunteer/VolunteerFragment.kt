@@ -19,7 +19,6 @@ import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import kotlinx.android.synthetic.main.volunteer_fragment.*
 import timber.log.Timber
 
-
 class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private val firebaseHelper = FirebaseHelper.instance
@@ -84,7 +83,6 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         return true // propagate.
     }
-
 
     private fun setupVolunteerAdapter(rows: ArrayList<VolunteerEvent>) {
         val items = rows.map { VolunteerAdapterItem(it) }

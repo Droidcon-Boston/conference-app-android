@@ -14,18 +14,19 @@ class FirebaseHelper private constructor() {
     val faqDatabase: DatabaseReference
     val cocDatabase: DatabaseReference
     val volunteerDatabase: DatabaseReference
+    val userDatabase: DatabaseReference
 
     init {
-
         // Enable disk persistence, https://firebase.google.com/docs/database/android/offline-capabilities
-        this.database.setPersistenceEnabled(true)
-        this.mainDatabase = database.reference
-        this.eventDatabase = mainDatabase.child("conferenceData").child("events")
-        this.speakerDatabase = mainDatabase.child("conferenceData").child("speakers")
-        this.volunteerDatabase = mainDatabase.child("volunteers")
-        this.aboutDatabase = mainDatabase.child("about")
-        this.faqDatabase = mainDatabase.child("faq")
-        this.cocDatabase = mainDatabase.child("conductCode")
+        database.setPersistenceEnabled(true)
+        mainDatabase = database.reference
+        eventDatabase = mainDatabase.child("conferenceData").child("events")
+        speakerDatabase = mainDatabase.child("conferenceData").child("speakers")
+        volunteerDatabase = mainDatabase.child("volunteers")
+        aboutDatabase = mainDatabase.child("about")
+        faqDatabase = mainDatabase.child("faq")
+        cocDatabase = mainDatabase.child("conductCode")
+        userDatabase = mainDatabase.child("users")
     }
 
     private object Holder {

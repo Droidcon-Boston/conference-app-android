@@ -10,7 +10,7 @@ class UserAgendaRepo private constructor(context: Context) {
     private val sessionIdsKey = "savedSessionsIds"
     private val sharedPrefs: SharedPreferences =
         context.getSharedPreferences(prefsKey, MODE_PRIVATE)
-    private val savedSessionIds = HashSet<String>()
+    val savedSessionIds = HashSet<String>()
 
     init {
         savedSessionIds += sharedPrefs.getStringSet(sessionIdsKey, HashSet<String>())
