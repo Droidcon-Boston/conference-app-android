@@ -18,7 +18,8 @@ import eu.davidea.viewholders.FlexibleViewHolder
 import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 const val CURRENT_ITEM_MARKER_TAG = "CURRENT_ITEM_MARKER_TAG"
 
@@ -46,7 +47,6 @@ class ScheduleAdapterItem internal constructor(
         } catch (e: ParseException) {
             Timber.e("Parse error: $e for $dateTimeString")
         }
-
     }
 
     override fun equals(other: Any?): Boolean {
@@ -98,7 +98,6 @@ class ScheduleAdapterItem internal constructor(
             } else {
                 addBackgroundRipple(holder)
             }
-
         } else {
             // For normal talks/sessions with speakers
             holder.avatarLayout.visibility = View.VISIBLE
@@ -148,7 +147,6 @@ class ScheduleAdapterItem internal constructor(
         context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
         holder.rootLayout.setBackgroundResource(outValue.resourceId)
     }
-
 
     class ViewHolder : FlexibleViewHolder {
 

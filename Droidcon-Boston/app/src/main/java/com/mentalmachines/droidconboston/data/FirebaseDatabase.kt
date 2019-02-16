@@ -11,7 +11,6 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.*
 
 const val TIME_BETWEEN_SESSIONS: Long = 15
 
@@ -145,4 +144,3 @@ open class FirebaseDatabase {
         var question: String = ""
     }
 }
-

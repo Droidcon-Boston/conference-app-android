@@ -13,7 +13,6 @@ import com.mentalmachines.droidconboston.utils.RVItemClickListener
 import com.mentalmachines.droidconboston.utils.RVItemClickListener.OnItemClickListener
 import com.mentalmachines.droidconboston.utils.loadUriInCustomTab
 import kotlinx.android.synthetic.main.social_fragment.*
-import java.util.*
 
 class SocialFragment : Fragment() {
 
@@ -27,7 +26,6 @@ class SocialFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.social_fragment, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -4,13 +4,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.mentalmachines.droidconboston.data.Schedule
 
+private const val PAGE_COUNT = 2
+
 class AgendaDayPagerAdapter internal constructor(
     fm: FragmentManager,
     private val myAgenda: Boolean
 ) :
     FixedFragmentStatePagerAdapter(fm) {
 
-    private val PAGE_COUNT = 2
     private val tabTitles = arrayOf("Day 1", "Day 2")
 
     override fun getCount(): Int {

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import com.mentalmachines.droidconboston.utils.NotificationUtils
 
-
 class BootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {

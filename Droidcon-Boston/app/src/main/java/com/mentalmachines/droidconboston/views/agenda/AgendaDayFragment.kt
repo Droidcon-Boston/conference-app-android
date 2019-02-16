@@ -334,11 +334,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
-        val adapterItem = try {
-            headerAdapter?.getItem(position)
-        } catch (e: Exception) {
-            null
-        }
+        val adapterItem = headerAdapter?.getItem(position)
         if (adapterItem is ScheduleAdapterItem) {
             val itemData = adapterItem.itemData
             if (itemData.primarySpeakerName.isNullorEmpty()) {

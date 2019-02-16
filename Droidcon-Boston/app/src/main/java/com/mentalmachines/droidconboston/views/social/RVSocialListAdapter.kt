@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.mentalmachines.droidconboston.R
 import com.mentalmachines.droidconboston.modal.SocialModal
-import java.util.*
 
 internal class RVSocialListAdapter(private var socialList: ArrayList<SocialModal>) :
     Adapter<RVSocialListAdapter.ListViewHolder>() {
@@ -35,7 +34,6 @@ internal class RVSocialListAdapter(private var socialList: ArrayList<SocialModal
         holder.txtView.text = socialModal.name
 
         holder.imageView.setImageResource(socialModal.image_resid)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mentalmachines.droidconboston.R
 import kotlinx.android.synthetic.main.agenda_fragment.*
-import java.util.*
+import java.util.Calendar
 
 class AgendaFragment : Fragment() {
 
@@ -19,12 +19,10 @@ class AgendaFragment : Fragment() {
         return inflater.inflate(R.layout.agenda_fragment, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupDayPager(savedInstanceState)
     }
-
 
     private fun setupDayPager(savedInstanceState: Bundle?) {
         viewpager.adapter = AgendaDayPagerAdapter(childFragmentManager, isMyAgenda())

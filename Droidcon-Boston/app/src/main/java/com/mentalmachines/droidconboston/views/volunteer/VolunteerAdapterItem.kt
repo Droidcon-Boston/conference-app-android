@@ -27,7 +27,6 @@ class VolunteerAdapterItem internal constructor(val itemData: VolunteerEvent) :
         payloads: MutableList<Any>?
     ) {
 
-
         var bodyText = itemData.position
         if (!itemData.twitter.isEmpty()) {
             bodyText += "\nTwitter: @${itemData.twitter}"

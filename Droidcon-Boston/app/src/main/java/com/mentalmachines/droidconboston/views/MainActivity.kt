@@ -24,7 +24,6 @@ import com.mentalmachines.droidconboston.views.speaker.SpeakerFragment
 import com.mentalmachines.droidconboston.views.volunteer.VolunteerFragment
 import kotlinx.android.synthetic.main.main_activity.*
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
@@ -63,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             initFragmentsFromIntent(it)
         }
     }
-
 
     override fun onBackPressed() {
         // If drawer is open
@@ -142,7 +140,6 @@ class MainActivity : AppCompatActivity() {
         return processAll
     }
 
-
     private fun initNavDrawerToggle() {
 
         setSupportActionBar(toolbar)
@@ -157,7 +154,7 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener { item ->
 
-            //Closing drawer on item click
+            // Closing drawer on item click
             drawer_layout.closeDrawers()
 
             when (item.itemId) {
@@ -217,7 +214,6 @@ class MainActivity : AppCompatActivity() {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(item)
-
     }
 
     private fun replaceFragment(title: String) {

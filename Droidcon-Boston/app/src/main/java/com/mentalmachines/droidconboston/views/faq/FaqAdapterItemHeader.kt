@@ -47,7 +47,6 @@ class FaqAdapterItemHeader internal constructor(private val question: String) :
         holder.header.text = question
     }
 
-
     class ViewHolder : FlexibleViewHolder {
 
         lateinit var header: TextView

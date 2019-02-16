@@ -1,9 +1,6 @@
 package com.mentalmachines.droidconboston.data
 
-import java.util.*
-
-
-/*
+/**
  * View models for schedule and schedule detail items.
  */
 class Schedule {

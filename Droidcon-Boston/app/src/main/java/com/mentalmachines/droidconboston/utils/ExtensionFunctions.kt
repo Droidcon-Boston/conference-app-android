@@ -8,11 +8,9 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.mentalmachines.droidconboston.R
 
-
 fun String?.isNullorEmpty(): Boolean {
     return !(this != null && !this.isEmpty())
 }
-
 
 fun String.getHtmlFormattedSpanned(): Spanned {
     return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -21,7 +19,6 @@ fun String.getHtmlFormattedSpanned(): Spanned {
         @Suppress("DEPRECATION") Html.fromHtml(this)
     }
 }
-
 
 fun Context.loadUriInCustomTab(uriString: String) {
     val data = Uri.parse(uriString)

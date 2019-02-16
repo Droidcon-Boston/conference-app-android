@@ -19,8 +19,6 @@ import com.mentalmachines.droidconboston.views.faq.FaqAdapterItemHeader
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.faq_fragment.*
 import timber.log.Timber
-import java.util.*
-
 
 class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
@@ -112,5 +110,4 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         return true
     }
-
 }

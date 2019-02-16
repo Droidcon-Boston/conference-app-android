@@ -1,6 +1,5 @@
 package com.mentalmachines.droidconboston.views.speaker
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import kotlinx.android.synthetic.main.speaker_fragment.*
 import timber.log.Timber
-
 
 class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
@@ -98,7 +96,8 @@ class SpeakerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         speakerAdapter = FlexibleAdapter(items)
         speakerAdapter.addListener(this)
         speaker_recycler.adapter = speakerAdapter
-        speaker_recycler.addItemDecoration(FlexibleItemDecoration(speaker_recycler.context).withDefaultDivider())
+        speaker_recycler.addItemDecoration(
+            FlexibleItemDecoration(speaker_recycler.context).withDefaultDivider())
         speakerAdapter.expandItemsAtStartUp().setDisplayHeadersAtStartUp(false)
     }
 }

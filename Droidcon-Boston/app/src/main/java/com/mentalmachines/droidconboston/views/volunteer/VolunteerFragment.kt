@@ -1,6 +1,5 @@
 package com.mentalmachines.droidconboston.views.volunteer
 
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +17,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import kotlinx.android.synthetic.main.volunteer_fragment.*
 import timber.log.Timber
-
 
 class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
@@ -85,7 +83,6 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return true // propagate.
     }
 
-
     private fun setupVolunteerAdapter(rows: ArrayList<VolunteerEvent>) {
         val items = rows.map { VolunteerAdapterItem(it) }
         volunteer_recycler.layoutManager =
@@ -93,7 +90,8 @@ class VolunteerFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         volunteerAdapter = FlexibleAdapter(items)
         volunteerAdapter.addListener(this)
         volunteer_recycler.adapter = volunteerAdapter
-        volunteer_recycler.addItemDecoration(FlexibleItemDecoration(volunteer_recycler.context).withDefaultDivider())
+        volunteer_recycler.addItemDecoration(
+            FlexibleItemDecoration(volunteer_recycler.context).withDefaultDivider())
         volunteerAdapter.expandItemsAtStartUp().setDisplayHeadersAtStartUp(false)
     }
 }

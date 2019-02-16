@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
-import java.util.*
+import java.util.WeakHashMap
 
 /**
  * See https://stackoverflow.com/questions/13695649/refresh-images-on-fragmentstatepageradapter-on-resuming-activity
@@ -30,7 +30,7 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
     override fun notifyDataSetChanged() {
         super.notifyDataSetChanged()
         for (position in mFragments.keys) {
-            //Make sure we only update fragments that should be seen
+            // Make sure we only update fragments that should be seen
             if (position != null && mFragments[position] != null && position.toInt() < count) {
                 updateFragmentItem(position, mFragments[position]!!)
             }
@@ -38,12 +38,12 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
     }
 
     override fun getItemPosition(fragmentObj: Any): Int {
-        //If the object is a fragment, check to see if we have it in the hashmap
+        // If the object is a fragment, check to see if we have it in the hashmap
         if (fragmentObj is Fragment) {
             val position = findFragmentPositionHashMap(fragmentObj)
-            //If fragment found in the hashmap check if it should be shown
+            // If fragment found in the hashmap check if it should be shown
             if (position >= 0) {
-                //Return POSITION_NONE if it shouldn't be display
+                // Return POSITION_NONE if it shouldn't be display
                 return if (position >= count) PagerAdapter.POSITION_NONE else position
             }
         }
@@ -58,7 +58,9 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
      */
     private fun findFragmentPositionHashMap(fragmentObj: Fragment): Int {
         for (position in mFragments.keys) {
-            if (position != null && mFragments[position] != null && mFragments[position] === fragmentObj) {
+            if (position != null &&
+                mFragments[position] != null &&
+                mFragments[position] === fragmentObj) {
                 return position
             }
         }

@@ -16,7 +16,6 @@ import com.mentalmachines.droidconboston.views.MainActivity
 import com.mentalmachines.droidconboston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.speaker_detail_fragment.*
 
-
 class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
 
     private val firebaseHelper = FirebaseHelper.instance
@@ -68,7 +67,6 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
             imgv_twitter.visibility = View.GONE
         }
 
-
         val linkedinHandle = itemData.socialProfiles?.get("linkedIn")
         if (!linkedinHandle.isNullOrEmpty()) {
             imgv_linkedin.setOnClickListener {
@@ -87,6 +85,5 @@ class SpeakerDetailFragment : androidx.fragment.app.Fragment() {
         Glide.with(activity).load(itemData.pictureUrl)
             .transform(CircleTransform(imgv_speaker_detail_avatar.context))
             .placeholder(R.drawable.emo_im_cool).crossFade().into(imgv_speaker_detail_avatar)
-
     }
 }
