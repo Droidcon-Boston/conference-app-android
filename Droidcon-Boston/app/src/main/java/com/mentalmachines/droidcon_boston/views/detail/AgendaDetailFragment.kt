@@ -1,8 +1,10 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +17,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.animation.GlideAnimation
+import com.bumptech.glide.request.target.SimpleTarget
 import com.google.android.material.snackbar.Snackbar
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.string
@@ -30,6 +35,7 @@ import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.*
+import timber.log.Timber
 
 class AgendaDetailFragment : Fragment() {
 
@@ -108,8 +114,6 @@ class AgendaDetailFragment : Fragment() {
 
             showBookmarkStatus()
         }
-
-        populateSpeakersInformation()
     }
 
     override fun onDestroyView() {
@@ -152,7 +156,7 @@ class AgendaDetailFragment : Fragment() {
                 }
 
                 // Add an imageview to the relative layout
-                val tempImg = ImageView(activity)
+                val tempImg = LottieAnimationView(activity)
                 val lp = RelativeLayout.LayoutParams(imgViewSize, imgViewSize)
                 if (speakerName == viewModel.speakerNames.first()) {
                     lp.setMargins(marginValue, 0, 0, defaultLeftMargin)
@@ -168,12 +172,19 @@ class AgendaDetailFragment : Fragment() {
                 // add speakerName as a child to the relative layout
                 agendaDetailView.addView(tempImg)
 
-                Glide.with(this)
+                tempImg.setAnimation("dancing_droid.json")
+                tempImg.playAnimation()
+                tempImg.loop(true)
+                Glide.with(activity)
                     .load(viewModel.getPhotoForSpeaker(speakerName))
+                    .asBitmap()
                     .transform(CircleTransform(tempImg.context))
-                    .placeholder(R.drawable.emo_im_cool)
-                    .crossFade()
-                    .into(tempImg)
+                    .into(object : SimpleTarget<Bitmap>(){
+                        override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
+                            tempImg.setImageBitmap(resource)
+                        }
+                    })
+                Timber.d("Droidddddd")
 
                 tempImg.setOnClickListener {
                     val eventSpeaker = viewModel.getSpeaker(speakerName)
