@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
@@ -174,7 +175,7 @@ class AgendaDetailFragment : Fragment() {
 
                 tempImg.setAnimation("dancing_droid.json")
                 tempImg.playAnimation()
-                tempImg.loop(true)
+                tempImg.repeatCount = LottieDrawable.INFINITE
                 Glide.with(activity)
                     .load(viewModel.getPhotoForSpeaker(speakerName))
                     .asBitmap()
@@ -184,7 +185,6 @@ class AgendaDetailFragment : Fragment() {
                             tempImg.setImageBitmap(resource)
                         }
                     })
-                Timber.d("Droidddddd")
 
                 tempImg.setOnClickListener {
                     val eventSpeaker = viewModel.getSpeaker(speakerName)
