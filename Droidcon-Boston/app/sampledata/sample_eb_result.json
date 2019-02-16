@@ -1,0 +1,63 @@
+{
+  "profile": {
+    "first_name": "Christopher",
+    "last_name": "Corrado",
+    "company": "Johnson & Johnson",
+    "name": "Christopher Corrado",
+    "email": "ccorrads@gmail.com",
+    "job_title": "Senior Software Engineer"
+  },
+  "answers": [
+    {
+      "answer": "Developer",
+      "question": "Which is your main function in your current team?",
+      "type": "multiple_choice",
+      "question_id": "20940485"
+    },
+    {
+      "answer": "@ccorrads",
+      "question": "What's your Twitter handle?",
+      "type": "text",
+      "question_id": "20940481"
+    },
+    {
+      "answer": "Yes",
+      "question": "Would you like to receive the Droidcon Boston newsletter?",
+      "type": "multiple_choice",
+      "question_id": "20940482"
+    },
+    {
+      "answer": "N/A",
+      "question": "Do you have any food restrictions?",
+      "type": "text",
+      "question_id": "20940483"
+    },
+    {
+      "answer": "Advanced topics | Technology landscape topics | Networking with peers | Recruiting | An excuse to get out of the office",
+      "question": "Which is your main goal for Droidcon Boston 2019?",
+      "type": "multiple_choice",
+      "question_id": "20940484"
+    },
+    {
+      "answer": "M",
+      "question": "Unisex t-shirt size",
+      "type": "multiple_choice",
+      "question_id": "20940486"
+    },
+    {
+      "answer": "Meetup",
+      "question": "How did you hear about Droidcon?",
+      "type": "multiple_choice",
+      "question_id": "20940487"
+    },
+    {
+      "question": "Where?",
+      "type": "text",
+      "question_id": "20940488"
+    }
+  ],
+  "checked_in": false,
+  "cancelled": false,
+  "status": "Attending",
+  "event_id": "51797973132"
+}

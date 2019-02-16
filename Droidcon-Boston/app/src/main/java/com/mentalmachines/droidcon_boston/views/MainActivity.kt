@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        authController = AuthController(R.mipmap.ic_launcher)
+        authController = AuthController()
 
         initNavDrawerToggle()
 
@@ -95,9 +95,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkNavMenuItem(title: String) {
-        processMenuItems({ item -> item.title == title },
+        processMenuItems(
+            { item -> item.title == title },
             { item -> item.setChecked(true).isChecked },
-            processAll = true)
+            processAll = true
+        )
     }
 
     private fun isNavItemChecked(title: String): Boolean {
@@ -291,7 +293,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        authController.login(this, RC_SIGN_IN)
+        authController.login(this, RC_SIGN_IN, R.mipmap.ic_launcher)
     }
 
     private fun logout() {
@@ -302,7 +304,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        authController.handleLoginResult(resultCode, data)?.let {
+        authController.handleLoginResult(this, resultCode, data)?.let {
             AlertDialog.Builder(this)
                 .setTitle(R.string.str_title_error)
                 .setMessage(it)
