@@ -121,6 +121,7 @@ obj/
 .idea/sonarlint/
 
 # OS-specific files
+*/.DS_Store
 .DS_Store
 .DS_Store?
 ._*

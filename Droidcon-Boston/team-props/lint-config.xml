@@ -8,4 +8,10 @@
         <ignore path="res/drawable/splash_text.xml" />
     </issue>
 
+    <!-- Ignore the VectorRaster issue in the given files -->
+    <issue id="VectorPath">
+        <ignore path="res/drawable/splash_logo.xml" />
+        <ignore path="res/drawable/splash_text.xml" />
+    </issue>
+
 </lint>
