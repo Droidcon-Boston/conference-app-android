@@ -104,6 +104,7 @@ dependencies {
     final mockitoCore = '2.23.4'
     final archCore = '2.0.0'
     final timber = '4.7.1'
+    final lottieVersion = '2.8.0'
     //endregion
 
     //region Dependencies
@@ -144,6 +145,7 @@ dependencies {
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenAbp"
     implementation "com.dinuscxj:recyclerrefreshlayout:$recyclerRefreshLayout"
     implementation "com.jakewharton.timber:timber:$timber"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
     //endregion
 }
 
