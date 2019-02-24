@@ -1,7 +1,12 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mentalmachines.droidcon_boston.R
 import kotlinx.android.synthetic.main.agenda_fragment.*
@@ -38,7 +43,7 @@ class AgendaFragment : Fragment() {
             // set current day to second if today matches
             val today = Calendar.getInstance()
             val dayTwo = Calendar.getInstance()
-            dayTwo.set(2018, Calendar.MARCH, 27)
+            dayTwo.set(EVENT_YEAR, EVENT_MONTH, EVENT_DAY_ONE)
             if (today == dayTwo) {
                 viewpager.currentItem = 1
             }
@@ -82,5 +87,9 @@ class AgendaFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+
+        private const val EVENT_YEAR = 2018
+        private const val EVENT_MONTH = Calendar.MARCH
+        private const val EVENT_DAY_ONE = 27
     }
 }

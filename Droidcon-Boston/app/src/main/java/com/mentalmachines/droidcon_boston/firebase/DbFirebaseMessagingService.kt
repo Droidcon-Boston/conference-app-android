@@ -33,8 +33,12 @@ class DbFirebaseMessagingService : FirebaseMessagingService() {
             notificationUtils.sendAndroidChannelNotification(
                 getString(R.string.conference_name),
                 bodyStr!!,
-                101
+                NOTIFICATION_ID
             )
         }
+    }
+
+    companion object {
+        private const val NOTIFICATION_ID = 101
     }
 }
