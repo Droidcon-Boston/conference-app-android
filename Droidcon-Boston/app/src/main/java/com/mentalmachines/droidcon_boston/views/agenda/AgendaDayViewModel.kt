@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.views.agenda
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,7 +21,16 @@ class AgendaDayViewModel(
     private val firebaseHelper = FirebaseHelper.instance
 
     private val _scheduleRows = MutableLiveData<List<Schedule.ScheduleRow>>()
-    val scheduleRows: LiveData<List<Schedule.ScheduleRow>> = _scheduleRows
+    private val _activeFilter = MutableLiveData<String>()
+
+    val scheduleRows: LiveData<List<Schedule.ScheduleRow>> = Transformations.map(_activeFilter) {
+            constraint ->
+        _scheduleRows.value?.filter { itemData ->
+            (itemData.talkTitle.contains(constraint, ignoreCase = true)
+                    || itemData.talkDescription.contains(constraint, ignoreCase = true)
+                    || itemData.speakerNames.any { it.contains(constraint, ignoreCase = true) })
+        }
+    }
 
     private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -43,6 +53,7 @@ class AgendaDayViewModel(
             }
 
             _scheduleRows.value = rows
+            _activeFilter.value = ""
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -54,6 +65,10 @@ class AgendaDayViewModel(
         if (scheduleRows.value == null) {
             firebaseHelper.eventDatabase.addValueEventListener(dataListener)
         }
+    }
+
+    fun setActiveFilter(filter: String) {
+        _activeFilter.value = filter
     }
 
     override fun onCleared() {

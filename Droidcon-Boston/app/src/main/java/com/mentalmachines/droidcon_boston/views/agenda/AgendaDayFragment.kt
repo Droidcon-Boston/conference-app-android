@@ -356,8 +356,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         (activity as? MainActivity)?.searchQuery?.observe(
             viewLifecycleOwner,
             Observer {
-                headerAdapter?.setFilter(it)
-                headerAdapter?.filterItems()
+                it?.let(viewModel::setActiveFilter)
             })
     }
 
@@ -365,7 +364,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         private const val ARG_DAY = "day"
         private const val ARG_MY_AGENDA = "my_agenda"
         private const val MILLISECONDS_PER_INCH = 50f
-        private const val SEARCH_DIALOG_TAG = "agenda_search_tag"
 
         fun newInstance(myAgenda: Boolean, day: String): AgendaDayFragment {
             val fragment = AgendaDayFragment()
