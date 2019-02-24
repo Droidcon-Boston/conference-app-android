@@ -17,6 +17,9 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -43,10 +46,6 @@ import timber.log.Timber
 class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val timeHeaders = HashMap<String, ScheduleAdapterItemHeader>()
 
-    private var dayFilter: String = ""
-    private val firebaseHelper = FirebaseHelper.instance
-    private var onlyMyAgenda: Boolean = false
-
     private lateinit var userAgendaRepo: UserAgendaRepo
     private var headerAdapter: FlexibleAdapter<*>? = null
     private lateinit var layoutManager: LinearLayoutManager
@@ -55,6 +54,18 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private lateinit var emptyStateView: View
     private lateinit var emptyFilterView: View
     private lateinit var scrollToCurrentButton: MaterialButton
+    private lateinit var viewModel: AgendaDayViewModel
+
+    private val viewModelFactory = object : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            val dayFilter = arguments?.getString(ARG_DAY) ?: ""
+            val onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
+            val userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
+
+            @Suppress("UNCHECKED_CAST")
+            return AgendaDayViewModel(dayFilter, onlyMyAgenda, userAgendaRepo) as T
+        }
+    }
 
     /**
      * Total number of sessions that begin after now and end before now.
@@ -89,10 +100,13 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             value
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        dayFilter = arguments?.getString(ARG_DAY) ?: ""
-        userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
+    private fun initViewModel() {
+        viewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(AgendaDayViewModel::class.java)
+
+        viewModel.scheduleRows.observe(viewLifecycleOwner, Observer {
+            it?.let(this::setupHeaderAdapter)
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -126,7 +140,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         agendaRecyler.layoutManager = layoutManager
-        onlyMyAgenda = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
         val linearSmoothScroller = setupSmoothScroller()
         addFloatingAnimation()
@@ -137,6 +150,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             )
         }
 
+        initViewModel()
         fetchScheduleData()
 
         activity?.supportFragmentManager?.addOnBackStackChangedListener(backStackChangeListener)
@@ -144,7 +158,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private val backStackChangeListener: () -> Unit = {
-        if (onlyMyAgenda) {
+        if (viewModel.onlyMyAgenda) {
             fetchScheduleData()
         } else {
             headerAdapter?.notifyDataSetChanged()
@@ -231,7 +245,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         agendaRecyler.removeOnChildAttachStateChangeListener(currentSessionVisibleListener)
-        firebaseHelper.eventDatabase.removeEventListener(dataListener)
         activity?.supportFragmentManager?.removeOnBackStackChangedListener(backStackChangeListener)
     }
 
@@ -239,35 +252,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agendaRecyler.adapter?.notifyDataSetChanged()
     }
 
-    private val dataListener: ValueEventListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val rows = ArrayList<ScheduleRow>()
-            for (roomSnapshot in dataSnapshot.children) {
-                val key = roomSnapshot.key ?: ""
-                val data = roomSnapshot.getValue(ScheduleEvent::class.java)
-                Timber.d("Event: $data")
-                if (data != null) {
-                    val scheduleRow = data.toScheduleRow(key)
-                    val matchesDay = scheduleRow.date == dayFilter
-                    val isPublicView = !onlyMyAgenda
-                    val isPrivateAndBookmarked = onlyMyAgenda && userAgendaRepo
-                        .isSessionBookmarked(scheduleRow.id)
-
-                    if (matchesDay && (isPublicView || isPrivateAndBookmarked)) {
-                        rows.add(scheduleRow)
-                    }
-                }
-            }
-            setupHeaderAdapter(rows)
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            Timber.e(databaseError.toException())
-        }
-    }
-
     private fun fetchScheduleData() {
-        firebaseHelper.eventDatabase.addValueEventListener(dataListener)
+        viewModel.fetchScheduleData()
     }
 
     private val currentSessionVisibleListener =
