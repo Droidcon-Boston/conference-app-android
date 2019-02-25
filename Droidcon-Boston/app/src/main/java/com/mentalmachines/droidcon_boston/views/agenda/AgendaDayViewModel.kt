@@ -27,14 +27,12 @@ class AgendaDayViewModel(
      * Whenever an active filter is set, we filter out the [_scheduleRows] for any that contain the
      * filter within the title, description, or speaker names.
      */
-    val scheduleRows: LiveData<List<Schedule.ScheduleRow>> = Transformations.map(_activeFilter) {
-            constraint ->
-        _scheduleRows.value?.filter { itemData ->
-            (itemData.talkTitle.contains(constraint, ignoreCase = true)
-                    || itemData.talkDescription.contains(constraint, ignoreCase = true)
-                    || itemData.speakerNames.any { it.contains(constraint, ignoreCase = true) })
+    val scheduleRows: LiveData<List<Schedule.ScheduleRow>> =
+        Transformations.map(_activeFilter) { constraint ->
+            _scheduleRows.value?.filter { itemData ->
+                itemData.containsKeyword(constraint)
+            }
         }
-    }
 
     private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {

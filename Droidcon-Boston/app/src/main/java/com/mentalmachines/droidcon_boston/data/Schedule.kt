@@ -32,6 +32,12 @@ class Schedule {
         fun hasMultipleSpeakers(): Boolean = speakerNames.size > 1
 
         fun getSpeakerString(): String? = speakerNames.joinToString(", ")
+
+        fun containsKeyword(keyword: String): Boolean {
+            return this.talkTitle.contains(keyword, ignoreCase = true)
+                    || this.talkDescription.contains(keyword, ignoreCase = true)
+                    || this.speakerNames.any { it.contains(keyword, ignoreCase = true) }
+        }
     }
 
     data class ScheduleDetail(
