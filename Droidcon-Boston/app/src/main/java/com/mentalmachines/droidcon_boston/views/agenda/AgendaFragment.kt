@@ -2,6 +2,9 @@ package com.mentalmachines.droidcon_boston.views.agenda
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -11,6 +14,11 @@ import java.util.*
 
 class AgendaFragment : Fragment() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -19,12 +27,10 @@ class AgendaFragment : Fragment() {
         return inflater.inflate(R.layout.agenda_fragment, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupDayPager(savedInstanceState)
     }
-
 
     private fun setupDayPager(savedInstanceState: Bundle?) {
         viewpager.adapter = AgendaDayPagerAdapter(childFragmentManager, isMyAgenda())
@@ -37,7 +43,7 @@ class AgendaFragment : Fragment() {
             // set current day to second if today matches
             val today = Calendar.getInstance()
             val dayTwo = Calendar.getInstance()
-            dayTwo.set(2018, Calendar.MARCH, 27)
+            dayTwo.set(EVENT_YEAR, EVENT_MONTH, EVENT_DAY_ONE)
             if (today == dayTwo) {
                 viewpager.currentItem = 1
             }
@@ -49,6 +55,20 @@ class AgendaFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(TAB_POSITION, tablayout.selectedTabPosition)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_search, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.search -> {
+                activity?.onSearchRequested()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     companion object {
@@ -67,5 +87,9 @@ class AgendaFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+
+        private const val EVENT_YEAR = 2018
+        private const val EVENT_MONTH = Calendar.MARCH
+        private const val EVENT_DAY_ONE = 27
     }
 }

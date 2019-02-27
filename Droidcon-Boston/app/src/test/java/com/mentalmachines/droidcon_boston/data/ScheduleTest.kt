@@ -65,4 +65,43 @@ class ScheduleTest {
         row.speakerNames = Arrays.asList(s1, s2)
         assertEquals("$s1, $s2", row.getSpeakerString())
     }
+
+    @Test
+    fun containsKeywordInTitle() {
+        val keyword = "Kotlin"
+        val testTitle = "All About $keyword"
+
+        val row = ScheduleRow(talkTitle = testTitle)
+        assertTrue(row.containsKeyword(keyword))
+    }
+
+    @Test
+    fun containsKeywordInDescription() {
+        val keyword = "Kotlin"
+        val testDescription = "All about $keyword"
+
+        val row = ScheduleRow(talkDescription = testDescription)
+        assertTrue(row.containsKeyword(keyword))
+    }
+
+    @Test
+    fun containsKeywordInSpeakerName() {
+        val keyword = "Kotlin"
+        val speakers = listOf("Speaker about $keyword")
+
+        val row = ScheduleRow(speakerNames = speakers)
+        assertTrue(row.containsKeyword(keyword))
+    }
+
+    @Test
+    fun containsEmptyKeyword() {
+        val row = ScheduleRow()
+        assertTrue(row.containsKeyword(""))
+    }
+
+    @Test
+    fun doesNotContainKeyword() {
+        val row = ScheduleRow()
+        assertFalse(row.containsKeyword("Blah"))
+    }
 }
