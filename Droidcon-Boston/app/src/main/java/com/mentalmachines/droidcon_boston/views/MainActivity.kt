@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initSearchDialog() {
         searchDialog.queryListener = _currentQuery::setValue
+        searchDialog.itemClicked = {
+            AgendaDetailFragment.addDetailFragmentToStack(supportFragmentManager, it)
+        }
     }
 
     private fun initFragmentsFromIntent(initialIntent: Intent) {
