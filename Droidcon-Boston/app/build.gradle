@@ -23,6 +23,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
     }
 
     signingConfigs {
@@ -93,6 +99,7 @@ dependencies {
     final firebaseDatabase = '16.0.6'
     final firebaseCore = '16.0.7'
     final firebaseMessaging = '17.4.0'
+    final firebaseAdmin = '6.7.0'
     final crashlytics = '2.9.1'
     final gson = '2.8.2'
     final flexibleAdapter = '5.0.1'
@@ -144,7 +151,8 @@ dependencies {
     testImplementation "com.squareup.moshi:moshi:$moshi_version"
     testImplementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     testImplementation "com.squareup.moshi:moshi-adapters:$moshi_version"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    testImplementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.google.firebase:firebase-admin:$firebaseAdmin"
 
     // Misc
     implementation "com.google.code.gson:gson:$gson"

@@ -43,3 +43,7 @@ captures/
 # secrets file
 **/*/res/values/secrets.xml
 
+# firebase admin secrets file
+**/*/droidcon-bos-firebase-adminsdk-apses-*.json
+
+
