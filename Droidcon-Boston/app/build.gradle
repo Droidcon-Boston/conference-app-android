@@ -90,9 +90,9 @@ dependencies {
     final junit = "4.12"
     final support = '1.0.0'
     final appCompat = '1.0.2'
-    final firebaseDatabase = '16.0.5'
-    final firebaseCore = '16.0.6'
-    final firebaseMessaging = '17.3.4'
+    final firebaseDatabase = '16.0.6'
+    final firebaseCore = '16.0.7'
+    final firebaseMessaging = '17.4.0'
     final crashlytics = '2.9.1'
     final gson = '2.8.2'
     final flexibleAdapter = '5.0.1'
@@ -103,6 +103,7 @@ dependencies {
     final recyclerRefreshLayout = '2.0.5'
     final mockitoCore = '2.23.4'
     final archCore = '2.0.0'
+    final lifecycle_version = '2.0.0'
     final timber = '4.7.1'
     //endregion
 
@@ -122,6 +123,9 @@ dependencies {
     implementation "androidx.cardview:cardview:$support"
     implementation "com.google.android.material:material:$support"
     implementation "androidx.browser:browser:$support"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     // Firebase
     implementation "com.google.firebase:firebase-messaging:$firebaseMessaging"

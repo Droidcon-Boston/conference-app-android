@@ -24,14 +24,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
-import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
-import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
@@ -46,7 +41,6 @@ import timber.log.Timber
 class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val timeHeaders = HashMap<String, ScheduleAdapterItemHeader>()
 
-    private lateinit var userAgendaRepo: UserAgendaRepo
     private var headerAdapter: FlexibleAdapter<*>? = null
     private lateinit var layoutManager: LinearLayoutManager
 
@@ -90,19 +84,21 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
     private fun wrapBounds(value: Int, min: Int, max: Int) =
-        if (value >= max) {
-            Timber.w("Value out of bounds value=$value, min=$min, max=$max")
-            max
-        } else if (value < 0) {
-            Timber.w("Value out of bounds value=$value, min=$min, max=$max")
-            min
-        } else {
-            value
+        when {
+            value >= max -> {
+                Timber.w("Value out of bounds value=$value, min=$min, max=$max")
+                max
+            }
+            value < 0 -> {
+                Timber.w("Value out of bounds value=$value, min=$min, max=$max")
+                min
+            }
+            else -> value
         }
 
     private fun initViewModel() {
         viewModel =
-                ViewModelProviders.of(this, viewModelFactory).get(AgendaDayViewModel::class.java)
+            ViewModelProviders.of(this, viewModelFactory).get(AgendaDayViewModel::class.java)
 
         viewModel.scheduleRows.observe(viewLifecycleOwner, Observer {
             it?.let(this::setupHeaderAdapter)
@@ -296,7 +292,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agendaRecyler.adapter = headerAdapter
         agendaRecyler
             .addItemDecoration(FlexibleItemDecoration(agendaRecyler.context)
-            .withDefaultDivider())
+                .withDefaultDivider())
         headerAdapter!!.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
 
         EmptyViewHelper(headerAdapter, emptyStateView, emptyFilterView, null)
@@ -317,7 +313,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 (it is ScheduleAdapterItem) && it.itemData.isCurrentSession
             }
             targetCurrentSesssionPosition =
-                    minOf(indexOfFirstCurrentSession, currentItems.lastIndex)
+                minOf(indexOfFirstCurrentSession, currentItems.lastIndex)
         }
 
         // Initialize the number of visible current sessions to zero.
