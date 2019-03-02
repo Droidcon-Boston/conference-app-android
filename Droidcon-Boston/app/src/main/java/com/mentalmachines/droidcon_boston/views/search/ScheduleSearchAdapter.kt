@@ -1,6 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.search
 
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ class ScheduleSearchAdapter(
     context: Context,
     private val layoutRes: Int,
     private val scheduleRows: List<Schedule.ScheduleRow>
-): ArrayAdapter<Schedule.ScheduleRow>(context, layoutRes, scheduleRows) {
+) : ArrayAdapter<Schedule.ScheduleRow>(context, layoutRes, scheduleRows) {
     private val suggestions: MutableList<Schedule.ScheduleRow> = mutableListOf()
     private val tempItems: MutableList<Schedule.ScheduleRow> = scheduleRows.toMutableList()
 
@@ -23,6 +24,9 @@ class ScheduleSearchAdapter(
 
         val scheduleRow = getItem(position)
         view.findViewById<TextView>(R.id.talk_title).text = scheduleRow?.talkTitle.orEmpty()
+        @Suppress("DEPRECATION")
+        view.findViewById<TextView>(R.id.talk_description).text =
+                Html.fromHtml(scheduleRow?.talkDescription)
 
         return view
     }
