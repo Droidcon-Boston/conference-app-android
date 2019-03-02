@@ -15,6 +15,8 @@ class ScheduleSearchAdapter(
     private val layoutRes: Int,
     private val scheduleRows: List<Schedule.ScheduleRow>
 ): ArrayAdapter<Schedule.ScheduleRow>(context, layoutRes, scheduleRows) {
+    private val suggestions: MutableList<Schedule.ScheduleRow> = mutableListOf()
+    private val tempItems: MutableList<Schedule.ScheduleRow> = scheduleRows.toMutableList()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(layoutRes, parent, false)
@@ -36,8 +38,14 @@ class ScheduleSearchAdapter(
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val suggestions = scheduleRows.filter {
-                    it.containsKeyword(constraint?.toString().orEmpty())
+                val keyword = constraint ?: return FilterResults()
+
+                suggestions.clear()
+
+                tempItems.forEach {
+                    if (it.containsKeyword(keyword.toString())) {
+                        suggestions.add(it)
+                    }
                 }
 
                 return FilterResults().apply {
@@ -47,15 +55,18 @@ class ScheduleSearchAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                val tempValues = (results?.values as? List<*>)
+                    ?.filterIsInstance(Schedule.ScheduleRow::class.java)
+
                 clear()
 
-                (results?.values as? List<*>)
-                    ?.filterIsInstance(Schedule.ScheduleRow::class.java)
-                    ?.forEach {
-                        add(it)
-                    }
+                tempValues?.forEach(this@ScheduleSearchAdapter::add)
 
                 notifyDataSetChanged()
+            }
+
+            override fun convertResultToString(resultValue: Any?): CharSequence {
+                return (resultValue as? Schedule.ScheduleRow)?.talkTitle.toString()
             }
         }
     }

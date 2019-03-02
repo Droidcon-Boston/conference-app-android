@@ -41,10 +41,6 @@ class Schedule {
                     || this.talkDescription.contains(keyword, ignoreCase = true)
                     || this.speakerNames.any { it.contains(keyword, ignoreCase = true) }
         }
-
-        override fun toString(): String {
-            return talkTitle
-        }
     }
 
     data class ScheduleDetail(
