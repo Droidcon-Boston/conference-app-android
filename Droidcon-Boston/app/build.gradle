@@ -140,11 +140,13 @@ dependencies {
         transitive = true
     }
 
-    // Misc
+    // Misc for slidesup conversion
     testImplementation "com.squareup.moshi:moshi:$moshi_version"
     testImplementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     testImplementation "com.squareup.moshi:moshi-adapters:$moshi_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
 
+    // Misc
     implementation "com.google.code.gson:gson:$gson"
     implementation "eu.davidea:flexible-adapter:$flexibleAdapter"
     implementation "eu.davidea:flexible-adapter-ui:$flexibleAdapterUi"
