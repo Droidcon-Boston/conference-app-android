@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.faq
 
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
@@ -17,9 +16,8 @@ import eu.davidea.viewholders.FlexibleViewHolder
 /**
  * Used for displaying the FAQ items
  */
-class FaqAdapterItem internal constructor(val itemData: Answer,
-                                          header: FaqAdapterItemHeader) :
-        AbstractSectionableItem<FaqAdapterItem.ViewHolder, FaqAdapterItemHeader>(header) {
+class FaqAdapterItem internal constructor(val itemData: Answer, header: FaqAdapterItemHeader) :
+    AbstractSectionableItem<FaqAdapterItem.ViewHolder, FaqAdapterItemHeader>(header) {
 
     override fun equals(other: Any?): Boolean {
         if (other is FaqAdapterItem) {
@@ -37,23 +35,25 @@ class FaqAdapterItem internal constructor(val itemData: Answer,
         return R.layout.faq_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(
+        view: View,
+        adapter: FlexibleAdapter<IFlexible<androidx.recyclerview.widget.RecyclerView.ViewHolder>>
+    ): ViewHolder {
         return FaqAdapterItem.ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>,
-                                holder: FaqAdapterItem.ViewHolder,
-                                position: Int,
-                                payloads: MutableList<Any>) {
+    override fun bindViewHolder(
+        adapter: FlexibleAdapter<IFlexible<androidx.recyclerview.widget.RecyclerView.ViewHolder>>,
+        holder: FaqAdapterItem.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
 
         holder.faq_text.text = itemData.answer
         if (!TextUtils.isEmpty(itemData.photoLink)) {
             val context = holder.faq_text.context
-            Glide.with(context)
-                    .load(itemData.photoLink)
-                    .crossFade()
-                    .centerCrop()
-                    .into(holder.faq_photo)
+            Glide.with(context).load(itemData.photoLink).crossFade().centerCrop()
+                .into(holder.faq_photo)
             holder.faq_photo.visibility = View.VISIBLE
         } else {
             holder.faq_photo.visibility = View.GONE

@@ -1,18 +1,24 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
+apply plugin: 'com.novoda.static-analysis'
+apply plugin: "io.gitlab.arturbosch.detekt"
+apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.mentalmachines.droidcon_boston"
-        minSdkVersion 16
-        targetSdkVersion 27
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 17
         versionName "2.0.9"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
         vectorDrawables {
             useSupportLibrary = true
@@ -52,47 +58,97 @@ android {
     }
 }
 
-dependencies {
-    final support = "27.1.0"
-    final playServices = "11.8.0"
-    final junit = "4.12"
+staticAnalysis {
+    penalty {
+        maxErrors = 150 // current threshold value
+        maxWarnings = 70 // current threshold value
+    }
 
+    lintOptions {
+        lintConfig rootProject.file('team-props/lint-config.xml')
+        checkReleaseBuilds false
+        warningsAsErrors true
+    }
+
+    detekt {
+        config = rootProject.files('team-props/detekt-config.yml')
+        filters = '.*test.*,.*/resources/.*,.*/tmp/.*'
+    }
+
+    ktlint {
+        android true
+        reporters = [ReporterType.CHECKSTYLE]
+
+        includeVariants { variant -> variant.name.contains('debug') }
+    }
+}
+
+dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //region Version
+    final junit = "4.12"
+    final support = '1.0.0'
+    final appCompat = '1.0.2'
+    final firebaseDatabase = '16.0.5'
+    final firebaseCore = '16.0.6'
+    final firebaseMessaging = '17.3.4'
+    final crashlytics = '2.9.1'
+    final gson = '2.8.2'
+    final flexibleAdapter = '5.0.1'
+    final flexibleAdapterUi = '1.0.0-b3'
+    final glide = '3.7.0'
+    final threeTen = '1.3.3'
+    final threeTenAbp = '1.0.5'
+    final recyclerRefreshLayout = '2.0.5'
+    final mockitoCore = '2.23.4'
+    final archCore = '2.0.0'
+    final timber = '4.7.1'
+    //endregion
+
+    //region Dependencies
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // TESTING
     testImplementation "junit:junit:$junit"
+    testImplementation "org.threeten:threetenbp:$threeTen"
+    testImplementation "org.mockito:mockito-core:$mockitoCore"
+    testImplementation "androidx.arch.core:core-testing:$archCore"
 
     // Support
-    implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support:support-v4:$support"
-    implementation "com.android.support:cardview-v7:$support"
-    implementation "com.android.support:design:$support"
-    implementation "com.android.support:customtabs:$support"
+    implementation "androidx.appcompat:appcompat:$appCompat"
+    implementation "androidx.legacy:legacy-support-v4:$support"
+    implementation "androidx.cardview:cardview:$support"
+    implementation "com.google.android.material:material:$support"
+    implementation "androidx.browser:browser:$support"
 
     // Firebase
-    implementation "com.google.firebase:firebase-messaging:$playServices"
-    implementation "com.google.firebase:firebase-database:$playServices"
-    implementation "com.google.firebase:firebase-core:$playServices"
+    implementation "com.google.firebase:firebase-messaging:$firebaseMessaging"
+    implementation "com.google.firebase:firebase-database:$firebaseDatabase"
+    implementation "com.google.firebase:firebase-core:$firebaseCore"
+
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
 
     // Crashlytics only for release builds
-    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+    releaseImplementation("com.crashlytics.sdk.android:crashlytics:$crashlytics@aar") {
         transitive = true
     }
 
     // Misc
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'eu.davidea:flexible-adapter:5.0.1'
-    implementation 'eu.davidea:flexible-adapter-ui:1.0.0-b3'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
-    implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
-
     testImplementation "com.squareup.moshi:moshi:$moshi_version"
     testImplementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     testImplementation "com.squareup.moshi:moshi-adapters:$moshi_version"
 
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.code.gson:gson:$gson"
+    implementation "eu.davidea:flexible-adapter:$flexibleAdapter"
+    implementation "eu.davidea:flexible-adapter-ui:$flexibleAdapterUi"
+    implementation "com.github.bumptech.glide:glide:$glide"
+    implementation "com.jakewharton.threetenabp:threetenabp:$threeTenAbp"
+    implementation "com.dinuscxj:recyclerrefreshlayout:$recyclerRefreshLayout"
+    implementation "com.jakewharton.timber:timber:$timber"
+    //endregion
 }
 
 apply plugin: 'com.google.gms.google-services'

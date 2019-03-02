@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/root_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="4dp"
-    android:paddingBottom="8dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
     android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="4dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="8dp"
     tools:ignore="UseCompoundDrawables">
 
-    <TextView android:id="@+id/faq_text"
+    <TextView
+        android:id="@+id/faq_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="17sp"
         android:fontFamily="sans-serif-light"
         android:textColor="@color/colorPrimaryDark"
-        tools:text="Answer to your question"/>
+        android:textSize="17sp"
+        tools:text="Answer to your question" />
 
     <ImageView
         android:id="@+id/faq_photo"
-        android:contentDescription="@string/hint_faq_photo"
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:layout_marginTop="8dp"
-        tools:src="@drawable/logo_text"/>
+        android:contentDescription="@string/hint_faq_photo"
+        tools:src="@drawable/logo_text" />
 </LinearLayout>

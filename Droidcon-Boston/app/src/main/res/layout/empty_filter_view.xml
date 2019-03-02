@@ -1,0 +1,22 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/empty_filter_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0.0"
+    android:padding="16dp"
+    tools:alpha="1.0">
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:alpha="0.6"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/there_are_no_talks_that_match_this_search"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="?android:textColorSecondary" />
+
+</FrameLayout>

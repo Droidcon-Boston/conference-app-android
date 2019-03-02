@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/logo_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/logoText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:foregroundGravity="center"
         android:layout_gravity="center"
-        android:maxWidth="600dp"
-        android:adjustViewBounds="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:contentDescription="@string/app_name"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:contentDescription="@string/app_name"
-        android:padding="75dp"
-        android:src="@drawable/logo_text"/>
+        android:foregroundGravity="center"
+        android:maxWidth="600dp"
+        android:src="@drawable/splash_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/content_description_logo"
+        android:foregroundGravity="center"
+        android:src="@drawable/splash_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoText"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

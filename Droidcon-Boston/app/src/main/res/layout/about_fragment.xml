@@ -13,30 +13,29 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:contentDescription="@string/navigation_header"
             android:scaleType="centerCrop"
-            android:src="@drawable/navigation_header_image"
-            android:contentDescription="Navigation Header" />
+            android:src="@drawable/gradient_splash_background" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:paddingEnd="50dp"
+            android:contentDescription="@string/logo"
             android:paddingStart="50dp"
+            android:paddingEnd="50dp"
             android:scaleType="centerInside"
-            android:src="@drawable/logo_text"
-            android:contentDescription="Logo" />
+            android:src="@drawable/logo_text" />
 
         <TextView
             android:id="@+id/tv_about_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/imageView2"
+            android:layout_alignParentStart="true"
+            android:lineSpacingMultiplier="1.2"
             android:padding="@dimen/def_padding_large"
             android:textSize="17sp"
-            android:lineSpacingMultiplier="1.2"
-            tools:text="@tools:sample/lorem/random"
-            android:layout_alignParentLeft="true" />
+            tools:text="@tools:sample/lorem/random" />
     </RelativeLayout>
 
 </ScrollView>

@@ -8,9 +8,9 @@
         android:id="@+id/tv_coc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.2"
         android:padding="@dimen/def_padding_large"
-        android:textSize="17sp"
-        android:lineSpacingMultiplier="1.2" />
+        android:textSize="17sp" />
 
 </ScrollView>
 

@@ -1,12 +1,11 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v4.view.PagerAdapter
 import android.view.ViewGroup
-
-import java.util.WeakHashMap
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
+import java.util.*
 
 /**
  * See https://stackoverflow.com/questions/13695649/refresh-images-on-fragmentstatepageradapter-on-resuming-activity
@@ -54,14 +53,12 @@ abstract class FixedFragmentStatePagerAdapter(fm: FragmentManager) : FragmentSta
 
     /**
      * Find the location of a fragment in the hashmap if it being view
-     * @param object the Fragment we want to check for
+     * @param fragmentObj the Fragment we want to check for
      * @return the position if found else -1
      */
     private fun findFragmentPositionHashMap(fragmentObj: Fragment): Int {
         for (position in mFragments.keys) {
-            if (position != null &&
-                    mFragments[position] != null &&
-                    mFragments[position] === fragmentObj) {
+            if (position != null && mFragments[position] != null && mFragments[position] === fragmentObj) {
                 return position
             }
         }
