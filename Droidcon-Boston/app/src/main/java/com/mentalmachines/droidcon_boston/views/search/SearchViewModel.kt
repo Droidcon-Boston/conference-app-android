@@ -13,6 +13,7 @@ import timber.log.Timber
 
 class SearchViewModel : ViewModel() {
     private val firebaseHelper = FirebaseHelper.instance
+    private val conferenceYear = "2018"
 
     private val _scheduleRows = MutableLiveData<List<Schedule.ScheduleRow>>()
     val scheduleRows: LiveData<List<Schedule.ScheduleRow>> = _scheduleRows
@@ -24,7 +25,11 @@ class SearchViewModel : ViewModel() {
                 val key = roomSnapshot.key ?: ""
                 val data = roomSnapshot.getValue(FirebaseDatabase.ScheduleEvent::class.java)
                 if (data != null) {
-                    rows.add(data.toScheduleRow(key))
+                    val scheduleRow = data.toScheduleRow(key)
+
+                    if (scheduleRow.date.endsWith(conferenceYear)) {
+                        rows.add(scheduleRow)
+                    }
                 }
             }
 

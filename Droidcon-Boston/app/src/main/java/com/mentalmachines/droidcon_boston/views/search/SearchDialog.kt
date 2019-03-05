@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.search
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,20 +17,13 @@ import com.mentalmachines.droidcon_boston.utils.visibleIf
 
 /**
  * A full screen dialog that is used to provide searching functionality in the app.
- *
- * @property[queryListener] A callback that should be used to be notified of any queries made by
- * this dialog.
  */
 class SearchDialog : DialogFragment() {
     private var backButton: ImageView? = null
     private var clearButton: ImageView? = null
     private var searchInput: AutoCompleteTextView? = null
 
-    var queryListener: ((String) -> Unit)? = null
     var itemClicked: ((Schedule.ScheduleRow) -> Unit)? = null
-
-    private val currentQuery: String
-        get() = searchInput?.text?.toString().orEmpty()
 
     private lateinit var viewModel: SearchViewModel
 
@@ -109,11 +101,6 @@ class SearchDialog : DialogFragment() {
             }
         })
 
-        searchInput?.setOnEditorActionListener { _, _, _ ->
-            handleQuery()
-            true
-        }
-
         searchInput?.setOnItemClickListener { _, _, position, _ ->
             val adapter = (searchInput?.adapter as? ScheduleSearchAdapter)
             val item = adapter?.getItem(position)
@@ -121,27 +108,6 @@ class SearchDialog : DialogFragment() {
                 itemClicked?.invoke(it)
                 dismiss()
             }
-        }
-    }
-
-    /**
-     * Notifies our [queryListener] that a query has been made and dismisses the dialog.
-     */
-    private fun handleQuery() {
-        queryListener?.invoke(currentQuery)
-        dismiss()
-    }
-
-    /**
-     * In general, we can just dismiss the dialog without performing a search. However, if we
-     * dismiss the dialog and there is no search, we should send that out so we can clear any
-     * current searches.
-     */
-    override fun onDismiss(dialog: DialogInterface?) {
-        if (currentQuery.isEmpty()) {
-            handleQuery()
-        } else {
-            super.dismiss()
         }
     }
 }

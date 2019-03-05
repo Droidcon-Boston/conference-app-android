@@ -69,8 +69,14 @@ class ScheduleSearchAdapter(
                 notifyDataSetChanged()
             }
 
+            /**
+             * Since our search dropdown includes actual talks, and not topics the user can suggest,
+             * we don't want to persist that inside the AutoCompleteTextView after all. We want
+             * to make it easy for them to click search and begin typing in the new thing, so we can
+             * just use an empty string here.
+             */
             override fun convertResultToString(resultValue: Any?): CharSequence {
-                return (resultValue as? Schedule.ScheduleRow)?.talkTitle.toString()
+                return ""
             }
         }
     }
