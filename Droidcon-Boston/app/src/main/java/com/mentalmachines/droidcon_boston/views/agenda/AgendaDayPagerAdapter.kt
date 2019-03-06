@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.views.agenda
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.mentalmachines.droidcon_boston.BuildConfig
 import com.mentalmachines.droidcon_boston.data.Schedule
 
 class AgendaDayPagerAdapter internal constructor(
@@ -18,9 +19,15 @@ class AgendaDayPagerAdapter internal constructor(
     }
 
     override fun getItem(position: Int): Fragment {
+        val dayString = if (position == 0) {
+            BuildConfig.EVENT_DAY_ONE_STRING
+        } else {
+            BuildConfig.EVENT_DAY_TWO_STRING
+        }
+
         return AgendaDayFragment.newInstance(
             myAgenda,
-            if (position == 0) Schedule.MONDAY else Schedule.TUESDAY
+            dayString
         )
     }
 
