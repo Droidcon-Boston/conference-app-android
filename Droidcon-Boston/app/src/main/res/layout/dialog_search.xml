@@ -35,7 +35,7 @@
             android:focusableInTouchMode="true"
             android:hint="@string/search_hint"
             android:imeOptions="actionSearch|flagNoExtractUi"
-            android:inputType="text"
+            android:inputType="textCapWords"
             android:maxLines="1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"

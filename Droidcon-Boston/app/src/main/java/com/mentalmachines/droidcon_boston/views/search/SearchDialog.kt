@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.search
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,29 +9,29 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.mentalmachines.droidcon_boston.R
+import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.utils.visibleIf
 
 /**
  * A full screen dialog that is used to provide searching functionality in the app.
- *
- * @property[queryListener] A callback that should be used to be notified of any queries made by
- * this dialog.
  */
 class SearchDialog : DialogFragment() {
     private var backButton: ImageView? = null
     private var clearButton: ImageView? = null
     private var searchInput: AutoCompleteTextView? = null
 
-    var queryListener: ((String) -> Unit)? = null
+    var itemClicked: ((Schedule.ScheduleRow) -> Unit)? = null
 
-    private val currentQuery: String
-        get() = searchInput?.text?.toString().orEmpty()
+    private lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle)
+        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -51,6 +50,7 @@ class SearchDialog : DialogFragment() {
         searchInput = view.findViewById(R.id.search_input)
 
         setupViewListeners()
+        listenForSchedule()
     }
 
     override fun onStart() {
@@ -59,6 +59,20 @@ class SearchDialog : DialogFragment() {
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         dialog?.window?.setLayout(width, height)
+    }
+
+    private fun listenForSchedule() {
+        viewModel.scheduleRows.observe(viewLifecycleOwner, Observer(this::setupSearchAdapter))
+    }
+
+    private fun setupSearchAdapter(suggestions: List<Schedule.ScheduleRow>?) {
+        val adapter = ScheduleSearchAdapter(
+            requireContext(),
+            R.layout.list_item_schedule_search,
+            suggestions.orEmpty()
+        )
+
+        searchInput?.setAdapter(adapter)
     }
 
     /**
@@ -87,30 +101,13 @@ class SearchDialog : DialogFragment() {
             }
         })
 
-        searchInput?.setOnEditorActionListener { _, _, _ ->
-            handleQuery()
-            true
-        }
-    }
-
-    /**
-     * Notifies our [queryListener] that a query has been made and dismisses the dialog.
-     */
-    private fun handleQuery() {
-        queryListener?.invoke(currentQuery)
-        dismiss()
-    }
-
-    /**
-     * In general, we can just dismiss the dialog without performing a search. However, if we
-     * dismiss the dialog and there is no search, we should send that out so we can clear any
-     * current searches.
-     */
-    override fun onDismiss(dialog: DialogInterface?) {
-        if (currentQuery.isEmpty()) {
-            handleQuery()
-        } else {
-            super.dismiss()
+        searchInput?.setOnItemClickListener { _, _, position, _ ->
+            val adapter = (searchInput?.adapter as? ScheduleSearchAdapter)
+            val item = adapter?.getItem(position)
+            item?.let {
+                itemClicked?.invoke(it)
+                dismiss()
+            }
         }
     }
 }

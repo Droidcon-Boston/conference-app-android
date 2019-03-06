@@ -10,11 +10,11 @@ class AgendaDayPagerAdapter internal constructor(
 ) :
     FixedFragmentStatePagerAdapter(fm) {
 
-    private val PAGE_COUNT = 2
+    private val pageCount = 2
     private val tabTitles = arrayOf("Day 1", "Day 2")
 
     override fun getCount(): Int {
-        return PAGE_COUNT
+        return pageCount
     }
 
     override fun getItem(position: Int): Fragment {

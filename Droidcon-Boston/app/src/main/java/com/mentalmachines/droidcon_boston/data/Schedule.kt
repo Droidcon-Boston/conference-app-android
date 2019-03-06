@@ -1,5 +1,7 @@
 package com.mentalmachines.droidcon_boston.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 
@@ -8,6 +10,7 @@ import java.util.*
  */
 class Schedule {
 
+    @Parcelize
     data class ScheduleRow(
         var primarySpeakerName: String = "",
         var id: String = "",
@@ -25,7 +28,7 @@ class Schedule {
         var photoUrlMap: HashMap<String, String> = HashMap(0),
         var isOver: Boolean = false,
         var isCurrentSession: Boolean = false
-    ) {
+    ) : Parcelable {
 
         fun hasSpeaker(): Boolean = speakerNames.isNotEmpty()
 
