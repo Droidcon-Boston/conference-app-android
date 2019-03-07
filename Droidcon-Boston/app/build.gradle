@@ -23,6 +23,13 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField "int", "EVENT_YEAR", "2018"
+        buildConfigField "int", "EVENT_MONTH", "03"
+        buildConfigField "int", "EVENT_DAY_ONE", "26"
+        buildConfigField "int", "EVENT_DAY_TWO", "27"
+        buildConfigField "String", "EVENT_DAY_ONE_STRING", "\"03/26/2018\""
+        buildConfigField "String", "EVENT_DAY_TWO_STRING", "\"03/27/2018\""
     }
 
     signingConfigs {

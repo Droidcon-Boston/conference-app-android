@@ -55,7 +55,5 @@ class Schedule {
 
     companion object {
         var SCHEDULE_ITEM_ROW = "schedule_item_row"
-        var MONDAY = "03/26/2018"
-        var TUESDAY = "03/27/2018"
     }
 }
