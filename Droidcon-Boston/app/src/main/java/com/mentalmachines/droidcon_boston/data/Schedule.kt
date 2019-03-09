@@ -22,7 +22,7 @@ class Schedule {
         var speakerNameToOrgName: HashMap<String, String> = HashMap(0),
         var utcStartTimeString: String = "",
         var endTime: String = "",
-        var room: String = "",
+        var room: String? = null,
         var date: String = "",
         var trackSortOrder: Int = 0,
         var photoUrlMap: HashMap<String, String> = HashMap(0),
