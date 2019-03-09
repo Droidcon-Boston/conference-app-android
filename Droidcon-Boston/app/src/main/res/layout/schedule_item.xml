@@ -113,15 +113,12 @@
             android:layout_height="90dp"
             android:layout_gravity="center_vertical">
 
-            <com.airbnb.lottie.LottieAnimationView
+            <ImageView
                 android:id="@+id/speaker_image"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/speaker_avatar"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="dancing_droid.json"
-                app:lottie_loop="true"
                 tools:src="@drawable/bg_social_btn" />
 
             <TextView

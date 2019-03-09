@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.agenda
 
-import android.graphics.Bitmap
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -8,11 +7,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.Target
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
@@ -22,7 +16,6 @@ import eu.davidea.flexibleadapter.items.AbstractSectionableItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 import timber.log.Timber
-import java.lang.Exception
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,10 +26,10 @@ const val CURRENT_ITEM_MARKER_TAG = "CURRENT_ITEM_MARKER_TAG"
  * Used for displaying the schedule with sticky headers with optional day filtering
  */
 class ScheduleAdapterItem internal constructor(
-        val itemData: Schedule.ScheduleRow,
-        header: ScheduleAdapterItemHeader
+    val itemData: Schedule.ScheduleRow,
+    header: ScheduleAdapterItemHeader
 ) :
-        AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
+    AbstractSectionableItem<ScheduleAdapterItem.ViewHolder, ScheduleAdapterItemHeader>(header) {
 
     private var startTime: Date = Date()
 
@@ -73,17 +66,17 @@ class ScheduleAdapterItem internal constructor(
     }
 
     override fun createViewHolder(
-            view: View,
-            adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>
+        view: View,
+        adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>
     ): ViewHolder {
         return ScheduleAdapterItem.ViewHolder(view, adapter)
     }
 
     override fun bindViewHolder(
-            adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
-            holder: ViewHolder,
-            position: Int,
-            payloads: MutableList<Any>
+        adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
+        holder: ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
     ) {
 
         val userAgendaRepo = UserAgendaRepo.getInstance(holder.bookmarkIndicator.context)
@@ -123,15 +116,9 @@ class ScheduleAdapterItem internal constructor(
 
             val context = holder.title.context
 
-
             Glide.with(context).load(itemData.photoUrlMap[itemData.primarySpeakerName])
-                    .asBitmap()
-                    .transform(CircleTransform(context))
-                    .into(object : SimpleTarget<Bitmap>() {
-                        override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
-                            holder.avatar.setImageBitmap(resource)
-                        }
-                    })
+                .transform(CircleTransform(context)).placeholder(R.drawable.emo_im_cool).crossFade()
+                .into(holder.avatar)
 
             holder.bookmarkIndicator.visibility =
                     if (userAgendaRepo.isSessionBookmarked(itemData.id)) View.VISIBLE
@@ -142,10 +129,10 @@ class ScheduleAdapterItem internal constructor(
 
         val availableColor = if (itemData.isOver) R.color.colorGray else R.color.colorAccent
         holder.availableIndicator.setBackgroundColor(
-                ContextCompat.getColor(
-                        holder.availableIndicator.context,
-                        availableColor
-                )
+            ContextCompat.getColor(
+                holder.availableIndicator.context,
+                availableColor
+            )
         )
 
         if (itemData.isCurrentSession) {
@@ -195,9 +182,9 @@ class ScheduleAdapterItem internal constructor(
         }
 
         constructor(view: View, adapter: FlexibleAdapter<*>, stickyHeader: Boolean) : super(
-                view,
-                adapter,
-                stickyHeader
+            view,
+            adapter,
+            stickyHeader
         ) {
 
             findViews(view)
