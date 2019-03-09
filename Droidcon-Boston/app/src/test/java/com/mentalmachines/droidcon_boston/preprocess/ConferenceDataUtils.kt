@@ -3,6 +3,9 @@ package com.mentalmachines.droidcon_boston.preprocess
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.io.IOException
 import java.time.Duration
 import java.util.*
 import kotlin.collections.HashMap
@@ -55,6 +58,8 @@ class ConferenceDataUtils {
                             it.value.primarySpeakerName = "Kaan Mamikoglu"
                         } else if (speakerNames.containsKey("Adrián Catalan")) {
                             it.value.primarySpeakerName = "Adrián Catalan"
+                        } else if (speakerNames.containsKey("Oleg Golberg")) {
+                            it.value.primarySpeakerName = "Oleg Golberg"
                         } else if (errorsFatal) {
                             throw IllegalStateException("Didn't handle case of speakernames: " + speakerNames)
                         }
@@ -92,6 +97,31 @@ class ConferenceDataUtils {
                     speaker.lastName = splitName.last()
                 }
             }
+        }
+
+        fun getSlidesupDataFromAPI(baseUrl: String): String {
+            val client = OkHttpClient()
+            val sections = getUrlRawData(client, "$baseUrl/sections.json?print=pretty")
+            val tracks = getUrlRawData(client, "$baseUrl/tracks.json?print=pretty")
+            val events = getUrlRawData(client, "$baseUrl/events.json?print=pretty")
+            val speakers = getUrlRawData(client, "$baseUrl/speakers.json?print=pretty")
+            val rooms = getUrlRawData(client, "$baseUrl/rooms.json?print=pretty")
+            val confExportJson = "{\n" +
+                    "  \"sections\" : $sections,\n" +
+                    "  \"tracks\" : $tracks,\n" +
+                    "  \"events\" : $events,\n" +
+                    "  \"speakers\" : $speakers,\n" +
+                    "  \"rooms\" : $rooms\n}"
+            return confExportJson
+        }
+
+        @Throws(IOException::class)
+        fun getUrlRawData(okHttpClient: OkHttpClient, url: String): String? {
+            val request = Request.Builder()
+                .url(url)
+                .build()
+
+            okHttpClient.newCall(request).execute().use { response -> return response.body()?.string() }
         }
     }
 }

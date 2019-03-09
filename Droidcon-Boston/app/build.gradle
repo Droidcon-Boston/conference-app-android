@@ -153,6 +153,7 @@ dependencies {
     testImplementation "com.squareup.moshi:moshi-adapters:$moshi_version"
     testImplementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.google.firebase:firebase-admin:$firebaseAdmin"
+    testImplementation "com.google.firebase:firebase-admin:$firebaseAdmin"
 
     // Misc
     implementation "com.google.code.gson:gson:$gson"
