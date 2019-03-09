@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.mentalmachines.droidcon_boston.BuildConfig
 import com.mentalmachines.droidcon_boston.R
 import kotlinx.android.synthetic.main.agenda_fragment.*
 import java.util.*
@@ -43,7 +44,11 @@ class AgendaFragment : Fragment() {
             // set current day to second if today matches
             val today = Calendar.getInstance()
             val dayTwo = Calendar.getInstance()
-            dayTwo.set(EVENT_YEAR, EVENT_MONTH, EVENT_DAY_ONE)
+            dayTwo.set(
+                BuildConfig.EVENT_YEAR,
+                BuildConfig.EVENT_MONTH - 1, // Calendar is 0 indexed
+                BuildConfig.EVENT_DAY_TWO
+            )
             if (today == dayTwo) {
                 viewpager.currentItem = 1
             }
@@ -87,9 +92,5 @@ class AgendaFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
-
-        private const val EVENT_YEAR = 2018
-        private const val EVENT_MONTH = Calendar.MARCH
-        private const val EVENT_DAY_ONE = 27
     }
 }
