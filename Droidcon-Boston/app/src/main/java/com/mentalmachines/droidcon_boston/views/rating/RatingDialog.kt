@@ -7,15 +7,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RatingBar
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.textfield.TextInputEditText
 import com.mentalmachines.droidcon_boston.R
-import timber.log.Timber
 
 class RatingDialog : DialogFragment() {
     private var sessionRatingBar: RatingBar? = null
     private var sessionFeedbackInput: TextInputEditText? = null
     private var cancelButton: Button? = null
     private var submitButton: Button? = null
+
+    private lateinit var viewModel: RatingViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,11 +27,19 @@ class RatingDialog : DialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.dialog_rating, container, false)
 
+        initializeViewModel()
         findViews(view)
-
         setupClickListeners()
 
         return view
+    }
+
+    private fun initializeViewModel() {
+        viewModel = ViewModelProviders.of(this).get(RatingViewModel::class.java)
+
+        viewModel.getFeedbackSent().observe(viewLifecycleOwner, Observer {
+            this.dismiss()
+        })
     }
 
     private fun findViews(view: View) {
@@ -44,9 +55,7 @@ class RatingDialog : DialogFragment() {
         }
 
         submitButton?.setOnClickListener {
-            val feedback = getFeedback()
-            Timber.d("Submitting feedback: $feedback")
-            this.dismiss()
+            onSubmitClicked()
         }
 
         sessionRatingBar?.setOnRatingBarChangeListener { _, rating, _ ->
@@ -63,11 +72,12 @@ class RatingDialog : DialogFragment() {
         dialog?.window?.setLayout(width, height)
     }
 
-    private fun getFeedback(): SessionFeedback {
+    private fun onSubmitClicked() {
         val rating = sessionRatingBar?.rating?.toInt() ?: 0
         val feedback = sessionFeedbackInput?.text?.toString().orEmpty()
         val sessionId = arguments?.getString(ARG_SESSION_ID).orEmpty()
-        return SessionFeedback(rating, feedback, sessionId)
+
+        viewModel.handleSubmission(rating, feedback, sessionId)
     }
 
     companion object {
