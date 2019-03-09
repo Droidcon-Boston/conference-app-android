@@ -233,7 +233,7 @@ class AgendaDetailFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.rate -> {
-                RatingDialog().show(fragmentManager, "RATE_DIALOG")
+                RatingDialog.newInstance(viewModel.schedulerowId).show(fragmentManager, "RATE_DIALOG")
                 true
             }
             else -> super.onOptionsItemSelected(item)

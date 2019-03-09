@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp">
 
     <RatingBar
-        android:id="@+id/talk_rating"
+        android:id="@+id/session_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
@@ -22,10 +24,10 @@
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/talk_rating">
+        app:layout_constraintTop_toBottomOf="@id/session_rating">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/talk_feedback"
+            android:id="@+id/session_feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/what_did_you_think" />

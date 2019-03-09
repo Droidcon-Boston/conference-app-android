@@ -9,10 +9,11 @@ import android.widget.RatingBar
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.mentalmachines.droidcon_boston.R
+import timber.log.Timber
 
 class RatingDialog : DialogFragment() {
-    private var talkRatingBar: RatingBar? = null
-    private var talkFeedbackInput: TextInputEditText? = null
+    private var sessionRatingBar: RatingBar? = null
+    private var sessionFeedbackInput: TextInputEditText? = null
     private var cancelButton: Button? = null
     private var submitButton: Button? = null
 
@@ -31,8 +32,8 @@ class RatingDialog : DialogFragment() {
     }
 
     private fun findViews(view: View) {
-        talkRatingBar = view.findViewById(R.id.talk_rating)
-        talkFeedbackInput = view.findViewById(R.id.talk_feedback)
+        sessionRatingBar = view.findViewById(R.id.session_rating)
+        sessionFeedbackInput = view.findViewById(R.id.session_feedback)
         cancelButton = view.findViewById(R.id.cancel)
         submitButton = view.findViewById(R.id.submit)
     }
@@ -43,7 +44,8 @@ class RatingDialog : DialogFragment() {
         }
 
         submitButton?.setOnClickListener {
-            //TODO: Handle submission
+            val feedback = getFeedback()
+            Timber.d("Submitting feedback: $feedback")
             this.dismiss()
         }
     }
@@ -54,5 +56,26 @@ class RatingDialog : DialogFragment() {
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         dialog?.window?.setLayout(width, height)
+    }
+
+    private fun getFeedback(): SessionFeedback {
+        val rating = sessionRatingBar?.rating?.toInt() ?: 0
+        val feedback = sessionFeedbackInput?.text?.toString().orEmpty()
+        val sessionId = arguments?.getString(ARG_SESSION_ID).orEmpty()
+        return SessionFeedback(rating, feedback, sessionId)
+    }
+
+    companion object {
+        private const val ARG_SESSION_ID = "sessionId"
+
+        fun newInstance(sessionId: String): RatingDialog {
+            val args = Bundle().apply {
+                putString(ARG_SESSION_ID, sessionId)
+            }
+
+            return RatingDialog().apply {
+                arguments = args
+            }
+        }
     }
 }
