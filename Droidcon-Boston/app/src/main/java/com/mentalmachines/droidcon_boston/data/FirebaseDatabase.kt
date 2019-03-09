@@ -78,7 +78,7 @@ open class FirebaseDatabase {
             }
 
             row.id = scheduleId
-            row.room = roomNames.keys.first()
+            row.room = roomNames.keys.firstOrNull()
             row.trackSortOrder = trackSortOrder
             row.primarySpeakerName = primarySpeakerName
             row.speakerNames = speakerNames.keys.toList()
