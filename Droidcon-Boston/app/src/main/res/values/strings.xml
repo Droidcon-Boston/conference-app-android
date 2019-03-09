@@ -64,4 +64,5 @@
     <string name="rate">Rate</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="err_select_rating">Please select a rating.</string>
 </resources>

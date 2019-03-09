@@ -48,6 +48,11 @@ class RatingDialog : DialogFragment() {
             Timber.d("Submitting feedback: $feedback")
             this.dismiss()
         }
+
+        sessionRatingBar?.setOnRatingBarChangeListener { _, rating, _ ->
+            val enableSubmissions = rating > 0.0F
+            submitButton?.isEnabled = enableSubmissions
+        }
     }
 
     override fun onStart() {
