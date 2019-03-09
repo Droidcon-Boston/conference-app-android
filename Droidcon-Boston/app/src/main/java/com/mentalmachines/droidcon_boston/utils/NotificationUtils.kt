@@ -154,7 +154,11 @@ class NotificationUtils(context: Context) : ContextWrapper(context) {
 
         pm.setComponentEnabledSetting(
             receiver,
-            if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            if (enabled) {
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            } else {
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+            },
             PackageManager.DONT_KILL_APP
         )
     }

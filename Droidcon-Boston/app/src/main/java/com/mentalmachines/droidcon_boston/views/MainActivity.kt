@@ -19,6 +19,7 @@ import com.mentalmachines.droidcon_boston.firebase.AuthController
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator
 import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
+import com.mentalmachines.droidcon_boston.views.search.SearchDialog
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
 import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerFragment
@@ -30,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var authController: AuthController
 
+    private val searchDialog = SearchDialog()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -39,6 +42,14 @@ class MainActivity : AppCompatActivity() {
         initNavDrawerToggle()
 
         initFragmentsFromIntent(intent)
+
+        initSearchDialog()
+    }
+
+    private fun initSearchDialog() {
+        searchDialog.itemClicked = {
+            AgendaDetailFragment.addDetailFragmentToStack(supportFragmentManager, it)
+        }
     }
 
     private fun initFragmentsFromIntent(initialIntent: Intent) {
@@ -241,7 +252,7 @@ class MainActivity : AppCompatActivity() {
             when (title) {
                 resources.getString(R.string.str_agenda) -> fragment = AgendaFragment.newInstance()
                 resources.getString(R.string.str_my_schedule) -> fragment =
-                        AgendaFragment.newInstanceMySchedule()
+                    AgendaFragment.newInstanceMySchedule()
                 resources.getString(R.string.str_faq) -> fragment = FAQFragment()
                 resources.getString(R.string.str_social) -> fragment = SocialFragment()
                 resources.getString(R.string.str_coc) -> fragment = CocFragment()
@@ -314,9 +325,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSearchRequested(): Boolean {
+        searchDialog.show(supportFragmentManager, SEARCH_DIALOG_TAG)
+        return true
+    }
+
     companion object {
         private const val EXTRA_SESSIONID = "MainActivity.EXTRA_SESSIONID"
         private const val EXTRA_SESSION_DETAILS = "MainActivity.EXTRA_SESSION_DETAILS"
+        private const val SEARCH_DIALOG_TAG = "agenda_search_tag"
 
         private const val RC_SIGN_IN = 1
 

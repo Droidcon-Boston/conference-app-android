@@ -243,7 +243,8 @@ class AgendaDetailFragment : Fragment() {
             agendaDetailFragment.arguments = arguments
 
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, agendaDetailFragment).addToBackStack(null).commit()
+                .replace(R.id.fragment_container, agendaDetailFragment)
+                .addToBackStack(null).commit()
         }
     }
 }
