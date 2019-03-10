@@ -28,6 +28,7 @@
     <string name="str_coc">Code Of Conduct</string>
     <string name="str_login">Log In</string>
     <string name="str_logout">Log Out</string>
+    <string name="str_twitter_feed">Twitter Feed</string>
     <string name="str_title_error">Error</string>
     <string name="social_title_facebook">Facebook</string>
     <string name="social_title_instagram">Instagram</string>
@@ -46,6 +47,8 @@
     <string name="close">Close</string>
     <string name="droidconbos_twitter_handle">droidconbos</string>
     <string name="no_bookmarked_items">No talks added to My Schedule\nfor this day</string>
+    <string name="twitter_error_txt">Sorry we couldn\'t fetch tweets :(\nSwipe down to
+        retry.</string>
     <string name="navigation_header">Navigation Header</string>
     <string name="logo">Logo</string>
     <string name="header_background">Header Background</string>
@@ -60,4 +63,10 @@
     <string name="close_search">Close Search</string>
     <string name="clear_search">Clear Search</string>
     <string name="there_are_no_talks_that_match_this_search">There are no talks that match this search.</string>
+
+    <string name="twitter_handel">\@%s</string>
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">0v2bhdPtoKKW7s7EC2yaFa2Ia</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">ZjUpAkV2qOflxxXoiHx4nWTT6pmn1m5XmUX4eVj84I1PZJySZZ</string>
+
 </resources>
