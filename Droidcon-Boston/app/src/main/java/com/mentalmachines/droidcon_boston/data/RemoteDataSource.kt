@@ -53,12 +53,10 @@ class RemoteDataSource : DataSource {
                 true)
             .enqueue(object : Callback<Search> {
                 override fun onFailure(call: Call<Search>, t: Throwable) {
-                    //TODO: Decide message
                     tweets.postValue(Result.Error("Error"))
                 }
 
                 override fun onResponse(call: Call<Search>, response: Response<Search>) {
-                    //TODO : check why quoted tweets are null
                     tweets.postValue(Result.Data(mapTweets(response.body()?.tweets ?: Collections.emptyList())))
                 }
 

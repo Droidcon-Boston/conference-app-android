@@ -10,13 +10,13 @@ class Repository private constructor(private val remoteDataSource: DataSource) {
 
     companion object {
 
-        private var repository: Repository? = null
+        private lateinit var repository: Repository
 
         fun getInstance(): Repository {
-            if (repository == null) {
+            if (!::repository.isInitialized) {
                 repository = Repository(RemoteDataSource.getInstance())
             }
-            return repository!!
+            return repository
         }
     }
 
