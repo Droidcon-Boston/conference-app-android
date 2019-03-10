@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/quotedProfileImage"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        tools:srcCompat="@tools:sample/avatars[5]" />
+
+    <TextView
+        android:id="@+id/quotedScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/quotedProfileImage"
+        tools:text="Droidcon Boston" />
+
+    <TextView
+        android:id="@+id/quotedName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/quotedScreenName"
+        tools:text="\@droidconbos" />
+
+    <TextView
+        android:id="@+id/quotedContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/quotedScreenName"
+        android:autoLink="web"
+        android:textColorLink="@color/colorPrimaryDark"
+        android:layout_toEndOf="@+id/quotedProfileImage"
+        tools:text="Today is #InternationalWomensDay. We celebrate you not only today, but everyday.💜
+✨All women get $300 off your #DroidconBos ticket when you register today.✨
+#Droidcon #AndroidDev #AndroidGala #WomensDay #WomensDay2019" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:layout_toEndOf="@+id/quotedProfileImage"
+        android:layout_below="@+id/quotedContent"
+        android:background="@drawable/bg_quoted_tweet">
+
+        <TextView
+            android:id="@+id/quotedTweetScreenName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            tools:text="Droidcon Boston" />
+
+        <TextView
+            android:id="@+id/quotedTweetName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/quotedTweetScreenName"
+            tools:text="\@droidconbos" />
+
+        <TextView
+            android:id="@+id/quotedTweetContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/quotedTweetScreenName"
+            android:textColor="@android:color/black"
+            android:autoLink="web"
+            android:textColorLink="@color/colorPrimaryDark"
+            tools:text="Today is #InternationalWomensDay. We celebrate you not only today, but everyday.💜
+✨All women get $300 off your #DroidconBos ticket when you register today.✨
+#Droidcon #AndroidDev #AndroidGala #WomensDay #WomensDay2019" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
