@@ -49,14 +49,14 @@ class FaqAdapterItem internal constructor(val itemData: Answer, header: FaqAdapt
         payloads: MutableList<Any>
     ) {
 
-        holder.faq_text.text = itemData.answer
+        holder.faqText.text = itemData.answer
         if (!TextUtils.isEmpty(itemData.photoLink)) {
-            val context = holder.faq_text.context
+            val context = holder.faqText.context
             Glide.with(context).load(itemData.photoLink).crossFade().centerCrop()
-                .into(holder.faq_photo)
-            holder.faq_photo.visibility = View.VISIBLE
+                .into(holder.faqPhoto)
+            holder.faqPhoto.visibility = View.VISIBLE
         } else {
-            holder.faq_photo.visibility = View.GONE
+            holder.faqPhoto.visibility = View.GONE
         }
 
         if (!TextUtils.isEmpty(itemData.otherLink) || !TextUtils.isEmpty(itemData.mapLink)) {
@@ -66,24 +66,24 @@ class FaqAdapterItem internal constructor(val itemData: Answer, header: FaqAdapt
 
     private fun addBackgroundRipple(holder: ViewHolder) {
         val outValue = TypedValue()
-        val context = holder.faq_text.context
+        val context = holder.faqText.context
         context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
-        holder.root_layout.setBackgroundResource(outValue.resourceId)
+        holder.rootLayout.setBackgroundResource(outValue.resourceId)
     }
 
 
     class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
 
-        lateinit var root_layout: View
+        lateinit var rootLayout: View
 
-        lateinit var faq_text: TextView
+        lateinit var faqText: TextView
 
-        lateinit var faq_photo: ImageView
+        lateinit var faqPhoto: ImageView
 
         private fun findViews(parent: View) {
-            root_layout = parent.findViewById(R.id.root_layout)
-            faq_text = parent.findViewById(R.id.faq_text)
-            faq_photo = parent.findViewById(R.id.faq_photo)
+            rootLayout = parent.findViewById(R.id.root_layout)
+            faqText = parent.findViewById(R.id.faq_text)
+            faqPhoto = parent.findViewById(R.id.faq_photo)
         }
 
         init {

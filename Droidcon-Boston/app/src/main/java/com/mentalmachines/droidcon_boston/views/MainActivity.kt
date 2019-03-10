@@ -11,8 +11,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.id
 import com.mentalmachines.droidcon_boston.R.string
@@ -34,9 +32,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var authController: AuthController
 
-    private val _currentQuery = MutableLiveData<String>()
-    val searchQuery: LiveData<String> = _currentQuery
-
     private val searchDialog = SearchDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +48,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSearchDialog() {
-        searchDialog.queryListener = _currentQuery::setValue
+        searchDialog.itemClicked = {
+            AgendaDetailFragment.addDetailFragmentToStack(supportFragmentManager, it)
+        }
     }
 
     private fun initFragmentsFromIntent(initialIntent: Intent) {

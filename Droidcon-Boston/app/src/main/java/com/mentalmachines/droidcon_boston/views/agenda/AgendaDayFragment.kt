@@ -24,16 +24,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.mentalmachines.droidcon_boston.R
-import com.mentalmachines.droidcon_boston.data.FirebaseDatabase.ScheduleEvent
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
-import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.isNullorEmpty
-import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
@@ -46,7 +40,6 @@ import timber.log.Timber
 class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val timeHeaders = HashMap<String, ScheduleAdapterItemHeader>()
 
-    private lateinit var userAgendaRepo: UserAgendaRepo
     private var headerAdapter: FlexibleAdapter<*>? = null
     private lateinit var layoutManager: LinearLayoutManager
 
@@ -154,7 +147,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchScheduleData()
 
         activity?.supportFragmentManager?.addOnBackStackChangedListener(backStackChangeListener)
-        listenForSearchQueries()
     }
 
     private val backStackChangeListener: () -> Unit = {
@@ -350,14 +342,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         return true
-    }
-
-    private fun listenForSearchQueries() {
-        (activity as? MainActivity)?.searchQuery?.observe(
-            viewLifecycleOwner,
-            Observer {
-                it?.let(viewModel::setActiveFilter)
-            })
     }
 
     companion object {
