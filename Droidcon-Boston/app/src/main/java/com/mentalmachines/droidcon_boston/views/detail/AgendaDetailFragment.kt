@@ -4,6 +4,9 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -28,6 +31,7 @@ import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
+import com.mentalmachines.droidcon_boston.views.rating.RatingDialog
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
@@ -48,6 +52,11 @@ class AgendaDetailFragment : Fragment() {
     }
 
     private lateinit var viewModel: AgendaDetailViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -217,7 +226,23 @@ class AgendaDetailFragment : Fragment() {
         fab_agenda_detail_bookmark.backgroundTintList = ColorStateList.valueOf(color)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_agenda_detail, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.rate -> {
+                RatingDialog.newInstance(viewModel.schedulerowId).show(fragmentManager, RATE_DIALOG_TAG)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     companion object {
+        private const val RATE_DIALOG_TAG = "RATE_DIALOG"
+
         fun addDetailFragmentToStack(
             supportFragmentManager: FragmentManager,
             itemData: Schedule.ScheduleRow
