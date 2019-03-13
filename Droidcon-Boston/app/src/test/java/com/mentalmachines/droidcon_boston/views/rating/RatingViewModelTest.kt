@@ -2,9 +2,9 @@ package com.mentalmachines.droidcon_boston.views.rating
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
-import org.junit.Assert.*
 import org.junit.Rule
 import org.mockito.Mockito.mock
 

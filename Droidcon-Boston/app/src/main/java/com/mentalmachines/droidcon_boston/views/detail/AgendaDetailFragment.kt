@@ -233,7 +233,7 @@ class AgendaDetailFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.rate -> {
-                RatingDialog.newInstance(viewModel.schedulerowId).show(fragmentManager, "RATE_DIALOG")
+                RatingDialog.newInstance(viewModel.schedulerowId).show(fragmentManager, RATE_DIALOG_TAG)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -241,6 +241,8 @@ class AgendaDetailFragment : Fragment() {
     }
 
     companion object {
+        private const val RATE_DIALOG_TAG = "RATE_DIALOG"
+
         fun addDetailFragmentToStack(
             supportFragmentManager: FragmentManager,
             itemData: Schedule.ScheduleRow
