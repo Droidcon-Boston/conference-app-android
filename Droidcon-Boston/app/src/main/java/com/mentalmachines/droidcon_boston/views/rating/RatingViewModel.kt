@@ -30,9 +30,10 @@ class RatingViewModel : ViewModel() {
         feedbackSent.value = true
     }
 
-    fun init(userId: String, ratingRepo: RatingRepo) {
+    fun init(userId: String, ratingRepo: RatingRepo): RatingViewModel {
         this.userId = userId
         this.ratingRepo = ratingRepo
+        return this
     }
 
     fun getPreviousFeedback(sessionId: String, feedbackCallback: (SessionFeedback?) -> Unit) {
