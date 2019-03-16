@@ -1,15 +1,14 @@
 package com.mentalmachines.droidcon_boston.views.rating
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.google.firebase.database.DatabaseReference
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.mock
 
 class RatingViewModelTest {
-    private val userDatabase = mock(DatabaseReference::class.java)
-    private val viewModel = RatingViewModel().init("myUserID", RatingRepo("myUserId", userDatabase))
+    private val ratingRepo = mock(RatingRepo::class.java)
+    private val viewModel = RatingViewModel().init("myUserID", ratingRepo)
 
     @JvmField
     @Rule
