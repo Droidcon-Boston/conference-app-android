@@ -4,7 +4,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.mentalmachines.droidcon_boston.data.FirebaseDatabase
 import timber.log.Timber
 
 class RatingRepo(
@@ -28,7 +27,7 @@ class RatingRepo(
                             "feedback" -> comments = it.value as String
                         }
                     }
-                    feedbackCallback(SessionFeedback(rating, comments, sessionId))
+                    feedbackCallback(SessionFeedback(rating, comments))
                 }
 
             })
