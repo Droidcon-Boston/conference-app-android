@@ -11,7 +11,7 @@ class RatingRepo(
     private val userDatabase: DatabaseReference
 ) {
     fun getSessionFeedback(sessionId: String, feedbackCallback: (SessionFeedback?) -> Unit) {
-        userDatabase.child("$userId/sessionFeedback/$sessionId")
+        userDatabase.child(getSessionFeedbackPath(sessionId))
             .addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     Timber.e(error.toException())
@@ -34,7 +34,11 @@ class RatingRepo(
     }
 
     fun setSessionFeedback(sessionId: String, sessionRating: SessionFeedback) {
-        userDatabase.child("$userId/sessionFeedback/$sessionId")
+        userDatabase.child(getSessionFeedbackPath(sessionId))
             .setValue(sessionRating)
+    }
+
+    private fun getSessionFeedbackPath(sessionId: String): String {
+        return "$userId/sessionFeedback/$sessionId"
     }
 }
