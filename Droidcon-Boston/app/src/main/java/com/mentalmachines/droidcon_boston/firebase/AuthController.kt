@@ -27,6 +27,10 @@ object AuthController {
     val userId: String?
         get() = user?.uid
 
+    init {
+        user = FirebaseAuth.getInstance().currentUser
+    }
+
     fun login(activity: AppCompatActivity, resultCode: Int, @DrawableRes loginScreenAppIcon: Int) {
         val providers = arrayListOf(
             AuthUI.IdpConfig.GoogleBuilder().build()
