@@ -56,8 +56,8 @@ class ConferenceDataUtils {
                             it.value.primarySpeakerName = "Giorgio Natili"
                         } else if (speakerNames.containsKey("Kaan Mamikoglu")) {
                             it.value.primarySpeakerName = "Kaan Mamikoglu"
-                        } else if (speakerNames.containsKey("Adrián Catalan")) {
-                            it.value.primarySpeakerName = "Adrián Catalan"
+                        } else if (speakerNames.containsKey("Adrian Catalan")) {
+                            it.value.primarySpeakerName = "Adrian Catalan"
                         } else if (speakerNames.containsKey("Oleg Golberg")) {
                             it.value.primarySpeakerName = "Oleg Golberg"
                         } else if (errorsFatal) {
