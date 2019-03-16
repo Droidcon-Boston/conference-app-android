@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import timber.log.Timber
 
-class RatingViewModel(
-    private val firebaseHelper: FirebaseHelper = FirebaseHelper.instance
-) : ViewModel() {
+class RatingViewModel : ViewModel() {
 
     private val feedbackSent = MutableLiveData<Boolean>()
 
