@@ -18,7 +18,7 @@ class UserProfileTest : TestCase() {
 
     private var localUser: FirebaseDatabase.User? = null
 
-    private var authController = AuthController()
+    private var authController = AuthController
 
     @Mock
     private lateinit var firebaseUser: FirebaseUser
