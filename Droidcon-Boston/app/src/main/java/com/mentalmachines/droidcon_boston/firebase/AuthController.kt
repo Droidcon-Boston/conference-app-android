@@ -79,11 +79,6 @@ object AuthController {
 
     fun logout(context: Context) {
         AuthUI.getInstance().signOut(context)
-        user?.email?.let { email ->
-            FirebaseHelper.instance.userDatabase.child(email).setValue(
-                null
-            )
-        }
         user = null
     }
 
