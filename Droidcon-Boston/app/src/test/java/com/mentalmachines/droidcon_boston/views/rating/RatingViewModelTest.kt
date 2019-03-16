@@ -1,17 +1,12 @@
 package com.mentalmachines.droidcon_boston.views.rating
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
 
-import org.junit.Rule
-import org.mockito.Mockito.mock
-
 class RatingViewModelTest {
-    private val mockFirebase = mock(FirebaseHelper::class.java)
-
-    private val viewModel = RatingViewModel(mockFirebase)
+    private val viewModel = RatingViewModel()
 
     @JvmField
     @Rule
