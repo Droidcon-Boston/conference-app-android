@@ -27,6 +27,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
+import com.mentalmachines.droidcon_boston.firebase.AuthController
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
@@ -227,7 +228,9 @@ class AgendaDetailFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_agenda_detail, menu)
+        if (menu?.findItem(R.id.rate) == null) {
+            inflater?.inflate(R.menu.menu_agenda_detail, menu)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -238,6 +241,12 @@ class AgendaDetailFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        menu?.findItem(R.id.rate)?.isVisible = AuthController.isLoggedIn
+
+        super.onPrepareOptionsMenu(menu)
     }
 
     companion object {
