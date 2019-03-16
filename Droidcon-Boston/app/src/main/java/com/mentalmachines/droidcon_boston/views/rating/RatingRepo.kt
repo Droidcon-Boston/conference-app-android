@@ -24,7 +24,7 @@ class RatingRepo(
                     var comments: String = ""
                     data.children.forEach {
                         when (it.key) {
-                            "rating" -> rating = it.value as Int
+                            "rating" -> rating = (it.value as Long).toInt()
                             "feedback" -> comments = it.value as String
                         }
                     }

@@ -37,4 +37,8 @@ class RatingViewModel(
         this.userId = userId
         this.ratingRepo = ratingRepo
     }
+
+    fun getPreviousFeedback(sessionId: String, feedbackCallback: (SessionFeedback?) -> Unit) {
+        ratingRepo.getSessionFeedback(sessionId, feedbackCallback)
+    }
 }

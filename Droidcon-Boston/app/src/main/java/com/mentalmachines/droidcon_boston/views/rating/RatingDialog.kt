@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RatingBar
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -33,6 +34,7 @@ class RatingDialog : DialogFragment() {
         initializeViewModel()
         findViews(view)
         setupClickListeners()
+        loadPreviousFeedback()
 
         return view
     }
@@ -41,7 +43,8 @@ class RatingDialog : DialogFragment() {
         viewModel = ViewModelProviders.of(this).get(RatingViewModel::class.java)
 
         val userId = AuthController.userId
-        viewModel.init(userId!!, RatingRepo(userId, FirebaseHelper.instance.userDatabase))
+        val ratingRepo = RatingRepo(userId!!, FirebaseHelper.instance.userDatabase)
+        viewModel.init(userId, ratingRepo)
 
         viewModel.getFeedbackSent().observe(viewLifecycleOwner, Observer {
             this.dismiss()
@@ -67,6 +70,16 @@ class RatingDialog : DialogFragment() {
         sessionRatingBar?.setOnRatingBarChangeListener { _, rating, _ ->
             val enableSubmissions = rating > 0.0F
             submitButton?.isEnabled = enableSubmissions
+        }
+    }
+
+    private fun loadPreviousFeedback() {
+        val sessionId = arguments?.getString(ARG_SESSION_ID).orEmpty()
+        viewModel.getPreviousFeedback(sessionId) {
+            it?.let {
+                sessionFeedbackInput?.setText(it.feedback, TextView.BufferType.NORMAL)
+                sessionRatingBar?.rating = it.rating.toFloat()
+            }
         }
     }
 
