@@ -11,6 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.textfield.TextInputEditText
 import com.mentalmachines.droidcon_boston.R
+import com.mentalmachines.droidcon_boston.firebase.AuthController
+import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.views.MainActivity
 
 class RatingDialog : DialogFragment() {
     private var sessionRatingBar: RatingBar? = null
@@ -36,6 +39,9 @@ class RatingDialog : DialogFragment() {
 
     private fun initializeViewModel() {
         viewModel = ViewModelProviders.of(this).get(RatingViewModel::class.java)
+
+        val userId = AuthController.userId
+        viewModel.init(userId!!, RatingRepo(userId, FirebaseHelper.instance.userDatabase))
 
         viewModel.getFeedbackSent().observe(viewLifecycleOwner, Observer {
             this.dismiss()

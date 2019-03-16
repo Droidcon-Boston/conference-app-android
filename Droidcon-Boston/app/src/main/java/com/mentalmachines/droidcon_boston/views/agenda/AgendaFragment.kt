@@ -58,8 +58,8 @@ class AgendaFragment : Fragment() {
     fun isMyAgenda() = arguments?.getBoolean(ARG_MY_AGENDA) ?: false
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         outState.putInt(TAB_POSITION, tablayout.selectedTabPosition)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

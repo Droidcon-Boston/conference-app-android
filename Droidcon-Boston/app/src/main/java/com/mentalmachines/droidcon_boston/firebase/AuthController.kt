@@ -13,12 +13,15 @@ import com.google.firebase.auth.FirebaseUser
 import com.mentalmachines.droidcon_boston.data.FirebaseDatabase
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 
-class AuthController {
+object AuthController {
 
     private var user: FirebaseUser? = null
 
     val isLoggedIn: Boolean
         get() = (user != null)
+
+    val userId: String?
+        get() = user?.uid
 
     fun login(activity: AppCompatActivity, resultCode: Int, @DrawableRes loginScreenAppIcon: Int) {
         val providers = arrayListOf(

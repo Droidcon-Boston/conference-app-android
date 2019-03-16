@@ -36,7 +36,7 @@ class CircleTransform(context: Context) : BitmapTransformation(context) {
             result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
         }
 
-        val canvas = Canvas(result)
+        val canvas = Canvas(result!!)
         val paint = Paint()
         paint.shader = BitmapShader(squared, TileMode.CLAMP, TileMode.CLAMP)
         paint.isAntiAlias = true

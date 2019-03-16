@@ -13,7 +13,7 @@ class UserAgendaRepo private constructor(context: Context) {
     val savedSessionIds = HashSet<String>()
 
     init {
-        savedSessionIds += sharedPrefs.getStringSet(sessionIdsKey, HashSet<String>())
+        savedSessionIds += sharedPrefs.getStringSet(sessionIdsKey, HashSet<String>())!!
     }
 
     fun isSessionBookmarked(sessionId: String): Boolean {
