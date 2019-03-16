@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         initFragmentsFromIntent(intent)
 
         initSearchDialog()
+
+        updateDrawerLoginState()
     }
 
     private fun initSearchDialog() {
@@ -309,7 +311,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun logout() {
         authController.logout(this)
-        navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_login)
+        updateDrawerLoginState()
+    }
+
+    private fun updateDrawerLoginState() {
+        navView.menu.findItem(R.id.nav_login_logout).title = getString(
+            if (authController.isLoggedIn) {
+                R.string.str_logout
+            } else {
+                R.string.str_login
+            }
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -321,7 +333,7 @@ class MainActivity : AppCompatActivity() {
                 .setMessage(it)
                 .show()
         } ?: run {
-            navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_logout)
+            updateDrawerLoginState()
         }
     }
 
