@@ -45,7 +45,7 @@ class AgendaDetailViewModel(
     val talkTitle: String
         get() = scheduleRowItem.talkTitle
 
-    val room: String
+    val room: String?
         get() = scheduleRowItem.room
 
     val startTime: String
