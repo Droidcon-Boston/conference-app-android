@@ -1,30 +1,26 @@
 package com.mentalmachines.droidcon_boston.data
 
-import androidx.lifecycle.LiveData
-import com.mentalmachines.droidcon_boston.modal.Result
+import android.content.Context
 import com.mentalmachines.droidcon_boston.modal.Tweet
 
-
-//TODO : Except room instance
-class LocalDataSource private constructor() : DataSource {
+class LocalDataSource private constructor(private val appDatabase: AppDatabase) {
 
     companion object {
-        private lateinit var dataSource: DataSource
-
-        fun getInstance(): DataSource {
+        private lateinit var dataSource: LocalDataSource
+        fun getInstance(context: Context): LocalDataSource {
             if (!::dataSource.isInitialized) {
-                dataSource = LocalDataSource()
+                dataSource = LocalDataSource(AppDatabase.getInstance(context))
             }
             return dataSource
         }
-
     }
 
-    override fun getTweets(): LiveData<Result<List<Tweet>>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun getTweets(): List<Tweet> {
+        return appDatabase.twitterDao().getTweets()
     }
 
-    override fun refreshTweets() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun updateTweets(tweets: List<Tweet>) {
+        appDatabase.twitterDao().updateTweets(tweets)
     }
+
 }

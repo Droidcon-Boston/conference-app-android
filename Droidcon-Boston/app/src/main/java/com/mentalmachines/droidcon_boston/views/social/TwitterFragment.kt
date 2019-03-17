@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.modal.Result
+import com.mentalmachines.droidcon_boston.utils.TwitterViewModelFactory
 import kotlinx.android.synthetic.main.twitter_fragment.*
 import timber.log.Timber
 
@@ -23,8 +24,12 @@ class TwitterFragment : Fragment() {
         TwitterRecyclerViewAdapter()
     }
 
+    private val twitterViewModelFactory: TwitterViewModelFactory by lazy {
+        TwitterViewModelFactory(requireContext())
+    }
+
     private val twitterViewModel: TwitterViewModel by lazy {
-        ViewModelProviders.of(this).get(TwitterViewModel::class.java)
+        ViewModelProviders.of(this, twitterViewModelFactory).get(TwitterViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -40,7 +45,9 @@ class TwitterFragment : Fragment() {
         twitterViewModel.tweets.observe(this, Observer {
             when(it) {
                 is Result.Loading -> {
-                    swipeToRefreshLayout.isRefreshing = true
+                    if (!swipeToRefreshLayout.isRefreshing) {
+                        swipeToRefreshLayout.isRefreshing = true
+                    }
                 }
                 is Result.Error -> {
                     swipeToRefreshLayout.isRefreshing = false
@@ -56,7 +63,6 @@ class TwitterFragment : Fragment() {
                 }
             }
         })
-
         swipeToRefreshLayout.setOnRefreshListener {
             twitterViewModel.refreshTweets()
         }

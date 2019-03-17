@@ -3,6 +3,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 apply plugin: 'com.novoda.static-analysis'
 apply plugin: "io.gitlab.arturbosch.detekt"
@@ -120,10 +121,15 @@ dependencies {
     final recyclerRefreshLayout = '2.0.5'
     final mockitoCore = '2.23.4'
     final archCore = '2.0.0'
+    final room = "2.1.0-alpha04"
     final timber = '4.7.1'
     //endregion
 
     //region Dependencies
+
+    //Room annotation processor
+    kapt "androidx.room:room-compiler:$room"
+
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -139,6 +145,9 @@ dependencies {
     implementation "androidx.cardview:cardview:$support"
     implementation "com.google.android.material:material:$support"
     implementation "androidx.browser:browser:$support"
+
+    //Room
+    implementation "androidx.room:room-runtime:$room"
 
     // Firebase
     implementation "com.google.firebase:firebase-messaging:$firebaseMessaging"

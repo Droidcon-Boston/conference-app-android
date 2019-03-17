@@ -31,7 +31,10 @@ class TwitterRecyclerViewAdapter : ListAdapter<Tweet, TwitterRecyclerViewAdapter
         fun bind(tweet: Tweet) {
             itemView.run {
                 if (tweet.type == R.layout.tweet_item_layout) {
-                    Glide.with(context).load(tweet.profileImageUrl)
+                    // Removing '_normal' in profile image url because it's a low resolution image and
+                    // will look blurry. There is no alternative solution for this and twitter
+                    // recommends this. Url after removing `_normal` gives high resolution image.
+                    Glide.with(context).load(tweet.profileImageUrl.replace("_normal", ""))
                         .transform(CircleTransform(context))
                         .crossFade()
                         .into(profileImage)
@@ -39,7 +42,10 @@ class TwitterRecyclerViewAdapter : ListAdapter<Tweet, TwitterRecyclerViewAdapter
                     name.text = String.format(context.getString(R.string.twitter_handel), tweet.name)
                     content.text = tweet.text
                 } else {
-                    Glide.with(context).load(tweet.profileImageUrl)
+                    // Removing '_normal' in profile image url because it's a low resolution image and
+                    // will look blurry. There is no alternative solution for this and twitter
+                    // recommends this. Url after removing `_normal` gives high resolution image.
+                    Glide.with(context).load(tweet.profileImageUrl.replace("_normal", ""))
                         .transform(CircleTransform(context))
                         .crossFade()
                         .into(quotedProfileImage)
