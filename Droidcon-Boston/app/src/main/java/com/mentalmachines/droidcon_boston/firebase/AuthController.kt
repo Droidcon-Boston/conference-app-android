@@ -19,17 +19,11 @@ import timber.log.Timber
 
 object AuthController {
 
-    private var user: FirebaseUser? = null
-
     val isLoggedIn: Boolean
-        get() = (user != null)
+        get() = (FirebaseAuth.getInstance().currentUser != null)
 
     val userId: String?
-        get() = user?.uid
-
-    init {
-        user = FirebaseAuth.getInstance().currentUser
-    }
+        get() = FirebaseAuth.getInstance().currentUser?.uid
 
     fun login(activity: AppCompatActivity, resultCode: Int, @DrawableRes loginScreenAppIcon: Int) {
         val providers = arrayListOf(
@@ -53,9 +47,8 @@ object AuthController {
         val response = IdpResponse.fromResultIntent(data)
 
         return if (resultCode == Activity.RESULT_OK) {
-            user = FirebaseAuth.getInstance().currentUser
-            user?.let { user ->
-                FirebaseHelper.instance.userDatabase.addListenerForSingleValueEvent(object:
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                FirebaseHelper.instance.userDatabase.addListenerForSingleValueEvent(object :
                     ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
                         Timber.e(error.toException())
@@ -83,7 +76,6 @@ object AuthController {
 
     fun logout(context: Context) {
         AuthUI.getInstance().signOut(context)
-        user = null
     }
 
     @VisibleForTesting
