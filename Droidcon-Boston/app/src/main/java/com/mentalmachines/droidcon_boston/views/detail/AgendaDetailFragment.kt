@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -37,6 +38,8 @@ import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
 class AgendaDetailFragment : Fragment() {
 
+    val ratingRepo = RatingRepo(AuthController.userId.orEmpty(), FirebaseHelper.instance.userDatabase)
+
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val scheduleRowItem = gson.fromJson(
@@ -45,7 +48,6 @@ class AgendaDetailFragment : Fragment() {
             )
 
             val userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
-            val ratingRepo = RatingRepo(AuthController.userId.orEmpty(), FirebaseHelper.instance.userDatabase)
 
             @Suppress("UNCHECKED_CAST")
             return AgendaDetailViewModel(scheduleRowItem, userAgendaRepo, ratingRepo) as T
@@ -126,10 +128,25 @@ class AgendaDetailFragment : Fragment() {
         }
 
         session_rating_overlay.setOnClickListener {
-            showRatingDialog()
+            if (AuthController.isLoggedIn) {
+                showRatingDialog()
+            } else {
+                AuthController.login(this, RC_SIGN_IN_FEEDBACK, R.mipmap.ic_launcher)
+            }
         }
 
         populateSpeakersInformation()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_SIGN_IN_FEEDBACK) {
+            ratingRepo.userId = AuthController.userId.orEmpty()
+            loadData()
+
+            showRatingDialog()
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroyView() {
@@ -244,6 +261,7 @@ class AgendaDetailFragment : Fragment() {
 
     companion object {
         private const val RATE_DIALOG_TAG = "RATE_DIALOG"
+        private const val RC_SIGN_IN_FEEDBACK = 2
 
         fun addDetailFragmentToStack(
             supportFragmentManager: FragmentManager,
