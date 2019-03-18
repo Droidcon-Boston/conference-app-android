@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.mentalmachines.droidcon_boston.modal.Result
 import timber.log.Timber
 
+
+/**
+ * Executes business logic asynchronously using a [AsyncScheduler].
+ */
 abstract class UseCase<in P, R> {
 
     val taskScheduler = AsyncScheduler

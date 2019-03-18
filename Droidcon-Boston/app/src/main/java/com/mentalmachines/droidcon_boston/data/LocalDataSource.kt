@@ -3,7 +3,7 @@ package com.mentalmachines.droidcon_boston.data
 import android.content.Context
 import com.mentalmachines.droidcon_boston.modal.Tweet
 
-class LocalDataSource private constructor(private val appDatabase: AppDatabase) {
+class LocalDataSource private constructor(private val appDatabase: AppDatabase) : DataSource {
 
     companion object {
         private lateinit var dataSource: LocalDataSource
@@ -15,7 +15,7 @@ class LocalDataSource private constructor(private val appDatabase: AppDatabase) 
         }
     }
 
-    fun getTweets(): List<Tweet> {
+    override fun getTweets(): List<Tweet> {
         return appDatabase.twitterDao().getTweets()
     }
 

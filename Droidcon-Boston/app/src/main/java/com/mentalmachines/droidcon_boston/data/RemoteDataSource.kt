@@ -9,9 +9,12 @@ import java.text.SimpleDateFormat
 import com.mentalmachines.droidcon_boston.modal.Tweet as ViewTweet
 import java.util.*
 
-class RemoteDataSource {
+class RemoteDataSource : DataSource {
 
     companion object {
+
+        private const val TWEET_COUNT = 100
+
         private lateinit var dataSource: RemoteDataSource
 
         fun getInstance(): RemoteDataSource {
@@ -23,7 +26,7 @@ class RemoteDataSource {
 
     }
 
-    fun getTweets(): List<ViewTweet> {
+    override fun getTweets(): List<ViewTweet> {
         val response = TwitterCore
             .getInstance()
             .guestApiClient
@@ -33,7 +36,7 @@ class RemoteDataSource {
                 null,
                 null,
                 "latest",
-                100,
+                TWEET_COUNT,
                 null,
                 0,
                 0,
