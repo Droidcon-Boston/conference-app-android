@@ -11,17 +11,22 @@ import com.mentalmachines.droidcon_boston.data.FirebaseDatabase
 import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
+import com.mentalmachines.droidcon_boston.views.rating.RatingRepo
 import timber.log.Timber
 
 class AgendaDetailViewModel(
     private val scheduleRowItem: Schedule.ScheduleRow,
     private val userAgendaRepo: UserAgendaRepo,
+    private val ratingRepo: RatingRepo,
     private val firebaseHelper: FirebaseHelper = FirebaseHelper.instance
 ) : ViewModel() {
     private val eventSpeakers: HashMap<String, FirebaseDatabase.EventSpeaker> = hashMapOf()
 
     private val _scheduleDetail = MutableLiveData<Schedule.ScheduleDetail>()
     val scheduleDetail: LiveData<Schedule.ScheduleDetail> = _scheduleDetail
+
+    private val _ratingValue = MutableLiveData<Int>()
+    val ratingValue: LiveData<Int> = _ratingValue
 
     private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onCancelled(databaseError: DatabaseError) {
@@ -76,6 +81,12 @@ class AgendaDetailViewModel(
 
     fun loadData() {
         firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(dataListener)
+
+        ratingRepo.getSessionFeedback(scheduleRowItem.id) { sessionFeedback ->
+            sessionFeedback?.let {
+                _ratingValue.value = it.rating
+            }
+        }
     }
 
     fun removeListener() {

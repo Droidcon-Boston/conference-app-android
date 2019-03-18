@@ -9,6 +9,7 @@ import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.firebase.FirebaseHelperRobot
+import com.mentalmachines.droidcon_boston.views.rating.RatingRepo
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -48,6 +49,7 @@ class AgendaDetailViewModelTest {
     )
 
     private lateinit var mockAgendaRepo: UserAgendaRepo
+    private lateinit var mockRatingRepo: RatingRepo
     private lateinit var viewModel: AgendaDetailViewModel
 
     @JvmField
@@ -65,8 +67,11 @@ class AgendaDetailViewModelTest {
         `when`(mockEditor.putStringSet(anyString(), any())).thenReturn(mockEditor)
 
         mockAgendaRepo = UserAgendaRepo.getInstance(mockContext)
-        viewModel = AgendaDetailViewModel(scheduleRow, mockAgendaRepo, mockFirebaseHelper)
+        mockRatingRepo = mock(RatingRepo::class.java)
+        viewModel = AgendaDetailViewModel(scheduleRow, mockAgendaRepo, mockRatingRepo,
+            mockFirebaseHelper)
     }
+
 
     @Test
     fun getTalkTitle() {

@@ -4,9 +4,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -28,11 +25,13 @@ import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
 import com.mentalmachines.droidcon_boston.firebase.AuthController
+import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.rating.RatingDialog
+import com.mentalmachines.droidcon_boston.views.rating.RatingRepo
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
@@ -46,9 +45,10 @@ class AgendaDetailFragment : Fragment() {
             )
 
             val userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
+            val ratingRepo = RatingRepo(AuthController.userId.orEmpty(), FirebaseHelper.instance.userDatabase)
 
             @Suppress("UNCHECKED_CAST")
-            return AgendaDetailViewModel(scheduleRowItem, userAgendaRepo) as T
+            return AgendaDetailViewModel(scheduleRowItem, userAgendaRepo, ratingRepo) as T
         }
     }
 
@@ -89,6 +89,12 @@ class AgendaDetailFragment : Fragment() {
         viewModel.scheduleDetail.observe(viewLifecycleOwner, Observer {
             it?.let(this::showAgendaDetail)
         })
+
+        viewModel.ratingValue.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                session_rating.rating = it.toFloat()
+            }
+        })
     }
 
     private fun populateView() {
@@ -117,6 +123,10 @@ class AgendaDetailFragment : Fragment() {
             ).show()
 
             showBookmarkStatus()
+        }
+
+        session_rating_overlay.setOnClickListener {
+            showRatingDialog()
         }
 
         populateSpeakersInformation()
@@ -178,7 +188,7 @@ class AgendaDetailFragment : Fragment() {
                 // add speakerName as a child to the relative layout
                 agendaDetailView.addView(tempImg)
 
-                Glide.with(this)
+                Glide.with(requireContext())
                     .load(viewModel.getPhotoForSpeaker(speakerName))
                     .transform(CircleTransform(tempImg.context))
                     .placeholder(R.drawable.emo_im_cool)
@@ -227,31 +237,9 @@ class AgendaDetailFragment : Fragment() {
         fab_agenda_detail_bookmark.backgroundTintList = ColorStateList.valueOf(color)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        if (menu?.findItem(R.id.rate) == null) {
-            inflater?.inflate(R.menu.menu_agenda_detail, menu)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.rate -> {
-                showRatingDialog()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun showRatingDialog() {
         RatingDialog.newInstance(viewModel.schedulerowId)
             .show(fragmentManager, RATE_DIALOG_TAG)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?) {
-        menu?.findItem(R.id.rate)?.isVisible = AuthController.isLoggedIn
-
-        super.onPrepareOptionsMenu(menu)
     }
 
     companion object {

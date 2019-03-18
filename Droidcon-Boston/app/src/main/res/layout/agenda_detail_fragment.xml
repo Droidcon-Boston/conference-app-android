@@ -30,8 +30,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -44,8 +44,8 @@
             android:layout_above="@+id/tv_agenda_detail_time"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -59,11 +59,28 @@
             android:layout_alignBottom="@+id/imgv_header_bg"
             android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             tools:text="10:30 am - 11:15 am" />
+
+        <FrameLayout
+            android:id="@+id/session_rating_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/tv_agenda_detail_title"
+            android:layout_alignStart="@+id/tv_agenda_detail_title">
+            <RatingBar
+                android:id="@+id/session_rating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:clickable="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1"/>
+        </FrameLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_agenda_detail_bookmark"
