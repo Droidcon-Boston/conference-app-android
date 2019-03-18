@@ -12,7 +12,7 @@ class RatingRepo(
 ) {
     fun getSessionFeedback(sessionId: String, feedbackCallback: (SessionFeedback?) -> Unit) {
         userDatabase.child(getSessionFeedbackPath(sessionId))
-            .addListenerForSingleValueEvent(object: ValueEventListener {
+            .addValueEventListener(object: ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     Timber.e(error.toException())
                     feedbackCallback(null)
