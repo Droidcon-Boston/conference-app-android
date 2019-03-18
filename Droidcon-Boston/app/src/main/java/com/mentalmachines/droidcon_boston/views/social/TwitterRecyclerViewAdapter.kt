@@ -16,7 +16,8 @@ class TwitterRecyclerViewAdapter : ListAdapter<Tweet, TwitterRecyclerViewAdapter
     (TweetsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent,false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent,
+            false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,7 +35,8 @@ class TwitterRecyclerViewAdapter : ListAdapter<Tweet, TwitterRecyclerViewAdapter
                     // Removing '_normal' in profile image url because it's a low resolution image and
                     // will look blurry. There is no alternative solution for this and twitter
                     // recommends this. Url after removing `_normal` gives high resolution image.
-                    Glide.with(context).load(tweet.profileImageUrl.replace("_normal", ""))
+                    Glide.with(context).load(tweet.profileImageUrl.replace("_normal",
+                        ""))
                         .transform(CircleTransform(context))
                         .crossFade()
                         .into(profileImage)
@@ -45,7 +47,8 @@ class TwitterRecyclerViewAdapter : ListAdapter<Tweet, TwitterRecyclerViewAdapter
                     // Removing '_normal' in profile image url because it's a low resolution image and
                     // will look blurry. There is no alternative solution for this and twitter
                     // recommends this. Url after removing `_normal` gives high resolution image.
-                    Glide.with(context).load(tweet.profileImageUrl.replace("_normal", ""))
+                    Glide.with(context).load(tweet.profileImageUrl.replace("_normal",
+                        ""))
                         .transform(CircleTransform(context))
                         .crossFade()
                         .into(quotedProfileImage)

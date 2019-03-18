@@ -22,5 +22,4 @@ class LocalDataSource private constructor(private val appDatabase: AppDatabase) 
     fun updateTweets(tweets: List<Tweet>) {
         appDatabase.twitterDao().updateTweets(tweets)
     }
-
 }

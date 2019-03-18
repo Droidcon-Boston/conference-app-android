@@ -24,5 +24,4 @@ class TwitterUseCase(private val repository: Repository) : UseCase<Unit, List<Tw
         }
         return tweets
     }
-
 }

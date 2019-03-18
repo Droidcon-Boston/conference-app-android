@@ -23,5 +23,4 @@ object AsyncScheduler : Scheduler {
     override fun execute(task: () -> Unit) {
         executorService.execute(task)
     }
-
 }

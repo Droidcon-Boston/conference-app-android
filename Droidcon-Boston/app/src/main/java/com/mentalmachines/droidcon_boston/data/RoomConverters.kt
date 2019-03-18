@@ -1,7 +1,7 @@
 package com.mentalmachines.droidcon_boston.data
 
 import androidx.room.TypeConverter
-import java.util.*
+import java.util.Date
 
 class RoomConverters {
 
@@ -14,5 +14,4 @@ class RoomConverters {
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
     }
-
 }

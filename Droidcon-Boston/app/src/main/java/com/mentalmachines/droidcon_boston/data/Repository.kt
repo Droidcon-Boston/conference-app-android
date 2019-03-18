@@ -3,8 +3,8 @@ package com.mentalmachines.droidcon_boston.data
 import android.content.Context
 import com.mentalmachines.droidcon_boston.modal.Tweet
 
-class Repository private constructor(private val remoteDataSource: RemoteDataSource, private val
-localDataSource: LocalDataSource) {
+class Repository private constructor(private val remoteDataSource: RemoteDataSource,
+                                     private val localDataSource: LocalDataSource) {
 
     companion object {
 
@@ -30,5 +30,4 @@ localDataSource: LocalDataSource) {
     fun updateDBTweets(tweets: List<Tweet>) {
         localDataSource.updateTweets(tweets)
     }
-
 }

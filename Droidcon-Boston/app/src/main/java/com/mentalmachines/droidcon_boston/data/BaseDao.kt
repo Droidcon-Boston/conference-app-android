@@ -21,7 +21,6 @@ interface BaseDao<T> {
     @Insert
     fun insert(vararg obj: T)
 
-
     /**
      * Insert list of objects in the database.
      *
@@ -37,5 +36,4 @@ interface BaseDao<T> {
      */
     @Delete
     fun delete(obj: T)
-
 }

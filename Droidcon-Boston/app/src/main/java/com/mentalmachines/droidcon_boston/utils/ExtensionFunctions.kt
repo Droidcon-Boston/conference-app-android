@@ -9,7 +9,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.mentalmachines.droidcon_boston.R
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 fun String?.isNullorEmpty(): Boolean {
     return !(this != null && !this.isEmpty())

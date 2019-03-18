@@ -5,9 +5,10 @@ import com.mentalmachines.droidcon_boston.modal.QuotedTweet
 import com.mentalmachines.droidcon_boston.utils.toDate
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.models.Tweet
-import java.text.SimpleDateFormat
 import com.mentalmachines.droidcon_boston.modal.Tweet as ViewTweet
-import java.util.*
+import java.text.SimpleDateFormat
+import java.util.Collections
+import java.util.Locale
 
 class RemoteDataSource : DataSource {
 
@@ -58,7 +59,8 @@ class RemoteDataSource : DataSource {
                                 text)
                         }
                     } else null
-                    val type = if (quotedTweet != null) R.layout.quoted_tweet_item else R.layout.tweet_item_layout
+                    val type = if (quotedTweet != null) R.layout.quoted_tweet_item else
+                        R.layout.tweet_item_layout
                     ViewTweet(it.retweetedStatus.id,
                         it.createdAt.toDate(simpleDateFormat),
                         type,

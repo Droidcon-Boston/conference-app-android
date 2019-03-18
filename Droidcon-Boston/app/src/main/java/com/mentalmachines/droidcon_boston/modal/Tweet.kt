@@ -3,7 +3,7 @@ package com.mentalmachines.droidcon_boston.modal
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
+import java.util.Date
 
 @Entity
 data class Tweet(@PrimaryKey val id: Long,

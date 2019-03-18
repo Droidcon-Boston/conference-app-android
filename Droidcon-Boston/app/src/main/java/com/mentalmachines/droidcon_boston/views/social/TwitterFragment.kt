@@ -32,10 +32,8 @@ class TwitterFragment : Fragment() {
         ViewModelProviders.of(this, twitterViewModelFactory).get(TwitterViewModel::class.java)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.twitter_fragment, container, false)
     }
 
@@ -43,7 +41,7 @@ class TwitterFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         recyclerView.adapter = twitterRecyclerViewAdapter
         twitterViewModel.tweets.observe(this, Observer {
-            when(it) {
+            when (it) {
                 is Result.Loading -> {
                     if (!swipeToRefreshLayout.isRefreshing) {
                         swipeToRefreshLayout.isRefreshing = true
@@ -67,5 +65,4 @@ class TwitterFragment : Fragment() {
             twitterViewModel.refreshTweets()
         }
     }
-
 }
