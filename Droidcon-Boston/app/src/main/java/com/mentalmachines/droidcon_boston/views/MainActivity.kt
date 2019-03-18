@@ -307,8 +307,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        AuthController.logout(this)
-        updateDrawerLoginState()
+        AuthController.logout(this) {
+            updateDrawerLoginState()
+        }
     }
 
     private fun updateDrawerLoginState() {

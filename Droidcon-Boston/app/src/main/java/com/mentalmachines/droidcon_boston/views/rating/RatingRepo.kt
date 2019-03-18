@@ -7,7 +7,7 @@ import com.google.firebase.database.ValueEventListener
 import timber.log.Timber
 
 class RatingRepo(
-    private val userId: String,
+    var userId: String,
     private val userDatabase: DatabaseReference
 ) {
     fun getSessionFeedback(sessionId: String, feedbackCallback: (SessionFeedback?) -> Unit) {
