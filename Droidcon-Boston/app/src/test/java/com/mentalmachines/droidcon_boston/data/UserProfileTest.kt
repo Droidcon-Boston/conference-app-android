@@ -18,8 +18,6 @@ class UserProfileTest : TestCase() {
 
     private var localUser: FirebaseDatabase.User? = null
 
-    private var authController = AuthController()
-
     @Mock
     private lateinit var firebaseUser: FirebaseUser
 
@@ -35,7 +33,7 @@ class UserProfileTest : TestCase() {
         Mockito.doReturn(id).`when`(firebaseUser).uid
         Mockito.doReturn("Joe Smith").`when`(firebaseUser).displayName
 
-        localUser = authController.createLocalUser(HashSet(), firebaseUser)
+        localUser = AuthController.createLocalUser(HashSet(), firebaseUser)
 
         assertNotNull(localUser)
         assertEquals("Joe Smith", localUser?.displayName)
