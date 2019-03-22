@@ -5,9 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.mentalmachines.droidcon_boston.modal.Media
+import com.mentalmachines.droidcon_boston.modal.QuotedTweet
 import com.mentalmachines.droidcon_boston.modal.Tweet
 
-@Database(entities = [Tweet::class], version = 1)
+@Database(entities = [Tweet::class, QuotedTweet::class, Media::class], version = 1)
 @TypeConverters(RoomConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -23,5 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun twitterDao(): TwitterDao
+    abstract fun tweetDao(): TweetDao
+    abstract fun quotedTweetDao(): QuotedTweetDao
+    abstract fun mediaDao(): MediaDao
 }

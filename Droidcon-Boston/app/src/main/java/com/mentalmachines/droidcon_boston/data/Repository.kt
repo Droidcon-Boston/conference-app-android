@@ -1,7 +1,7 @@
 package com.mentalmachines.droidcon_boston.data
 
 import android.content.Context
-import com.mentalmachines.droidcon_boston.modal.Tweet
+import com.mentalmachines.droidcon_boston.modal.TweetWithMedia
 
 class Repository private constructor(private val remoteDataSource: RemoteDataSource,
                                      private val localDataSource: LocalDataSource) {
@@ -19,15 +19,15 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
         }
     }
 
-    fun getTweets(): List<Tweet> {
+    fun getTweets(): List<TweetWithMedia> {
         return remoteDataSource.getTweets()
     }
 
-    fun getTweetsFromDB(): List<Tweet> {
+    fun getTweetsFromDB(): List<TweetWithMedia> {
         return localDataSource.getTweets()
     }
 
-    fun updateDBTweets(tweets: List<Tweet>) {
+    fun updateDBTweets(tweets: List<TweetWithMedia>) {
         localDataSource.updateTweets(tweets)
     }
 }

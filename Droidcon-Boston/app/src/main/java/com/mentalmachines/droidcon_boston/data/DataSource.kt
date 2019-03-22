@@ -1,7 +1,7 @@
 package com.mentalmachines.droidcon_boston.data
 
-import com.mentalmachines.droidcon_boston.modal.Tweet
+import com.mentalmachines.droidcon_boston.modal.TweetWithMedia
 
 interface DataSource {
-    fun getTweets(): List<Tweet>
+    fun getTweets(): List<TweetWithMedia>
 }
