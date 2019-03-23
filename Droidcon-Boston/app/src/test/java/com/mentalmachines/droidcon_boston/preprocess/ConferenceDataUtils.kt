@@ -60,6 +60,8 @@ class ConferenceDataUtils {
                             it.value.primarySpeakerName = "Adrian Catalan"
                         } else if (speakerNames.containsKey("Oleg Golberg")) {
                             it.value.primarySpeakerName = "Oleg Golberg"
+                        } else if (speakerNames.containsKey("Chris Corrado")) {
+                            it.value.primarySpeakerName = "Chris Corrado"
                         } else if (errorsFatal) {
                             throw IllegalStateException("Didn't handle case of speakernames: " + speakerNames)
                         }
