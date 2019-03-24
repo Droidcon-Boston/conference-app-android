@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    private lateinit var authController: AuthController
 
     private val searchDialog = SearchDialog()
 
@@ -38,13 +37,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        authController = AuthController()
-
         initNavDrawerToggle()
 
         initFragmentsFromIntent(intent)
 
         initSearchDialog()
+
+        updateDrawerLoginState()
     }
 
     private fun initSearchDialog() {
@@ -192,7 +191,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_speakers -> replaceFragment(getString(R.string.str_speakers))
                 R.id.nav_volunteers -> replaceFragment(getString(R.string.str_volunteers))
                 R.id.nav_login_logout -> {
-                    if (authController.isLoggedIn) {
+                    if (AuthController.isLoggedIn) {
                         logout()
                     } else {
                         login()
@@ -307,24 +306,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        authController.login(this, RC_SIGN_IN, R.mipmap.ic_launcher)
+        AuthController.login(this, RC_SIGN_IN, R.mipmap.ic_launcher)
     }
 
     private fun logout() {
-        authController.logout(this)
-        navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_login)
+        AuthController.logout(this) {
+            updateDrawerLoginState()
+        }
+    }
+
+    private fun updateDrawerLoginState() {
+        navView.menu.findItem(R.id.nav_login_logout).title = getString(
+            if (AuthController.isLoggedIn) {
+                R.string.str_logout
+            } else {
+                R.string.str_login
+            }
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        authController.handleLoginResult(this, resultCode, data)?.let {
+        AuthController.handleLoginResult(this, resultCode, data)?.let {
             AlertDialog.Builder(this)
                 .setTitle(R.string.str_title_error)
                 .setMessage(it)
                 .show()
         } ?: run {
-            navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_logout)
+            updateDrawerLoginState()
         }
     }
 

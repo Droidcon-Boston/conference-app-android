@@ -63,6 +63,11 @@
     <string name="close_search">Close Search</string>
     <string name="clear_search">Clear Search</string>
     <string name="there_are_no_talks_that_match_this_search">There are no talks that match this search.</string>
+    <string name="what_did_you_think">What did you think?</string>
+    <string name="rate">Rate</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="err_select_rating">Please select a rating.</string>
 
     <string name="twitter_handel">\@%s</string>
 
