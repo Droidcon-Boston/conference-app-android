@@ -9,7 +9,8 @@ import androidx.room.ForeignKey
         childColumns = ["quoted_tweet_id"], onDelete = ForeignKey.CASCADE),
     ForeignKey(entity = Tweet::class, parentColumns = ["id"], childColumns = ["tweet_id"],
         onDelete = ForeignKey.CASCADE)])
-data class Media(val id1: Long, val id2: Long, val type: String, val url: String,
+data class Media(val id1: Long, val id2: Long, val type: String, val mediaUrlHttps: String,
+                 val url: String,
                  @ColumnInfo(name = "tweet_id") val tweetId: Long? = null,
                  @ColumnInfo(name = "quoted_tweet_id") val quotedTweetId: Long? = null) {
     companion object {

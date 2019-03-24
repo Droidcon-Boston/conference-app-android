@@ -79,12 +79,12 @@ class RemoteDataSource : DataSource {
 
                         media = it.retweetedStatus.extendedEntities?.media?.map { media ->
                             Media(media.id, it.retweetedStatus.id,
-                                media.type, media.mediaUrlHttps, it.retweetedStatus.id)
+                                media.type, media.mediaUrlHttps, media.url, it.retweetedStatus.id)
                         }
 
                         quotedMedia = it.retweetedStatus.quotedStatus?.extendedEntities?.media?.map {
                                 media -> Media(media.id, it.retweetedStatus.id, media.type, media.mediaUrlHttps,
-                             quotedTweetId = it.retweetedStatus.quotedStatus.id)
+                             media.url, quotedTweetId = it.retweetedStatus.quotedStatus.id)
                         }
                     }
 
@@ -107,11 +107,11 @@ class RemoteDataSource : DataSource {
                             it.text, quotedTweet)
 
                         media = it.extendedEntities?.media?.map { media -> Media(media.id, it.id,
-                            media.type, media.mediaUrlHttps, it.id) }
+                            media.type, media.mediaUrlHttps, media.url, it.id) }
 
                         quotedMedia = it.quotedStatus.extendedEntities?.media?.map {
                                 media -> Media(media.id, it.id, media.type, media
-                            .mediaUrlHttps, quotedTweetId = it.quotedStatus.id)
+                            .mediaUrlHttps, media.url, quotedTweetId = it.quotedStatus.id)
                         }
                     }
                 }
@@ -126,7 +126,7 @@ class RemoteDataSource : DataSource {
                             it.text)
 
                         media = it.extendedEntities?.media?.map { media -> Media(media.id, it.id,
-                            media.type, media.mediaUrlHttps, it.id) }
+                            media.type, media.mediaUrlHttps, media.url, it.id) }
                     }
                 }
             }

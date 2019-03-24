@@ -43,6 +43,38 @@
 ✨All women get $300 off your #DroidconBos ticket when you register today.✨
 #Droidcon #AndroidDev #AndroidGala #WomensDay #WomensDay2019" />
 
+    <FrameLayout
+        android:id="@+id/quotedMediaContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/quotedProfileImage"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/quotedContent"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <include layout="@layout/twitter_one_image_layout"
+            android:visibility="gone"/>
+
+        <include layout="@layout/twitter_two_image_layout"
+            android:visibility="gone"/>
+
+        <include layout="@layout/twitter_three_image_layout"
+            android:visibility="gone"/>
+
+        <include layout="@layout/twitter_four_image_layout"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <include layout="@layout/twitter_video_layout"
+            android:visibility="gone"/>
+
+        <include layout="@layout/twitter_gif_layout"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +82,7 @@
         android:layout_marginTop="8dp"
         android:padding="8dp"
         android:layout_toEndOf="@+id/quotedProfileImage"
-        android:layout_below="@+id/quotedContent"
+        android:layout_below="@+id/quotedMediaContainer"
         android:background="@drawable/bg_quoted_tweet">
 
         <TextView
@@ -80,6 +112,36 @@
             tools:text="Today is #InternationalWomensDay. We celebrate you not only today, but everyday.💜
 ✨All women get $300 off your #DroidconBos ticket when you register today.✨
 #Droidcon #AndroidDev #AndroidGala #WomensDay #WomensDay2019" />
+
+        <FrameLayout
+            android:id="@+id/quotedTweetMediaContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/quotedTweetContent"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <include layout="@layout/twitter_one_image_layout"
+                android:visibility="gone" />
+
+            <include layout="@layout/twitter_two_image_layout"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <include layout="@layout/twitter_three_image_layout"
+                android:visibility="gone" />
+
+            <include layout="@layout/twitter_four_image_layout"
+                android:visibility="gone" />
+
+            <include layout="@layout/twitter_video_layout"
+                android:visibility="gone"/>
+
+            <include layout="@layout/twitter_gif_layout"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
     </RelativeLayout>
 
