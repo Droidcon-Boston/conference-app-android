@@ -20,8 +20,12 @@ import kotlinx.android.synthetic.main.twitter_three_image_layout.view.*
 import kotlinx.android.synthetic.main.twitter_two_image_layout.view.*
 import kotlinx.android.synthetic.main.twitter_video_layout.view.*
 
-class TwitterRecyclerViewAdapter : ListAdapter<TweetWithMedia, TwitterRecyclerViewAdapter.ViewHolder>
-    (TweetsDiffCallback()) {
+class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickListener) :
+    ListAdapter<TweetWithMedia, TwitterRecyclerViewAdapter.ViewHolder>(TweetsDiffCallback()) {
+
+    interface OnMediaClickListener {
+        fun onVideoOrGifClick(url: String)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent,
@@ -29,15 +33,17 @@ class TwitterRecyclerViewAdapter : ListAdapter<TweetWithMedia, TwitterRecyclerVi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onMediaClickListener)
     }
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position).tweet.type
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(tweet: TweetWithMedia) {
+    class ViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+
+        fun bind(tweet: TweetWithMedia, onMediaClickListener: OnMediaClickListener) {
             itemView.run {
                 if (tweet.tweet.type == R.layout.tweet_item_layout) {
                     // Removing '_normal' in profile image url because it's a low resolution image and
@@ -56,7 +62,7 @@ class TwitterRecyclerViewAdapter : ListAdapter<TweetWithMedia, TwitterRecyclerVi
                     if (tweet.media.isNullOrEmpty()) {
                         mediaContainer.visibility = View.GONE
                     } else {
-                        renderMedia(mediaContainer, tweet.media!!)
+                        renderMedia(mediaContainer, tweet.media!!, onMediaClickListener)
                     }
 
                 } else {
@@ -75,7 +81,7 @@ class TwitterRecyclerViewAdapter : ListAdapter<TweetWithMedia, TwitterRecyclerVi
                     if (tweet.media.isNullOrEmpty()) {
                         quotedMediaContainer.visibility = View.GONE
                     } else {
-                        renderMedia(quotedMediaContainer, tweet.media!!)
+                        renderMedia(quotedMediaContainer, tweet.media!!, onMediaClickListener)
                     }
                     quotedTweetScreenName.text = tweet.tweet.quotedTweet?.screenName
                     quotedTweetName.text = String.format(context.getString(R.string.twitter_handel),
@@ -85,13 +91,14 @@ class TwitterRecyclerViewAdapter : ListAdapter<TweetWithMedia, TwitterRecyclerVi
                     if (tweet.quotedMedia.isNullOrEmpty()) {
                         quotedTweetMediaContainer.visibility = View.GONE
                     } else {
-                        renderMedia(quotedTweetMediaContainer, tweet.quotedMedia!!)
+                        renderMedia(quotedTweetMediaContainer, tweet.quotedMedia!!, onMediaClickListener)
                     }
                 }
             }
         }
 
-        private fun renderMedia(mediaContainer: ViewGroup, media: List<Media>) {
+        private fun renderMedia(mediaContainer: ViewGroup, media: List<Media>,
+                                onMediaClickListener: OnMediaClickListener) {
             mediaContainer.visibility = View.VISIBLE
             when(media.size) {
                 1 -> {
@@ -118,6 +125,9 @@ class TwitterRecyclerViewAdapter : ListAdapter<TweetWithMedia, TwitterRecyclerVi
                                 gifContainer.visibility = View.VISIBLE
                                 Glide.with(context).load("${media[0].mediaUrlHttps}:small")
                                     .crossFade().into(gifImage)
+                                gifContainer.setOnClickListener {
+                                    onMediaClickListener.onVideoOrGifClick(media[0].url)
+                                }
                             }
                         }
                         Media.MEDIA_TYPE_VIDEO -> {
@@ -130,6 +140,9 @@ class TwitterRecyclerViewAdapter : ListAdapter<TweetWithMedia, TwitterRecyclerVi
                                 gifContainer.visibility = View.GONE
                                 Glide.with(context).load("${media[0].mediaUrlHttps}:small")
                                     .crossFade().into(videoImage)
+                                videoContainer.setOnClickListener {
+                                    onMediaClickListener.onVideoOrGifClick(media[0].url)
+                                }
                             }
                         }
                     }

@@ -1,5 +1,7 @@
 package com.mentalmachines.droidcon_boston.views.social
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,14 +16,14 @@ import com.mentalmachines.droidcon_boston.utils.TwitterViewModelFactory
 import kotlinx.android.synthetic.main.twitter_fragment.*
 import timber.log.Timber
 
-class TwitterFragment : Fragment() {
+class TwitterFragment : Fragment(), TwitterRecyclerViewAdapter.OnMediaClickListener {
 
     companion object {
         fun newInstance() = TwitterFragment()
     }
 
     private val twitterRecyclerViewAdapter: TwitterRecyclerViewAdapter by lazy {
-        TwitterRecyclerViewAdapter()
+        TwitterRecyclerViewAdapter(this)
     }
 
     private val twitterViewModelFactory: TwitterViewModelFactory by lazy {
@@ -40,6 +42,7 @@ class TwitterFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         recyclerView.adapter = twitterRecyclerViewAdapter
+        swipeToRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
         twitterViewModel.tweets.observe(this, Observer {
             when (it) {
                 is Result.Loading -> {
@@ -64,5 +67,12 @@ class TwitterFragment : Fragment() {
         swipeToRefreshLayout.setOnRefreshListener {
             twitterViewModel.refreshTweets()
         }
+    }
+
+    override fun onVideoOrGifClick(url: String) {
+        val webIntent: Intent = Uri.parse(url).let { webpage ->
+            Intent(Intent.ACTION_VIEW, webpage)
+        }
+        startActivity(webIntent)
     }
 }
