@@ -65,4 +65,5 @@
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="err_select_rating">Please select a rating.</string>
+    <string name="sharing_twitter_title">Enjoy this talk? Let your followers know!</string>
 </resources>
