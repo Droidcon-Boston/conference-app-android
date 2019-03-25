@@ -26,7 +26,6 @@ class RemoteDataSource : DataSource {
             }
             return dataSource
         }
-
     }
 
     override fun getTweets(): List<TweetWithMedia> {
@@ -101,7 +100,6 @@ class RemoteDataSource : DataSource {
                                 )
                             }
                     }
-
                 }
                 it.quotedStatus != null -> {
                     val quotedTweet = QuotedTweet(

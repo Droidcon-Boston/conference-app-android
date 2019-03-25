@@ -43,8 +43,7 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
         return getItem(position).tweet.type
     }
 
-    class ViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(tweet: TweetWithMedia, onMediaClickListener: OnMediaClickListener) {
             itemView.run {
@@ -57,10 +56,7 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                             "_normal",
                             ""
                         )
-                    )
-                        .transform(CircleTransform(context))
-                        .crossFade()
-                        .into(profileImage)
+                    ).transform(CircleTransform(context)).crossFade().into(profileImage)
                     screenName.text = tweet.tweet.screenName
                     name.text = String.format(
                         context.getString(R.string.twitter_handel),
@@ -73,7 +69,6 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                     } else {
                         renderMedia(mediaContainer, tweet.media!!, onMediaClickListener)
                     }
-
                 } else {
                     // Removing '_normal' in profile image url because it's a low resolution image and
                     // will look blurry. There is no alternative solution for this and twitter
@@ -83,10 +78,7 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                             "_normal",
                             ""
                         )
-                    )
-                        .transform(CircleTransform(context))
-                        .crossFade()
-                        .into(quotedProfileImage)
+                    ).transform(CircleTransform(context)).crossFade().into(quotedProfileImage)
                     quotedScreenName.text = tweet.tweet.screenName
                     quotedName.text = String.format(
                         context.getString(R.string.twitter_handel),
@@ -118,7 +110,8 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
         }
 
         private fun renderMedia(
-            mediaContainer: ViewGroup, media: List<Media>,
+            mediaContainer: ViewGroup,
+            media: List<Media>,
             onMediaClickListener: OnMediaClickListener
         ) {
             mediaContainer.visibility = View.VISIBLE

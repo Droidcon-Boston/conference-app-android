@@ -18,7 +18,10 @@ import androidx.room.Index
     indices = [Index("tweet_id"), Index("quoted_tweet_id")]
 )
 data class Media(
-    val id1: Long, val id2: Long, val type: String, val mediaUrlHttps: String,
+    val id1: Long,
+    val id2: Long,
+    val type: String,
+    val mediaUrlHttps: String,
     val url: String,
     @ColumnInfo(name = "tweet_id") val tweetId: Long? = null,
     @ColumnInfo(name = "quoted_tweet_id") val quotedTweetId: Long? = null

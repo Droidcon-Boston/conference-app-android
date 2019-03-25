@@ -35,7 +35,8 @@ class TwitterFragment : Fragment(), TwitterRecyclerViewAdapter.OnMediaClickListe
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.twitter_fragment, container, false)
