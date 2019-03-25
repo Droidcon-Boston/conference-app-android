@@ -13,5 +13,4 @@ class TweetWithMedia {
 
     @Relation(parentColumn = "quoted_id", entityColumn = "quoted_tweet_id")
     var quotedMedia: List<Media>? = null
-
 }

@@ -34,8 +34,10 @@ class TwitterFragment : Fragment(), TwitterRecyclerViewAdapter.OnMediaClickListe
         ViewModelProviders.of(this, twitterViewModelFactory).get(TwitterViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.twitter_fragment, container, false)
     }
 

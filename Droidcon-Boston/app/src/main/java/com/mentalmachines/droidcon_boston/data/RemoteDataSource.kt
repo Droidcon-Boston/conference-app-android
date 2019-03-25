@@ -34,7 +34,8 @@ class RemoteDataSource : DataSource {
             .getInstance()
             .guestApiClient
             .searchService
-            .tweets("%23DroidconBos",
+            .tweets(
+                "%23DroidconBos",
                 null,
                 null,
                 null,
@@ -43,7 +44,8 @@ class RemoteDataSource : DataSource {
                 null,
                 0,
                 0,
-                true).execute()
+                true
+            ).execute()
         return mapTweets(response.body()?.tweets ?: Collections.emptyList())
     }
 
@@ -63,29 +65,41 @@ class RemoteDataSource : DataSource {
                             user.screenName,
                             user.name,
                             user.profileImageUrlHttps,
-                            text)
+                            text
+                        )
                     }
                     val type = if (quotedTweet != null) R.layout.quoted_tweet_item else
                         R.layout.tweet_item_layout
 
                     TweetWithMedia().apply {
-                        tweet = ViewTweet(it.retweetedStatus.id,
+                        tweet = ViewTweet(
+                            it.retweetedStatus.id,
                             it.createdAt.toDate(simpleDateFormat),
                             type,
                             it.retweetedStatus.user.screenName,
                             it.retweetedStatus.user.name,
                             it.retweetedStatus.user.profileImageUrlHttps,
-                            it.retweetedStatus.text, quotedTweet)
+                            it.retweetedStatus.text, quotedTweet
+                        )
 
                         media = it.retweetedStatus.extendedEntities?.media?.map { media ->
-                            Media(media.id, it.retweetedStatus.id,
-                                media.type, media.mediaUrlHttps, media.url, it.retweetedStatus.id)
+                            Media(
+                                media.id, it.retweetedStatus.id,
+                                media.type, media.mediaUrlHttps, media.url, it.retweetedStatus.id
+                            )
                         }
 
-                        quotedMedia = it.retweetedStatus.quotedStatus?.extendedEntities?.media?.map {
-                                media -> Media(media.id, it.retweetedStatus.id, media.type, media.mediaUrlHttps,
-                             media.url, quotedTweetId = it.retweetedStatus.quotedStatus.id)
-                        }
+                        quotedMedia =
+                            it.retweetedStatus.quotedStatus?.extendedEntities?.media?.map { media ->
+                                Media(
+                                    media.id,
+                                    it.retweetedStatus.id,
+                                    media.type,
+                                    media.mediaUrlHttps,
+                                    media.url,
+                                    quotedTweetId = it.retweetedStatus.quotedStatus.id
+                                )
+                            }
                     }
 
                 }
@@ -95,38 +109,51 @@ class RemoteDataSource : DataSource {
                         it.quotedStatus.user.screenName,
                         it.quotedStatus.user.name,
                         it.quotedStatus.user.profileImageUrlHttps,
-                        it.quotedStatus.text)
+                        it.quotedStatus.text
+                    )
 
                     TweetWithMedia().apply {
-                        tweet = ViewTweet(it.id,
+                        tweet = ViewTweet(
+                            it.id,
                             it.createdAt.toDate(simpleDateFormat),
                             R.layout.quoted_tweet_item,
                             it.user.screenName,
                             it.user.name,
                             it.user.profileImageUrlHttps,
-                            it.text, quotedTweet)
+                            it.text, quotedTweet
+                        )
 
-                        media = it.extendedEntities?.media?.map { media -> Media(media.id, it.id,
-                            media.type, media.mediaUrlHttps, media.url, it.id) }
+                        media = it.extendedEntities?.media?.map { media ->
+                            Media(
+                                media.id, it.id, media.type, media.mediaUrlHttps, media.url, it.id
+                            )
+                        }
 
-                        quotedMedia = it.quotedStatus.extendedEntities?.media?.map {
-                                media -> Media(media.id, it.id, media.type, media
-                            .mediaUrlHttps, media.url, quotedTweetId = it.quotedStatus.id)
+                        quotedMedia = it.quotedStatus.extendedEntities?.media?.map { media ->
+                            Media(
+                                media.id, it.id, media.type, media.mediaUrlHttps,
+                                media.url, quotedTweetId = it.quotedStatus.id
+                            )
                         }
                     }
                 }
                 else -> {
                     TweetWithMedia().apply {
-                        tweet = ViewTweet(it.id,
+                        tweet = ViewTweet(
+                            it.id,
                             it.createdAt.toDate(simpleDateFormat),
                             R.layout.tweet_item_layout,
                             it.user.screenName,
                             it.user.name,
                             it.user.profileImageUrlHttps,
-                            it.text)
+                            it.text
+                        )
 
-                        media = it.extendedEntities?.media?.map { media -> Media(media.id, it.id,
-                            media.type, media.mediaUrlHttps, media.url, it.id) }
+                        media = it.extendedEntities?.media?.map { media ->
+                            Media(
+                                media.id, it.id, media.type, media.mediaUrlHttps, media.url, it.id
+                            )
+                        }
                     }
                 }
             }

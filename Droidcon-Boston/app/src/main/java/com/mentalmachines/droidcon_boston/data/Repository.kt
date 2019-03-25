@@ -3,8 +3,10 @@ package com.mentalmachines.droidcon_boston.data
 import android.content.Context
 import com.mentalmachines.droidcon_boston.modal.TweetWithMedia
 
-class Repository private constructor(private val remoteDataSource: RemoteDataSource,
-                                     private val localDataSource: LocalDataSource) {
+class Repository private constructor(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
+) {
 
     companion object {
 
@@ -12,8 +14,9 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
 
         fun getInstance(context: Context): Repository {
             if (!::repository.isInitialized) {
-                repository = Repository(RemoteDataSource.getInstance(), LocalDataSource
-                    .getInstance(context))
+                repository = Repository(
+                    RemoteDataSource.getInstance(), LocalDataSource.getInstance(context)
+                )
             }
             return repository
         }

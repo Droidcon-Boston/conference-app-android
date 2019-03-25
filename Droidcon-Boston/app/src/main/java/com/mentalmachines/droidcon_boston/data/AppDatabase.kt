@@ -9,7 +9,11 @@ import com.mentalmachines.droidcon_boston.modal.Media
 import com.mentalmachines.droidcon_boston.modal.QuotedTweet
 import com.mentalmachines.droidcon_boston.modal.Tweet
 
-@Database(entities = [Tweet::class, QuotedTweet::class, Media::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Tweet::class, QuotedTweet::class, Media::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(RoomConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -17,11 +21,14 @@ abstract class AppDatabase : RoomDatabase() {
 
         private const val DATABASE_NAME = "droidconbosapp-db"
 
-        @Volatile private var INSTANCE: AppDatabase? = null
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
-            return INSTANCE ?: Room.databaseBuilder(context.applicationContext,
-                AppDatabase::class.java, DATABASE_NAME).build().also { INSTANCE = it }
+            return INSTANCE ?: Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java, DATABASE_NAME
+            ).build().also { INSTANCE = it }
         }
     }
 

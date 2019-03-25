@@ -7,7 +7,7 @@ import java.lang.Exception
 class TwitterUseCase(private val repository: Repository) : UseCase<Unit, List<TweetWithMedia>>() {
 
     override fun execute(parameters: Unit): List<TweetWithMedia> {
-        val tweets =  try {
+        val tweets = try {
             repository.getTweets().run {
                 if (isEmpty()) {
                     repository.getTweetsFromDB()

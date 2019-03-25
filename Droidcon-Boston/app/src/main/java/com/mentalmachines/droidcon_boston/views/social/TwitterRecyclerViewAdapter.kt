@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.modal.Media
 import com.mentalmachines.droidcon_boston.modal.TweetWithMedia

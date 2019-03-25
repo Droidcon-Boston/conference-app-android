@@ -16,5 +16,4 @@ abstract class QuotedTweetDao : BaseDao<QuotedTweet> {
 
     @Query("DELETE FROM QuotedTweet")
     abstract fun deleteAll()
-
 }
