@@ -28,8 +28,12 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(viewType, parent,
-            false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                viewType, parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -49,14 +53,20 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                     // Removing '_normal' in profile image url because it's a low resolution image and
                     // will look blurry. There is no alternative solution for this and twitter
                     // recommends this. Url after removing `_normal` gives high resolution image.
-                    Glide.with(context).load(tweet.tweet.profileImageUrl.replace("_normal",
-                        ""))
+                    Glide.with(context).load(
+                        tweet.tweet.profileImageUrl.replace(
+                            "_normal",
+                            ""
+                        )
+                    )
                         .transform(CircleTransform(context))
                         .crossFade()
                         .into(profileImage)
                     screenName.text = tweet.tweet.screenName
-                    name.text = String.format(context.getString(R.string.twitter_handel),
-                        tweet.tweet.name)
+                    name.text = String.format(
+                        context.getString(R.string.twitter_handel),
+                        tweet.tweet.name
+                    )
                     content.text = tweet.tweet.text
 
                     if (tweet.media.isNullOrEmpty()) {
@@ -69,14 +79,20 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                     // Removing '_normal' in profile image url because it's a low resolution image and
                     // will look blurry. There is no alternative solution for this and twitter
                     // recommends this. Url after removing `_normal` gives high resolution image.
-                    Glide.with(context).load(tweet.tweet.profileImageUrl.replace("_normal",
-                        ""))
+                    Glide.with(context).load(
+                        tweet.tweet.profileImageUrl.replace(
+                            "_normal",
+                            ""
+                        )
+                    )
                         .transform(CircleTransform(context))
                         .crossFade()
                         .into(quotedProfileImage)
                     quotedScreenName.text = tweet.tweet.screenName
-                    quotedName.text = String.format(context.getString(R.string.twitter_handel),
-                        tweet.tweet.name)
+                    quotedName.text = String.format(
+                        context.getString(R.string.twitter_handel),
+                        tweet.tweet.name
+                    )
                     quotedContent.text = tweet.tweet.text
                     if (tweet.media.isNullOrEmpty()) {
                         quotedMediaContainer.visibility = View.GONE
@@ -84,25 +100,32 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                         renderMedia(quotedMediaContainer, tweet.media!!, onMediaClickListener)
                     }
                     quotedTweetScreenName.text = tweet.tweet.quotedTweet?.screenName
-                    quotedTweetName.text = String.format(context.getString(R.string.twitter_handel),
-                        tweet.tweet.quotedTweet?.name)
+                    quotedTweetName.text = String.format(
+                        context.getString(R.string.twitter_handel),
+                        tweet.tweet.quotedTweet?.name
+                    )
                     quotedTweetContent.text = tweet.tweet.quotedTweet?.text
 
                     if (tweet.quotedMedia.isNullOrEmpty()) {
                         quotedTweetMediaContainer.visibility = View.GONE
                     } else {
-                        renderMedia(quotedTweetMediaContainer, tweet.quotedMedia!!, onMediaClickListener)
+                        renderMedia(
+                            quotedTweetMediaContainer, tweet.quotedMedia!!,
+                            onMediaClickListener
+                        )
                     }
                 }
             }
         }
 
-        private fun renderMedia(mediaContainer: ViewGroup, media: List<Media>,
-                                onMediaClickListener: OnMediaClickListener) {
+        private fun renderMedia(
+            mediaContainer: ViewGroup, media: List<Media>,
+            onMediaClickListener: OnMediaClickListener
+        ) {
             mediaContainer.visibility = View.VISIBLE
-            when(media.size) {
+            when (media.size) {
                 1 -> {
-                    when(media[0].type) {
+                    when (media[0].type) {
                         Media.MEDIA_TYPE_PHOTO -> {
                             mediaContainer.run {
                                 mediaOne.visibility = View.VISIBLE
