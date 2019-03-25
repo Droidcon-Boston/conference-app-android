@@ -9,7 +9,7 @@ import com.mentalmachines.droidcon_boston.modal.Media
 import com.mentalmachines.droidcon_boston.modal.QuotedTweet
 import com.mentalmachines.droidcon_boston.modal.Tweet
 
-@Database(entities = [Tweet::class, QuotedTweet::class, Media::class], version = 1)
+@Database(entities = [Tweet::class, QuotedTweet::class, Media::class], version = 1, exportSchema = false)
 @TypeConverters(RoomConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 

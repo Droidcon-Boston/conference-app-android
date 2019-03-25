@@ -15,6 +15,7 @@ abstract class TweetDao : BaseDao<Tweet> {
         insertAll(tweets)
     }
 
+    @Transaction
     @Query("SELECT * FROM Tweet ORDER BY createdAt DESC")
     abstract fun getTweets(): List<TweetWithMedia>
 
