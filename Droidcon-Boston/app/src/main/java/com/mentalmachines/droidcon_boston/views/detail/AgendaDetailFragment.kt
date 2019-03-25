@@ -173,7 +173,7 @@ class AgendaDetailFragment : Fragment() {
                 speakerNames += speakerName + when {
                     orgName != null -> " - $orgName"
                     else -> {
-                        // Do nothing
+                        ' '
                     }
                 }
 
