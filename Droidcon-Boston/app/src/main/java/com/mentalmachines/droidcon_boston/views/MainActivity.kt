@@ -21,10 +21,10 @@ import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import com.mentalmachines.droidcon_boston.views.search.SearchDialog
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
+import com.mentalmachines.droidcon_boston.views.social.TwitterFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
 import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerFragment
 import kotlinx.android.synthetic.main.main_activity.*
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity() {
             initFragmentsFromIntent(it)
         }
     }
-
 
     override fun onBackPressed() {
         // If drawer is open
@@ -154,7 +153,6 @@ class MainActivity : AppCompatActivity() {
         return processAll
     }
 
-
     private fun initNavDrawerToggle() {
 
         setSupportActionBar(toolbar)
@@ -169,7 +167,7 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener { item ->
 
-            //Closing drawer on item click
+            // Closing drawer on item click
             drawer_layout.closeDrawers()
 
             when (item.itemId) {
@@ -196,6 +194,7 @@ class MainActivity : AppCompatActivity() {
                         login()
                     }
                 }
+                R.id.nav_tweet_feed -> replaceFragment(getString(R.string.str_twitter_feed))
             }
 
             if (item.itemId != R.id.nav_login_logout) {
@@ -229,7 +228,6 @@ class MainActivity : AppCompatActivity() {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(item)
-
     }
 
     private fun replaceFragment(title: String) {
@@ -258,6 +256,8 @@ class MainActivity : AppCompatActivity() {
                 resources.getString(R.string.str_about_us) -> fragment = AboutFragment()
                 resources.getString(R.string.str_speakers) -> fragment = SpeakerFragment()
                 resources.getString(R.string.str_volunteers) -> fragment = VolunteerFragment()
+                resources.getString(R.string.str_twitter_feed) -> fragment =
+                    TwitterFragment.newInstance()
             }
             // Add fragment with tag
             fragment?.let {

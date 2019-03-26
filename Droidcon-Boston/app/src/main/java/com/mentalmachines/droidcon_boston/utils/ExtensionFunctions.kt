@@ -8,6 +8,8 @@ import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.mentalmachines.droidcon_boston.R
+import java.text.SimpleDateFormat
+import java.util.Date
 
 fun String?.isNullorEmpty(): Boolean {
     return !(this != null && !this.isEmpty())
@@ -30,4 +32,8 @@ fun Context.loadUriInCustomTab(uriString: String) {
 
 fun View?.visibleIf(condition: Boolean?) {
     this?.visibility = if (condition == true) View.VISIBLE else View.GONE
+}
+
+fun String.toDate(simpleDateFormat: SimpleDateFormat): Date {
+    return simpleDateFormat.parse(this)
 }
