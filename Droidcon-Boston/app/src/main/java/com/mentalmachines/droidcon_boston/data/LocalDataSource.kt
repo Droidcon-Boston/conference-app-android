@@ -9,12 +9,11 @@ import com.mentalmachines.droidcon_boston.modal.TweetWithMedia
 class LocalDataSource private constructor(private val appDatabase: AppDatabase) : DataSource {
 
     companion object {
-        private lateinit var dataSource: LocalDataSource
+        private var dataSource: LocalDataSource? = null
         fun getInstance(context: Context): LocalDataSource {
-            if (!::dataSource.isInitialized) {
-                dataSource = LocalDataSource(AppDatabase.getInstance(context))
+            return dataSource ?: LocalDataSource(AppDatabase.getInstance(context)).also {
+                dataSource = it
             }
-            return dataSource
         }
     }
 
@@ -38,15 +37,15 @@ class LocalDataSource private constructor(private val appDatabase: AppDatabase) 
             tweetWithMedia.tweet.quotedTweet?.let { quotedTweet.add(it) }
         }
 
-        if (!tweets.isEmpty()) {
+        if (tweets.isNotEmpty()) {
             appDatabase.tweetDao().updateTweets(tweets)
         }
 
-        if (!quotedTweet.isEmpty()) {
+        if (quotedTweet.isNotEmpty()) {
             appDatabase.quotedTweetDao().updateTweets(quotedTweet)
         }
 
-        if (!media.isEmpty()) {
+        if (media.isNotEmpty()) {
             appDatabase.mediaDao().insertAll(media)
         }
     }

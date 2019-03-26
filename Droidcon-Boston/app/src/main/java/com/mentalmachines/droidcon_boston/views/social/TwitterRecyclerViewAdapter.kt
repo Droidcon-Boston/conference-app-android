@@ -119,16 +119,7 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                 1 -> {
                     when (media[0].type) {
                         Media.MEDIA_TYPE_PHOTO -> {
-                            mediaContainer.run {
-                                mediaOne.visibility = View.VISIBLE
-                                twoMediaContainer.visibility = View.GONE
-                                threeMediaContainer.visibility = View.GONE
-                                fourMediaContainer.visibility = View.GONE
-                                videoContainer.visibility = View.GONE
-                                gifContainer.visibility = View.GONE
-                                Glide.with(context).load("${media[0].mediaUrlHttps}:small")
-                                    .crossFade().into(mediaOne)
-                            }
+                            renderPhotos(mediaContainer, media)
                         }
                         Media.MEDIA_TYPE_GIF -> {
                             mediaContainer.run {
@@ -162,28 +153,32 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                         }
                     }
                 }
-                2 -> {
-                    mediaContainer.run {
-                        mediaOne.visibility = View.GONE
-                        twoMediaContainer.visibility = View.VISIBLE
-                        threeMediaContainer.visibility = View.GONE
-                        fourMediaContainer.visibility = View.GONE
-                        videoContainer.visibility = View.GONE
-                        gifContainer.visibility = View.GONE
+                else -> {
+                    renderPhotos(mediaContainer, media)
+                }
+            }
+        }
+
+        private fun renderPhotos(mediaContainer: ViewGroup, media: List<Media>) {
+            mediaContainer.run {
+                mediaOne.visibility = if (media.size == 1) View.VISIBLE else View.GONE
+                twoMediaContainer.visibility = if (media.size == 2) View.VISIBLE else View.GONE
+                threeMediaContainer.visibility = if (media.size == 3) View.VISIBLE else View.GONE
+                fourMediaContainer.visibility = if (media.size == 4) View.VISIBLE else View.GONE
+                videoContainer.visibility = View.GONE
+                gifContainer.visibility = View.GONE
+                when (media.size) {
+                    1 -> {
+                        Glide.with(context).load("${media[0].mediaUrlHttps}:small")
+                            .crossFade().into(mediaOne)
+                    }
+                    2 -> {
                         Glide.with(context).load("${media[0].mediaUrlHttps}:small")
                             .crossFade().into(twoImageMediaOne)
                         Glide.with(context).load("${media[1].mediaUrlHttps}:small")
                             .crossFade().into(twoImageMediaTwo)
                     }
-                }
-                3 -> {
-                    mediaContainer.run {
-                        mediaOne.visibility = View.GONE
-                        twoMediaContainer.visibility = View.GONE
-                        threeMediaContainer.visibility = View.VISIBLE
-                        fourMediaContainer.visibility = View.GONE
-                        videoContainer.visibility = View.GONE
-                        gifContainer.visibility = View.GONE
+                    3 -> {
                         Glide.with(mediaContainer.context).load("${media[0].mediaUrlHttps}:small")
                             .crossFade().into(threeImageMediaOne)
                         Glide.with(mediaContainer.context).load("${media[1].mediaUrlHttps}:small")
@@ -191,15 +186,7 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                         Glide.with(mediaContainer.context).load("${media[2].mediaUrlHttps}:small")
                             .crossFade().into(threeImageMediaThree)
                     }
-                }
-                4 -> {
-                    mediaContainer.run {
-                        mediaOne.visibility = View.GONE
-                        twoMediaContainer.visibility = View.GONE
-                        threeMediaContainer.visibility = View.GONE
-                        fourMediaContainer.visibility = View.VISIBLE
-                        videoContainer.visibility = View.GONE
-                        gifContainer.visibility = View.GONE
+                    4 -> {
                         Glide.with(mediaContainer.context).load("${media[0].mediaUrlHttps}:small")
                             .crossFade().into(fourImageMediaOne)
                         Glide.with(mediaContainer.context).load("${media[1].mediaUrlHttps}:small")
@@ -210,6 +197,7 @@ class TwitterRecyclerViewAdapter(private val onMediaClickListener: OnMediaClickL
                             .crossFade().into(fourImageMediaFour)
                     }
                 }
+                return@run
             }
         }
     }

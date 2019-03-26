@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.data
 
+import androidx.annotation.LayoutRes
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.modal.Media
 import com.mentalmachines.droidcon_boston.modal.QuotedTweet
@@ -9,7 +10,6 @@ import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.models.Tweet
 import com.mentalmachines.droidcon_boston.modal.Tweet as ViewTweet
 import java.text.SimpleDateFormat
-import java.util.Collections
 import java.util.Locale
 
 class RemoteDataSource : DataSource {
@@ -45,7 +45,7 @@ class RemoteDataSource : DataSource {
                 0,
                 true
             ).execute()
-        return mapTweets(response.body()?.tweets ?: Collections.emptyList())
+        return mapTweets(response.body()?.tweets.orEmpty())
     }
 
     private fun mapTweets(tweets: List<Tweet>): List<TweetWithMedia> {
@@ -58,102 +58,58 @@ class RemoteDataSource : DataSource {
         }.map {
             when {
                 it.retweetedStatus != null -> {
-                    val quotedTweet = it.retweetedStatus.quotedStatus?.run {
-                        QuotedTweet(
-                            id,
-                            user.screenName,
-                            user.name,
-                            user.profileImageUrlHttps,
-                            text
-                        )
-                    }
-                    val type = if (quotedTweet != null) R.layout.quoted_tweet_item else
-                        R.layout.tweet_item_layout
+                    val type =
+                        if (it.retweetedStatus.quotedStatus != null) R.layout.quoted_tweet_item else
+                            R.layout.tweet_item_layout
 
-                    TweetWithMedia().apply {
-                        tweet = ViewTweet(
-                            it.retweetedStatus.id,
-                            it.createdAt.toDate(simpleDateFormat),
-                            type,
-                            it.retweetedStatus.user.screenName,
-                            it.retweetedStatus.user.name,
-                            it.retweetedStatus.user.profileImageUrlHttps,
-                            it.retweetedStatus.text, quotedTweet
-                        )
-
-                        media = it.retweetedStatus.extendedEntities?.media?.map { media ->
-                            Media(
-                                media.id, it.retweetedStatus.id,
-                                media.type, media.mediaUrlHttps, media.url, it.retweetedStatus.id
-                            )
-                        }
-
-                        quotedMedia =
-                            it.retweetedStatus.quotedStatus?.extendedEntities?.media?.map { media ->
-                                Media(
-                                    media.id,
-                                    it.retweetedStatus.id,
-                                    media.type,
-                                    media.mediaUrlHttps,
-                                    media.url,
-                                    quotedTweetId = it.retweetedStatus.quotedStatus.id
-                                )
-                            }
-                    }
+                    mapTweetToTweetWithMedia(type, it.retweetedStatus, simpleDateFormat)
                 }
                 it.quotedStatus != null -> {
-                    val quotedTweet = QuotedTweet(
-                        it.quotedStatus.id,
-                        it.quotedStatus.user.screenName,
-                        it.quotedStatus.user.name,
-                        it.quotedStatus.user.profileImageUrlHttps,
-                        it.quotedStatus.text
-                    )
-
-                    TweetWithMedia().apply {
-                        tweet = ViewTweet(
-                            it.id,
-                            it.createdAt.toDate(simpleDateFormat),
-                            R.layout.quoted_tweet_item,
-                            it.user.screenName,
-                            it.user.name,
-                            it.user.profileImageUrlHttps,
-                            it.text, quotedTweet
-                        )
-
-                        media = it.extendedEntities?.media?.map { media ->
-                            Media(
-                                media.id, it.id, media.type, media.mediaUrlHttps, media.url, it.id
-                            )
-                        }
-
-                        quotedMedia = it.quotedStatus.extendedEntities?.media?.map { media ->
-                            Media(
-                                media.id, it.id, media.type, media.mediaUrlHttps,
-                                media.url, quotedTweetId = it.quotedStatus.id
-                            )
-                        }
-                    }
+                    mapTweetToTweetWithMedia(R.layout.quoted_tweet_item, it, simpleDateFormat)
                 }
                 else -> {
-                    TweetWithMedia().apply {
-                        tweet = ViewTweet(
-                            it.id,
-                            it.createdAt.toDate(simpleDateFormat),
-                            R.layout.tweet_item_layout,
-                            it.user.screenName,
-                            it.user.name,
-                            it.user.profileImageUrlHttps,
-                            it.text
-                        )
-
-                        media = it.extendedEntities?.media?.map { media ->
-                            Media(
-                                media.id, it.id, media.type, media.mediaUrlHttps, media.url, it.id
-                            )
-                        }
-                    }
+                    mapTweetToTweetWithMedia(R.layout.tweet_item_layout, it, simpleDateFormat)
                 }
+            }
+        }
+    }
+
+    private fun mapTweetToTweetWithMedia(
+        @LayoutRes type: Int, tweet: Tweet,
+        simpleDateFormat: SimpleDateFormat
+    ): TweetWithMedia {
+        val quotedTweet = tweet.quotedStatus?.run {
+            QuotedTweet(
+                id,
+                user.screenName,
+                user.name,
+                user.profileImageUrlHttps,
+                text
+            )
+        }
+        return TweetWithMedia().apply {
+            this.tweet = ViewTweet(
+                tweet.id,
+                tweet.createdAt.toDate(simpleDateFormat),
+                type,
+                tweet.user.screenName,
+                tweet.user.name,
+                tweet.user.profileImageUrlHttps,
+                tweet.text,
+                quotedTweet
+            )
+
+            media = tweet.extendedEntities?.media?.map { media ->
+                Media(
+                    media.id, tweet.id, media.type, media.mediaUrlHttps, media.url, tweet.id
+                )
+            }
+
+            quotedMedia = tweet.quotedStatus?.extendedEntities?.media?.map { media ->
+                Media(
+                    media.id, tweet.id, media.type, media.mediaUrlHttps,
+                    media.url, quotedTweetId = tweet.quotedStatus.id
+                )
             }
         }
     }
