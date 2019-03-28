@@ -15,6 +15,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
+import kotlinx.android.synthetic.main.list_item_schedule_search.view.*
 import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -91,7 +92,12 @@ class ScheduleAdapterItem internal constructor(
                     else View.INVISIBLE
             holder.sessionLayout.visibility = View.VISIBLE
             holder.title.text = itemData.talkTitle
-            holder.room.text = itemData.room
+
+            // WORKAROUND FOR https://github.com/Droidcon-Boston/conference-app-android/issues/165
+            // If the talk title is Check-In then hardcode the room name to be the lobby
+            if (itemData.talkTitle.toLowerCase().contains("check-in")) {
+                holder.room.text = "Calderwood Pavilion Lobby"
+            }
 
             if (itemData.photoUrlMap.size == 0) {
                 holder.rootLayout.background = null
