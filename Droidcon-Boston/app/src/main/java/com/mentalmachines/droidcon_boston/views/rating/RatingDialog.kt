@@ -43,9 +43,9 @@ class RatingDialog : DialogFragment() {
         viewModel = ViewModelProviders.of(this).get(RatingViewModel::class.java)
 
         // should not be able to get to this dialog w/o being logged in
-        val userId = AuthController.userId!!
-        val ratingRepo = RatingRepo(userId, FirebaseHelper.instance.userDatabase)
-        viewModel.init(userId, ratingRepo)
+        val userId = if (AuthController.userId != null) AuthController.userId else ' '
+        val ratingRepo = RatingRepo(userId.toString(), FirebaseHelper.instance.userDatabase)
+        viewModel.init(userId.toString(), ratingRepo)
 
         viewModel.getFeedbackSent().observe(viewLifecycleOwner, Observer {
             this.dismiss()

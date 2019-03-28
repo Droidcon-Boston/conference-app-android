@@ -173,7 +173,7 @@ class AgendaDetailFragment : Fragment() {
                 speakerNames += speakerName + when {
                     orgName != null -> " - $orgName"
                     else -> {
-                        // Do nothing
+                        ' '
                     }
                 }
 
@@ -200,6 +200,7 @@ class AgendaDetailFragment : Fragment() {
 
                 // add the imageview above the textview for room data
                 lp.addRule(RelativeLayout.ABOVE, tv_agenda_detail_room.id)
+                lp.addRule(RelativeLayout.BELOW, session_rating_overlay.id)
                 tempImg.layoutParams = lp
 
                 // add speakerName as a child to the relative layout
