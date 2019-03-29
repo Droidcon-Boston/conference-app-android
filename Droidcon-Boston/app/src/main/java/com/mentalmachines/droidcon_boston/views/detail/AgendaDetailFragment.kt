@@ -2,6 +2,7 @@ package com.mentalmachines.droidcon_boston.views.detail
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -255,6 +256,17 @@ class AgendaDetailFragment : Fragment() {
                 scheduleDetail.listRow.talkDescription.getHtmlFormattedSpanned()
 
         tv_agenda_detail_description.movementMethod = LinkMovementMethod.getInstance()
+        tv_agenda_detail_shareText.text = resources.getString(R.string.sharing_twitter_title)
+        imgv_twitter.setOnClickListener {
+            val twitter = viewModel.getSpeaker(scheduleDetail.listRow.primarySpeakerName)?.socialProfiles?.get("twitter")
+
+            var twitterVal =  if(twitter.isNullOrEmpty()) scheduleDetail.listRow.primarySpeakerName else "@$twitter"
+
+            val tweetUrl = "https://twitter.com/intent/tweet?text=I really enjoyed this %23droidconbos talk \"${scheduleDetail.listRow.talkTitle}\"  by $twitterVal"
+            val uri = Uri.parse(tweetUrl)
+            var shareIntent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(shareIntent)
+        }
     }
 
     private fun showBookmarkStatus() {

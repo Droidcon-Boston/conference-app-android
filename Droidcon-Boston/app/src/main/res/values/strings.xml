@@ -68,10 +68,10 @@
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="err_select_rating">Please select a rating.</string>
+    <string name="sharing_twitter_title">Enjoy this talk? Let your followers know!</string>
 
     <string name="twitter_handel">\@%s</string>
 
     <string name="com.twitter.sdk.android.CONSUMER_KEY">NpgDY5dYI3M2is9V4mbK0IKMS</string>
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">JhaeIidtw4MnY9tvbsxIFSn2CUxn9B4lLYc3WVcu6eZmDc9HAo</string>
-
 </resources>
