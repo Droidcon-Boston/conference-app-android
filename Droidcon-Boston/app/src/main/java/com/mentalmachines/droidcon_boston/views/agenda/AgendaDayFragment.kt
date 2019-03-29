@@ -41,6 +41,7 @@ import timber.log.Timber
  */
 class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val timeHeaders = HashMap<String, ScheduleAdapterItemHeader>()
+    private val floatAnimation = AnimatorSet()
 
     private var headerAdapter: FlexibleAdapter<*>? = null
     private lateinit var layoutManager: LinearLayoutManager
@@ -235,7 +236,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         floatDownAnimator.duration = JumpToCurrent.ButtonTranslation.duration
         floatDownAnimator.interpolator = LinearInterpolator()
 
-        val floatAnimation = AnimatorSet()
         floatAnimation.playSequentially(floatUpAnimator, floatDownAnimator)
         floatAnimation.start()
         floatAnimation.addListener(object : AnimatorListenerAdapter() {
@@ -247,6 +247,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        floatAnimation.cancel();
         agendaRecyler.removeOnChildAttachStateChangeListener(currentSessionVisibleListener)
         activity?.supportFragmentManager?.removeOnBackStackChangedListener(backStackChangeListener)
     }
