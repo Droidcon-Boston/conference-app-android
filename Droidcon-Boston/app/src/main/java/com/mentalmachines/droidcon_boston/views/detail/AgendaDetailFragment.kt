@@ -107,7 +107,6 @@ class AgendaDetailFragment : Fragment() {
         if (viewModel.talkTitle.toLowerCase().contains("check-in")) {
             tv_agenda_detail_room.text =
                 resources.getString(R.string.str_agenda_detail_room, "Calderwood Pavilion Lobby")
-
         } else {
             tv_agenda_detail_room.text =
                 resources.getString(R.string.str_agenda_detail_room, viewModel.room)
