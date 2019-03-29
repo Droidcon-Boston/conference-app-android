@@ -34,6 +34,8 @@ class Sync {
 
             val data = ConferenceDataUtils.getSlidesupDataFromAPI("https://slidesup-8b9d6" +
                     ".firebaseio.com/confs/detail/droidcon-boston-2019")
+            println(data)
+            println("==========")
 
             val moshi = ConferenceDataUtils.getMoshiInstance()
             val jsonAdapter = moshi.adapter(ConferenceDataModel::class.java)

@@ -1,211 +1,1400 @@
 {
+  "sections" : {
+    "-LYTKvo6mIh7Ll2T3Acv" : {
+      "endTime" : "2019-04-09T01:00:00.000Z",
+      "name" : "Day 1",
+      "startTime" : "2019-04-08T12:00:00.000Z",
+      "title" : "Monday, April 8, 2019",
+      "updatedAt" : 1549918518591,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-LYTL19q-vfBOzjNuqdV" : {
+      "endTime" : "2019-04-10T01:00:00.000Z",
+      "name" : "Day 2",
+      "startTime" : "2019-04-09T12:00:00.000Z",
+      "title" : "Tuesday, April 9, 2019",
+      "updatedAt" : 1549921110854,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    }
+  }
+,
+  "tracks" : {
+    "-L_AqtujmZtdApYMCEPJ" : {
+      "description" : "<p>Track with talks about a broad variety of topics taking place at the Nancy and Edward Roberts Studio Theatre.</p>",
+      "name" : "Rainbow",
+      "sortOrder" : 1,
+      "type" : "conf",
+      "updatedAt" : 1551903271443,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_AqwvtqFNqKTExZVX5" : {
+      "description" : "<p>A track about core Android development topics taking place at the main stage, at the Virginia Wimberly Theatre.</p>",
+      "name" : "Core",
+      "sortOrder" : 0,
+      "type" : "conf",
+      "updatedAt" : 1551903260679,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B0Y_CnhonLTP47C14" : {
+      "description" : "<p>A series of workshops taking place at the Carol Deane Theatre.</p>",
+      "name" : "Workshop",
+      "sortOrder" : 2,
+      "type" : "conf",
+      "updatedAt" : 1551903274903,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    }
+  }
+,
   "events" : {
-    "-L3daccTVLOcYi9hVHsD" : {
-      "description" : "<p>Get your badge and breakfast before the talks start.</p>",
+    "-L_AuG8zVgRvoYc4xVzX" : {
+      "description" : "<p>Grab your badge, have breakfast, and meet other attendees before getting ready for the talks!</p>\n<p><strong>Getting Here</strong></p>\n<p>📍<a href=\"https://goo.gl/maps/MNAc3HJpSio\" target=\"_blank\"><strong>Calderwood Pavilion on Google Maps</strong></a></p>",
+      "duration" : "PT45M",
+      "isGeneralEvent" : true,
+      "isPublished" : true,
+      "name" : "Check-In",
+      "roomIds" : {
+        "-Lb-aLvdmfg_OcspGioM" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T13:00:00.000Z",
+      "type" : "conf",
+      "updatedAt" : 1553714485760,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_Au_gM0TbzGf-SOq3r" : {
+      "description" : "<p>A good release is an uneventful one. While often overlooked, continuous integration (CI) and automation can be pivotal to shipping a quality app timely. A good CI system helps reduce bottlenecks by automating workflows. Hear how The New York Times leverages CI to facilitate a regular release cycle while allowing developers to keep their focus on code. In this talk, you’ll learn to understand how CI and automation can help both large and small teams increase productivity, communications, and transparency.</p>\n<p>Topics will include:</p>\n<p>- Integrations with Github, Jira, and Slack</p>\n<p>- Giving product direct control over creating and publishing releases</p>\n<p>- Moving our CI to the cloud</p>\n<p>- Future CI plans and exploration</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Using automation to spark joy for developers and boost app quality",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_Fc-FSt82gvteUxcxb" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T17:30:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553208137466,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_AuvdoXTOuI7GXiWMa" : {
+      "description" : "<p>Come to learn how simple and testable your app's navigation can be with the new Navigation Architecture Component. We’ll start with the basics, assuming no prior experience, and move on to more advanced topics like testing navigation, conditional navigation, deep linking, and both reasons and strategies for migrating to a single Activity-based architecture.</p>\n<p>You’ll leave this talk with a solid understanding of the Navigation Architecture Component and the confidence to get started.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Destination navigation: You’re going to love the transition",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_EbCnvker3BVMypnQa" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T15:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553286736043,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_Av5f3BV3OagrK6g9Q" : {
+      "description" : "<p>Modern&nbsp;mobile applications make use of a wide array of technical solutions to achieve clean, testable and performant code. Among these tools is the&nbsp;reactive programming paradigm. While many have heard of reactive&nbsp;programming, far less have a solid understanding of what it is, how to&nbsp;achieve it, and what benefits it may provide. The Android communities&nbsp;use of RxJava as a replacement for the AsyncTask class has lead to&nbsp;widespread adoption of reactive technologies without a corresponding&nbsp;embracing of reactive programming.<br>\n</p>\n<p>In this talk, we’ll review&nbsp;what reactive programming is and what its history is. We’ll then address&nbsp;the ways in which the Android community has been using reactive&nbsp;technologies and how it could take the next step in adopting these&nbsp;technologies towards creating end to end reactive apps. We’ll take a&nbsp;deep dive into how RxJava integrates with the Android LiveData classes&nbsp;and when to use which. We’ll work through a small but meaningful&nbsp;application to demonstrate reactive programming concepts in the Android&nbsp;world. We’ll end the example by looking at how the code can be (easily)&nbsp;tested and some of the benefits we’ve received from utilizing a reactive approach.<br>\n</p>\n<p>- Introduction to reactive programming and its benefits for UI development<br>\n- Overview of LiveData and how it relates to reactive programming<br>\n- Similar overview for RxJava<br>\n- How the Android community is currently using RxJava and the deficiencies in how many view the library<br>\n- Simple example of a reactive app<br>\n- Building up to a more complex example of an end to end reactive app using both LiveData and RxJava<br>\n- Using JUnit tests in a reactive context<br>\n- Recapping the benefits of the reactive development with the now finished example app<br>\n- Conclusion</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Achieving fully reactive code using both LiveData and RxJava",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L__27SPk_N8Z1HoAY3t" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T20:30:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553286348101,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_AvLwHFux5CCUg57lw" : {
+      "description" : "<p>Our job as engineers does not stop with building a dizzying array of&nbsp;features, eliminating technical defects and ensuring high reliability. Engineers of all kinds must ensure their work serves the public good. A product that reliably harms, exacerbates injustices, or excludes marginalized groups is not a product worth building and maintaining. Learn how to effectively accomplish change in your working conditions or your employer's products through grassroots employee advocacy.</p>",
       "duration" : "PT1H",
       "isGeneralEvent" : true,
       "isPublished" : true,
-      "name" : "Registration & Breakfast",
+      "name" : "Keynote: Ethical product design and you!",
       "roomIds" : {
-        "-L3dafKRjcsfpsvrqn82" : true
+        "-L_Asu4o4fNYDxpW4OO9" : true
       },
-      "startTime" : "2018-02-01T14:00:00.000Z",
-      "updatedAt" : 1516821464815,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
+      "speakerIds" : {
+        "-L_d07rDYpSC2b4H-jUy" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T14:00:00.000Z",
+      "type" : "conf",
+      "updatedAt" : 1553286938151,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
     },
-    "-L3dbFPwUx9Q6K7pqN-L" : {
-      "description" : "<p>Trying to learn about filmmaking was tough for Zach. In his adventures trying to use Final Cut Pro, he found a lack of resources. He forced himself to learn by creating his own tutorial site. Trial and error gave him invaluable experience, which led to innovating in new mediums and a supporting role in Zootopia.</p>\n<p>Zach shares his story on experience and how it can lead to unexpected paths.</p>",
+    "-L_AwUU2tP9ZOkftXaCG" : {
+      "description" : "<p>Let's be honest. Till 3 years ago, adding motion to your app was probably the last thing to be implemented IF it would be implemented at&nbsp;all. The main reasons were 2; A. it was a pain to animate the simplest thing and B. the feedback your users were expecting was an annoying dialog window for all the useful... and sometimes not so useful&nbsp;information. And that was fine! The last couple of years and after the introduction of the material design principles, this is not the case anymore. The users expect some meaningful feedback about their actions,&nbsp;that will not interfere though with the flow of their interaction and it&nbsp;will be \"normal\" to the eye. Very recently, Google unveiled a lot of new, amazing tools that can help you take your app to the next level, engage your users more by offering a meaningful and fun experience,&nbsp;without causing you headaches anymore.</p>",
+      "duration" : "PT40M",
+      "isGeneralEvent" : true,
+      "isPublished" : true,
+      "name" : "Lighting Talk: I like to move it, move it!",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L__3fHliXQcwGkRJrV-" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T16:15:00.000Z",
+      "type" : "conf",
+      "updatedAt" : 1553287007916,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_AwxcL6eRZl0GlrFfO" : {
+      "description" : "<p>Complex Android app flows consist of many screens, synchronous and/or asynchronous calls, and potentially involve third-party libraries with different life cycles. On top of that, the activity lifecycle is quite complex — making it close to impossible to handle all edge cases caused by that lifecycle. This talk will demonstrate a way to get complex flows under control by using a finite state machine. We will use Kotlin and basic RxJava to create a generic finite state machine that allows us to nicely decouple state and UI logic. We will also look into the composition of finite state machines.</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Finite state machines to the rescue: Get complex app flows under control",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_Ehp7aYCb6WGIvIxom" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T14:30:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553287227219,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_AzfdN-brAmJ7LWob7" : {
+      "description" : "<p>An introduction to the Model View Intent architecture pattern. This pattern takes ideas and concepts from Reactive and Functional programming. We'll go over the core principles of this pattern, and how you can apply them in your Android applications. We'll look at concrete implementation details, and explore some of its benefits. Some familiarity with Kotlin and RxJava is assumed.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Simple MVI architecture for Android",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_EbsX-4IcExvMGc-K5" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T17:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553208119300,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_Azl_QBdtfuEE7oHgT" : {
+      "description" : "<p>Have you ever had an experience where a small voice in your head prevented you from acting on an idea, stopped you from sharing your knowledge or trying something new, or maybe even made you feel like your achievements were nothing special?</p>\n<p>That voice is more common than you think!</p>\n<p>In this talk we will go over the basic steps that will help you materialize, deconstruct and take control of that voice, helping you distinguish the useful bits of information that can help you grow from the overwhelming debris and clutter. You will learn how to notice the early signs of its onset and manage the situation to your benefit. Finally, you will learn to use simple tools that will help you recognize and acknowledge your achievements and help yourself and others fight the invisible menace.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Inhibiting the impostor",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_FbBmFWLXGsbG5VPB1" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T15:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553208068517,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_Azz36TEF4dvISlh5q" : {
+      "description" : "<p>Guaranteed, battery friendly solution to the problem of ensuring the critical background tasks are executed despite the restrictions and in a constraint environment, even after the app exits? WorkManager is your new smart delegate Library that solves this complex background processing. The talk will help us understand:</p>\n<p>- Basic overview including underlying concepts, how to specify tasks and restraints</p>\n<p>- Suitable tasks use cases - When and when NOT to use WorkManager</p>\n<p>- Chained Sequences &amp; unique named sequences</p>\n<p>I will be demonstrating a real-world problem, and how WorkManager is an improvement over existing solutions to solve this.&nbsp;</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "WorkManager: Clever delegate for deferrable background tasks",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_Ef0HYEAncZygEMwN6" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T18:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553287145729,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B-4-92D1t-BIhRx4t" : {
+      "description" : "<p>One of the promises of test-driven development is the confidence and ease with which we can refactor our production code.</p>\n<p>However, sometimes we find ourselves in situations where our tests are too coupled to our code and we have to change the tests every time we update the code. At this point, we start wondering if the tests are worth it.</p>\n<p>If you have ever found yourself having to update your tests every time the behavior of a dependency of a class changes, then this talk is for you.</p>\n<p>This talk is to share some patterns, tools, and examples that can guide us to write more maintainable tests.</p>\n<p>We will look at why we need tests in the first place, how writing tests is an investment that will save time in the future. We will also look at some causes of unmaintainable tests (for example using a wrong test double, testing implementation details and not general behavior) and how to overcome these problems. With the use of examples from everyday Android development, we will learn how to avoid brittle tests.</p>\n<p>You will leave the talk having a clearer understanding of why tests are important and worth the time and ultimately be able to apply the tips to write robust and more maintainable tests.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Writing tests that stand the test of time",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_EcdUbwXZVtPOFzXJk" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T18:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553287139545,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B-977xEo7jEcMblW3" : {
+      "description" : "<p>Do you fear changes in the shape of a monster legacy code base? Do you have zero test coverage and don’t know how to regain safety in your day-to-day work? Come to this talk and get insights from the developers of a million client SDK who solved these problems without a whole rewrite.</p>\n<p>A code base which grows over years often leads to an ad-hoc architecture and plenty of dark corners where no developer wants to go. If this code base is untested it can slow down implementation speed dramatically. It may prevent developers from making necessary changes as they fear to break something. So most changes are limited to small operations which do not increase the overall quality of the code base.</p>\n<p>We faced such problems in our Android SDK and introduced architectural components and abstractions to support testability and regain safety for future changes.</p>\n<p>I will present how we fought this giant legacy code monster: from introducing architectural patterns to a critical codebase, which runs on millions of devices around the world, techniques for testing legacy code without breaking it, to how we support our engineers with CI tools and automated device tests. I will show which obstacles we had to pass and where we are now.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Test the untested: Our journey from zero coverage to automated testing",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_EdLUZougkrL0jf3K4" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T19:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553287088301,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B-G1z80NWCSJP7DlN" : {
+      "description" : "<p>You've heard all about how Kotlin supports Domain Specific Languages (DSLs) and now it is time to put Kotlin's DSL features into action in your everyday code. You may not be building the next Gradle DSL or Anko, but you are writing Kotlin code and that code can be improved using DSL techniques.</p>\n<p>Yes, this talk will cover the Kotlin features you need to write DSLs: lambdas, infix notation, @DslMarker, etc... but you need to know more than that. You need to know what your design goals should be, know how to use Kotlin's features properly to make DSLs, what design patterns help you do it, and how to evolve your code slowly into from a single improvement to eventually becoming a full DSL.</p>\n<p>This talk exposes you to a dozen or more DSL techniques. You will learn how to turn ordinary builders into languages by using design patterns such as nested builders, pass context to lambdas to make your code more language-like, swap parameter order to make your code more readable, and clean up unnecessary syntax.&nbsp;</p>\n<p>By the end of this talk, you will have a brain full of ideas you can use to make full use of Kotlin's capabilities.&nbsp;</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "A dozen techniques for everyday DSLs",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_EhR30i6CHFAUU-NGe" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T19:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553207886623,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_B-NcfJd2qBjDW5Jm6" : {
+      "description" : "<p>The time is here to start thinking about the architecture of your Android app. You know your app will be all Kotlin (right?) it needs to do network requests, and it must communicate with a Bluetooth device. That means that it must deal with asynchronous programming so that it can receive and send data from the network and the device, while your UI keeps running as smooth as butter. There are a few choices to accomplish this, such as using plain Threads, AsyncTasks, or the popular Rx Java framework if you dread to manage threads in your own code (who doesn't).<br>\n</p>\n<p>In this talk, we'll narrow down the choices to two candidates. The first one is the popular Rx Java framework and the second one is the newly minted Coroutines feature in Kotlin. We explain how they work and give you a checklist so that you can figure out which one suits the architecture of your app and your team of developers best. After all, you and your team want an app that is a pleasure to build and that your users will love!</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Asynchrony in Kotlin: How you can choose between using Rx or using Coroutines",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_EiKS5yY_3b0rtfM8F" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T14:30:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1551820754955,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_B-TXp-iqpEhqXgnRV" : {
+      "description" : "<p>Do you use Outlook or Skype on your phone? At Microsoft, we have over &nbsp;100,000 employees that beta test these apps internally. How do we get &nbsp;the apps to that many user seconds after the a change is made in the &nbsp;codebase? How do we target all the &nbsp;testers to give us feedback on a version? Learn how we build and test &nbsp;our mobile apps on the cloud and analyzee our apps after distributing it &nbsp;to beta tester and especially how we handle a scaled store outside the &nbsp;Play Store.</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "How we seamlessly internally test our Android apps within Microsoft?",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_FeKVyX4N8HtdtOHfF" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T17:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553372171840,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    },
+    "-L_B-_d3Km_uQnh03xc7" : {
+      "description" : "<p>Coroutines have been around since the dawn of programming languages, but it's only recently come to Android programmers through Kotlin. Journey through the history of coroutines, learning what problems they're good at solving - and how they can be used effectively in our Android applications.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : true,
+      "isPublished" : true,
+      "name" : "Keynote: Android routines on coroutines",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_cLbF97SiES258yfxn" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T21:00:00.000Z",
+      "type" : "conf",
+      "updatedAt" : 1553208084750,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_B0pJQFXQmjqtbYgJC" : {
+      "description" : "<p>Firebase offers two cloud-based, client-accessible database solutions that support real-time data syncing. In this talk, we’ll cover Could Firestore, Firebase's new database solution. It’s an efficient, low-latency database solution for mobile apps that is optimized for speed, security, and offline use. Cloud Firestore lets you build rich, high-quality applications by allowing secure access to the database directly from client-side code. Besides being easy to use, it allows you to use queries to decrease the data usage and increase the security so that you can get just the info you need for your user. When offline, apps remain responsive because the Firebase SDK persists your data to disk, giving the end user an immersive experience. Come and learn how you can use Cloud Firestore to effortlessly build powerful real-time experiences on Android in a faster and more efficient way to bring your products to millions of users without worrying about scaling.</p>",
       "duration" : "PT1H30M",
-      "isGeneralEvent" : true,
-      "isPublished" : true,
-      "name" : "The New Age of Experience",
-      "roomIds" : {
-        "-L3dbJhcrABxtcCeCE0I" : true
-      },
-      "speakerIds" : {
-        "-L3dd0queRj8ffFi-_sx" : true
-      },
-      "startTime" : "2018-02-01T15:00:00.000Z",
-      "updatedAt" : 1516822759721,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    },
-    "-L3dfyD125eXmG6FAPBx" : {
-      "description" : "<p>A in-depth design workshop.</p>",
-      "duration" : "PT5H30M",
       "isGeneralEvent" : false,
       "isPublished" : true,
-      "name" : "Design Workshop",
+      "name" : "Create, Store, Synchronize: Firebase Cloud Firestore",
       "roomIds" : {
-        "-L3dbNIg6JuunPgD37Os" : true
+        "-L_B0fLq57414d4GSnw7" : true
       },
       "speakerIds" : {
-        "-L3dlTYjoDUJrXrrPMDS" : true
+        "-L_FfDxnuXzt7cpXXu9_" : true
       },
-      "startTime" : "2018-02-01T16:30:00.000Z",
-      "trackId" : "-L3daEMFuTMgXRUqmPdk",
-      "updatedAt" : 1516824313823,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T17:30:00.000Z",
+      "trackId" : "-L_B0Y_CnhonLTP47C14",
+      "type" : "conf",
+      "updatedAt" : 1551894917241,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
     },
-    "-L3dgDtbhQnkQb75wMlU" : {
-      "description" : "<p>A in-depth engineering workshop.</p>",
-      "duration" : "PT5H30M",
-      "isGeneralEvent" : false,
-      "isPublished" : true,
-      "name" : "Engineering Workshop",
-      "roomIds" : {
-        "-L3dbJhcrABxtcCeCE0I" : true,
-        "-L3dbV4V-I0VIFuPN-GG" : true
-      },
-      "speakerIds" : {
-        "-L3dh2BblGFOUmPwsEib" : true,
-        "-L3diC4vTxzzTok0ODOC" : true,
-        "-L3dosApLejO6jxtrLGg" : true
-      },
-      "startTime" : "2018-02-01T16:30:00.000Z",
-      "trackId" : "-L3daHLsiaLB448RhtOx",
-      "updatedAt" : 1516825189806,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    },
-    "-L3dlnOfnGJGtcq9ebz9" : {
+    "-L_B1DZjQoi22O8iuT1L" : {
       "description" : "<p><br></p>",
-      "duration" : "PT8H",
+      "duration" : "PT2H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Unconference",
+      "roomIds" : {
+        "-L_B0fLq57414d4GSnw7" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T19:00:00.000Z",
+      "trackId" : "-L_B0Y_CnhonLTP47C14",
+      "type" : "conf",
+      "updatedAt" : 1552748382312,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    },
+    "-L_B1cUrcjc4XlMD_afX" : {
+      "description" : "<p>Grab your badge, have breakfast, and meet other attendees before getting ready for the talks!</p>\n<p><strong>Getting Here</strong></p>\n<p>📍<a href=\"https://goo.gl/maps/MNAc3HJpSio\" target=\"_blank\"><strong>Calderwood Pavilion on Google Maps</strong></a></p>",
+      "duration" : "PT30M",
       "isGeneralEvent" : true,
       "isPublished" : true,
-      "name" : "Service in the Community",
-      "startTime" : "2018-02-02T14:00:00.000Z",
-      "updatedAt" : 1516824376313,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    }
-  },
-  "rooms" : {
-    "-L3dafKRjcsfpsvrqn82" : {
-      "name" : "Main Lobby",
-      "updatedAt" : 1516821459682,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    },
-    "-L3dbJhcrABxtcCeCE0I" : {
-      "name" : "Main Ballroom",
-      "updatedAt" : 1516821629172,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    },
-    "-L3dbNIg6JuunPgD37Os" : {
-      "name" : "Salon A",
-      "updatedAt" : 1516821643894,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    },
-    "-L3dbV4V-I0VIFuPN-GG" : {
-      "name" : "Salon B",
-      "updatedAt" : 1516821675755,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    }
-  },
-  "sections" : {
-    "-L3dXawqxLOm4bJSBexw" : {
-      "endTime" : "2018-02-01T22:00:00.000Z",
-      "name" : "Day 1",
-      "startTime" : "2018-02-01T14:00:00.000Z",
-      "title" : "Thursday, February 1",
-      "updatedAt" : 1516820394058,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    },
-    "-L3dY4vOLMsk_fdZfV2U" : {
-      "endTime" : "2018-02-02T22:00:00.000Z",
-      "name" : "Day 2",
-      "startTime" : "2018-02-02T14:00:00.000Z",
-      "title" : "Friday, February 2",
-      "updatedAt" : 1516820520710,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    }
-  },
-  "speakers" : {
-    "-L3dd0queRj8ffFi-_sx" : {
-      "bio" : "<p>Zach King is an American Vine star, filmmaker and YouTube personality based in Los Angeles. He is most known for his \"magic vines\" - six-second videos digitally edited to look as if he is doing magic. He calls his videos \"digital sleight of hand\".</p>",
-      "isFeatured" : false,
-      "name" : "Zach King",
-      "org" : "FinalCutKing",
-      "pictureId" : "8e7f7bdd-15ca-46ab-bf49-14ffbfdf1622",
-      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-test.appspot.com/o/confs%2Fdetail%2Fsample-conference%2Fspeakers%2F8e7f7bdd-15ca-46ab-bf49-14ffbfdf1622.png?alt=media&token=b35350bb-3234-49a7-95fa-7a1bfd6a869d",
-      "socialProfiles" : {
-        "facebook" : "ZachKingVine",
-        "twitter" : "finalcutking",
-        "web" : "finalcutking.com"
+      "name" : "Check-In",
+      "roomIds" : {
+        "-Lb-aLvdmfg_OcspGioM" : true
       },
-      "title" : "Filmmaker",
-      "updatedAt" : 1516822076224,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T13:00:00.000Z",
+      "type" : "conf",
+      "updatedAt" : 1553714490624,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
     },
-    "-L3dh2BblGFOUmPwsEib" : {
-      "bio" : "<p>Addy Osmani is an engineer that's worked on the web for over a decade. He's deeply passionate about web performance, tools and helping share knowledge with others. He currently works as an engineering manager and Senior Staff Engineer with the Chrome and Developer Relations teams at Google. His focus is on helping get sites loading fast. His previous jobs have included stints at companies like AOL Online.</p>",
-      "isFeatured" : false,
-      "name" : "Addy Osmani",
-      "org" : "Google",
-      "pictureId" : "d6bcc71f-151a-4370-93a0-418707318f76",
-      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-test.appspot.com/o/confs%2Fdetail%2Fsample-conference%2Fspeakers%2Fd6bcc71f-151a-4370-93a0-418707318f76.png?alt=media&token=65ca8dbd-b3e9-46f5-b6e3-4aecb2bd1117",
-      "socialProfiles" : {
-        "facebook" : "addyosmaniofficial",
-        "github" : "addyosmani",
-        "linkedIn" : "osmani",
-        "twitter" : "addyosmani",
-        "web" : "addyosmani.com"
+    "-L_B1xWucOuxqhoOBgDV" : {
+      "description" : "<p>Chances are that you're a teacher - whether you've formally taught in a classroom, shared an engineering experience as a talk or blog post, or helped out someone new on your team. Since you're a teacher, you should care about being a <em>good</em> teacher. Good teaching empowers those around you and nurtures healthy technical communities. Also, teaching doesn't need to be entirely altruistic - often the best way to truly learn something is to teach it.</p>\n<p>My education career started over a decade ago. It has included teaching at an all girl's STEM school in Rwanda and for the last five years as an online instructor for Google's Android courses. The Google courses are by far the biggest \"classroom\" I've been a part of, with a diverse and driven pool of students. Android has also had seismic changes over the past few years. These facts combined make Android a subject where teachers need to continually adapt, iterate and hone their skills.</p>\n<p>In this talk, I'll share what it's like behind the scenes: scripting, filming and producing Android classes for hundred of thousands of students, including what we got right, and what took a few tries. From this, I'll cover reflections and practical takeaways about teaching Android and teaching in general. Because I am a teacher and so are you!<br>\n</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : true,
+      "isPublished" : true,
+      "name" : "Keynote: I'm a teacher and so are you–lessons from teaching Android on the ground and in the cloud",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
       },
-      "title" : "Engineering Manager",
-      "updatedAt" : 1516823130298,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    },
-    "-L3diC4vTxzzTok0ODOC" : {
-      "bio" : "<p>Hi folks. I’m Paul. I’m a front-end developer who loves the web. I’m always thinking a lot about how to make you more productive with tools that improve your workflow help you make slicker, sexier, mobile web sites and webapps.</p>\n<p>I work on the <a href=\"http://twitter.com/chromiumdev\">Google Chrome</a> team focused on Developer Tooling. Chrome DevTools and everything else Chrome can do to make you a productive web developer.</p>\n<p>I’ve <strong>developed</strong> tools like <a href=\"http://modernizr.com/\">Modernizr</a>, <a href=\"http://yeoman.io/\">Yeoman</a>, <a href=\"http://css3please.com/\">CSS3 Please</a> and <a href=\"http://html5boilerplate.com/\">HTML5 Boilerplate</a>, <strong>curated</strong> <a href=\"http://html5rocks.com/\">HTML5 Rocks</a>, and <strong>co-created</strong> projects like <a href=\"http://html5please.com/\">HTML5 Please</a>, <a href=\"http://mothereffingtextshadow.com/\">mothereffingtextshadow</a>, <a href=\"http://mothereffinghsl.com/\">mothereffinghsl</a>, <a href=\"http://movethewebforward.org/\">Move the Web Forward</a>, <a href=\"http://mothereffinganimatedgif.com/\">Mothereffing Animated GIF</a>, <a href=\"http://w3fools.com/\">W3Fools</a>, <a href=\"http://chromestatus.com/\">chromestatus.com</a>, <a href=\"http://html5readiness.com/\">HTML5 Readiness</a>, <a href=\"http://na.isobar.com/standards/\">Front-end Coding Standards</a>, <a href=\"http://typerendering.com/\">Type Rendering Project</a>. Oh and I used to host the amazing <a href=\"http://yayquery.com/\" title=\"yayQuery Podcast - It's about jQuery, duh. :)\">yayQuery Podcast</a>. I’ve long loved music and kept the <a href=\"http://aurgasm.us/\">Aurgasm</a> music blog up for 10 years.</p>",
-      "isFeatured" : false,
-      "name" : "Paul Irish",
-      "org" : "Google",
-      "pictureId" : "cc826e99-35b7-4fef-80ff-8f1452200a28",
-      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-test.appspot.com/o/confs%2Fdetail%2Fsample-conference%2Fspeakers%2Fcc826e99-35b7-4fef-80ff-8f1452200a28.png?alt=media&token=c6e46e79-933a-4820-8ee2-83dfa09c8a53",
-      "socialProfiles" : {
-        "github" : "paulirish",
-        "linkedIn" : "paulirish",
-        "twitter" : "paul_irish",
-        "web" : "paulirish.com"
+      "speakerIds" : {
+        "-L_dfzSgOIymJNLWhzhu" : true
       },
-      "title" : "Performance Engineer",
-      "updatedAt" : 1516823432978,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T13:30:00.000Z",
+      "type" : "conf",
+      "updatedAt" : 1553287205890,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
     },
-    "-L3dlTYjoDUJrXrrPMDS" : {
-      "bio" : "<p>Katie Dill is the VP of Design of Lyft. She used to be the director of experience design of Airbnb.</p>\n<p>Katie joined AirBnB from Greenstart Venture Design where, as a Partner and Creative Director, she worked with early stage startups to design their user experience and brand strategy.</p>\n<p>Prior to Greenstart, as Creative Director at frog design, Katie led strategic, multidisciplinary design programs for companies including Intel, Disney, Samsung, Dolby and Chase Bank.</p>\n<p>Katie's expertise includes interaction and industrial design, business strategy and user research. Katie earned her B.S. in Industrial Design at Art Center College of Design and over the last 3 years, she taught Interaction and Industrial Design at California College of Arts.</p>",
-      "isFeatured" : false,
-      "name" : "Katie Dill",
-      "org" : "Lyft",
-      "pictureId" : "3fa64d3b-5dbf-40e9-883f-7c815bceda3a",
-      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-test.appspot.com/o/confs%2Fdetail%2Fsample-conference%2Fspeakers%2F3fa64d3b-5dbf-40e9-883f-7c815bceda3a.png?alt=media&token=6201be59-aba6-444e-9ecc-066e3a46438c",
-      "socialProfiles" : {
-        "linkedIn" : "katie-dill-79168b3",
-        "twitter" : "lil_dill"
+    "-L_B2BqWCy7nJT1yH6e8" : {
+      "description" : "<p>Your laptop is broken! What do you do? When this happened to me I used my smartphone to make a development environment with all the modules I needed for my ambitious artsy projects. We will go through my challenges in setting up and maintaining a remote server, using my environment when my connection was weak, and how I managed to write and view code on such a dinky little screen as my phone.</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Programming for nomads: How to program on mobile devices",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
       },
-      "title" : "VP of Design",
-      "updatedAt" : 1516824290944,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
+      "speakerIds" : {
+        "-L__1ubbdVQX_BgSuxCF" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T14:30:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553287175237,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
     },
-    "-L3dosApLejO6jxtrLGg" : {
-      "bio" : "<p><br></p>",
-      "isFeatured" : false,
-      "name" : "Steve Wozniak",
-      "updatedAt" : 1516825182356,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
-    }
-  },
-  "tracks" : {
-    "-L3daEMFuTMgXRUqmPdk" : {
-      "description" : "<p>The design track.</p>",
-      "name" : "Design",
-      "sortOrder" : 0,
-      "updatedAt" : 1516821346219,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
+    "-L_B2HycRbuFsVMNI1-3" : {
+      "description" : "<p>Do you ever find yourself staring at a problem that you have NO IDEA how to fix? Somehow I end up with those a lot, maybe I'm low on ideas, or I'm just good at finding the right rock to open up the coconut. Regardless, I'm happy to fight with a problem, poking and prodding until I find that special epiphany that makes it clear, usually muttering \"it was so simple all along\". I will share some stories of times I've been stuck, and the strategies employed to break through the lack of understanding and get to a solution. You will learn different approaches you can take and different things to look for when you find yourself with a difficult problem that has an obscure solution. Hopefully, you'll also laugh, as I did, at the simple solutions that were so laboriously won.</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Solving the hard problems",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_FbYyaJoHu1VHX7DSL" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T20:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553093478441,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
     },
-    "-L3daHLsiaLB448RhtOx" : {
-      "description" : "<p>The engineering track.</p>",
-      "name" : "Engineering",
-      "sortOrder" : 1,
-      "updatedAt" : 1516821357372,
-      "updatedBy" : "GU9CPPkIFIaRtKT93Zk2t1JdQre2"
+    "-L_B2zmxIdwGqPRbTFDR" : {
+      "description" : "<p>Now that Kotlin is the preferred language of Android developers, what is the best library to work with SQLite databases using Kotlin?&nbsp;Room just released support for Kotlin Coroutines, and SqlDelight released support for Kotlin Multiplatform. Room has great documentation and hides a lot of implementation detail, while SqlDelight lets you write raw SQL statements with an Android Studio plugin and then generates type-safe code for you. In this session, you'll see a rundown of these two libraries, along with live coding demos to help you decide which library sounds right for you in this Kotlin world.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "SELECT * FROM Kotlin",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_Efkg-vSsGFe6ec762" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T17:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553287063924,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B33jtXuGeeD7gipYY" : {
+      "description" : "<p>We all use crash reporting tools in our apps, but have you ever wondered what happens under the hood? How do these crash reporters do what they do to make our debugging lives easier? Let’s find out! In this session, you'll learn how to create a crash reporting SDK from scratch using Android's UncaughtExceptionHandler, starting by capturing and sending stack traces to an HTTP endpoint. We'll then progressively add functionality onto our crash reporter until it's turned into a battle-tested SDK that we're confident will save us hours of debugging crashes in production.<br>\n</p>\n<p>As expected diving deeper into the inner workings of our tools, we’ll encounter challenges along the way. We’ll analyze the various scenarios, what they mean for our apps, and how to best go about solving for them given tradeoffs and solutions. Here are some of the challenges we’ll encounter:<br>\n</p>\n<p>For starters, we’ll discuss the design constraints caused by working in a low-memory environment, and how streaming IO and JSON serialization can help us capture OutOfMemoryErrors. We’ll also learn the best practices of caching undelivered reports on disk for future delivery and triggering automatic upload of reports in response to connectivity changes. We’ll consider privacy issues, like how we can collect useful metadata about the device and application at the time of crash while respecting user privacy by filtering sensitive information. To further expand our tool, we’ll capture exceptions caught in a try-catch block and discuss the difficulties with ensuring thread-safety in these situations. Then we’ll move on to the various strategies for testing a crash reporter and walk through the benefits of black-box end-to-end tests.<br>\n</p>\n<p>Another issue to examine is how we can deobfuscate stack traces in apps which use R8—we’ll review uploading a mapping file to an HTTP endpoint and read its contents to reveal a readable stack trace. There are even things we can do to highlight the most useful parts of stack traces as well as thinking through grouping related errors together. Then we’ll consider supporting different API levels and how it affects the collection of useful data, and finally, we’ll touch on capturing errors in NDK apps and the potential pitfalls in the Java Native Interface.<br>\n</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Everything you ever wanted to know about error handling on Android",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_EifYpHS78HrR4qNf0" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T14:30:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1551820906260,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_B3DXM6OS_nwcdzq18" : {
+      "description" : "<p>Chances are you were already a Software Engineer before switching to Android Development. You might also have learnt your&nbsp;first line of Kotlin solely in the bid to become an Android Developer.&nbsp;Regardless of how you started developing for Android, at some point, you’ll need to start thinking about advancing to the next stage in your&nbsp;career.</p>\n<p>In this talk, you’ll see the evolution of an Android developer - from&nbsp;Junior, to Intermediate, to Senior and then to Team Lead and beyond. You will learn about what to expect at each stage, what mistakes that&nbsp;are overlooked and permissible and gain more insight into how to level&nbsp;up to the next stage.</p>\n<p>You’ll leave this talk with all the information you need to advance in your career!</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : true,
+      "isPublished" : true,
+      "name" : "Lightning Talk: Leveling up as an Android dev",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_cOxmXrYLzv1fCmKZw" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T16:00:00.000Z",
+      "type" : "conf",
+      "updatedAt" : 1553287185541,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B3QO9M_GkT9h5gfta" : {
+      "description" : "<p>In this workshop, I'll take you through the process of performing facial recognition (not just detection) on Android. I show how to set up and train your Cloud AutoML model, and then how to use that model within your Android app.</p>",
+      "duration" : "PT1H30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Facial recognition on Android using Cloud AutoML",
+      "roomIds" : {
+        "-L_B0fLq57414d4GSnw7" : true
+      },
+      "speakerIds" : {
+        "-L_Ffrw323h3avq3N3sa" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T14:30:00.000Z",
+      "trackId" : "-L_B0Y_CnhonLTP47C14",
+      "type" : "conf",
+      "updatedAt" : 1553208035655,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_B3eTePpxdrM_UHNoJ" : {
+      "description" : "<p>The move to cloud-based tablet POS systems has been a big win for restaurants. But what happens when the Internet goes out? How do you keep the five tablets in your restaurant humming along happily until the router is plugged back in? And how do you reconcile all of the activity you’ve recorded once everyone is back online?<br>\n</p>\n<p>Join us to learn how Toast has tackled this problem so far, and how we’re improving our solution. We’ll give you an end-to-end tour of the challenge, including:<br>\n</p>\n<p>- On-device database technologies<br>\n- The basics of securely storing payments<br>\n- Direct device-to-device communications<br>\n- Sharing business logic across the app and cloud<br>\n- Messaging stacks and their strengths<br>\n- Event sourcing patterns<br>\n</p>\n<p>You’ll understand how we make sure thousands of restaurants can give their customers great service under all conditions, and we’ll share patterns that you can apply to your own apps.<br>\n</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Working offline: Data sync patterns at Toast",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_EeWsJdhSbbW2TGHP1" : true,
+        "-L_EefHE19OjnfRnNlzj" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T18:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553287125789,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B3sy080lzy4uQb0y7" : {
+      "description" : "<p>The Chromebook represents an extraordinary opportunity for Android app distribution, but it also poses significant development and testing challenges for Android developers. In this talk, we'll explore how to connect a Chromebook to a development system for debugging and testing. Then we'll move on to display management, including how to detect and adapt to a Chromebook's larger screen with its true multi-window environment and variations in screen size, pixel density, and orientation. Specific recommendations will be offered for making an app feel like it's native to a Chromebook's visual environment. We'll then talk about file management, which works somewhat differently on Chromebooks compared to conventional Android devices. We'll look at how the Chromebook's local file system is shared with the container that manages Android apps, and how to work with Google Drive through the Storage Access Framework API. And finally, we'll explore the Chromebook's USB ports and what they offer for both file transfer and audio output.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Optimizing Android apps for Chromebooks",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_EgEG6UYInGN5UEBvK" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T18:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553208111414,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_B3yxj5auoL7sydUeI" : {
+      "description" : "<p>You’ve heard, seen or witnessed the buzz around MotionLayout. But what does it really look like in real life? What are some of its current limitations? How easy is it to use? Are the demos that we’ve seen actually possible? Or is it all a ruse and they’ve been created in Adobe After Effects?</p>\n<p>In this talk, we’ll use MotionLayout to develop an animation taken straight from a crazy designer’s mock-up. A mock-up that you see and crumble at just how long it would typically take you to build it on Android. Throughout this talk, you’ll see some animated goodness and you’ll learn some of the fundamentals of how MotionLayout works. You’ll find out what a MotionScene is and how you can use it to separate your states and transitions from your layout, how to use click and swipe handling to trigger transitions, how we can take advantage of KeyAttributes to tweak animations at certain frames, how to use CustomAttributes to animate certain parts of a View and more!</p>\n<p>You will leave this talk armed with the basic knowledge required to start having fun with MotionLayout and creating your own animations and transitions. And you'll realize that the mad animations or transitions that your designers give you are now possible!</p>\n<p>To never saying “no” to designers again*! 🍻</p>\n<p><br></p>\n<p>* Ok, sometimes you’ll still have to say no.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Do the Loco-MotionLayout: Building animations with MotionLayout",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_EdhXeQCP48FT0hHx_" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T19:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553287241929,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B43Pdd6b26V2460G7" : {
+      "description" : "<p>Crowd sourcing a team of professionals from around the globe for a conference is not an easy task. Get a first-hand account from two first-time volunteers about how just a little time in each week was enough to bring the Droidcon Boston 2019 app to life. Learn what Android patterns we used to build the app this year, how we balanced global weekly meetings and touchpoints through Slack channels, and most importantly what it was like to get involved in the Android development community. Contributing to the community isn't as scary as it seems!</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Community-driven, Community-built: The Droidcon Boston app story",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-LaQOAH52GgJb7ZUdQBI" : true,
+        "-LaQOOuVVrMI7kK2b4Yf" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T17:30:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553207997335,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_B48m3Ificxo7ltgFF" : {
+      "description" : "<p>Machine Learning is everywhere it seems, and its usefulness is growing daily. In this session, you'll get a deep dive into Machine Learning, and a tour of the options available to you to add on-device machine learning to your mobile app. Whether you want ready-to-use APIs for common use cases like detecting faces or labeling images or you have experience developing your own custom models, ML Kit can help. We’ll cover the basics of implementing machine learning into your app, so you can build a more powerful user experience.&nbsp;</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "On-device machine learning for Android developers",
+      "roomIds" : {
+        "-L_B0fLq57414d4GSnw7" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T19:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1552748255150,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    },
+    "-L_B4DoizLa7Th8saFvE" : {
+      "description" : "<p>Breaking away from the traditional steps of a <a href=\"http://www.gv.com/sprint\" target=\"_blank\">design sprint</a>, we blur them together to further reduce the development cycle in what we call “Building @ speed of thought\".&nbsp;Over the years my group has been perfecting how to build world-class Android Apps at the speed of thought first for hackathons, then products and now for design sprints.</p>\n<p>In this session, we will detail the “Speed of Thought” methodology, steps, tools and components involved. We start by utilizing a design sprint to explore the power of mobile and how it fits into the market/problem we are trying to solve. Then focusing on the crucial step in a design sprint, we build high fidelity prototypes in rapid succession utilizing the JetPack Android software components (UI, Behavior, Foundation, Architecture) to take full advantage of the Android platform.&nbsp;We do this by leveraging the design features of Android Studio (material components/theme editor, constraint library, motion editor) along with open source/industry resources to build an intuitive and beautiful UI.</p>\n<p>Once the UI framework is done, we write the Kotlin application logic utilizing the Android Architecture Components with data binding connected to Firebase for the synchronized backend. With our application finished we execute our strategy for marketing, distribution, and monetization guided by Data-Driven Ethnography (DDE).&nbsp;At the end of the session, the audience will have a good idea of how in rapid secession all these tools and components come together to produce magic.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Building @ speed of thought",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_FdOqy0HORovQdX_4H" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T19:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553286556182,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B4Lxn9ybz7C9jn_xD" : {
+      "description" : "<p>Discussions around app optimizations and cold start times are nothing new. However, in this talk I’d like to take a slightly different approach, taking individual cases for the various Uber apps, and exploring optimizations in a highly contextual manner. Though some optimizations are applicable across all Android apps, it can be hard to decide what optimizations to focus on, given the potential impact and the estimated effort. We’ll walk through optimizations around code organization, threading, various networking topics, background work, etc., in the form of case studies for the Uber Rider, Driver, UberEats and Uberlite apps, comparing their individual needs. Through this talk I hope to provide you some insight into approaching optimization for your particular apps, along with exposure to some of the tools and methods we use at Uber for such performance work.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "App optimizations: A case-based exploration",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_EfQfbPxWLR6ojYH0F" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T20:00:00.000Z",
+      "trackId" : "-L_AqwvtqFNqKTExZVX5",
+      "type" : "conf",
+      "updatedAt" : 1553819286734,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_B4RaG-QQBeMSw1bmN" : {
+      "description" : "<p>Combining Flutter and Kotlin/Native done on a conference app, I will share how to do this approach and the things I learned. For a sneak peek, check out <a href=\"https://tech.olx.com/fast-prototypes-with-flutter-kotlin-native-d7ce5cfeb5f1\" target=\"_blank\">my blog post</a>.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Fast prototypes with Flutter + Kotlin/Native",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_FcOarfVbUNI6HCxVQ" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T20:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553286814442,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B4WPRcp8H8zWMMVr6" : {
+      "description" : "<p>Did you know \"neural-network based classification\" is really just a &nbsp;fancy way to squish a bunch of data until all the things that look alike &nbsp;are right next to each other? Machine learning is permeating every &nbsp;facet of our lives, from learning our preferences to self-driving cars, &nbsp;but what happens when you apply neural networks to code quality…how do &nbsp;you even view code as data? &nbsp;The key ideas are pretty easy to summarize &nbsp;and fun to play with. &nbsp;This talk will provide an overview of fundamental &nbsp;concepts of machine learning, and then delve into how it can be used to &nbsp;analyze and improve code, provide pointers to available commercial and &nbsp;open source tools and discuss what’s been achieved so far (coding in &nbsp;English, context-aware code completion, automated Stack Overflow). &nbsp;The &nbsp;talk will close with speculation on where the field is going, and how &nbsp;machine learning won’t take our jobs, but hopefully will take some of &nbsp;the work we don’t like doing.</p>",
+      "duration" : "PT1H",
+      "isGeneralEvent" : true,
+      "isPublished" : true,
+      "name" : "Code + AI: Will robots take our coding jobs? Machine learning applied to programming",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L__20ZBweEOF20K_Ic9" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T21:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553287269988,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B50s2Ua07L2GHMZvQ" : {
+      "description" : "<p>Words have power! In this workshop, we’ll step outside of our Android comfort zone and create a conversational user experience using the Google Assistant running on our phones.&nbsp;We’ll manipulate the world around us with Internet of Things (IoT) hardware. Get ready to learn a taste of Kotlin-based Google Actions fulfillment with Google’s AppEngine, Firebase Functions using Node.js, the Particle Photon Arduino platform and possibly Newton’s Laws of Motion as they pertain to Ping Pong balls! (BYOL - bring your own laptop)</p>",
+      "duration" : "PT1H30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Words have power: The ping pong catapult",
+      "roomIds" : {
+        "-L_B0fLq57414d4GSnw7" : true
+      },
+      "speakerIds" : {
+        "-L_EjCbG_oNgIfeqtF4i" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T17:00:00.000Z",
+      "trackId" : "-L_B0Y_CnhonLTP47C14",
+      "type" : "conf",
+      "updatedAt" : 1553287160373,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_B5D9Wiw66PXJVnZto" : {
+      "description" : "<p>In this free workshop, you’ll work at your own pace to build a complete mobile app in the NativeScript Playground and running on your iOS or&nbsp;Android mobile device. We’ll build a fun mobile app called Tarotmoji - a nice-looking, performant app that uses emoji to give you a Tarot reading. Over the course of the workshop, we’ll talk about strategies for routing in mobile apps, building screens, navigation, and nice layouts, as well as using plugins to enhance the app building experience.</p>\n<p>Learning outcomes:</p>\n<p>- Build mobile apps</p>\n<p>- Android development</p>\n<p>- Navigation strategies</p>\n<p>- UI design</p>\n<p>- Plugin integration</p>",
+      "duration" : "PT1H30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Build a complete native mobile app with NativeScript-Vue",
+      "roomIds" : {
+        "-L_B0fLq57414d4GSnw7" : true
+      },
+      "speakerIds" : {
+        "-L_FgI4zOik_cNAKSmxc" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T19:30:00.000Z",
+      "trackId" : "-L_B0Y_CnhonLTP47C14",
+      "type" : "conf",
+      "updatedAt" : 1553286444476,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_BIxRiAFtDQHsalPXB" : {
+      "description" : "<p><br></p>",
+      "duration" : "PT15M",
+      "isGeneralEvent" : true,
+      "isPublished" : true,
+      "name" : "Community addiction: Part III",
+      "roomIds" : {
+        "-L_Asu4o4fNYDxpW4OO9" : true
+      },
+      "speakerIds" : {
+        "-L_cV86-OZjwKpW0CfB9" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T13:45:00.000Z",
+      "type" : "conf",
+      "updatedAt" : 1553286677007,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_DQsQWcvEaPc-pe_qS" : {
+      "description" : "<p>Two longtime friends with complementary skills meet a new mobile SDK for building high-performance apps from a single codebase, what could go wrong? Flutter is quite powerful but with great power comes great responsibility. Using widgets, building a meaningful UI in a new way, finding that library we need and getting used to a different architectural approach are some of the many challenges we face as developers and designers when going into the cross-platform world. In this talk, we'll review some of this advantages of using Flutter, how to tackle common challenges when adopting it and how can it spark a better collaboration between designers and developers, including roles and responsibilities, a well-defined feedback process and our own experience while building an app. Interested? let's chat it over a beverage of your choice.</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Flutter, a designer and a developer walk into a project",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-L_Faee5JPkKI7jk8QsG" : true,
+        "-L_FdxseLCtsPJmN42kU" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-08T20:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1552237003990,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    },
+    "-L_ZH4chzqwMQP-uNhGT" : {
+      "description" : "<p>You&nbsp;may already have an AR app or a portion of your app using AR.&nbsp;And&nbsp;while it may be a fun experience for the users, how do you increase&nbsp;engagement (and thus conversions)?</p>\n<p>By changing the users’ reality of course!</p>\n<p>In this talk, you’ll learn about how you can&nbsp;combine ARCore and Sceneform to let users take their augmented reality experience with them. So your users can take a part of their reality&nbsp;with them and continue to engage in the AR experience,&nbsp;whether they’re in a subway or at work!</p>",
+      "duration" : "PT30M",
+      "isGeneralEvent" : false,
+      "isPublished" : true,
+      "name" : "Augmenting reality: From fun to furnished",
+      "roomIds" : {
+        "-L_Asyn3fF9jq7PN_TmJ" : true
+      },
+      "speakerIds" : {
+        "-La5yQ1ja7GSBDs0gsgj" : true
+      },
+      "staffInstructions" : "",
+      "startTime" : "2019-04-09T17:00:00.000Z",
+      "trackId" : "-L_AqtujmZtdApYMCEPJ",
+      "type" : "conf",
+      "updatedAt" : 1553287278993,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
     }
   }
+,
+  "speakers" : {
+    "-L_EbCnvker3BVMypnQa" : {
+      "bio" : "<p>Eric is an Android developer and instructor at Big Nerd Ranch, an instructor at Caster.IO, an Android GDE and the organizer of GDG Android Columbus. He has been building Android apps for the last 5 years and working as a software engineer for the last 15.&nbsp;When he's not working, he enjoys spending time with his wife and two daughters.</p>",
+      "isFeatured" : false,
+      "name" : "Eric Maxwell",
+      "org" : "Big Nerd Ranch",
+      "pictureId" : "75bfe7f7-7851-454e-837e-1cc5643b3564",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F75bfe7f7-7851-454e-837e-1cc5643b3564.png?alt=media&token=51b7117e-d109-4833-be93-91ac6eec5143",
+      "socialProfiles" : {
+        "twitter" : "@emmax"
+      },
+      "title" : "Developer and Instructor, #GDE Android",
+      "updatedAt" : 1553647598565,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_EbsX-4IcExvMGc-K5" : {
+      "bio" : "<p>Etienne Caron is a tech developer lead at Shopify, a popular Canadian e-commerce company. He is also part of Google's Developer Expert program and an instructor for Caster.io. Etienne has been an active member of the Android developer community in Montreal since 2010, and regularly devotes his time to mentoring startups, developers, and students in the mobile space. 3D animation, procedural content generation, and VR are some of his hobbies, and he loves introducing other developers to this fascinating field.&nbsp;</p>",
+      "isFeatured" : false,
+      "name" : "Etienne Caron",
+      "org" : "Shopify",
+      "pictureId" : "884b0231-9069-43f6-9019-a469b86176bf",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F884b0231-9069-43f6-9019-a469b86176bf.png?alt=media&token=dbb1cd8f-2d28-43e8-b857-cc43f6c93e18",
+      "socialProfiles" : {
+        "github" : "kanawish",
+        "twitter" : "kanawish"
+      },
+      "title" : "Tech Developer Lead, GDE, Caster.io Instructor",
+      "updatedAt" : 1553562124517,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_EcdUbwXZVtPOFzXJk" : {
+      "bio" : "<p>Segun Famisa is a Google Developer Expert for Android, based in Düsseldorf, Germany and has been developing for Android since Gingerbread. He has previously worked at Andela as an Android Consultant in Lagos, Nigeria, where he worked with various partners on their Android projects. He also worked at Konga where he led Android development efforts on the KongaPay team. He is passionate about Android development including and loves to share his passion and findings through technical articles on his blog as well as speaking about the platform. He is a bass player and does some painting in his spare time.</p>",
+      "isFeatured" : false,
+      "name" : "Oluwasegun Famisa",
+      "pictureId" : "81a1af5f-13fc-4fd8-aef4-1999669998a1",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F81a1af5f-13fc-4fd8-aef4-1999669998a1.png?alt=media&token=dd9d1396-44c7-4446-b359-886af9be82d7",
+      "socialProfiles" : {
+        "twitter" : "segunfamisa"
+      },
+      "title" : "GDE Android",
+      "updatedAt" : 1553373788137,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_EdLUZougkrL0jf3K4" : {
+      "bio" : "<p>Developer with &lt;3 from Dresden who joined the successful startup RadioOpt after finishing his studies. Now working at Vodafone Group on mobile client solutions.&nbsp;</p>",
+      "isFeatured" : false,
+      "name" : "Anton Augsburg",
+      "org" : "Vodafone Group",
+      "pictureId" : "2f9e261a-95bb-44dd-ad9b-1611253e9fae",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F2f9e261a-95bb-44dd-ad9b-1611253e9fae.png?alt=media&token=6fc9a08c-5bd0-414a-947c-62d439db551a",
+      "socialProfiles" : {
+        "twitter" : "ungesehn"
+      },
+      "title" : "Developer",
+      "updatedAt" : 1552064490116,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_EdhXeQCP48FT0hHx_" : {
+      "bio" : "<p>Mike Scamell is a Senior Android Developer for some of the most popular sports and news apps in Europe; Sky Sports UK, Germany, Italy, and Sky News. He’s also the host of the Android Snacks podcast (currently on hiatus). You’ll often find him consumed with UI whether that’s playing with VectorDrawables, SharedElementTransitions or meticulously tweaking an animation. Mike instantly fell in love with MotionLayout and has been finding creative uses for it ever since.</p>",
+      "isFeatured" : false,
+      "name" : "Michael Scamell",
+      "org" : "Sky, UK",
+      "pictureId" : "3f7bf0fd-235b-4667-acf5-c9a7035e780c",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F3f7bf0fd-235b-4667-acf5-c9a7035e780c.png?alt=media&token=eac9bfbb-1320-4e10-966a-9c3c19a09cd5",
+      "socialProfiles" : {
+        "twitter" : "mikescamell"
+      },
+      "title" : "Senior Android Developer",
+      "updatedAt" : 1553561838406,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_EeWsJdhSbbW2TGHP1" : {
+      "bio" : "<p>Oleg joined Toast after serving as Chief Architect at Vecna Technologies. In his three years at Toast, Oleg led infrastructural projects that laid the foundation for Toast's growth to a billion-dollar technology company. Oleg's work on Toast's Data Sync platform has led to multiple pending patent applications. He is currently focused on building a massively-scalable Android and cloud order processing system.</p>",
+      "isFeatured" : false,
+      "name" : "Oleg Golberg",
+      "org" : "Toast",
+      "pictureId" : "48d72c70-a2fa-4205-92f4-b9aa9e2c78e8",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F48d72c70-a2fa-4205-92f4-b9aa9e2c78e8.png?alt=media&token=8e241321-ecb5-47c9-a403-9fd8e32390c6",
+      "title" : "Senior Principal Software Engineer",
+      "updatedAt" : 1552749565859,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    },
+    "-L_EefHE19OjnfRnNlzj" : {
+      "bio" : "<p>Ben joined Toast in 2017 after building a petabyte-scale cybersecurity threat hunting platform as the Director of Engineering at Sqrrl Data (acquired by Amazon). Ben leads Toast's Platform group, with teams focused on core infrastructural components of the Toast cloud and Android architecture.&nbsp;</p>",
+      "isFeatured" : false,
+      "name" : "Ben Popp",
+      "org" : "Toast",
+      "pictureId" : "c0aa51db-baa4-4785-ba9a-4729a96b964b",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fc0aa51db-baa4-4785-ba9a-4729a96b964b.png?alt=media&token=21971640-3417-49f2-a594-e3beb9152d57",
+      "title" : "Director of Engineering - Platform",
+      "updatedAt" : 1552749606198,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    },
+    "-L_Ef0HYEAncZygEMwN6" : {
+      "bio" : "<p>I am a mobile developer, currently enhancing the Gametime App and enjoying exploring San Francisco. I have been learning and building Android apps for more than 2 years now.&nbsp;I am always up for a new challenge and want to create awesome mobile apps with the purpose to make life fun and easy and solve problems. If I am not coding, I am usually traveling or lost in my other world of fictional novels.</p>",
+      "isFeatured" : false,
+      "name" : "Divya Jain",
+      "org" : "Gametime",
+      "pictureId" : "56237039-db63-4eed-aac7-dd534f3a0f2c",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F56237039-db63-4eed-aac7-dd534f3a0f2c.png?alt=media&token=b6e4760e-f967-41da-813b-aff6448aec24",
+      "socialProfiles" : {
+        "twitter" : "divyajain2405"
+      },
+      "title" : "Mobile Developer",
+      "updatedAt" : 1553511852142,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_EfQfbPxWLR6ojYH0F" : {
+      "bio" : "<p>Utkarsh is a Software Engineer on Uber's Mobile Platform team. He works on Android performance and architecture related things, including binary size, class loading, startup performance, memory management, etc., across the Rider, Driver, Eats and Uberlite apps.</p>",
+      "isFeatured" : false,
+      "name" : "Utkarsh Garg",
+      "org" : "Uber",
+      "pictureId" : "1dcfb9a4-beda-41fc-910f-1aaa7b52a51f",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F1dcfb9a4-beda-41fc-910f-1aaa7b52a51f.png?alt=media&token=289dd949-e574-416f-ac59-17f9947f587c",
+      "title" : "Software Engineer",
+      "updatedAt" : 1553647849245,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_Efkg-vSsGFe6ec762" : {
+      "bio" : "<p>Sam is a Lead Android Engineer at Capital One, Google Developer Expert for Android, co-organizer of Android Summit, and Instructor at Caster.IO. He has been working with Android since 2011 and has 15 years of professional experience with software development. Check out https://handstandsam.com where he shares tips and tricks about Android and software development.</p>",
+      "isFeatured" : false,
+      "name" : "Sam Edwards",
+      "org" : "Capital One",
+      "pictureId" : "144d2fac-9246-4ab2-89c2-52e1c32dc29a",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F144d2fac-9246-4ab2-89c2-52e1c32dc29a.png?alt=media&token=151b864b-0afd-4bab-9e28-7cec3f8d656a",
+      "socialProfiles" : {
+        "twitter" : "HandstandSam"
+      },
+      "title" : "Lead Android Engineer",
+      "updatedAt" : 1551896849932,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_EgEG6UYInGN5UEBvK" : {
+      "bio" : "<p>David Gassner is Managing Staff Instructor for LinkedIn Learning's technology training library. He's authored over 100 video-based technical training courses for software developers and currently specializes courses on Android, Java, Kotlin, and other programming languages. He was the author of Wiley's Flex 3 Bible and Flash Builder 4 and Flex 4 Bible, and for 10 years was a regular speaker at conferences for Allaire, Macromedia, and Adobe. He most recently designed and developed Audio Cues, an Android app for running sound in live performance, which is available in the Google Play and Amazon app stores and runs well on phones, tablets, and Chromebooks.</p>",
+      "isFeatured" : false,
+      "name" : "David Gassner",
+      "org" : "LinkedIn",
+      "pictureId" : "c928f789-9272-47ad-9b11-3a13d14ec434",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fc928f789-9272-47ad-9b11-3a13d14ec434.png?alt=media&token=8e88a40e-a728-4f42-9cea-fa0f775b15ee",
+      "socialProfiles" : {
+        "linkedIn" : "dgassner"
+      },
+      "title" : "Managing Staff Instructor",
+      "updatedAt" : 1551896832622,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_EhR30i6CHFAUU-NGe" : {
+      "bio" : "<p>Greg Milette is a software engineer who loves gadgets and good code. That's why in 2009 he grabbed his G1 Android phone and started writing apps. Since then he's written a few books on the subject of Android and Kotlin, built dozens of apps, and even created a video course about Kotlin DSLs.&nbsp;</p>\n<p>Today, he believes Android phones are still fun gadgets even if they do not have slide out keyboards like the good old G1.</p>\n<p>Recently while at TripAdvisor, he has committed completely to Kotlin development, and has lost all sense of where the semicolon key is.&nbsp;</p>\n<p>You can find Greg around the halls of the conference trying to get everyone to call the !! operator \"bunny ears.\"</p>",
+      "isFeatured" : false,
+      "name" : "Greg Milette",
+      "org" : "TripAdvisor",
+      "pictureId" : "2f69c89e-1a8f-4e49-a432-12934e794eb4",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F2f69c89e-1a8f-4e49-a432-12934e794eb4.png?alt=media&token=85643913-100a-431c-bdb2-874803b24fa2",
+      "socialProfiles" : {
+        "linkedIn" : "gregmilette/",
+        "twitter" : "gregmilette"
+      },
+      "title" : "Senior Software Engineer",
+      "updatedAt" : 1553567706362,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_Ehp7aYCb6WGIvIxom" : {
+      "bio" : "<p>Emanuel Moecklin is Chief Technology Officer at Airfox, a Boston-based startup providing transformative financial services to emerging markets. He has been with Airfox for over two years as Chief Software Architect and Lead Android Developer, leading the 10 person engineering team based in Boston and São Paulo. Emanuel was a mobile technology entrepreneur with Android developer company 1gravity LLC (founder and CEO) and software architect/manager at PostFinance. Emanuel has architected, designed, and built large-scale transaction systems for the biggest payment processor in Switzerland and has worked in numerous enterprise software projects across the globe for the management consulting business unit of PricewaterhouseCoopers. He’s an expert in mobile advertising and the mobile development wizard of Airfox responsible for designing and implementing the Airfox mobile client architecture.</p>",
+      "isFeatured" : false,
+      "name" : "Emanuel Moecklin",
+      "org" : "Airfox",
+      "pictureId" : "7056c013-4cd1-4faf-b8e4-f737ce277f30",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F7056c013-4cd1-4faf-b8e4-f737ce277f30.png?alt=media&token=caee08bc-b3fa-4f54-98a2-407a09bc3f6d",
+      "socialProfiles" : {
+        "linkedIn" : "emanuel-moecklin-4b0ba518"
+      },
+      "title" : "CTO",
+      "updatedAt" : 1551896624766,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_EiKS5yY_3b0rtfM8F" : {
+      "bio" : "<p>Anton has over 25 years of experience as a software developer and architect in various software fields and currently works as a dev lead for Intrepid, part of Accenture. He has been involved in the Android community since its early days and has been one of the top contributors to various online forums for Android developers. He is one of the organizers of the Kotlin Office Hours Meetup in Cambridge, Massachusetts. When not at work, he likes to dabble on his guitar or plan his next travel destination.</p>",
+      "isFeatured" : false,
+      "name" : "Anton Spaans",
+      "org" : "Intrepid, part of Accenture",
+      "pictureId" : "c657551b-8770-49bf-bfeb-338b076660d3",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fc657551b-8770-49bf-bfeb-338b076660d3.png?alt=media&token=26d89f2d-a7dc-4938-ac62-5b0c86add6b9",
+      "socialProfiles" : {
+        "facebook" : "streetsofboston",
+        "linkedIn" : "antonspaans",
+        "twitter" : "streetsofboston"
+      },
+      "title" : "Dev Lead",
+      "updatedAt" : 1551896662344,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_EifYpHS78HrR4qNf0" : {
+      "bio" : "<p>Jamie lives in Bath, England, and has been developing Android applications for nearly 5 years. He currently develops an open-source Android error-reporting SDK at Bugsnag. His claims to fame include creating the smallest Android APK in the world (678 bytes), moderating the AndroidDev subreddit, and creating json2kotlin, a tool which generates Kotlin source files from JSON.</p>",
+      "isFeatured" : false,
+      "name" : "Jamie Lynch",
+      "org" : "Bugsnag",
+      "pictureId" : "eda7f747-b3df-4524-a020-e578a9f860ef",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Feda7f747-b3df-4524-a020-e578a9f860ef.png?alt=media&token=df9b68af-25dc-44ec-917b-04ada5db0125",
+      "socialProfiles" : {
+        "github" : "fractalwrench",
+        "twitter" : "fractalwrench",
+        "web" : "fractalwrench.co.uk/posts/"
+      },
+      "title" : "Android Developer",
+      "updatedAt" : 1553561949751,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_EjCbG_oNgIfeqtF4i" : {
+      "bio" : "<p>Nick DiPatri has a degree in Electrical Engineering from Rutgers and has spent the last 20 years building hardware and software systems for Philadelphia companies. He is currently a Principal Engineer at Comcast.&nbsp;Nick is a 'maker' at heart and loves to build gadgets using epoxy, 3D printing, microprocessors, and blinky lights.</p>",
+      "isFeatured" : false,
+      "name" : "Nicholas DiPatri",
+      "org" : "Comcast",
+      "pictureId" : "8b00e09f-8664-4db5-a87e-aefc743901a0",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F8b00e09f-8664-4db5-a87e-aefc743901a0.png?alt=media&token=d23f3998-cc8f-46a1-9360-75ac898ed4bd",
+      "socialProfiles" : {
+        "twitter" : "ndipatri"
+      },
+      "title" : "Principal Engineer",
+      "updatedAt" : 1553288343833,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_Faee5JPkKI7jk8QsG" : {
+      "bio" : "<p>Calu is a designer from Guatemala City. Print, branding, lettering, UI &amp; UX are her main areas of development. She teaches photography and semiotics at Mariano Galvez University and currently is the design lead of a local online media company. A true fangirl, nerd &amp; geek. Comics, books, DnD, movies, games, cosplay and baking are her hobbies and learning her passion.</p>",
+      "isFeatured" : false,
+      "name" : "Carmen Gonzalez",
+      "org" : "Media Managers",
+      "pictureId" : "86c57052-b79a-4a5f-824d-428a696b7a54",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F86c57052-b79a-4a5f-824d-428a696b7a54.png?alt=media&token=648dfcdc-eb42-4303-a7e0-189e731e8fbd",
+      "socialProfiles" : {
+        "twitter" : "caluuuux",
+        "web" : "about.me/carmenlucia"
+      },
+      "title" : "Design Lead",
+      "updatedAt" : 1553819785318,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_FbBmFWLXGsbG5VPB1" : {
+      "bio" : "<p>Ana is a software engineer with over 7 years of experience in Android. During college, she focused on various e-learning projects and plagiarism detection. After getting her Masters degree in CS, she started developing for Android, working on various projects in the telecommunication, medical and travel industry. After switching to mobile banking and security, in 2016 she took the role of Technical Manager of Mobile Banking. She is currently working as a PM at Asseco SEE. In addition to coding, she loves organizing workshops and working directly with clients, helping to close the gap between the technical and practical in the mobile industry. Apart from coding and public speaking, she enjoys spending time with her family and traveling.</p>",
+      "isFeatured" : false,
+      "name" : "Ana Baotić",
+      "org" : "Asseco SEE",
+      "pictureId" : "87a67db6-196b-478b-9199-13a4ff8c4010",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F87a67db6-196b-478b-9199-13a4ff8c4010.png?alt=media&token=9bd2957f-b008-47ba-9176-8a7109867238",
+      "socialProfiles" : {
+        "twitter" : "abaotic"
+      },
+      "title" : "PM",
+      "updatedAt" : 1551896738871,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_FbYyaJoHu1VHX7DSL" : {
+      "bio" : "<p>Travis Himes is a Senior Software Engineer specializing in Android at Warner Brothers Digital Labs with more than 10 years of experience, 7 years of which are building Android applications. Travis has given talks at the Philadelphia Android Alliance, as well as taught fellow developers the basics of Android development. Travis is a fan of keyboard shortcuts, and really anything that saves time and increases repeatability; his .bashrc file is a mile long and fraught with aliases and functions to speed his work. He always enjoys learning something new, you might say it's his hobby.</p>",
+      "isFeatured" : false,
+      "name" : "Travis Himes",
+      "org" : "Warner Brothers Digital Labs",
+      "pictureId" : "64c7a9b7-ce0a-4864-aa18-fd252d959668",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F64c7a9b7-ce0a-4864-aa18-fd252d959668.png?alt=media&token=38325962-5448-45ee-b6f4-c950d682a4c1",
+      "socialProfiles" : {
+        "twitter" : "travis_himes"
+      },
+      "title" : "Senior Software Engineer",
+      "updatedAt" : 1551896588768,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_Fc-FSt82gvteUxcxb" : {
+      "bio" : "<p>Joe is a Sr. Software Engineer on the Mobile Platforms Team at The New York Times.&nbsp;Joe has been working as an engineer for over 20 years, working with Java since Java 2. He has taken experience from backend and systems engineering to the Android ecosystem. When he is not working on new features in the NYTimes app, he is watching the latest Marvel movie or exploring New York City for new coffee shops.</p>",
+      "isFeatured" : false,
+      "name" : "Joe Cyboski",
+      "org" : "The New York Times",
+      "pictureId" : "94738dfc-be4f-4b06-a3b4-0d4d06d1c118",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F94738dfc-be4f-4b06-a3b4-0d4d06d1c118.png?alt=media&token=671cbe6b-8a83-409d-98eb-b8e0f72bd640",
+      "socialProfiles" : {
+        "twitter" : "cybo42"
+      },
+      "title" : "Senior Software Engineer",
+      "updatedAt" : 1553288260908,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_FcOarfVbUNI6HCxVQ" : {
+      "bio" : "<p>JB is a geeky mobile expert from Berlin. JB has been with OLX Group for more than three years, two years of which are from the Philippines and the rest from Berlin. Before that he worked for several years in a company that serviced clients such as NFL, HSN, and other large media companies. He likes exploring new technologies related to mobile, especially those that can improve developer productivity. JB enjoys experiencing different cultures via food, language, and travel.</p>",
+      "isFeatured" : false,
+      "name" : "JB Lorenzo",
+      "org" : "OLX Group GmbH Berlin",
+      "pictureId" : "9ce79309-f213-41e4-8eb5-163d5aa02a98",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F9ce79309-f213-41e4-8eb5-163d5aa02a98.png?alt=media&token=a5c36ee1-5f64-478a-b7d2-edce7c49e3ca",
+      "socialProfiles" : {
+        "twitter" : "bennegeek"
+      },
+      "title" : "Senior Android Developer",
+      "updatedAt" : 1553735959148,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_FdOqy0HORovQdX_4H" : {
+      "bio" : "<p>Ash - CTO @ ZoeWave building physiologically intelligent clothing called ZoeWear. Combining biotech, mobile and fashion to build clothing that keeps people healthy while looking great*. Zoe(“life”)Wear “wearable for life” is built on his experience in all three fields:</p>\n<p>BioTech - A researcher @ RxDigita / TDI working on medical biomarkers. Researching human physiology and physical biochemistry for early detection of diseases (scientific publications &amp; posters).</p>\n<p>Mobile - A developer @ YLabz building both native iOS &amp; Android apps. Enthusiastic author, teacher, and speaker helping promote the ecosystem (patents, JavaOne Rock Star &amp; 3x Amazon Code Ninja).</p>\n<p>Fashion - Designed a 15-week wearable course \"Technology is the new Black\" researching Techo Fashion for AAU. How to build products that incorporate the “Beauty of Fashion” infused with the “Magic of Technology” to promote “Life Care”.</p>\n<p>Check out more <a href=\"https://goo.gl/dmkJ0a\" target=\"_blank\">about me</a> and more in-depth about <a href=\"https://goo.gl/7Wi8cF\" target=\"_blank\">other talks I've given</a>.</p>",
+      "isFeatured" : false,
+      "name" : "Siamak (Ash) Ashrafi",
+      "org" : "ZoeWave",
+      "pictureId" : "156bc2df-cfbe-4065-93ce-174af6be93fa",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F156bc2df-cfbe-4065-93ce-174af6be93fa.png?alt=media&token=22213ea0-8956-4d83-8826-77bc9f1f1eb2",
+      "socialProfiles" : {
+        "twitter" : "biocodes"
+      },
+      "title" : "CTO",
+      "updatedAt" : 1553288485904,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_FdxseLCtsPJmN42kU" : {
+      "bio" : "<p>Adrián has been involved in the software industry for 15+ years, working both in web and mobile apps. Facebook Developers Circle Guatemala organizer, GDG Guatemala, GuatemalaJS and Nodebots former co-organizer. Currently, he leads the Innovation Lab at Galileo University and is a Google Developer Expert(GDE) for Android, IoT, and Firebase.</p>",
+      "isFeatured" : false,
+      "name" : "Adrian Catalan",
+      "org" : "Galileo University",
+      "pictureId" : "6327d64d-3093-40cb-ad97-6e208e475305",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F6327d64d-3093-40cb-ad97-6e208e475305.png?alt=media&token=3dd6f061-85bd-4dcc-9d99-518b08d662cf",
+      "socialProfiles" : {
+        "twitter" : "ykro"
+      },
+      "title" : "Lead of Innovation Lab, GDE",
+      "updatedAt" : 1551896950384,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_FeKVyX4N8HtdtOHfF" : {
+      "bio" : "<p>KK is an engineering manager at Microsoft and leads the beta distribution and internal distribution teams for App Center. Apart from the innovation of ways to make an Android developer's work 10x easier, she is a fitness instructor and a high school computer science teacher.&nbsp;</p>",
+      "isFeatured" : false,
+      "name" : "Keerthana \"KK\" Kumar",
+      "org" : "Microsoft",
+      "pictureId" : "9b893cd9-8e01-4588-8807-5147df490149",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F9b893cd9-8e01-4588-8807-5147df490149.png?alt=media&token=023c26d5-a61c-42ea-81ca-8e5bbc464665",
+      "socialProfiles" : {
+        "twitter" : "keerthanakumar"
+      },
+      "title" : "Engineering Manager",
+      "updatedAt" : 1551896932259,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_FfDxnuXzt7cpXXu9_" : {
+      "bio" : "<p>Kaan is a mobile software engineer and a Google Developer Expert (GDE) for Firebase, based in London, UK. As an active community builder, he has co-organized a lot of developer events in the UK and Turkey such as DevFests, Android Developer Days, Android Study Jams, and has been a distinguished speaker at many international industry events in the US, UK, Austria, Ireland, Italy, Czech Republic, Belarus, Romania, UAE, Latvia, Turkey and Georgia. Besides being a Google Developer Group (GDG) London lead, he is a Google Product Expert (PE) and a Google Local Guide. Kaan is passionate about exploring new technologies and traveling around the world.</p>",
+      "isFeatured" : false,
+      "name" : "Kaan Mamikoglu",
+      "pictureId" : "c634f7e5-0fe0-4d45-a52c-2b80ab01191f",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fc634f7e5-0fe0-4d45-a52c-2b80ab01191f.png?alt=media&token=c15c89f1-c9b2-46ee-8d9b-4a9cbcfccce8",
+      "socialProfiles" : {
+        "github" : "iamkaan",
+        "linkedIn" : "iamkaan",
+        "twitter" : "kaanmamikoglu",
+        "web" : "www.iamkaan.com"
+      },
+      "title" : "Mobile Software Engineer, GDE",
+      "updatedAt" : 1553647726720,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_Ffrw323h3avq3N3sa" : {
+      "bio" : "<p>Andrew is a Google Developer Expert for Android and has been working with Android for the past 6 years. He’s given talks at conferences in Sydney, Melbourne, Oslo, Singapore, and Chicago on topics ranging from Android Things to Google Assistant and Constraint Layout. Andrew is currently the Engineering Lead for Google technologies at Bilue, based in Sydney Australia.</p>",
+      "isFeatured" : false,
+      "name" : "Andrew Kelly",
+      "org" : "Bilue",
+      "pictureId" : "00b143a6-516e-4d5f-a3ec-622ee4ae4b84",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F00b143a6-516e-4d5f-a3ec-622ee4ae4b84.png?alt=media&token=dbc2b542-5cb3-465f-853b-1e4c3706aa87",
+      "socialProfiles" : {
+        "twitter" : "andrew_ke11y"
+      },
+      "title" : "Engineering Lead for Google technologies & GDE",
+      "updatedAt" : 1551896809718,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_FgI4zOik_cNAKSmxc" : {
+      "bio" : "<p>Jen Looper is a Google Developer Expert and a Senior Developer Advocate at Progress with over 15 years' experience as a web and mobile developer, specializing in creating cross-platform mobile apps. She's a multilingual multiculturalist with a passion for hardware hacking, mobile apps, Vue.js, machine learning and discovering new things every day. She is the founder and CEO of Vue Vixens, an initiative promoting diversity in the Vue.js community. Visit her online at <a href=\"http://www.jenlooper.com/\" target=\"_blank\">http://www.jenlooper.com</a>, or via Twitter <a href=\"https://twitter.com/jenlooper\" target=\"_blank\">@jenlooper</a>.</p>",
+      "isFeatured" : false,
+      "name" : "Jen Looper",
+      "org" : "Progress",
+      "pictureId" : "c3f70022-d711-4dea-9a19-8dd411b2b063",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fc3f70022-d711-4dea-9a19-8dd411b2b063.png?alt=media&token=2340ff4c-dee0-4441-9499-160859033722",
+      "socialProfiles" : {
+        "github" : "jlooper",
+        "linkedIn" : "jen-looper-3442413",
+        "twitter" : "jenlooper",
+        "web" : "www.jenlooper.com"
+      },
+      "title" : "Senior Developer Advocate, GDE Web",
+      "updatedAt" : 1553512047182,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_Vh4DqsF9IU-S8nafb" : {
+      "bio" : "<p>Erik Haddad is a UX Engineer at Google on the Firebase team in San Francisco. Prior to joining Google, Erik was an advanced development engineer at ESPN and Disney.</p>",
+      "isFeatured" : false,
+      "name" : "Erik Haddad",
+      "org" : "Google",
+      "pictureId" : "6db6e2fd-1843-4770-a17a-2e82860894fd",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F6db6e2fd-1843-4770-a17a-2e82860894fd.png?alt=media&token=7f0db68a-04ed-49ce-b216-631f2db65887",
+      "socialProfiles" : {
+        "github" : "erikhaddad",
+        "linkedIn" : "erikhaddad",
+        "twitter" : "erikhaddad"
+      },
+      "title" : "UX Engineer",
+      "updatedAt" : 1552105624748,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L__1ubbdVQX_BgSuxCF" : {
+      "bio" : "<p>Matilda is a trans disabled artist, community organizer, and programmer studying, imagining, and leveraging mathematical, ecological, and social systems for a more just, equitable, and inclusive world. They have organized around racial, disability, climate, and housing justice and are currently a fellow at The Knowledge House, a Bronx based pipeline for tech talent from low income communities.</p>",
+      "isFeatured" : false,
+      "name" : "Matilda Wysocki",
+      "pictureId" : "198cfe11-1f84-4dcb-b942-14c419bdd938",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F198cfe11-1f84-4dcb-b942-14c419bdd938.png?alt=media&token=36ef0dea-d1f3-4264-b74f-840541de6ad8",
+      "updatedAt" : 1552206011799,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L__20ZBweEOF20K_Ic9" : {
+      "bio" : "<p>Stephen Magill is the CEO of Muse Dev, a software company dedicated to helping developers write better code through code quality automation. Muse Dev is a spin-off of Galois, a leader in computer science R&amp;D focused on formal methods and software analysis. Stephen is a world-recognized expert on program analysis, with work ranging from high-level domain-specific languages to static analysis of low-level systems code. Stephen is also a principal scientist at Galois, where he leads several projects for commercial clients including work with Amazon. He also serves as principal investigator on a number of DARPA-funded projects. Prior to Galois, Stephen was a research scientist at the Institute for Defense Analysis Center for Computing Sciences and a researcher at the University of Maryland. Stephen earned his Ph.D. and Master's Degrees in Computer Science from Carnegie Mellon, and his work has been widely published at conferences. Stephen also serves on the University of Tulsa Industry Advisory Board and numerous program committees and funding panels. In his free time, Stephen enjoys snowboarding, surfing, and camping.</p>",
+      "isFeatured" : false,
+      "name" : "Stephen Magill",
+      "org" : "Muse Dev",
+      "pictureId" : "6eb15850-59ab-4791-8968-f0a26558230e",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F6eb15850-59ab-4791-8968-f0a26558230e.png?alt=media&token=9f27fcdb-50ca-48a7-bf8c-2a257fcfd511",
+      "socialProfiles" : {
+        "twitter" : "stephenmagill"
+      },
+      "title" : "CEO",
+      "updatedAt" : 1552206102893,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L__27SPk_N8Z1HoAY3t" : {
+      "bio" : "<p>Alex Sullivan is a senior mobile developer living in Boston who specializes in Android development. He's currently employed at Thoughtbot where he spends his time building Android, iOS and cross platform applications for a variety of clients. Before Thoughtbot, Alex spent several years at Runkeeper, where he helped to spearhead a new view architecture and a foundational restructuring of the application. In addition to his work as a full time engineer, Alex enjoys writing tutorials for RayWenderlich.com and is currently in the process of writing a book with the RayWenderlich team to help guide Android developers through the beautiful world of reactive programming.</p>",
+      "isFeatured" : false,
+      "name" : "Alex Sullivan",
+      "org" : "thoughtbot",
+      "pictureId" : "27610138-4e1a-479b-9963-f93465491b0b",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F27610138-4e1a-479b-9963-f93465491b0b.png?alt=media&token=38f69271-c4ca-4509-b12a-b338fc77b847",
+      "socialProfiles" : {
+        "twitter" : "alexsullivan444"
+      },
+      "title" : "Senior Developer",
+      "updatedAt" : 1553380488755,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L__3fHliXQcwGkRJrV-" : {
+      "bio" : "<p>Eliza is an Android developer at Pixplicity, the Women Techmakers Lead&nbsp;for the Netherlands and an organizer for the GDG Netherlands. Her big&nbsp;passion is to explore and play with new technologies while she enjoys&nbsp;travelling, and attending conferences and meetups. Her latest obsession&nbsp;is conversational apps and IoT.</p>",
+      "isFeatured" : false,
+      "name" : "Eliza Camber",
+      "org" : "Pixplicity",
+      "pictureId" : "3a400441-0a85-4155-9b59-6aa0f6f24c3e",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F3a400441-0a85-4155-9b59-6aa0f6f24c3e.png?alt=media&token=d03b177c-8c90-42fa-9929-95b51195f3c0",
+      "socialProfiles" : {
+        "twitter" : "ElizaCamber"
+      },
+      "title" : "Android developer. GDE Assistant. GDG NL organizer. WTM NL lead.",
+      "updatedAt" : 1553647438570,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_aflv_kYMAxT8ALeZ1" : {
+      "bio" : "<p>Nate is an Android developer who enjoys building quality software and helping others do the same.</p>",
+      "isFeatured" : false,
+      "name" : "Nate Ebel",
+      "org" : "Pixite Apps",
+      "pictureId" : "3c37ecd7-7d2c-47fb-8b34-815e462fa484",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F3c37ecd7-7d2c-47fb-8b34-815e462fa484.png?alt=media&token=ec84defd-86eb-4754-97fe-4dd579db7b16",
+      "socialProfiles" : {
+        "github" : "n8ebel",
+        "linkedIn" : "n8ebel",
+        "twitter" : "n8ebel"
+      },
+      "title" : "Android Developer",
+      "updatedAt" : 1553647817947,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_cLbF97SiES258yfxn" : {
+      "bio" : "<p>Sean McQuillan is a Developer Advocate at Google. With a decade of experience at Twilio and other San Francisco startups he is an expert at building apps that scale. Sean is passionate about using great tooling to build high quality apps - quickly. When he is not working on Android you can find him fiddling on the piano or crocheting hats.</p>",
+      "isFeatured" : false,
+      "name" : "Sean McQuillan",
+      "org" : "Google",
+      "pictureId" : "24076a78-099b-4983-9018-83d37a67b42e",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F24076a78-099b-4983-9018-83d37a67b42e.png?alt=media&token=bfade7cf-11e5-4f43-8814-92d7732397ab",
+      "socialProfiles" : {
+        "linkedIn" : "seanmcq",
+        "twitter" : "objcode"
+      },
+      "title" : "Android Developer Advocate",
+      "updatedAt" : 1553374381243,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_cOxmXrYLzv1fCmKZw" : {
+      "bio" : "<p>Moyinoluwa is an Android Engineer who enjoys exploring the latest&nbsp;technologies in Android Development. She loves sharing her knowledge by writing technical articles and speaking at developer events. She also&nbsp;cares a lot about building apps that look good and work well on all&nbsp;devices.</p>",
+      "isFeatured" : false,
+      "name" : "Moyinoluwa Adeyemi",
+      "org" : "Zola Electric",
+      "pictureId" : "f29d2522-10d6-4bd1-a3e1-37efba026b19",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Ff29d2522-10d6-4bd1-a3e1-37efba026b19.png?alt=media&token=bace51e0-f8e5-41ff-99dc-a66536200927",
+      "socialProfiles" : {
+        "twitter" : "moyheen"
+      },
+      "title" : "Android Developer",
+      "updatedAt" : 1553380197560,
+      "updatedBy" : "kJhRBlKxMNNbO2184hPWS2wkT2w2"
+    },
+    "-L_cV86-OZjwKpW0CfB9" : {
+      "bio" : "<p>On paper, I am an engineering lead at Amazon where I work with the layout team of the Kindle organization solving the problem of converting, delivering and rendering the content of millions of books on billions of devices on every supported language.</p>\n<p>In a parallel universe, I foster my vision of an inclusive and diverse community where great training is affordable to everyone. To achieve this goal, I run several conferences (Droidcon Boston and SwiftFest), participate in many meetups in Boston, Seattle, and New York, and speak at conferences covering my favorite topics: Android, Angular, Machine Learning, Swift and TDD.</p>\n<p>I have the honor of being part of the Google Developer Expertrs program.</p>\n<p><br></p>",
+      "isFeatured" : false,
+      "name" : "Giorgio Natili",
+      "org" : "Droidcon Boston",
+      "pictureId" : "fca64b60-cc07-4928-88b5-4c3425239b53",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Ffca64b60-cc07-4928-88b5-4c3425239b53.png?alt=media&token=2772ad35-a195-4240-a511-68eaaf02e25b",
+      "socialProfiles" : {
+        "github" : "giorgionatili",
+        "linkedIn" : "giorgionatili",
+        "twitter" : "giorgionatili"
+      },
+      "title" : "Crazy One",
+      "updatedAt" : 1553287482469,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_d07rDYpSC2b4H-jUy" : {
+      "bio" : "<p>Liz is a developer advocate, labor and ethics organizer, and&nbsp;Site Reliability Engineer (SRE) with 15+ years of experience. She is an&nbsp;advocate at Honeycomb.io for the SRE and Observability communities, and&nbsp;previously was an SRE working on products ranging from the Google Cloud Load Balancer to Google Flights.<br>\n<br>\n<br>\nShe lives in&nbsp;Brooklyn with her wife, metamours, and a Samoyed/Golden Retriever mix, and in San Francisco and Seattle with her other partners. She plays&nbsp;classical piano, leads an EVE Online alliance, and advocates for&nbsp;transgender rights as a board member of the National Center for Transgender Equality.</p>",
+      "isFeatured" : false,
+      "name" : "Liz Fong-Jones",
+      "org" : "Honeycomb",
+      "pictureId" : "ab6b340b-90de-4e30-a839-76c697da03a6",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fab6b340b-90de-4e30-a839-76c697da03a6.png?alt=media&token=1720e49a-15a7-44b7-9cb2-4bec961b5337",
+      "socialProfiles" : {
+        "twitter" : "lizthegrey",
+        "web" : "lizthegrey.com"
+      },
+      "title" : "Developer Advocate",
+      "updatedAt" : 1553288299638,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-L_dfzSgOIymJNLWhzhu" : {
+      "bio" : "<p>Lyla is an Android Developer Advocate at Google working on Android Jetpack and developer training. Prior to joining Google, she worked at Udacity, where she had the privilege of teaching developers from across the globe how to write Android and Firebase apps. She's a returned Peace Corps volunteer and has worked and lived on three continents.</p>",
+      "isFeatured" : false,
+      "name" : "Lyla Fujiwara",
+      "org" : "Google",
+      "pictureId" : "d4ace409-aeb1-4ecb-b75f-6b4f31d19b6b",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fd4ace409-aeb1-4ecb-b75f-6b4f31d19b6b.png?alt=media&token=8f3f8a5a-844c-47c0-9c4e-7054ffba9476",
+      "socialProfiles" : {
+        "linkedIn" : "lylafujiwara",
+        "twitter" : "CeruleanOtter"
+      },
+      "title" : "Android Developer Advocate",
+      "updatedAt" : 1552256333743,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    },
+    "-La5yQ1ja7GSBDs0gsgj" : {
+      "bio" : "<p>Clive wrote his first AR app in 2007, worked at a video game company,&nbsp;and now he’s a tech lead at the LensXR team at Wayfair. In his spare&nbsp;time, he likes to write about software development, work on his side&nbsp;projects and learn new things!</p>",
+      "isFeatured" : false,
+      "name" : "Clive Lee",
+      "org" : "Wayfair",
+      "pictureId" : "c72f19dc-c26a-4ea1-ae76-437948d3e3f4",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fc72f19dc-c26a-4ea1-ae76-437948d3e3f4.png?alt=media&token=1f2d379b-9aa2-43e6-8e7e-8f0711c761d0",
+      "socialProfiles" : {
+        "twitter" : "cliveleehere"
+      },
+      "title" : "Tech lead on Lens XR pod",
+      "updatedAt" : 1553288127495,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-LaQOAH52GgJb7ZUdQBI" : {
+      "bio" : "<p>Adam is a Software Engineer, Android enthusiast, and pun aficionado. He fell in love with Android when he picked it up as a hobby in 2013 and he's been staying on top of the latest trends and contributing to open source projects ever since. Adam also strives to be an active member of the developer community - traveling the country to attend and speak at hackathons and conferences to both educate and learn from others in the community.</p>",
+      "isFeatured" : false,
+      "name" : "Adam McNeilly",
+      "org" : "OkCupid",
+      "pictureId" : "314f5485-d7c0-42b1-9b37-99eaa44eaef6",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2F314f5485-d7c0-42b1-9b37-99eaa44eaef6.png?alt=media&token=2b75f177-4ed7-4592-a70b-0123f17555ee",
+      "socialProfiles" : {
+        "twitter" : "AdamMc331"
+      },
+      "title" : "Senior Android Engineer",
+      "updatedAt" : 1553093259128,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    },
+    "-LaQOOuVVrMI7kK2b4Yf" : {
+      "bio" : "<p>Chris has been an Android Software Engineer at J&amp;J since 2015 and has built a variety of apps including the J&amp;J Official 7 Minute Workout. Since starting his career, he’s been engaged with community events across the U.S. to learn more about best practices in Android and share solutions to common problems on the platform. If he’s not coding, he’s probably playing an instrument.</p>",
+      "isFeatured" : false,
+      "name" : "Chris Corrado",
+      "org" : "Johnson & Johnson",
+      "pictureId" : "b93df174-786f-4718-8a06-db2089116559",
+      "pictureUrl" : "https://firebasestorage.googleapis.com/v0/b/slidesup-8b9d6.appspot.com/o/confs%2Fdetail%2Fdroidcon-boston-2019%2Fspeakers%2Fb93df174-786f-4718-8a06-db2089116559.png?alt=media&token=3d2cc4b1-3de5-493b-b42d-f60a722269ac",
+      "socialProfiles" : {
+        "twitter" : "ccorrads"
+      },
+      "title" : "Senior Software Engineer",
+      "updatedAt" : 1553093298490,
+      "updatedBy" : "CX9Tzux5SEVhp7BwzmVoO1ss8QF2"
+    }
+  }
+,
+  "rooms" : {
+    "-L_Asu4o4fNYDxpW4OO9" : {
+      "name" : "Virginia Wimberly Theatre • Stage 1",
+      "updatedAt" : 1551756403135,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_Asyn3fF9jq7PN_TmJ" : {
+      "name" : "Nancy and Edward Roberts Studio Theatre • Stage 2",
+      "updatedAt" : 1551756422413,
+      "updatedBy" : "w1eDnYH6jOa53ITDRhMiLPh63482"
+    },
+    "-L_B0fLq57414d4GSnw7" : {
+      "name" : "Carol Deane Theatre",
+      "updatedAt" : 1551903831702,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    },
+    "-Lb-aLvdmfg_OcspGioM" : {
+      "name" : "Calderwood Pavilion Lobby",
+      "updatedAt" : 1553714474808,
+      "updatedBy" : "1zcpmayPXFYMNccuClK1pPSa6WE2"
+    }
+  }
+
 }
