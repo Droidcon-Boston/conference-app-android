@@ -102,8 +102,16 @@ class AgendaDetailFragment : Fragment() {
 
     private fun populateView() {
         tv_agenda_detail_title.text = viewModel.talkTitle
-        tv_agenda_detail_room.text =
+
+        // WORKAROUND FOR https://github.com/Droidcon-Boston/conference-app-android/issues/165
+        // If the talk title is Check-In then hardcode the room name to be the lobby
+        if (viewModel.talkTitle.toLowerCase().contains("check-in")) {
+            tv_agenda_detail_room.text =
+                resources.getString(R.string.str_agenda_detail_room, "Calderwood Pavilion Lobby")
+        } else {
+            tv_agenda_detail_room.text =
                 resources.getString(R.string.str_agenda_detail_room, viewModel.room)
+        }
         tv_agenda_detail_time.text = resources.getString(
             R.string.str_agenda_detail_time,
             viewModel.startTime,
@@ -174,7 +182,7 @@ class AgendaDetailFragment : Fragment() {
                 speakerNames += speakerName + when {
                     orgName != null -> " - $orgName"
                     else -> {
-                        // Do nothing
+                        ' '
                     }
                 }
 
@@ -201,6 +209,7 @@ class AgendaDetailFragment : Fragment() {
 
                 // add the imageview above the textview for room data
                 lp.addRule(RelativeLayout.ABOVE, tv_agenda_detail_room.id)
+                lp.addRule(RelativeLayout.BELOW, session_rating_overlay.id)
                 tempImg.layoutParams = lp
 
                 // add speakerName as a child to the relative layout

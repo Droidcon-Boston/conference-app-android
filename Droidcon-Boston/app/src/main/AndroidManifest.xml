@@ -29,7 +29,7 @@
         <!-- Main Activity -->
         <activity
             android:name=".views.MainActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:taskAffinity="" />
 

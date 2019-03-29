@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fourMediaContainer"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
+
+
+    <ImageView
+        android:id="@+id/fourImageMediaOne"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toTopOf="@+id/fourImageMediaTwo"
+        app:layout_constraintEnd_toStartOf="@+id/fourImageMediaThree"
+        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".5"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <ImageView
+        android:id="@+id/fourImageMediaTwo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fourImageMediaFour"
+        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fourImageMediaOne"
+        app:layout_constraintWidth_percent=".5"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[11]" />
+
+    <ImageView
+        android:id="@+id/fourImageMediaThree"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toTopOf="@+id/fourImageMediaFour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintStart_toEndOf="@+id/fourImageMediaOne"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".5"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[10]" />
+
+    <ImageView
+        android:id="@+id/fourImageMediaFour"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintStart_toEndOf="@+id/fourImageMediaTwo"
+        app:layout_constraintTop_toBottomOf="@+id/fourImageMediaThree"
+        app:layout_constraintWidth_percent=".5"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[9]" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
