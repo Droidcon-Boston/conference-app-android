@@ -15,7 +15,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
-import kotlinx.android.synthetic.main.list_item_schedule_search.view.*
 import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
