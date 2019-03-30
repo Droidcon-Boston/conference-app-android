@@ -27,15 +27,20 @@
             style="@android:style/TextAppearance.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxHeight="80dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="First, Do No Harm" />
+            tools:text="I'm a teacher and so are you --- lessons from teaching Android on the ground and in the cloud"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform" />
 
         <TextView
             android:id="@+id/tv_agenda_detail_room"
