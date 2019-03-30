@@ -97,7 +97,7 @@
             android:layout_marginEnd="16dp"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorLightGray"
-            app:srcCompat="@drawable/ic_heart" />
+            app:srcCompat="@drawable/ic_star" />
 
 
         <LinearLayout
