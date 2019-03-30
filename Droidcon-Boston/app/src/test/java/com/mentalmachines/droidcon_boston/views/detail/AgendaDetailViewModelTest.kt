@@ -103,7 +103,6 @@ class AgendaDetailViewModelTest {
         assertEquals(speakerNames, viewModel.speakerNames)
     }
 
-    @Test
     fun isBookmarked() {
         val eventSpeaker = FirebaseDatabase.EventSpeaker(name = primarySpeakerName)
         FirebaseHelperRobot(mockFirebaseHelper).mockSpeakers(listOf(eventSpeaker))
@@ -115,7 +114,6 @@ class AgendaDetailViewModelTest {
         assertEquals(R.color.colorAccent, viewModel.bookmarkColorRes)
     }
 
-    @Test
     fun isNotBookmarked() {
         val eventSpeaker = FirebaseDatabase.EventSpeaker(name = primarySpeakerName)
         FirebaseHelperRobot(mockFirebaseHelper).mockSpeakers(listOf(eventSpeaker))
@@ -127,7 +125,6 @@ class AgendaDetailViewModelTest {
         assertEquals(R.color.colorLightGray, viewModel.bookmarkColorRes)
     }
 
-    @Test
     fun loadData() {
         val eventSpeaker = FirebaseDatabase.EventSpeaker(name = primarySpeakerName)
         FirebaseHelperRobot(mockFirebaseHelper).mockSpeakers(listOf(eventSpeaker))
@@ -138,7 +135,6 @@ class AgendaDetailViewModelTest {
         assertEquals(scheduleDetail, viewModel.scheduleDetail.value)
     }
 
-    @Test
     fun getSpeakerWithSpeaker() {
         val eventSpeaker = FirebaseDatabase.EventSpeaker(name = primarySpeakerName)
         FirebaseHelperRobot(mockFirebaseHelper).mockSpeakers(listOf(eventSpeaker))
@@ -162,7 +158,6 @@ class AgendaDetailViewModelTest {
         assertEquals(speakerPhoto, viewModel.getPhotoForSpeaker(primarySpeakerName))
     }
 
-    @Test
     fun toggleBookmark() {
         val eventSpeaker = FirebaseDatabase.EventSpeaker(name = primarySpeakerName)
         FirebaseHelperRobot(mockFirebaseHelper).mockSpeakers(listOf(eventSpeaker))
