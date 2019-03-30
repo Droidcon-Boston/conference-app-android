@@ -59,6 +59,7 @@ class AgendaDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance = false
         setHasOptionsMenu(true)
     }
 
