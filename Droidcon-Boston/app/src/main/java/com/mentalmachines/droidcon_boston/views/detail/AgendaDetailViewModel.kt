@@ -28,7 +28,7 @@ class AgendaDetailViewModel(
     private val _ratingValue = MutableLiveData<Int>()
     val ratingValue: LiveData<Int> = _ratingValue
 
-    private val dataListener: ValueEventListener = object : ValueEventListener {
+    private val speakerDataListener: ValueEventListener = object : ValueEventListener {
         override fun onCancelled(databaseError: DatabaseError) {
             Timber.e(databaseError.toException())
         }
@@ -80,7 +80,12 @@ class AgendaDetailViewModel(
         get() = if (isBookmarked) R.color.colorAccent else R.color.colorLightGray
 
     fun loadData() {
-        firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(dataListener)
+        if (scheduleRowItem.hasSpeaker()) {
+            // need to get speaker social media links
+            firebaseHelper.speakerDatabase.orderByChild("name").addValueEventListener(speakerDataListener)
+        } else {
+            _scheduleDetail.value = Schedule.ScheduleDetail(scheduleRowItem)
+        }
 
         ratingRepo.getSessionFeedback(scheduleRowItem.id) { sessionFeedback ->
             sessionFeedback?.let {
@@ -90,7 +95,7 @@ class AgendaDetailViewModel(
     }
 
     fun removeListener() {
-        firebaseHelper.speakerDatabase.removeEventListener(dataListener)
+        firebaseHelper.speakerDatabase.removeEventListener(speakerDataListener)
     }
 
     fun getSpeaker(speakerName: String): FirebaseDatabase.EventSpeaker? {
