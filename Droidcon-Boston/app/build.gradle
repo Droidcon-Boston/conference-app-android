@@ -147,6 +147,7 @@ dependencies {
     implementation "com.google.android.material:material:$support"
     implementation "androidx.browser:browser:$support"
     implementation "androidx.lifecycle:lifecycle-extensions:$support"
+    implementation "androidx.core:core:$support"
 
     //Room
     implementation "androidx.room:room-runtime:$room"
