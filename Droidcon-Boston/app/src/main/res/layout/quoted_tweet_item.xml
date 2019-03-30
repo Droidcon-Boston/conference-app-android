@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -25,6 +26,10 @@
         android:id="@+id/quotedName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="10sp"
         android:layout_marginStart="8dp"
         android:layout_toEndOf="@+id/quotedScreenName"
         tools:text="\@droidconbos" />
@@ -97,6 +102,10 @@
             android:id="@+id/quotedTweetName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="10sp"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/quotedTweetScreenName"
             tools:text="\@droidconbos" />
