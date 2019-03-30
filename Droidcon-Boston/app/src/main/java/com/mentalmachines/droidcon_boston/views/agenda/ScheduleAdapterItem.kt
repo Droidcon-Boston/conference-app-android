@@ -92,11 +92,7 @@ class ScheduleAdapterItem internal constructor(
             holder.sessionLayout.visibility = View.VISIBLE
             holder.title.text = itemData.talkTitle
 
-            // WORKAROUND FOR https://github.com/Droidcon-Boston/conference-app-android/issues/165
-            // If the talk title is Check-In then hardcode the room name to be the lobby
-            if (itemData.talkTitle.toLowerCase().contains("check-in")) {
-                holder.room.text = "Calderwood Pavilion Lobby"
-            }
+            holder.room.text = itemData.room
 
             if (itemData.photoUrlMap.size == 0) {
                 holder.rootLayout.background = null
