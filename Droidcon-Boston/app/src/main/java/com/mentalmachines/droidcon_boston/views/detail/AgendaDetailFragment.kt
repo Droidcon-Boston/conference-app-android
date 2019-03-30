@@ -251,7 +251,7 @@ class AgendaDetailFragment : Fragment() {
 
         tv_agenda_detail_description.movementMethod = LinkMovementMethod.getInstance()
         tv_agenda_detail_shareText.text = resources.getString(R.string.sharing_twitter_title)
-        imgv_twitter.setOnClickListener {
+        tv_agenda_detail_shareText.setOnClickListener {
             val twitter = viewModel.getSpeaker(scheduleDetail.listRow.primarySpeakerName)?.socialProfiles?.get("twitter")
 
             var twitterVal =  if(twitter.isNullOrEmpty()) scheduleDetail.listRow.primarySpeakerName else "@$twitter"
