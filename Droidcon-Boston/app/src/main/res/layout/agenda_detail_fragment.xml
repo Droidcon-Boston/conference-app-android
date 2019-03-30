@@ -152,22 +152,13 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:fontFamily="sans-serif"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="@dimen/def_padding_large"
                     android:layout_centerVertical="true"
+                    android:drawableStart="@drawable/ic_twitter_logo_blue"
+                    android:drawablePadding="16dp"
                     tools:text="Enjoy this talk? Let your followers know!"/>
-
-                <ImageView
-                    android:id="@+id/imgv_twitter"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:contentDescription="@string/twitter_icon"
-                    android:paddingStart="@dimen/def_padding"
-                    android:paddingLeft="@dimen/def_padding"
-                    android:paddingEnd="@dimen/def_padding"
-                    android:paddingRight="@dimen/def_padding"
-                    android:src="@drawable/social_twitter"
-                    android:layout_toRightOf="@+id/tv_agenda_detail_shareText"
-                    android:layout_marginLeft="@dimen/def_padding"/>
 
             </RelativeLayout>
 

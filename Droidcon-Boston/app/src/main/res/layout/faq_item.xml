@@ -26,5 +26,5 @@
         android:layout_height="125dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/hint_faq_photo"
-        tools:src="@drawable/logo_text" />
+        tools:src="@drawable/splash_text" />
 </LinearLayout>
