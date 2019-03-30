@@ -145,7 +145,7 @@
             android:layout_marginEnd="8dp"
             android:contentDescription="@string/hint_bookmark"
             android:tint="@color/colorStar"
-            app:srcCompat="@drawable/ic_star" />
+            app:srcCompat="@drawable/ic_heart" />
     </LinearLayout>
 
 </FrameLayout>

@@ -9,5 +9,5 @@
     <color name="colorGray">#9e9e9e</color>
     <color name="colorLightGray">#e0e0e0</color>
     <color name="navItemTextColor">#484848</color>
-    <color name="colorStar">#eb8a2d</color>
+    <color name="colorStar">@color/colorAccent</color>
 </resources>
