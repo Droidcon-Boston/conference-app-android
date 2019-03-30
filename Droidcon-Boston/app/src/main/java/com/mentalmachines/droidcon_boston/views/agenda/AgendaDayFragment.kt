@@ -23,6 +23,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.google.android.material.button.MaterialButton
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
@@ -39,6 +41,7 @@ import timber.log.Timber
  */
 class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private val timeHeaders = HashMap<String, ScheduleAdapterItemHeader>()
+    private val floatAnimation = AnimatorSet()
 
     private var headerAdapter: FlexibleAdapter<*>? = null
     private lateinit var layoutManager: LinearLayoutManager
@@ -48,6 +51,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private lateinit var emptyFilterView: View
     private lateinit var scrollToCurrentButton: MaterialButton
     private lateinit var viewModel: AgendaDayViewModel
+    private lateinit var agendaProgressView: LottieAnimationView
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -132,6 +136,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         emptyStateView = view.findViewById(R.id.empty_view)
         emptyFilterView = view.findViewById(R.id.empty_filter_view)
         scrollToCurrentButton = view.findViewById(R.id.scroll_to_current_session)
+        agendaProgressView = view.findViewById(R.id.speaker_image)
 
         layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         agendaRecyler.layoutManager = layoutManager
@@ -149,6 +154,13 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         fetchScheduleData()
 
         activity?.supportFragmentManager?.addOnBackStackChangedListener(backStackChangeListener)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        agendaProgressView.setAnimation("dancing_droid.json")
+        agendaProgressView.playAnimation()
+        agendaProgressView.repeatCount = LottieDrawable.INFINITE
     }
 
     private val backStackChangeListener: () -> Unit = {
@@ -226,7 +238,6 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         floatDownAnimator.duration = JumpToCurrent.ButtonTranslation.duration
         floatDownAnimator.interpolator = LinearInterpolator()
 
-        val floatAnimation = AnimatorSet()
         floatAnimation.playSequentially(floatUpAnimator, floatDownAnimator)
         floatAnimation.start()
         floatAnimation.addListener(object : AnimatorListenerAdapter() {
@@ -238,6 +249,8 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        floatAnimation.cancel();
         agendaRecyler.removeOnChildAttachStateChangeListener(currentSessionVisibleListener)
         activity?.supportFragmentManager?.removeOnBackStackChangedListener(backStackChangeListener)
     }
@@ -288,6 +301,7 @@ class AgendaDayFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         agendaRecyler.addOnChildAttachStateChangeListener(currentSessionVisibleListener)
         headerAdapter!!.addListener(this)
         agendaRecyler.adapter = headerAdapter
+        agendaProgressView.visibility = View.GONE
         agendaRecyler
             .addItemDecoration(FlexibleItemDecoration(agendaRecyler.context)
                 .withDefaultDivider())

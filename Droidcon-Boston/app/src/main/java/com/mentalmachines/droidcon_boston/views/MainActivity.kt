@@ -21,15 +21,14 @@ import com.mentalmachines.droidcon_boston.views.agenda.AgendaFragment
 import com.mentalmachines.droidcon_boston.views.detail.AgendaDetailFragment
 import com.mentalmachines.droidcon_boston.views.search.SearchDialog
 import com.mentalmachines.droidcon_boston.views.social.SocialFragment
+import com.mentalmachines.droidcon_boston.views.social.TwitterFragment
 import com.mentalmachines.droidcon_boston.views.speaker.SpeakerFragment
 import com.mentalmachines.droidcon_boston.views.volunteer.VolunteerFragment
 import kotlinx.android.synthetic.main.main_activity.*
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    private lateinit var authController: AuthController
 
     private val searchDialog = SearchDialog()
 
@@ -37,13 +36,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        authController = AuthController()
-
         initNavDrawerToggle()
 
         initFragmentsFromIntent(intent)
 
         initSearchDialog()
+
+        updateDrawerLoginState()
     }
 
     private fun initSearchDialog() {
@@ -74,7 +73,6 @@ class MainActivity : AppCompatActivity() {
             initFragmentsFromIntent(it)
         }
     }
-
 
     override fun onBackPressed() {
         // If drawer is open
@@ -155,7 +153,6 @@ class MainActivity : AppCompatActivity() {
         return processAll
     }
 
-
     private fun initNavDrawerToggle() {
 
         setSupportActionBar(toolbar)
@@ -170,7 +167,7 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener { item ->
 
-            //Closing drawer on item click
+            // Closing drawer on item click
             drawer_layout.closeDrawers()
 
             when (item.itemId) {
@@ -191,12 +188,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_speakers -> replaceFragment(getString(R.string.str_speakers))
                 R.id.nav_volunteers -> replaceFragment(getString(R.string.str_volunteers))
                 R.id.nav_login_logout -> {
-                    if (authController.isLoggedIn) {
+                    if (AuthController.isLoggedIn) {
                         logout()
                     } else {
                         login()
                     }
                 }
+                R.id.nav_tweet_feed -> replaceFragment(getString(R.string.str_twitter_feed))
             }
 
             if (item.itemId != R.id.nav_login_logout) {
@@ -230,7 +228,6 @@ class MainActivity : AppCompatActivity() {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(item)
-
     }
 
     private fun replaceFragment(title: String) {
@@ -259,6 +256,8 @@ class MainActivity : AppCompatActivity() {
                 resources.getString(R.string.str_about_us) -> fragment = AboutFragment()
                 resources.getString(R.string.str_speakers) -> fragment = SpeakerFragment()
                 resources.getString(R.string.str_volunteers) -> fragment = VolunteerFragment()
+                resources.getString(R.string.str_twitter_feed) -> fragment =
+                    TwitterFragment.newInstance()
             }
             // Add fragment with tag
             fragment?.let {
@@ -304,24 +303,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        authController.login(this, RC_SIGN_IN, R.mipmap.ic_launcher)
+        AuthController.login(this, RC_SIGN_IN, R.mipmap.ic_launcher)
     }
 
     private fun logout() {
-        authController.logout(this)
-        navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_login)
+        AuthController.logout(this) {
+            updateDrawerLoginState()
+        }
+    }
+
+    private fun updateDrawerLoginState() {
+        navView.menu.findItem(R.id.nav_login_logout).title = getString(
+            if (AuthController.isLoggedIn) {
+                R.string.str_logout
+            } else {
+                R.string.str_login
+            }
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        authController.handleLoginResult(this, resultCode, data)?.let {
+        AuthController.handleLoginResult(this, resultCode, data)?.let {
             AlertDialog.Builder(this)
                 .setTitle(R.string.str_title_error)
                 .setMessage(it)
                 .show()
         } ?: run {
-            navView.menu.findItem(R.id.nav_login_logout).title = getString(R.string.str_logout)
+            updateDrawerLoginState()
         }
     }
 

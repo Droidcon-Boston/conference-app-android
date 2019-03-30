@@ -1,6 +1,8 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
+import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -24,14 +26,20 @@ import com.mentalmachines.droidcon_boston.data.Schedule
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleDetail
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
 import com.mentalmachines.droidcon_boston.data.UserAgendaRepo
+import com.mentalmachines.droidcon_boston.firebase.AuthController
+import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
 import com.mentalmachines.droidcon_boston.views.MainActivity
+import com.mentalmachines.droidcon_boston.views.rating.RatingDialog
+import com.mentalmachines.droidcon_boston.views.rating.RatingRepo
 import com.mentalmachines.droidcon_boston.views.transform.CircleTransform
 import kotlinx.android.synthetic.main.agenda_detail_fragment.*
 
 class AgendaDetailFragment : Fragment() {
+
+    val ratingRepo = RatingRepo(AuthController.userId.orEmpty(), FirebaseHelper.instance.userDatabase)
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -43,11 +51,16 @@ class AgendaDetailFragment : Fragment() {
             val userAgendaRepo = UserAgendaRepo.getInstance(requireContext())
 
             @Suppress("UNCHECKED_CAST")
-            return AgendaDetailViewModel(scheduleRowItem, userAgendaRepo) as T
+            return AgendaDetailViewModel(scheduleRowItem, userAgendaRepo, ratingRepo) as T
         }
     }
 
     private lateinit var viewModel: AgendaDetailViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,12 +92,26 @@ class AgendaDetailFragment : Fragment() {
         viewModel.scheduleDetail.observe(viewLifecycleOwner, Observer {
             it?.let(this::showAgendaDetail)
         })
+
+        viewModel.ratingValue.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                session_rating.rating = it.toFloat()
+            }
+        })
     }
 
     private fun populateView() {
         tv_agenda_detail_title.text = viewModel.talkTitle
-        tv_agenda_detail_room.text =
+
+        // WORKAROUND FOR https://github.com/Droidcon-Boston/conference-app-android/issues/165
+        // If the talk title is Check-In then hardcode the room name to be the lobby
+        if (viewModel.talkTitle.toLowerCase().contains("check-in")) {
+            tv_agenda_detail_room.text =
+                resources.getString(R.string.str_agenda_detail_room, "Calderwood Pavilion Lobby")
+        } else {
+            tv_agenda_detail_room.text =
                 resources.getString(R.string.str_agenda_detail_room, viewModel.room)
+        }
         tv_agenda_detail_time.text = resources.getString(
             R.string.str_agenda_detail_time,
             viewModel.startTime,
@@ -109,7 +136,26 @@ class AgendaDetailFragment : Fragment() {
             showBookmarkStatus()
         }
 
+        session_rating_overlay.setOnClickListener {
+            if (AuthController.isLoggedIn) {
+                showRatingDialog()
+            } else {
+                AuthController.login(this, RC_SIGN_IN_FEEDBACK, R.mipmap.ic_launcher)
+            }
+        }
+
         populateSpeakersInformation()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_SIGN_IN_FEEDBACK) {
+            ratingRepo.userId = AuthController.userId.orEmpty()
+            loadData()
+
+            showRatingDialog()
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroyView() {
@@ -136,7 +182,7 @@ class AgendaDetailFragment : Fragment() {
                 speakerNames += speakerName + when {
                     orgName != null -> " - $orgName"
                     else -> {
-                        // Do nothing
+                        ' '
                     }
                 }
 
@@ -163,12 +209,13 @@ class AgendaDetailFragment : Fragment() {
 
                 // add the imageview above the textview for room data
                 lp.addRule(RelativeLayout.ABOVE, tv_agenda_detail_room.id)
+                lp.addRule(RelativeLayout.BELOW, session_rating_overlay.id)
                 tempImg.layoutParams = lp
 
                 // add speakerName as a child to the relative layout
                 agendaDetailView.addView(tempImg)
 
-                Glide.with(this)
+                Glide.with(requireContext())
                     .load(viewModel.getPhotoForSpeaker(speakerName))
                     .transform(CircleTransform(tempImg.context))
                     .placeholder(R.drawable.emo_im_cool)
@@ -209,6 +256,17 @@ class AgendaDetailFragment : Fragment() {
                 scheduleDetail.listRow.talkDescription.getHtmlFormattedSpanned()
 
         tv_agenda_detail_description.movementMethod = LinkMovementMethod.getInstance()
+        tv_agenda_detail_shareText.text = resources.getString(R.string.sharing_twitter_title)
+        imgv_twitter.setOnClickListener {
+            val twitter = viewModel.getSpeaker(scheduleDetail.listRow.primarySpeakerName)?.socialProfiles?.get("twitter")
+
+            var twitterVal =  if(twitter.isNullOrEmpty()) scheduleDetail.listRow.primarySpeakerName else "@$twitter"
+
+            val tweetUrl = "https://twitter.com/intent/tweet?text=I really enjoyed this %23droidconbos talk \"${scheduleDetail.listRow.talkTitle}\"  by $twitterVal"
+            val uri = Uri.parse(tweetUrl)
+            var shareIntent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(shareIntent)
+        }
     }
 
     private fun showBookmarkStatus() {
@@ -217,7 +275,15 @@ class AgendaDetailFragment : Fragment() {
         fab_agenda_detail_bookmark.backgroundTintList = ColorStateList.valueOf(color)
     }
 
+    private fun showRatingDialog() {
+        RatingDialog.newInstance(viewModel.schedulerowId)
+            .show(fragmentManager, RATE_DIALOG_TAG)
+    }
+
     companion object {
+        private const val RATE_DIALOG_TAG = "RATE_DIALOG"
+        private const val RC_SIGN_IN_FEEDBACK = 2
+
         fun addDetailFragmentToStack(
             supportFragmentManager: FragmentManager,
             itemData: Schedule.ScheduleRow
@@ -232,8 +298,7 @@ class AgendaDetailFragment : Fragment() {
             agendaDetailFragment.arguments = arguments
 
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, agendaDetailFragment)
-                .addToBackStack(null).commit()
+                .add(R.id.fragment_container, agendaDetailFragment).addToBackStack(null).commit()
         }
     }
 }
