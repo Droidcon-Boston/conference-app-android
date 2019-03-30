@@ -148,11 +148,11 @@ dependencies {
     implementation "androidx.cardview:cardview:$support"
     implementation "com.google.android.material:material:$support"
     implementation "androidx.browser:browser:$support"
+    implementation "androidx.core:core:$support"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.core:core:$lifecycle_version"
 
     //Room
     implementation "androidx.room:room-runtime:$room"
