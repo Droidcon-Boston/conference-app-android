@@ -1,6 +1,6 @@
 # Droidcon Boston - Conference Android App
 
-Official conference android app for Droidcon Boston.
+Official conference Android app for Droidcon Boston.
 
 <img src="img/readme_img.png" height="480"/>
 
