@@ -64,9 +64,8 @@ class AgendaDayViewModel(
     }
 
     fun fetchScheduleData() {
-        if (scheduleRows.value == null) {
-            firebaseHelper.eventDatabase.addValueEventListener(dataListener)
-        }
+        firebaseHelper.eventDatabase.removeEventListener(dataListener)
+        firebaseHelper.eventDatabase.addValueEventListener(dataListener)
     }
 
     fun setActiveFilter(filter: String) {
