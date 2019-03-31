@@ -29,14 +29,22 @@ jobs:
     - run:
         name: Static Analysis Checks
         command: cd Droidcon-Boston && ./gradlew detekt ktlintCheck lint
-        
+
     - run:
         name: Run Tests
         command: cd Droidcon-Boston && ./gradlew test
 
+    - run:
+        name: Assemble APK
+        command: cd Droidcon-Boston && ./gradlew assembleRelease
+
     - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
         path: Droidcon-Boston/app/build/reports
         destination: reports
+
+    - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+        path: Droidcon-Boston/app/build/outputs
+        destination: outputs
 
     - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
         path: Droidcon-Boston/app/build/test-results
