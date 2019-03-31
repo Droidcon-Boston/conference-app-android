@@ -12,6 +12,7 @@ import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.HashMap
 
 const val TIME_BETWEEN_SESSIONS: Long = 15
 
@@ -151,7 +152,7 @@ open class FirebaseDatabase {
         val pictureUrl: String? = "",
         val displayName: String? = "",
         val twitter: String? = "",
-        val savedSessionIds: List<String> = ArrayList()
+        val savedSessionIds: Map<String, String> = mutableMapOf()
     )
 }
 

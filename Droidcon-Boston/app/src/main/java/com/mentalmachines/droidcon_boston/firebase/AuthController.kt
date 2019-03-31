@@ -72,7 +72,8 @@ object AuthController {
                             FirebaseHelper.instance.userDatabase.child(user.uid)
                                 .setValue(
                                     createLocalUser(
-                                        UserAgendaRepo.getInstance(context).savedSessionIds,
+                                        UserAgendaRepo.getInstance(context).savedSessionIds
+                                            .values.toSet(),
                                         user
                                     )
                                 )
@@ -100,7 +101,7 @@ object AuthController {
             user.photoUrl?.toString(),
             user.displayName,
             "",
-            sessionIds.toList()
+            sessionIds.map { it to it } .toMap()
         )
     }
 }
