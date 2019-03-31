@@ -250,7 +250,6 @@ class AgendaDetailFragment : Fragment() {
                 scheduleDetail.listRow.talkDescription.getHtmlFormattedSpanned()
 
         tv_agenda_detail_description.movementMethod = LinkMovementMethod.getInstance()
-        tv_agenda_detail_shareText.text = resources.getString(R.string.sharing_twitter_title)
         tv_agenda_detail_shareText.setOnClickListener {
             val twitter = viewModel.getSpeaker(scheduleDetail.listRow.primarySpeakerName)?.socialProfiles?.get("twitter")
 
