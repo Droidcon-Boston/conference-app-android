@@ -1,5 +1,6 @@
 package com.mentalmachines.droidcon_boston.views.detail
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
@@ -142,7 +143,7 @@ class AgendaDetailFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_SIGN_IN_FEEDBACK) {
+        if (requestCode == RC_SIGN_IN_FEEDBACK && resultCode == Activity.RESULT_OK) {
             ratingRepo.userId = AuthController.userId.orEmpty()
             loadData()
 
