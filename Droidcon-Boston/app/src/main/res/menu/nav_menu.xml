@@ -15,10 +15,6 @@
             android:title="@string/str_faq" />
 
         <item
-            android:id="@+id/nav_social"
-            android:icon="@drawable/ic_social"
-            android:title="@string/str_social" />
-        <item
             android:id="@+id/nav_coc"
             android:icon="@drawable/ic_coc"
             android:title="@string/str_coc" />
@@ -37,6 +33,11 @@
             android:id="@+id/nav_tweet_feed"
             android:icon="@drawable/ic_twitter_logo"
             android:title="@string/str_twitter_feed" />
+
+        <item
+            android:id="@+id/nav_social"
+            android:icon="@drawable/ic_social"
+            android:title="@string/str_social" />
 
         <item
             android:id="@+id/nav_about"
