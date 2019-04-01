@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
 
         initNavDrawerToggle()
 
+        setInitialFragment(savedInstanceState)
+
         initFragmentsFromIntent(intent)
 
         initSearchDialog()
@@ -51,18 +53,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFragmentsFromIntent(initialIntent: Intent) {
-        replaceFragment(getString(string.str_agenda))
+    private fun setInitialFragment(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            replaceFragment(getString(string.str_agenda))
+        }
+    }
 
+    private fun initFragmentsFromIntent(initialIntent: Intent) {
         val sessionDetails = initialIntent.extras?.getString(EXTRA_SESSION_DETAILS)
         if (!TextUtils.isEmpty(sessionDetails)) {
+            replaceFragment(getString(string.str_agenda))
             AgendaDetailFragment.addDetailFragmentToStack(
                 supportFragmentManager,
                 ServiceLocator.gson.fromJson(sessionDetails, ScheduleRow::class.java)
             )
             updateSelectedNavItem(supportFragmentManager)
-        } else {
-            navView.setCheckedItem(id.nav_agenda)
         }
     }
 
