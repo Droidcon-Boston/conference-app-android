@@ -10,6 +10,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.mentalmachines.droidcon_boston.R
 import com.mentalmachines.droidcon_boston.R.id
@@ -236,13 +237,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(title: String) {
-        if (isNavItemChecked(title)) {
-            // Fragment currently selected, no action.
-            return
-        }
-
         checkNavMenuItem(title)
-
         updateToolbarTitle(title)
 
         // Get the fragment by tag
@@ -251,53 +246,42 @@ class MainActivity : AppCompatActivity() {
 
         if (fragment == null) {
             // Initialize the fragment based on tag
-            when (title) {
-                resources.getString(R.string.str_agenda) -> fragment = AgendaFragment.newInstance()
-                resources.getString(R.string.str_my_schedule) -> fragment =
-                    AgendaFragment.newInstanceMySchedule()
-                resources.getString(R.string.str_faq) -> fragment = FAQFragment()
-                resources.getString(R.string.str_social) -> fragment = SocialFragment()
-                resources.getString(R.string.str_coc) -> fragment = CocFragment()
-                resources.getString(R.string.str_about_us) -> fragment = AboutFragment()
-                resources.getString(R.string.str_speakers) -> fragment = SpeakerFragment()
-                resources.getString(R.string.str_volunteers) -> fragment = VolunteerFragment()
-                resources.getString(R.string.str_twitter_feed) -> fragment =
-                    TwitterFragment.newInstance()
-            }
-            // Add fragment with tag
-            fragment?.let {
-                supportFragmentManager?.beginTransaction()
-                    // replace in container
-                    ?.replace(R.id.fragment_container, it, title)
-                    // commit fragment transaction
-                    ?.commit()
-            }
+            fragment = createFragmentForTitle(title)
         } else {
-
             // For Agenda and My Schedule Screen, which add more fragments to backstack.
             // Remove all fragment except the last one when navigating via the nav drawer.
             when (title) {
-                resources.getString(R.string.str_agenda) -> popUntilLastFragment()
-                resources.getString(R.string.str_my_schedule) -> popUntilLastFragment()
+                resources.getString(R.string.str_agenda),
+                resources.getString(R.string.str_my_schedule)  -> {
+                    supportFragmentManager.popBackStack(
+                        title,
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE
+                    )
+                }
             }
+        }
 
-            val fragmentInContainer =
-                supportFragmentManager?.findFragmentById(R.id.fragment_container)
-            fragmentInContainer?.let {
-                supportFragmentManager?.beginTransaction()
-                    // detach the fragment that is currently visible
-                    ?.detach(it)
-                    // attach the fragment found as per the tag
-                    ?.attach(it)
-                    // commit fragment transaction
-                    ?.commit()
-            }
+        fragment?.let {
+            supportFragmentManager?.beginTransaction()
+                // replace in container
+                ?.replace(R.id.fragment_container, it, title)
+                // commit fragment transaction
+                ?.commit()
         }
     }
 
-    private fun popUntilLastFragment() {
-        for (i in 0..supportFragmentManager.backStackEntryCount) {
-            supportFragmentManager.popBackStack()
+    private fun createFragmentForTitle(title: String): Fragment? {
+        return when (title) {
+            resources.getString(string.str_agenda) -> AgendaFragment.newInstance()
+            resources.getString(string.str_my_schedule) -> AgendaFragment.newInstanceMySchedule()
+            resources.getString(string.str_faq) -> FAQFragment()
+            resources.getString(string.str_social) -> SocialFragment()
+            resources.getString(string.str_coc) -> CocFragment()
+            resources.getString(string.str_about_us) -> AboutFragment()
+            resources.getString(string.str_speakers) -> SpeakerFragment()
+            resources.getString(string.str_volunteers) -> VolunteerFragment()
+            resources.getString(string.str_twitter_feed) -> TwitterFragment.newInstance()
+            else -> null
         }
     }
 
