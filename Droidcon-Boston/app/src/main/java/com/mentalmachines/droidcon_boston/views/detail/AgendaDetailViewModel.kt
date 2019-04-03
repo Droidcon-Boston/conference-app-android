@@ -110,6 +110,29 @@ class AgendaDetailViewModel(
         return scheduleRowItem.photoUrlMap[speakerName]
     }
 
+    /**
+     * Returns the twitter handle for a user if we have one, otherwise returns the speaker name.
+     */
+    private fun getTwitterHandleForSpeaker(speakerName: String): String {
+        val handle = eventSpeakers[speakerName]?.socialProfiles?.get("twitter")
+
+        return if (handle.isNullOrEmpty()) {
+            speakerName
+        } else {
+            "@$handle"
+        }
+    }
+
+    /**
+     * Builds the twitter handle string for multiple speakers.
+     */
+    fun getTwitterHandleForAllSpeakers(detail: Schedule.ScheduleDetail): String {
+        return detail.listRow.speakerNames.joinToString(
+            separator = " and ",
+            transform = this::getTwitterHandleForSpeaker
+        )
+    }
+
     fun toggleBookmark() {
         val nextBookmarkStatus = !isBookmarked
         userAgendaRepo.bookmarkSession(sessionId, nextBookmarkStatus)

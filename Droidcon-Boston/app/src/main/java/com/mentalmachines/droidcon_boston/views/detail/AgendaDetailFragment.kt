@@ -252,13 +252,11 @@ class AgendaDetailFragment : Fragment() {
 
         tv_agenda_detail_description.movementMethod = LinkMovementMethod.getInstance()
         tv_agenda_detail_shareText.setOnClickListener {
-            val twitter = viewModel.getSpeaker(scheduleDetail.listRow.primarySpeakerName)?.socialProfiles?.get("twitter")
-
-            var twitterVal =  if(twitter.isNullOrEmpty()) scheduleDetail.listRow.primarySpeakerName else "@$twitter"
+            val twitterVal = viewModel.getTwitterHandleForAllSpeakers(scheduleDetail)
 
             val tweetUrl = "https://twitter.com/intent/tweet?text=I really enjoyed this %23droidconbos talk \"${scheduleDetail.listRow.talkTitle}\"  by $twitterVal"
             val uri = Uri.parse(tweetUrl)
-            var shareIntent = Intent(Intent.ACTION_VIEW, uri)
+            val shareIntent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(shareIntent)
         }
     }
