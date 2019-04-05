@@ -157,6 +157,7 @@
                     app:autoSizeMinTextSize="16sp"
                     app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform"
+                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:drawableStart="@drawable/ic_twitter_logo_blue"
                     android:drawablePadding="16dp"

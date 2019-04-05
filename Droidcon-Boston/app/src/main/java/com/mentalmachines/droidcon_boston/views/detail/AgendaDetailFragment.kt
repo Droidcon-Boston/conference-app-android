@@ -32,6 +32,7 @@ import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
+import com.mentalmachines.droidcon_boston.utils.visibleIf
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.rating.RatingDialog
 import com.mentalmachines.droidcon_boston.views.rating.RatingRepo
@@ -260,6 +261,8 @@ class AgendaDetailFragment : Fragment() {
             val shareIntent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(shareIntent)
         }
+
+        tv_agenda_detail_shareText.visibleIf(scheduleDetail.listRow.speakerCount > 0)
     }
 
     private fun showBookmarkStatus() {
