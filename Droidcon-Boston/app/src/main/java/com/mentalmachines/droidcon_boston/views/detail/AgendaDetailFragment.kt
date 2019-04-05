@@ -254,7 +254,8 @@ class AgendaDetailFragment : Fragment() {
         tv_agenda_detail_shareText.setOnClickListener {
             val twitterVal = viewModel.getTwitterHandleForAllSpeakers(scheduleDetail)
 
-            val tweetUrl = "https://twitter.com/intent/tweet?text=I really enjoyed this %23droidconbos talk \"${scheduleDetail.listRow.talkTitle}\"  by $twitterVal"
+            val tweetUrl =
+                "https://twitter.com/intent/tweet?text=I really enjoyed this %23droidconbos talk \"${scheduleDetail.listRow.talkTitle}\" by $twitterVal!"
             val uri = Uri.parse(tweetUrl)
             val shareIntent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(shareIntent)
