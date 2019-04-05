@@ -32,6 +32,7 @@ import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.utils.NotificationUtils
 import com.mentalmachines.droidcon_boston.utils.ServiceLocator.Companion.gson
 import com.mentalmachines.droidcon_boston.utils.getHtmlFormattedSpanned
+import com.mentalmachines.droidcon_boston.utils.visibleIf
 import com.mentalmachines.droidcon_boston.views.MainActivity
 import com.mentalmachines.droidcon_boston.views.rating.RatingDialog
 import com.mentalmachines.droidcon_boston.views.rating.RatingRepo
@@ -252,15 +253,16 @@ class AgendaDetailFragment : Fragment() {
 
         tv_agenda_detail_description.movementMethod = LinkMovementMethod.getInstance()
         tv_agenda_detail_shareText.setOnClickListener {
-            val twitter = viewModel.getSpeaker(scheduleDetail.listRow.primarySpeakerName)?.socialProfiles?.get("twitter")
+            val twitterVal = viewModel.getTwitterHandleForAllSpeakers(scheduleDetail)
 
-            var twitterVal =  if(twitter.isNullOrEmpty()) scheduleDetail.listRow.primarySpeakerName else "@$twitter"
-
-            val tweetUrl = "https://twitter.com/intent/tweet?text=I really enjoyed this %23droidconbos talk \"${scheduleDetail.listRow.talkTitle}\"  by $twitterVal"
+            val tweetUrl =
+                "https://twitter.com/intent/tweet?text=I really enjoyed this %23droidconbos talk \"${scheduleDetail.listRow.talkTitle}\" by $twitterVal!"
             val uri = Uri.parse(tweetUrl)
-            var shareIntent = Intent(Intent.ACTION_VIEW, uri)
+            val shareIntent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(shareIntent)
         }
+
+        tv_agenda_detail_shareText.visibleIf(scheduleDetail.listRow.speakerCount > 0)
     }
 
     private fun showBookmarkStatus() {
