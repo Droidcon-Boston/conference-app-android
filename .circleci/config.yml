@@ -28,7 +28,7 @@ jobs:
 
     - run:
         name: Static Analysis Checks
-        command: cd Droidcon-Boston && ./gradlew detekt ktlintCheck lint
+        command: cd Droidcon-Boston && ./gradlew detekt ktlintCheck lint evaluateViolations
         
     - run:
         name: Run Tests

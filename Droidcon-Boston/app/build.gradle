@@ -78,8 +78,8 @@ android {
 
 staticAnalysis {
     penalty {
-        maxErrors = 150 // current threshold value
-        maxWarnings = 70 // current threshold value
+        maxErrors = 117 // current threshold value
+        maxWarnings = 22 // current threshold value
     }
 
     lintOptions {
