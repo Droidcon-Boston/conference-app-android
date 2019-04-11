@@ -3,13 +3,11 @@ package com.mentalmachines.droidcon_boston.views
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -19,9 +17,9 @@ import com.mentalmachines.droidcon_boston.firebase.FirebaseHelper
 import com.mentalmachines.droidcon_boston.views.faq.FaqAdapterItem
 import com.mentalmachines.droidcon_boston.views.faq.FaqAdapterItemHeader
 import eu.davidea.flexibleadapter.FlexibleAdapter
-import kotlinx.android.synthetic.main.faq_fragment.faq_recycler
-import java.util.ArrayList
-import java.util.HashMap
+import kotlinx.android.synthetic.main.faq_fragment.*
+import timber.log.Timber
+import java.util.*
 
 
 class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
@@ -30,7 +28,11 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private lateinit var headerAdapter: FlexibleAdapter<FaqAdapterItem>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(layout.faq_fragment, container, false)
     }
@@ -47,7 +49,7 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         firebaseHelper.faqDatabase.removeEventListener(dataListener)
     }
 
-    val dataListener: ValueEventListener = object : ValueEventListener {
+    private val dataListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val rows = ArrayList<FaqEvent>()
             for (faqSnapshot in dataSnapshot.children) {
@@ -62,7 +64,7 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.e(javaClass.canonicalName, "onCancelled", databaseError.toException())
+            Timber.e(databaseError.toException())
         }
     }
 
@@ -75,7 +77,8 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         val items = ArrayList<FaqAdapterItem>(faqs.size)
         faqs.forEach { faq ->
             faq.answers.forEach { answer ->
-                val header: FaqAdapterItemHeader = questionHeaders[faq.question] ?: FaqAdapterItemHeader(faq.question)
+                val header: FaqAdapterItemHeader =
+                    questionHeaders[faq.question] ?: FaqAdapterItemHeader(faq.question)
                 questionHeaders[faq.question] = header
 
                 val item = FaqAdapterItem(answer, header)
@@ -83,12 +86,12 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             }
         }
 
-        faq_recycler.layoutManager = LinearLayoutManager(faq_recycler.context)
+        faq_recycler.layoutManager =
+                androidx.recyclerview.widget.LinearLayoutManager(faq_recycler.context)
         headerAdapter = FlexibleAdapter(items)
         headerAdapter.addListener(this)
         faq_recycler.adapter = headerAdapter
-        headerAdapter.expandItemsAtStartUp()
-                .setDisplayHeadersAtStartUp(true)
+        headerAdapter.expandItemsAtStartUp().setDisplayHeadersAtStartUp(true)
     }
 
     override fun onItemClick(view: View, position: Int): Boolean {
@@ -96,7 +99,8 @@ class FAQFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
             val item = headerAdapter.getItem(position)
             val itemData = item!!.itemData
 
-            val url = if (!TextUtils.isEmpty(itemData.otherLink)) itemData.otherLink else itemData.mapLink
+            val url =
+                if (!TextUtils.isEmpty(itemData.otherLink)) itemData.otherLink else itemData.mapLink
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
 

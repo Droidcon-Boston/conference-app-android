@@ -1,6 +1,5 @@
 package com.mentalmachines.droidcon_boston.views.faq
 
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
@@ -17,9 +16,8 @@ import eu.davidea.viewholders.FlexibleViewHolder
 /**
  * Used for displaying the FAQ items
  */
-class FaqAdapterItem internal constructor(val itemData: Answer,
-                                          header: FaqAdapterItemHeader) :
-        AbstractSectionableItem<FaqAdapterItem.ViewHolder, FaqAdapterItemHeader>(header) {
+class FaqAdapterItem internal constructor(val itemData: Answer, header: FaqAdapterItemHeader) :
+    AbstractSectionableItem<FaqAdapterItem.ViewHolder, FaqAdapterItemHeader>(header) {
 
     override fun equals(other: Any?): Boolean {
         if (other is FaqAdapterItem) {
@@ -37,26 +35,28 @@ class FaqAdapterItem internal constructor(val itemData: Answer,
         return R.layout.faq_item
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(
+        view: View,
+        adapter: FlexibleAdapter<IFlexible<androidx.recyclerview.widget.RecyclerView.ViewHolder>>
+    ): ViewHolder {
         return FaqAdapterItem.ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>,
-                                holder: FaqAdapterItem.ViewHolder,
-                                position: Int,
-                                payloads: MutableList<Any>) {
+    override fun bindViewHolder(
+        adapter: FlexibleAdapter<IFlexible<androidx.recyclerview.widget.RecyclerView.ViewHolder>>,
+        holder: FaqAdapterItem.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
 
-        holder.faq_text.text = itemData.answer
+        holder.faqText.text = itemData.answer
         if (!TextUtils.isEmpty(itemData.photoLink)) {
-            val context = holder.faq_text.context
-            Glide.with(context)
-                    .load(itemData.photoLink)
-                    .crossFade()
-                    .centerCrop()
-                    .into(holder.faq_photo)
-            holder.faq_photo.visibility = View.VISIBLE
+            val context = holder.faqText.context
+            Glide.with(context).load(itemData.photoLink).crossFade().centerCrop()
+                .into(holder.faqPhoto)
+            holder.faqPhoto.visibility = View.VISIBLE
         } else {
-            holder.faq_photo.visibility = View.GONE
+            holder.faqPhoto.visibility = View.GONE
         }
 
         if (!TextUtils.isEmpty(itemData.otherLink) || !TextUtils.isEmpty(itemData.mapLink)) {
@@ -66,24 +66,24 @@ class FaqAdapterItem internal constructor(val itemData: Answer,
 
     private fun addBackgroundRipple(holder: ViewHolder) {
         val outValue = TypedValue()
-        val context = holder.faq_text.context
+        val context = holder.faqText.context
         context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
-        holder.root_layout.setBackgroundResource(outValue.resourceId)
+        holder.rootLayout.setBackgroundResource(outValue.resourceId)
     }
 
 
     class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter) {
 
-        lateinit var root_layout: View
+        lateinit var rootLayout: View
 
-        lateinit var faq_text: TextView
+        lateinit var faqText: TextView
 
-        lateinit var faq_photo: ImageView
+        lateinit var faqPhoto: ImageView
 
         private fun findViews(parent: View) {
-            root_layout = parent.findViewById(R.id.root_layout)
-            faq_text = parent.findViewById(R.id.faq_text)
-            faq_photo = parent.findViewById(R.id.faq_photo)
+            rootLayout = parent.findViewById(R.id.root_layout)
+            faqText = parent.findViewById(R.id.faq_text)
+            faqPhoto = parent.findViewById(R.id.faq_photo)
         }
 
         init {

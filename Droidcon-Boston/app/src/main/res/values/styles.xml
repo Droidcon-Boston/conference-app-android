@@ -12,12 +12,15 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="AppTheme.Splash" parent="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@drawable/droidcon_blank</item>
+        <item name="android:windowBackground">@drawable/gradient_splash_background</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -35,14 +38,31 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="JumpToSessionButton" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:paddingStart">@dimen/jump_btn_horizontal_padding</item>
+        <item name="android:paddingLeft">@dimen/jump_btn_horizontal_padding</item>
+        <item name="android:paddingEnd">@dimen/jump_btn_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/jump_btn_horizontal_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/tw__solid_white</item>
+    </style>
+
     <style name="ThemeOverlay.AppCompat.navTheme">
 
         <!-- Color of text and icon when SELECTED -->
-        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
 
         <!-- Background color when SELECTED -->
         <item name="colorControlHighlight">@android:color/transparent</item>
 
     </style>
 
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

@@ -15,9 +15,9 @@
             android:id="@+id/imgv_header_bg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:contentDescription="Header Background"
+            android:contentDescription="@string/header_background"
             android:scaleType="centerCrop"
-            android:src="@drawable/navigation_header_image" />
+            android:src="@drawable/gradient_splash_background" />
 
 
         <ImageView
@@ -26,7 +26,7 @@
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:contentDescription="Header Background"
+            android:contentDescription="@string/speaker_avatar"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars" />
 
@@ -38,8 +38,8 @@
             android:layout_below="@+id/imgv_speaker_detail_avatar"
             android:layout_marginTop="@dimen/margin_normal"
             android:gravity="center"
-            android:paddingEnd="@dimen/def_padding"
             android:paddingStart="@dimen/def_padding"
+            android:paddingEnd="@dimen/def_padding"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -50,13 +50,12 @@
             android:id="@+id/tv_speaker_detail_designation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_speaker_detail_name"
+            android:layout_alignParentStart="true"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:paddingEnd="@dimen/def_padding_large"
             android:paddingStart="@dimen/def_padding_large"
+            android:paddingEnd="@dimen/def_padding_large"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             tools:text="Software Engineer @ Company" />
@@ -67,28 +66,29 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_speaker_detail_description"
             android:layout_alignEnd="@id/imgv_header_bg"
-            android:layout_alignRight="@id/imgv_header_bg"
             android:layout_marginBottom="-20dp"
-            android:paddingEnd="@dimen/def_padding"
-            android:paddingLeft="@dimen/def_padding"
-            android:paddingRight="@dimen/def_padding"
+            android:orientation="horizontal"
             android:paddingStart="@dimen/def_padding"
-            android:orientation="horizontal">
+            android:paddingLeft="@dimen/def_padding"
+            android:paddingEnd="@dimen/def_padding"
+            android:paddingRight="@dimen/def_padding">
 
             <ImageView
                 android:id="@+id/imgv_twitter"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:paddingEnd="@dimen/def_padding"
-                android:paddingLeft="@dimen/def_padding"
-                android:paddingRight="@dimen/def_padding"
+                android:contentDescription="@string/twitter_icon"
                 android:paddingStart="@dimen/def_padding"
+                android:paddingLeft="@dimen/def_padding"
+                android:paddingEnd="@dimen/def_padding"
+                android:paddingRight="@dimen/def_padding"
                 android:src="@drawable/social_twitter" />
 
             <ImageView
                 android:id="@+id/imgv_linkedin"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:contentDescription="@string/linkedin_icon"
                 android:src="@drawable/social_linkedin" />
 
         </LinearLayout>
@@ -101,9 +101,9 @@
             android:layout_below="@id/imgv_header_bg"
             android:layout_marginTop="25dp"
             android:fontFamily="sans-serif"
-            android:paddingBottom="@dimen/def_padding"
             android:paddingLeft="@dimen/def_padding_large"
             android:paddingRight="@dimen/def_padding_large"
+            android:paddingBottom="@dimen/def_padding"
             android:textColor="@android:color/black"
             tools:text="@tools:sample/lorem/random" />
     </RelativeLayout>

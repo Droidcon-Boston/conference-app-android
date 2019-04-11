@@ -17,9 +17,9 @@
             android:id="@+id/imgv_header_bg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:contentDescription="header Background"
+            android:contentDescription="@string/header_background"
             android:scaleType="centerCrop"
-            android:src="@drawable/navigation_header_image" />
+            android:src="@drawable/gradient_splash_background" />
 
 
         <TextView
@@ -27,27 +27,30 @@
             style="@android:style/TextAppearance.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:maxHeight="80dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="First, Do No Harm" />
+            tools:text="I'm a teacher and so are you --- lessons from teaching Android on the ground and in the cloud"
+            app:autoSizeMinTextSize="16sp"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform" />
 
         <TextView
             android:id="@+id/tv_agenda_detail_room"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/tv_agenda_detail_time"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -61,25 +64,40 @@
             android:layout_alignBottom="@+id/imgv_header_bg"
             android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             tools:text="10:30 am - 11:15 am" />
 
-        <android.support.design.widget.FloatingActionButton
+        <FrameLayout
+            android:id="@+id/session_rating_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/tv_agenda_detail_title"
+            android:layout_alignStart="@+id/tv_agenda_detail_title">
+            <RatingBar
+                android:id="@+id/session_rating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:clickable="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1"/>
+        </FrameLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_agenda_detail_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_agenda_detail_room"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorLightGray"
-            app:srcCompat="@drawable/ic_star" />
+            app:srcCompat="@drawable/ic_heart" />
 
 
         <LinearLayout
@@ -94,7 +112,6 @@
                 android:layout_width="319dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
                 android:textColor="@color/colorGray"
                 android:textSize="18sp" />
 
@@ -103,7 +120,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
                 tools:text="@tools:sample/full_names" />
 
             <View
@@ -122,6 +138,32 @@
                 android:textColor="@android:color/black"
 
                 tools:text="@tools:sample/lorem/random" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_agenda_detail_shareText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:fontFamily="sans-serif"
+                    android:maxHeight="32dp"
+                    android:textSize="18sp"
+                    app:autoSizeMaxTextSize="18sp"
+                    app:autoSizeMinTextSize="16sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:drawableStart="@drawable/ic_twitter_logo_blue"
+                    android:drawablePadding="16dp"
+                    android:text="@string/sharing_twitter_title"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
 

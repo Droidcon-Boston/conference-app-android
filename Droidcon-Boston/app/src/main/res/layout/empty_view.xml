@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/empty_view"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/empty_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="0.0"
@@ -13,11 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:alpha="0.6"
+        android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="@string/no_bookmarked_items"
-        android:alpha="0.6"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:fontFamily="sans-serif"
-        android:textColor="?android:textColorSecondary"/>
+        android:textColor="?android:textColorSecondary" />
 
 </FrameLayout>

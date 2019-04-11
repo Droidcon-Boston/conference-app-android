@@ -29,7 +29,9 @@
         <!-- Main Activity -->
         <activity
             android:name=".views.MainActivity"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:taskAffinity="" />
 
         <!-- Firebase Cloud Messaging -->
         <service

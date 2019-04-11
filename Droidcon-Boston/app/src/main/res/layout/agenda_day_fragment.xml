@@ -1,17 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- FrameLayout is for FlexyAdapter sticky adapter -->
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- FrameLayout is for FlexyAdapter sticky adapter -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/agenda_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackground"
         android:scrollbars="vertical"
-        android:background="@color/colorBackground"/>
+        tools:listitem="@layout/schedule_item" />
 
-    <include layout="@layout/empty_view"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/scroll_to_current_session"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/jump_btn_margin_bottom"
+        android:text="@string/jump_btn_title"
+        android:theme="@style/JumpToSessionButton"
+        android:visibility="gone"
+        app:cornerRadius="@dimen/jump_btn_corner_radius"
+        tools:visibility="visible" />
+
+    <include layout="@layout/empty_view" />
+
+    <include layout="@layout/empty_filter_view" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/speaker_image"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/speaker_avatar"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="dancing_droid.json"
+        app:lottie_loop="true"
+        tools:src="@drawable/bg_social_btn" />
 
 </FrameLayout>

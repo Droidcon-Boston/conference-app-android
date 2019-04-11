@@ -8,24 +8,26 @@ import com.mentalmachines.droidcon_boston.utils.SingletonHolder
 class UserAgendaRepo private constructor(context: Context) {
     private val prefsKey = "UserAgenda"
     private val sessionIdsKey = "savedSessionsIds"
-    private val sharedPrefs : SharedPreferences = context.getSharedPreferences(prefsKey, MODE_PRIVATE)
-    private val savedSessionIds = HashSet<String>()
+    private val sharedPrefs: SharedPreferences =
+        context.getSharedPreferences(prefsKey, MODE_PRIVATE)
+    val savedSessionIds = HashMap<String, String>()
 
     init {
-        savedSessionIds.addAll(sharedPrefs.getStringSet(sessionIdsKey, HashSet<String>()))
+        savedSessionIds += sharedPrefs.getStringSet(sessionIdsKey, HashSet<String>()).orEmpty()
+            .map { it to it }.toMap()
     }
 
-    fun isSessionBookmarked(sessionId : String) : Boolean {
+    fun isSessionBookmarked(sessionId: String): Boolean {
         return savedSessionIds.contains(sessionId)
     }
 
-    fun bookmarkSession(sessionId : String, flag : Boolean) {
+    fun bookmarkSession(sessionId: String, flag: Boolean) {
         if (flag) {
-            savedSessionIds.add(sessionId)
+            savedSessionIds.put(sessionId, sessionId)
         } else {
             savedSessionIds.remove(sessionId)
         }
-        sharedPrefs.edit().putStringSet(sessionIdsKey, savedSessionIds).apply()
+        sharedPrefs.edit().putStringSet(sessionIdsKey, savedSessionIds.values.toSet()).apply()
     }
 
     companion object : SingletonHolder<UserAgendaRepo, Context>(::UserAgendaRepo)

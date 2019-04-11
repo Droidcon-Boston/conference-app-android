@@ -1,9 +1,11 @@
 package com.mentalmachines.droidcon_boston.data
 
 import com.mentalmachines.droidcon_boston.data.Schedule.ScheduleRow
-import org.junit.*
-import org.junit.Assert.*
-import java.util.Arrays
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
+import java.util.*
 
 class ScheduleTest {
 
@@ -45,12 +47,61 @@ class ScheduleTest {
     }
 
     @Test
+    fun getSpeakerStringNoSpeaker() {
+        val row = ScheduleRow()
+        assertEquals("", row.getSpeakerString())
+    }
+
+    @Test
+    fun getSpeakerStringOneSpeaker() {
+        val row = ScheduleRow()
+        row.speakerNames = Arrays.asList(s1)
+        assertEquals(s1, row.getSpeakerString())
+    }
+
+    @Test
     fun getSpeakerStringMultipleSpeakers() {
         val row = ScheduleRow()
-
         row.speakerNames = Arrays.asList(s1, s2)
-        val speakerNameString = row.getSpeakerString()!!
-        assertTrue(speakerNameString.contains(s1))
-        assertTrue(speakerNameString.contains(s2))
+        assertEquals("$s1, $s2", row.getSpeakerString())
+    }
+
+    @Test
+    fun containsKeywordInTitle() {
+        val keyword = "Kotlin"
+        val testTitle = "All About $keyword"
+
+        val row = ScheduleRow(talkTitle = testTitle)
+        assertTrue(row.containsKeyword(keyword))
+    }
+
+    @Test
+    fun containsKeywordInDescription() {
+        val keyword = "Kotlin"
+        val testDescription = "All about $keyword"
+
+        val row = ScheduleRow(talkDescription = testDescription)
+        assertTrue(row.containsKeyword(keyword))
+    }
+
+    @Test
+    fun containsKeywordInSpeakerName() {
+        val keyword = "Kotlin"
+        val speakers = listOf("Speaker about $keyword")
+
+        val row = ScheduleRow(speakerNames = speakers)
+        assertTrue(row.containsKeyword(keyword))
+    }
+
+    @Test
+    fun containsEmptyKeyword() {
+        val row = ScheduleRow()
+        assertTrue(row.containsKeyword(""))
+    }
+
+    @Test
+    fun doesNotContainKeyword() {
+        val row = ScheduleRow()
+        assertFalse(row.containsKeyword("Blah"))
     }
 }
