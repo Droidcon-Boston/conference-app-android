@@ -16,8 +16,8 @@ android {
         applicationId "com.mentalmachines.droidcon_boston"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 20
-        versionName "3.0.2"
+        versionCode 21
+        versionName "3.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -78,8 +78,8 @@ android {
 
 staticAnalysis {
     penalty {
-        maxErrors = 150 // current threshold value
-        maxWarnings = 70 // current threshold value
+        maxErrors = 117 // current threshold value
+        maxWarnings = 22 // current threshold value
     }
 
     lintOptions {
