@@ -31,7 +31,14 @@ data class EventModel(
         var trackSortOrder: Int?,
         val updatedAt: Long,
         val updatedBy: String
-)
+) {
+        @Suppress("unused")
+        constructor() : this("", "", Duration.ZERO, false, false,
+                Date(), Date(), null, null, null, null, null, null, null,
+                null, null, null, 0, "") {
+
+        }
+}
 
 data class RoomModel(
         val name: String,
@@ -69,4 +76,14 @@ data class TrackModel(
         val sortOrder: Int,
         val updatedAt: Long,
         val updatedBy: String
+)
+
+data class UserModel(
+        val displayName: String,
+        val sessionFeedback: Map<String, SessionFeedback>?      // key is session ID
+)
+
+data class SessionFeedback(
+        val rating: Int,
+        val feedback: String
 )
